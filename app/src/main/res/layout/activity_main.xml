@@ -3,14 +3,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.MainActivity">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calories Burned"
+        android:id="@+id/mainButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/currentMapImageView"
+        android:src="@drawable/currentmap"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/mainButton"
+        android:layout_alignLeft="@+id/mainButton"
+        android:layout_alignStart="@+id/mainButton" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tips/Suggestions"
+        android:id="@+id/tipsTextView"
+        android:textSize="25sp"
+        android:paddingTop="25dp"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/currentMapImageView"
+        android:layout_alignLeft="@+id/currentMapImageView"
+        android:layout_alignStart="@+id/currentMapImageView"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello Fitness!" />
+        android:text="Drinking a cup of water instead of a can of soda will save you 140 calories"
+        android:id="@+id/tipOneTextView"
+        android:layout_below="@+id/tipsTextView"
+        android:layout_margin="15dp"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="20sp"
+        android:textColor="#1b1010" />
+
 </RelativeLayout>
