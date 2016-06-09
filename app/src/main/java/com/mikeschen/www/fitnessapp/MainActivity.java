@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
     private Location mLastLocation;
     private Marker marker;
     private int caloriesBurned;
+    private int stepsTaken;
+    private String buttonDisplay;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
         loadJSON();
 
         caloriesBurned = 200;
+        stepsTaken = 75;
+        buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
 
@@ -189,7 +193,16 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
 
     @Override
     public void onClick(View v) {
-
+        switch(v.getId()) {
+            case(R.id.mainButton) :
+                if(buttonDisplay.equals("Calories")) {
+                    buttonDisplay = "Steps";
+                    mMainButton.setText("Steps Taken: " + stepsTaken);
+                } else if(buttonDisplay.equals("Steps")) {
+                    buttonDisplay = "Calories";
+                    mMainButton.setText("Calories Burned: " + caloriesBurned);
+                }
+        }
     }
 
     private void addDrawerItems() {
