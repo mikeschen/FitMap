@@ -6,20 +6,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        android:src="@drawable/walkbackground"
+        android:scaleType="centerCrop" />
+
     <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.MainActivity">
 
+        <EditText
+            android:id="@+id/searchView1"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="14dp"
+            android:hint="Walk Destination"
+            android:padding="3dp"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white" >
+        </EditText>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="28dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="4dp"
+            android:layout_alignBottom="@+id/searchView1"
+            android:layout_alignRight="@+id/searchView1"
+            android:background="@drawable/ic_search_black_24dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mainButton"
+        android:layout_below="@+id/searchView1"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
         android:textSize="20sp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="50dp" />
 
     <LinearLayout
@@ -66,7 +98,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textSize="20sp"
-        android:textColor="#1b1010" />
+        android:textColor="#ffffff" />
 
 </RelativeLayout>
     <ListView
