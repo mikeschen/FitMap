@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 /** Utility class for access to runtime permissions.
@@ -20,7 +21,7 @@ public abstract class PermissionUtils {
      * Requests the fine location permission. If a rationale with an additional explanation should
      * be shown to the user, displays a dialog that triggers the request.
      */
-    public static void requestPermission(MapsActivity activity, int requestId, String permission, boolean finishActivity) {
+    public static void requestPermission(FragmentActivity activity, int requestId, String permission, boolean finishActivity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
             // Display a dialog with rationale.
             PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)
