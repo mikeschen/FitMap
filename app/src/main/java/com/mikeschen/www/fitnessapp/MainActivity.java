@@ -40,7 +40,8 @@ import java.util.Random;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
+public class MainActivity extends AppCompatActivity implements
+        GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
         LocationListener,
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
+    @Bind(R.id.tipsTextView) TextView mTipsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
