@@ -1,16 +1,15 @@
 package com.mikeschen.www.fitnessapp;
 
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -67,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
+        TextView myTextview = (TextView) findViewById(R.id.tipsTextView);
+        myTextview.setTypeface(myTypeFace);
+
         ButterKnife.bind(this);
 
         SupportMapFragment mapFragment =
