@@ -14,24 +14,33 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="Calories Burned"
+        android:layout_height="wrap_content"
         android:id="@+id/mainButton"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
         android:textSize="20sp"
-        android:layout_alignParentTop="true" />
+        android:layout_marginRight="50dp" />
 
-    <ImageView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/currentMapImageView"
-        android:src="@drawable/currentmap"
-        android:paddingTop="10dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/mainButton"
-        android:layout_alignLeft="@+id/mainButton"
-        android:layout_alignStart="@+id/mainButton" />
+        android:id="@+id/mapLayout"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            tools:context="com.mikeschen.www.fitnessapp.MapsActivity"
+            android:layout_below="@+id/mainButton" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -42,17 +51,15 @@
         android:textSize="25sp"
         android:paddingTop="25dp"
         android:layout_margin="15dp"
-        android:layout_below="@+id/currentMapImageView"
-        android:layout_alignLeft="@+id/currentMapImageView"
-        android:layout_alignStart="@+id/currentMapImageView"
         android:textColor="@color/colorAccent"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/mapLayout" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Drinking a cup of water instead of a can of soda will save you 140 calories"
-        android:id="@+id/tipOneTextView"
+        android:id="@+id/tipTextView"
         android:layout_below="@+id/tipsTextView"
         android:layout_margin="15dp"
 
