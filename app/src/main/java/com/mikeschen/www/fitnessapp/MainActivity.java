@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     private GoogleMap mMap;
     private Location mLastLocation;
     private Marker marker;
+    private int caloriesBurned;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -56,6 +57,9 @@ public class MainActivity extends FragmentActivity implements GoogleMap.OnMyLoca
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         loadJSON();
+
+        caloriesBurned = 200;
+        mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
 
     @Override
