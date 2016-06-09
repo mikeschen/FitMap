@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends FragmentActivity implements GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        LocationListener {
+        LocationListener,
+        View.OnClickListener {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
@@ -60,6 +62,7 @@ public class MainActivity extends FragmentActivity implements GoogleMap.OnMyLoca
 
         caloriesBurned = 200;
         mMainButton.setText("Calories Burned: " + caloriesBurned);
+        mMainButton.setOnClickListener(this);
     }
 
     @Override
@@ -159,5 +162,10 @@ public class MainActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
