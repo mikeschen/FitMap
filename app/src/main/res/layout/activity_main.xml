@@ -13,15 +13,14 @@
     tools:context="com.mikeschen.www.fitnessapp.MainActivity">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mainButton"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
         android:textSize="20sp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp" />
+        android:layout_marginRight="50dp" />
 
     <LinearLayout
         android:orientation="horizontal"
