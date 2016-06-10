@@ -1,13 +1,8 @@
 package com.mikeschen.www.fitnessapp;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,32 +19,21 @@ import android.widget.Toast;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Random;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
         MainInterface.View,
-        GoogleMap.OnMyLocationButtonClickListener,
-        OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback,
+        MapInterface.View,
         LocationListener,
         View.OnClickListener {
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
     private GoogleMap mMap;
     private Location mLastLocation;
@@ -64,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements
     private String mActivityTitle;
     private TipPresenter mTipPresenter;
     private Context mContext;
+    private MapPresenter mMapPresenter;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -77,23 +62,24 @@ public class MainActivity extends AppCompatActivity implements
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
         caloriesBurned = 200;
         stepsTaken = 75;
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
-        mContext =  getApplicationContext();
+        mContext =  this;
 
         mDrawerList = (ListView) findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
         mTipPresenter = new TipPresenter(this, mContext);
+        mMapPresenter = new MapPresenter(this, mContext, mapFragment);
 
         addDrawerItems();
         setupDrawer();
         mTipPresenter.loadTip();
+        mMapPresenter.loadMap();
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -105,55 +91,13 @@ public class MainActivity extends AppCompatActivity implements
         mTipTextView.setText(tip);
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
 
-        mMap.setOnMyLocationButtonClickListener(this);
-        enableMyLocation();
-    }
-
-    private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission to access the location is missing.
-            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
-        } else if (mMap != null) {
-            // Access to the location has been granted to the app.
-            mMap.setMyLocationEnabled(true);
-        }
-    }
-
-    @Override
-    public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
-            return;
-        }
-
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
-            enableMyLocation();
-        } else {
-            // Display the missing permission error dialog when the fragments resume.
-            mPermissionDenied = true;
-        }
-    }
-
+    //Google Maps
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
+            Log.d("onResumeFragments", "Here?");
             // Permission was not granted, display error dialog.
             showMissingPermissionError();
             mPermissionDenied = false;
@@ -163,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void updatePermissionStatus(boolean permissionStatus) {
+        Log.d("UpdatePermissionStatus", "Hello");
+        mPermissionDenied = permissionStatus;
     }
 
     @Override
@@ -181,31 +131,6 @@ public class MainActivity extends AppCompatActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
     }
 
-
-    //Can we split this in the View and Presenter?
-    //Set text into View?
-//    public void loadJSON() {
-//        String json = null;
-//        try {
-//            InputStream is = this.getAssets().open("tips.json");
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            json = new String(buffer, "UTF-8");
-//            try {
-//                JSONObject jsonObject = new JSONObject(json);
-//                Random randomNumberGenerator = new Random();
-//                int randomNumber = randomNumberGenerator.nextInt(jsonObject.length());
-//                String tip = jsonObject.getString(randomNumber+"");
-//                mTipTextView.setText(tip);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
 
     @Override
     public void onClick(View v) {
@@ -265,6 +190,11 @@ public class MainActivity extends AppCompatActivity implements
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void showMap() {
+
     }
 }
 
