@@ -2,6 +2,9 @@ package com.mikeschen.www.fitnessapp;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -10,9 +13,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Ramon on 6/10/16.
@@ -21,6 +31,7 @@ public class MapPresenter implements
         MapInterface.Presenter,
         OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
+        LocationListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
     private final MapInterface.View mMapView;
@@ -29,6 +40,10 @@ public class MapPresenter implements
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
     private boolean mPermissionDenied = false;
+    private Location mLastLocation;
+    private Marker marker;
+    private UiSettings mUiSettings;
+
 
 
     public MapPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
@@ -42,10 +57,41 @@ public class MapPresenter implements
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+        mUiSettings = mMap.getUiSettings();
 
         mMap.setOnMyLocationButtonClickListener(this);
+//        mUiSettings.setZoomControlsEnabled(true);
+        //Need to implement a toggle to activate zoom buttons on MapsActivity but not Main Activity
+
         enableMyLocation();
+
+        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        if (location != null) {
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(location.getLatitude(), location.getLongitude()), 13));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .zoom(19)
+                    .build();
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+
     }
+
 
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -84,13 +130,26 @@ public class MapPresenter implements
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+
+        if (marker != null) {
+            marker.remove();
+        }
+
+        double dLatitude = mLastLocation.getLatitude();
+        double dLongitude = mLastLocation.getLongitude();
+        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(dLatitude, dLongitude))
+                .title("My Location").icon(BitmapDescriptorFactory
+                        .defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
+    }
+
 
 
     @Override
     public void loadMap() {
-
-//    SupportMapFragment mapFragment =
-//            (SupportMapFragment) mContext.getSupportFragmentManager().findFragmentById(R.id.map);
     mMapFragment.getMapAsync(this);
 
     }

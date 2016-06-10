@@ -1,7 +1,6 @@
 package com.mikeschen.www.fitnessapp;
 
 import android.content.Context;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,14 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,13 +23,9 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements
         MainInterface.View,
         MapInterface.View,
-        LocationListener,
         View.OnClickListener {
 
     private boolean mPermissionDenied = false;
-    private GoogleMap mMap;
-    private Location mLastLocation;
-    private Marker marker;
     private int caloriesBurned;
     private int stepsTaken;
     private String buttonDisplay;
@@ -113,22 +101,6 @@ public class MainActivity extends AppCompatActivity implements
     public void updatePermissionStatus(boolean permissionStatus) {
         Log.d("UpdatePermissionStatus", "Hello");
         mPermissionDenied = permissionStatus;
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-
-        if (marker != null) {
-            marker.remove();
-        }
-
-        double dLatitude = mLastLocation.getLatitude();
-        double dLongitude = mLastLocation.getLongitude();
-        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(dLatitude, dLongitude))
-                .title("My Location").icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
     }
 
 
