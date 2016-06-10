@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
-        TextView myTextview = (TextView) findViewById(R.id.tipsTextView);
-        myTextview.setTypeface(myTypeFace);
-
-        ButterKnife.bind(this);
+        mMainButton.setTypeface(myTypeFace);
+        mTipsTextView.setTypeface(myTypeFace);
+        mTipTextView.setTypeface(myTypeFace);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
-
 
     private void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
