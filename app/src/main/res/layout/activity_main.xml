@@ -85,11 +85,13 @@
         android:layout_margin="15dp"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
+        android:background="#ffffff"
         android:layout_below="@+id/mapLayout" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:id="@+id/tipTextView"
         android:layout_below="@+id/tipsTextView"
         android:layout_margin="15dp"
@@ -97,7 +99,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textSize="20sp"
-        android:textColor="#ffffff" />
+        android:textColor="#000000"
+        android:background="#ffffff"/>
 
 </RelativeLayout>
     <ListView
