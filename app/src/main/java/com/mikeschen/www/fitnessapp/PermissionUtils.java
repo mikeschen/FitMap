@@ -5,6 +5,7 @@ package com.mikeschen.www.fitnessapp;
 import android.*;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 /** Utility class for access to runtime permissions.
-        */
+ */
 public abstract class PermissionUtils {
 
     /**
@@ -107,6 +108,7 @@ public abstract class PermissionUtils {
         private static final String ARGUMENT_FINISH_ACTIVITY = "finish";
 
         private boolean mFinishActivity = false;
+        private Context mContext;
 
         /**
          * Creates a new instance of a dialog displaying the rationale for the use of the location
@@ -131,11 +133,12 @@ public abstract class PermissionUtils {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            mContext = getActivity();
             Bundle arguments = getArguments();
             final int requestCode = arguments.getInt(ARGUMENT_PERMISSION_REQUEST_CODE);
             mFinishActivity = arguments.getBoolean(ARGUMENT_FINISH_ACTIVITY);
 
-            return new AlertDialog.Builder(getActivity())
+            return new AlertDialog.Builder(mContext)
                     .setMessage(R.string.permission_rationale_location)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -156,11 +159,12 @@ public abstract class PermissionUtils {
         public void onDismiss(DialogInterface dialog) {
             super.onDismiss(dialog);
             if (mFinishActivity) {
-                Toast.makeText(getActivity(),
+                Toast.makeText(mContext,
                         R.string.permission_required_toast,
                         Toast.LENGTH_SHORT)
                         .show();
                 getActivity().finish();
+                //TODO If you rotate on error message, getActivity().finish(); causes the phone to crash. Changing line 162 to "mContext" fixed the problem there, but .finish() can't be called on mContext, even though mContext is equal to .getActivity()
             }
         }
     }
