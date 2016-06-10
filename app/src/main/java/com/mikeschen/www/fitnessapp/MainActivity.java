@@ -1,5 +1,6 @@
 package com.mikeschen.www.fitnessapp;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -41,6 +42,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
+        MainInterface.View,
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
+    private TipPresenter mTipPresenter;
+    private Context mContext;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -74,24 +78,31 @@ public class MainActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        loadJSON();
 
         caloriesBurned = 200;
         stepsTaken = 75;
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
+        mContext =  getApplicationContext();
 
         mDrawerList = (ListView) findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
-
+        mTipPresenter = new TipPresenter(this, mContext);
 
         addDrawerItems();
         setupDrawer();
+        mTipPresenter.loadTip();
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public void showTip(String tip) {
+        mTipTextView.setText(tip);
     }
 
     @Override
@@ -170,28 +181,31 @@ public class MainActivity extends AppCompatActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
     }
 
-    public void loadJSON() {
-        String json = null;
-        try {
-            InputStream is = this.getAssets().open("tips.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-            try {
-                JSONObject jsonObject = new JSONObject(json);
-                Random randomNumberGenerator = new Random();
-                int randomNumber = randomNumberGenerator.nextInt(jsonObject.length());
-                String tip = jsonObject.getString(randomNumber+"");
-                mTipTextView.setText(tip);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+
+    //Can we split this in the View and Presenter?
+    //Set text into View?
+//    public void loadJSON() {
+//        String json = null;
+//        try {
+//            InputStream is = this.getAssets().open("tips.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            json = new String(buffer, "UTF-8");
+//            try {
+//                JSONObject jsonObject = new JSONObject(json);
+//                Random randomNumberGenerator = new Random();
+//                int randomNumber = randomNumberGenerator.nextInt(jsonObject.length());
+//                String tip = jsonObject.getString(randomNumber+"");
+//                mTipTextView.setText(tip);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     @Override
     public void onClick(View v) {

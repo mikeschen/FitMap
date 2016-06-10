@@ -34,7 +34,7 @@
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@android:id/list"
+            android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -58,7 +58,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Drinking a cup of water instead of a can of soda will save you 140 calories"
         android:id="@+id/tipTextView"
         android:layout_below="@+id/tipsTextView"
         android:layout_margin="15dp"
