@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -29,6 +30,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     private boolean mPermissionDenied = false;
     private GoogleMap mMap;
     private Location mLastLocation;
+    private UiSettings mUiSettings;
     private Marker marker;
 
     @Override
@@ -45,7 +47,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
+        mUiSettings = mMap.getUiSettings();
         mMap.setOnMyLocationButtonClickListener(this);
+        mUiSettings.setZoomControlsEnabled(true);
         enableMyLocation();
     }
 

@@ -90,7 +90,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Drinking a cup of water instead of a can of soda will save you 140 calories"
         android:id="@+id/tipTextView"
         android:layout_below="@+id/tipsTextView"
         android:layout_margin="15dp"
