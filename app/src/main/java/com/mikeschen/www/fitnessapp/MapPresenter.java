@@ -58,6 +58,8 @@ public class MapPresenter implements
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mUiSettings = mMap.getUiSettings();
+        mUiSettings.setZoomGesturesEnabled(false);
+        mUiSettings.setRotateGesturesEnabled(false);
 
         mMap.setOnMyLocationButtonClickListener(this);
 //        mUiSettings.setZoomControlsEnabled(true);
@@ -85,7 +87,7 @@ public class MapPresenter implements
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))
-                    .zoom(19)
+                    .zoom(16)
                     .build();
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
