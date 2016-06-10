@@ -83,25 +83,32 @@
         android:text="Tips/Suggestions"
         android:id="@+id/tipsTextView"
         android:textSize="25sp"
-        android:paddingTop="15dp"
-        android:layout_margin="15dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:background="#ffffff"
         android:layout_below="@+id/mapLayout" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:id="@+id/tipTextView"
         android:layout_below="@+id/tipsTextView"
-        android:layout_margin="10dp"
-
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textColor="#2E2E2E"
         android:background="#ffffff"/>
 
 </RelativeLayout>
