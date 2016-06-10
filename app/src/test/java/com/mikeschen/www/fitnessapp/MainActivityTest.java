@@ -4,6 +4,8 @@ import android.os.Build;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.MapsInitializer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +21,9 @@ public class MainActivityTest {
     private MainActivity activity;
 
     @Before
-    public void setup() {
-        activity = Robolectric.setupActivity(MainActivity.class);
+    public void setUp() throws Exception {
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+//        MapsInitializer.initialize(activity);
     }
 
     @Test

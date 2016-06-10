@@ -36,6 +36,14 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.0.2'
     compile 'com.jakewharton:butterknife:7.0.1'
     testCompile 'org.robolectric:robolectric:3.0'
+    // These exclusions were put in in an attempt to fix the Inflate Exception error thrown by Robolectric testing
+//    testCompile ('org.robolectric:robolectric:3.0') {
+//        exclude group: 'commons-logging', module: 'commons-logging'
+//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+//        exclude group: 'com.android.support', module: 'appcompat'
+//        exclude group: 'com.android.support', module: 'support-v4'
+//        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    //}
     testCompile 'org.robolectric:shadows-support-v4:3.0'
     testCompile 'org.robolectric:shadows-maps:3.0'
     testCompile 'org.robolectric:shadows-play-services:3.0'
