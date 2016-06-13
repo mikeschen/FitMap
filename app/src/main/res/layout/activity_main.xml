@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:src="@drawable/grad"
+        android:src="@drawable/stairwalkmain"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
@@ -28,7 +28,7 @@
             android:layout_marginRight="@dimen/activity_wide_margin"
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:hint="Walk Destination"
-            android:padding="3dp"
+            android:padding="@dimen/activity_small_padding"
             android:textColor="@android:color/black"
             android:background="@android:color/white" >
         </EditText>
@@ -37,7 +37,7 @@
             android:id="@+id/button1"
             android:layout_width="28dp"
             android:layout_height="@dimen/activity_wide_margin"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="@dimen/activity_small_padding"
             android:layout_alignBottom="@+id/searchView1"
             android:layout_alignRight="@+id/searchView1"
             android:background="@drawable/ic_search_black_24dp" />
@@ -103,6 +103,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textSize="@dimen/text_small"
+            android:elevation="1dp"
             android:background="@color/colorWhite"/>
 
     </RelativeLayout>
