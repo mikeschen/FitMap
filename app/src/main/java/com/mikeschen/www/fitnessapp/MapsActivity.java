@@ -3,24 +3,66 @@ package com.mikeschen.www.fitnessapp;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
+import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
+import com.mikeschen.www.fitnessapp.Modules.Route;
 
-public class MapsActivity extends AppCompatActivity implements MapInterface.View {
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MapsActivity extends AppCompatActivity implements MapInterface.View, DirectionFinderListener {
     private boolean mPermissionDenied = false;
     private Context mContext;
     private MapActivityPresenter mMapActivityPresenter;
+    @Bind(R.id.atOrigin) EditText atOrigin;
+    @Bind(R.id.atDestination) EditText atDestination;
+    @Bind(R.id.btnFindPath) Button btnFindPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        ButterKnife.bind(this);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
         mMapActivityPresenter.loadMap();
+        btnFindPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendRequest();
+            }
+        });
+    }
+
+    private void sendRequest() {
+        String origin = atOrigin.getText().toString();
+        String destination = atDestination.getText().toString();
+        if (origin.isEmpty()) {
+            Toast.makeText(mContext, "Please enter origin address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (destination.isEmpty()) {
+            Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            new DirectionFinder(this, origin, destination).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showMap() {
@@ -43,6 +85,16 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     @Override
     public void updatePermissionStatus(boolean permissionStatus) {
         mPermissionDenied = permissionStatus;
+    }
+
+    @Override
+    public void onDirectionFinderStart() {
+
+    }
+
+    @Override
+    public void onDirectionFinderSuccess(List<Route>routes) {
+
     }
 
 }
