@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements
                     mStepCounterPresenter.loadSteps();
                 } else if(buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mMainButton.setText("Calories Burned: " + caloriesBurned);
+                    mStepCounterPresenter.loadCalories();
                 }
         }
     }
@@ -179,8 +179,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void showSteps(int stepCount) {
         mMainButton.setText("Steps Taken: " + stepCount);
+    }
 
-
+    @Override
+    public void showCalories(int caloriesBurned) {
+        mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
 }
 

@@ -27,6 +27,8 @@ public class StepCounterPresenter implements
     private float grossTotalSpeed;
     private boolean checkSpeedDirection;
 
+    private int caloriesBurned;
+
     private ArrayList<Float> speedData;
 
     public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
@@ -42,6 +44,7 @@ public class StepCounterPresenter implements
         grossTotalSpeed = 0;
         checkSpeedDirection = true;
         speedData = new ArrayList<>();
+        caloriesBurned = 0;
     }
 
     @Override
@@ -108,9 +111,17 @@ public class StepCounterPresenter implements
 
     }
 
+
     @Override
     public void loadSteps() {
         mStepCounterView.showSteps(stepCount);
     }
+
+    @Override
+    public void loadCalories() {
+        caloriesBurned = stepCount * 175/3500;
+        mStepCounterView.showCalories(caloriesBurned);
+    }
 }
+
 
