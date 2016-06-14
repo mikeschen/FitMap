@@ -5,15 +5,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import java.util.ArrayList;
 
 /**
  * Created by Ramon on 6/14/16.
  */
-public class StepCounterPresenter extends AppCompatActivity implements SensorEventListener {
+public class StepCounterPresenter implements
+        StepCounterInterface.Presenter,
+        SensorEventListener {
+
+    private StepCounterInterface.View mStepCounterView;
+    private Context mContext;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private long lastUpdate = 0;
@@ -27,11 +29,11 @@ public class StepCounterPresenter extends AppCompatActivity implements SensorEve
 
     private ArrayList<Float> speedData;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
+        mStepCounterView = stepCounterInterface;
+        mContext = context;
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
         stepCount = 0;
@@ -40,7 +42,6 @@ public class StepCounterPresenter extends AppCompatActivity implements SensorEve
         grossTotalSpeed = 0;
         checkSpeedDirection = true;
         speedData = new ArrayList<>();
-
     }
 
     @Override
@@ -105,6 +106,11 @@ public class StepCounterPresenter extends AppCompatActivity implements SensorEve
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    public void loadSteps() {
+        mStepCounterView.showSteps(stepCount);
     }
 }
 
