@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import com.mikeschen.www.fitnessapp.maps.MapsActivity;
  * Created by Matt on 6/15/2016.
  */
 public class BaseActivity extends AppCompatActivity {
-    private ListView mDrawerList;
+    private NavigationView mNavView;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -32,43 +33,40 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         mActivityTitle = getTitle().toString();
-        Log.d("list", mDrawerList+"");
-        Log.d("drawer", mDrawerLayout+"");
     }
 
     @Override
     public void setContentView(int layoutResID) {
         mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
-        mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.navList);
+        mNavView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
         FrameLayout activityContainer = (FrameLayout) mDrawerLayout.findViewById(R.id.activity_content);
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
-        super.setContentView(mDrawerLayout);
-        addDrawerItems();
         setupDrawer();
+        addDrawerItems();
+        super.setContentView(mDrawerLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         setTitle("FitnessApp");
     }
 
     private void addDrawerItems() {
-        String[] navArray = {"Main", "Maps", "Meals", "Stats", "About"};
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, navArray);
-        mDrawerList.setAdapter(mAdapter);
-        Log.d("set", "click");
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                Log.d("clicked", "nav");
+                mDrawerLayout.closeDrawers();
+                switch (menuItem.getItemId()) {
+                    case R.id.main:
                         Intent main = new Intent(BaseActivity.this, MainActivity.class);
                         startActivity(main);
-                        break;
-                    case 1:
+                        return true;
+                    case R.id.maps:
                         Log.d("clicked", "maps");
                         Intent maps = new Intent(BaseActivity.this, MapsActivity.class);
                         startActivity(maps);
-                        break;
+                        return true;
                     default:
+                        return true;
                 }
             }
         });
