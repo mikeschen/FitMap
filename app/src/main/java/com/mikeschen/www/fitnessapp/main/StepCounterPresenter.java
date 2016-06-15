@@ -9,9 +9,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ramon on 6/14/16.
- */
 public class StepCounterPresenter implements
         StepCounterInterface.Presenter,
         SensorEventListener {
