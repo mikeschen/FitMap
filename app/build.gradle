@@ -47,4 +47,6 @@ dependencies {
     testCompile 'org.robolectric:shadows-support-v4:3.0'
     testCompile 'org.robolectric:shadows-maps:3.0'
     testCompile 'org.robolectric:shadows-play-services:3.0'
+    //implement callingraphy
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }
