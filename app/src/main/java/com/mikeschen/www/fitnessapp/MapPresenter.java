@@ -148,11 +148,13 @@ public class MapPresenter implements
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
     }
 
-
-
     @Override
     public void loadMap() {
-    mMapFragment.getMapAsync(this);
+        mMapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void makeRequest(String origin, String destination) {
 
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MapsActivity extends AppCompatActivity implements MapInterface.View, DirectionFinderListener {
+public class MapsActivity extends AppCompatActivity implements MapInterface.View {
     private boolean mPermissionDenied = false;
     private Context mContext;
     private MapActivityPresenter mMapActivityPresenter;
@@ -61,11 +61,7 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
             return;
         }
 
-        try {
-            new DirectionFinder(this, origin, destination).execute();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        mMapActivityPresenter.makeRequest(origin, destination);
     }
 
     public void showMap() {
@@ -90,15 +86,15 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
         mPermissionDenied = permissionStatus;
     }
 
-    @Override
-    public void onDirectionFinderStart() {
-
-    }
-
-    @Override
-    public void onDirectionFinderSuccess(List<Route>routes) {
-
-    }
+//    @Override
+//    public void onDirectionFinderStart() {
+//
+//    }
+//
+//    @Override
+//    public void onDirectionFinderSuccess(List<Route>routes) {
+//
+//    }
 
 }
 

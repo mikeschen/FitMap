@@ -26,9 +26,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
 import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
 import com.mikeschen.www.fitnessapp.Modules.Route;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +99,15 @@ public class MapActivityPresenter implements
                     android.Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (mMap != null) {
             mMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public void makeRequest(String origin, String destination) {
+        try {
+            new DirectionFinder(this, origin, destination).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
