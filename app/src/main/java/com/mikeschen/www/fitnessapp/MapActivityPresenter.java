@@ -153,9 +153,8 @@ public class MapActivityPresenter implements
 
     @Override
     public void onDirectionFinderStart() {
-        Log.d("onDirectionStart", "its started");
-        progressDialog = ProgressDialog.show(mContext, "Please wait.",
-                "Finding direction..!", true);
+        progressDialog = ProgressDialog.show(mContext, "Please wait...",
+                "Finding Directions", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -178,6 +177,7 @@ public class MapActivityPresenter implements
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
+        //PASS MTEXTVIEW
         progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
