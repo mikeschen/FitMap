@@ -56,7 +56,6 @@ public class MapActivityPresenter implements
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
 
-
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         mMapView = mapView;
         mContext= context;
@@ -183,10 +182,10 @@ public class MapActivityPresenter implements
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
 
+
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            //THIS SETS TEXT DURATION AND DISTANCE
-//            ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
+            mMapView.showDistance(route.distance.text);
 //            ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()

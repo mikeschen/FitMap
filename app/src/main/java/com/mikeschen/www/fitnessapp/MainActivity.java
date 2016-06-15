@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements
         mTipPresenter.loadTip();
         mMapPresenter.loadMap();
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -86,13 +85,11 @@ public class MainActivity extends AppCompatActivity implements
         mTipTextView.setText(tip);
     }
 
-
     //Google Maps
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
-            Log.d("onResumeFragments", "Here?");
             // Permission was not granted, display error dialog.
             showMissingPermissionError();
             mPermissionDenied = false;
@@ -106,10 +103,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void updatePermissionStatus(boolean permissionStatus) {
-        Log.d("UpdatePermissionStatus", "Hello");
         mPermissionDenied = permissionStatus;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -154,9 +149,6 @@ public class MainActivity extends AppCompatActivity implements
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle("Menu");
                 invalidateOptionsMenu();
-
-
-
             }
 
             public void onDrawerClosed(View view) {
@@ -185,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void showMap() {
+    }
+
+    @Override
+    public void showDistance(String distance) {
 
     }
 

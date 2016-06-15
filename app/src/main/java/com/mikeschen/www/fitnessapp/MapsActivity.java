@@ -68,6 +68,12 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     }
 
     @Override
+    public void showDistance(String distance) {
+        mTvDistance.setText(distance);
+    }
+
+
+    @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
@@ -85,16 +91,5 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     public void updatePermissionStatus(boolean permissionStatus) {
         mPermissionDenied = permissionStatus;
     }
-
-//    @Override
-//    public void onDirectionFinderStart() {
-//
-//    }
-//
-//    @Override
-//    public void onDirectionFinderSuccess(List<Route>routes) {
-//
-//    }
-
 }
 

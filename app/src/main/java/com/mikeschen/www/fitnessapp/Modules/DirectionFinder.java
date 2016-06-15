@@ -32,11 +32,9 @@ public class DirectionFinder {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
-        Log.d("dest", destination);
     }
 
     public void execute() throws UnsupportedEncodingException {
-        Log.d("onDirecFinderStart", listener+"");
         listener.onDirectionFinderStart();
         new DownloadRawData().execute(createUrl());
     }
