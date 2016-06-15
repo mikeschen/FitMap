@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
@@ -133,7 +133,17 @@ public class MainActivity extends AppCompatActivity implements
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case 0:
+                        Intent main = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(main);
+                        break;
+                    case 1:
+                        Intent maps = new Intent(MainActivity.this, MapsActivity.class);
+                        startActivity(maps);
+                        break;
+                    default:
+                }
             }
         });
     }
@@ -144,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle("Menu");
                 invalidateOptionsMenu();
+
+
+
             }
 
             public void onDrawerClosed(View view) {
