@@ -25,20 +25,21 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements
         MainInterface.View,
         MapInterface.View,
+        StepCounterInterface.View,
         View.OnClickListener {
 
     private boolean mPermissionDenied = false;
     private int caloriesBurned;
-    private int stepsTaken;
     private String buttonDisplay;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
-    private TipPresenter mTipPresenter;
     private Context mContext;
+    private TipPresenter mTipPresenter;
     private MapPresenter mMapPresenter;
+    private StepCounterPresenter mStepCounterPresenter;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         caloriesBurned = 200;
-        stepsTaken = 75;
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements
         mActivityTitle = getTitle().toString();
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
+        mStepCounterPresenter = new StepCounterPresenter(this, mContext);
 
         addDrawerItems();
         setupDrawer();
@@ -117,10 +118,10 @@ public class MainActivity extends AppCompatActivity implements
             case(R.id.mainButton) :
                 if(buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
-                    mMainButton.setText("Steps Taken: " + stepsTaken);
+                    mStepCounterPresenter.loadSteps();
                 } else if(buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mMainButton.setText("Calories Burned: " + caloriesBurned);
+                    mStepCounterPresenter.loadCalories();
                 }
         }
     }
@@ -186,6 +187,16 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void showMap() {
 
+    }
+
+    @Override
+    public void showSteps(int stepCount) {
+        mMainButton.setText("Steps Taken: " + stepCount);
+    }
+
+    @Override
+    public void showCalories(int caloriesBurned) {
+        mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
 }
 
