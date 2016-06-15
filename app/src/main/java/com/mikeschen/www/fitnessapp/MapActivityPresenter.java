@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -141,6 +142,7 @@ public class MapActivityPresenter implements
 
     @Override
     public void onDirectionFinderStart() {
+        Log.d("onDirectionStart", "its started");
         progressDialog = ProgressDialog.show(mContext, "Please wait.",
                 "Finding direction..!", true);
 
