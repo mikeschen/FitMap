@@ -26,7 +26,6 @@ public class TipPresenter implements MainInterface.Presenter {
     //Will implement Presenter interface
     @Override
     public void loadTip() {
-                Log.d("Here?", "Hi there!");
 
         String json = null;
         try {
