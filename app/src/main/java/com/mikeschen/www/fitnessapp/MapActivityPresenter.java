@@ -196,10 +196,10 @@ public class MapActivityPresenter implements
                     .title(route.endAddress)
                     .position(route.endLocation)));
 
-            PolylineOptions polylineOptions = new PolylineOptions().
-                    geodesic(true).
-                    color(Color.BLUE).
-                    width(10);
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .color(Color.rgb(66,133,244))
+                    .width(25)
+                    .geodesic(true);
 
             for (int i = 0; i < route.points.size(); i++)
                 polylineOptions.add(route.points.get(i));
