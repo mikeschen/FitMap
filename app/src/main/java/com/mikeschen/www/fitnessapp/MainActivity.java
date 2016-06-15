@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private boolean mPermissionDenied = false;
-    private int caloriesBurned;
+    private int caloriesBurned = 0;
     private String buttonDisplay;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        caloriesBurned = 200;
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
