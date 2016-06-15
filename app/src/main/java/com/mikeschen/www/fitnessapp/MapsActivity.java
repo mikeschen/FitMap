@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -26,6 +27,8 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     @Bind(R.id.atOrigin) EditText atOrigin;
     @Bind(R.id.atDestination) EditText atDestination;
     @Bind(R.id.btnFindPath) Button btnFindPath;
+    @Bind(R.id.tvDistance) TextView mTvDistance;
+    @Bind(R.id.tvDuration) TextView mTvDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

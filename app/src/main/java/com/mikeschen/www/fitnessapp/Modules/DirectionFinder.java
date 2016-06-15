@@ -36,6 +36,7 @@ public class DirectionFinder {
     }
 
     public void execute() throws UnsupportedEncodingException {
+        Log.d("onDirecFinderStart", listener+"");
         listener.onDirectionFinderStart();
         new DownloadRawData().execute(createUrl());
     }
@@ -44,7 +45,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         Log.d("url", urlDestination);
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + GOOGLE_API_KEY;
+        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
