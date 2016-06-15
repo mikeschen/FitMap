@@ -49,8 +49,7 @@
             android:layout_marginLeft="@dimen/activity_small_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 mi"
-            android:id="@+id/tvDistance" />
+            android:text="0 miles"/>
 
         <ImageView
             android:layout_marginLeft="@dimen/activity_wide_margin"
