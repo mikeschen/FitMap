@@ -5,6 +5,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -47,10 +49,18 @@ public class StepCounterPresenter implements
         caloriesBurned = 0;
     }
 
+    public int getStepCount() {
+        return stepCount;
+    }
+
+    public void setStepCount(int stepCount) {
+        this.stepCount = stepCount;
+        mStepCounterView.showSteps(this.stepCount);
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
-
 
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             if(System.currentTimeMillis()-lastUpdate > 20) {
@@ -89,12 +99,12 @@ public class StepCounterPresenter implements
                     if (checkSpeedDirection) {
                         if (localAverageSpeed > totalAverageSpeed) {
                             checkSpeedDirection = false;
-                            stepCount ++;
+                            setStepCount(getStepCount()+1);
                         }
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
                             checkSpeedDirection = true;
-                            stepCount++;
+                            setStepCount(getStepCount()+1);
                         }
                     }
                 }
@@ -114,12 +124,13 @@ public class StepCounterPresenter implements
 
     @Override
     public void loadSteps() {
-        mStepCounterView.showSteps(stepCount);
+        Log.d("it", "works");
+        mStepCounterView.showSteps(getStepCount());
     }
 
     @Override
     public void loadCalories() {
-        caloriesBurned = stepCount * 175/3500;
+        caloriesBurned = getStepCount() * 175/3500;
         mStepCounterView.showCalories(caloriesBurned);
     }
 }

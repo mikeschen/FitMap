@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
+        Log.d("presenters", "loaded");
 
         addDrawerItems();
         setupDrawer();
