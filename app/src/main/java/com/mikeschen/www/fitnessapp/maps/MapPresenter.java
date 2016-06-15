@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 /**
  * Created by Ramon on 6/10/16.

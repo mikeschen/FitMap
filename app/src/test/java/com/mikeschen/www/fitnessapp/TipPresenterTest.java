@@ -1,6 +1,8 @@
 package com.mikeschen.www.fitnessapp;
 
-import android.content.Context;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
+import com.mikeschen.www.fitnessapp.main.MainInterface;
+import com.mikeschen.www.fitnessapp.main.TipPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

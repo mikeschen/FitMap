@@ -1,7 +1,8 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.main;
 
 import android.content.Context;
-import android.util.Log;
+
+import com.mikeschen.www.fitnessapp.main.MainInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;

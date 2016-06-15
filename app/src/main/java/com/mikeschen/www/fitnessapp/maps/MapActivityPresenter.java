@@ -1,27 +1,14 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -29,6 +16,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
 import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
 import com.mikeschen.www.fitnessapp.Modules.Route;
+import com.mikeschen.www.fitnessapp.R;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -91,9 +79,6 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            //THIS SETS TEXT DURATION AND DISTANCE
-//            ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
-//            ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))

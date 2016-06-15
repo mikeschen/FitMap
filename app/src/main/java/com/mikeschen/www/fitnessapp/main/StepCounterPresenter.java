@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.main;
 
 import android.content.Context;
 import android.hardware.Sensor;

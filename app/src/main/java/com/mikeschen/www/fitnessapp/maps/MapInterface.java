@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
 /**
  * Created by Ramon on 6/10/16.

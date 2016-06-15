@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,12 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
-import com.mikeschen.www.fitnessapp.Modules.Route;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
+import com.mikeschen.www.fitnessapp.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

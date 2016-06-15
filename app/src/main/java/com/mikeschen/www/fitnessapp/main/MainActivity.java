@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
@@ -18,6 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
+import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.maps.MapInterface;
+import com.mikeschen.www.fitnessapp.maps.MapPresenter;
+import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

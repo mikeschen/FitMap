@@ -16,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.mikeschen.www.fitnessapp.MainActivity">
+        tools:context=".main.MainActivity">
 
         <EditText
             android:id="@+id/searchView1"
@@ -71,7 +71,7 @@
                 android:layout_height="200dp"
                 android:layout_marginLeft="@dimen/activity_wide_margin"
                 android:layout_marginRight="@dimen/activity_wide_margin"
-                tools:context="com.mikeschen.www.fitnessapp.MapsActivity"
+                tools:context=".maps.MapsActivity"
                 android:layout_below="@+id/mainButton" />
         </LinearLayout>
 

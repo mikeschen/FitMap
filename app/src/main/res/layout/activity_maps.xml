@@ -5,7 +5,7 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mikeschen.www.fitnessapp.MapsActivity"
+    tools:context=".maps.MapsActivity"
     android:orientation="vertical"  >
 
     <EditText
