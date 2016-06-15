@@ -50,7 +50,6 @@ public class MapPresenter implements
         mMapView = mapView;
         mContext = context;
         mMapFragment = mapFragment;
-
     }
 
 
