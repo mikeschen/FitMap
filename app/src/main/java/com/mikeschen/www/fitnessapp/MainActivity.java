@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
@@ -25,20 +25,21 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements
         MainInterface.View,
         MapInterface.View,
+        StepCounterInterface.View,
         View.OnClickListener {
 
     private boolean mPermissionDenied = false;
     private int caloriesBurned;
-    private int stepsTaken;
     private String buttonDisplay;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
-    private TipPresenter mTipPresenter;
     private Context mContext;
+    private TipPresenter mTipPresenter;
     private MapPresenter mMapPresenter;
+    private StepCounterPresenter mStepCounterPresenter;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -58,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        caloriesBurned = 200;
-        stepsTaken = 75;
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements
         mActivityTitle = getTitle().toString();
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
+        mStepCounterPresenter = new StepCounterPresenter(this, mContext);
 
         addDrawerItems();
         setupDrawer();
@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity implements
             case(R.id.mainButton) :
                 if(buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
-                    mMainButton.setText("Steps Taken: " + stepsTaken);
+                    mStepCounterPresenter.loadSteps();
                 } else if(buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mMainButton.setText("Calories Burned: " + caloriesBurned);
+                    mStepCounterPresenter.loadCalories();
                 }
         }
     }
@@ -133,7 +133,17 @@ public class MainActivity extends AppCompatActivity implements
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case 0:
+                        Intent main = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(main);
+                        break;
+                    case 1:
+                        Intent maps = new Intent(MainActivity.this, MapsActivity.class);
+                        startActivity(maps);
+                        break;
+                    default:
+                }
             }
         });
     }
@@ -144,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle("Menu");
                 invalidateOptionsMenu();
+
+
+
             }
 
             public void onDrawerClosed(View view) {
@@ -173,6 +186,16 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void showMap() {
 
+    }
+
+    @Override
+    public void showSteps(int stepCount) {
+        mMainButton.setText("Steps Taken: " + stepCount);
+    }
+
+    @Override
+    public void showCalories(int caloriesBurned) {
+        mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
 }
 

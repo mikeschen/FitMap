@@ -1,100 +1,76 @@
 package com.mikeschen.www.fitnessapp;
 
-import android.*;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
+import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
+import com.mikeschen.www.fitnessapp.Modules.Route;
 
-public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLocationButtonClickListener,
-        OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback,
-        LocationListener {
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MapsActivity extends AppCompatActivity implements MapInterface.View {
     private boolean mPermissionDenied = false;
-    private GoogleMap mMap;
-    private Location mLastLocation;
-    private UiSettings mUiSettings;
-    private Marker marker;
+    private Context mContext;
+    private MapActivityPresenter mMapActivityPresenter;
+    @Bind(R.id.atOrigin) EditText atOrigin;
+    @Bind(R.id.atDestination) EditText atDestination;
+    @Bind(R.id.btnFindPath) Button btnFindPath;
+    @Bind(R.id.tvDistance) TextView mTvDistance;
+    @Bind(R.id.tvDuration) TextView mTvDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        ButterKnife.bind(this);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mContext = this;
+        mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
+        mMapActivityPresenter.loadMap();
+        btnFindPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendRequest();
+            }
+        });
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
-
-        mUiSettings = mMap.getUiSettings();
-        mMap.setOnMyLocationButtonClickListener(this);
-        mUiSettings.setZoomControlsEnabled(true);
-        enableMyLocation();
-    }
-
-    private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission to access the location is missing.
-            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
-        } else if (mMap != null) {
-            // Access to the location has been granted to the app.
-            mMap.setMyLocationEnabled(true);
+    private void sendRequest() {
+        String origin = atOrigin.getText().toString();
+        String destination = atDestination.getText().toString();
+        if (origin.isEmpty()) {
+            Toast.makeText(mContext, "Please enter origin address!", Toast.LENGTH_SHORT).show();
+            return;
         }
-    }
-
-    @Override
-    public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+        if (destination.isEmpty()) {
+            Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
-            enableMyLocation();
-        } else {
-            // Display the missing permission error dialog when the fragments resume.
-            mPermissionDenied = true;
-        }
+        mMapActivityPresenter.makeRequest(origin, destination);
+    }
+
+    public void showMap() {
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
-            // Permission was not granted, display error dialog.
             showMissingPermissionError();
             mPermissionDenied = false;
         }
@@ -106,19 +82,19 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-
-        if (marker != null) {
-            marker.remove();
-        }
-
-        double dLatitude = mLastLocation.getLatitude();
-        double dLongitude = mLastLocation.getLongitude();
-        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(dLatitude, dLongitude))
-                .title("My Location").icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
+    public void updatePermissionStatus(boolean permissionStatus) {
+        mPermissionDenied = permissionStatus;
     }
+
+//    @Override
+//    public void onDirectionFinderStart() {
+//
+//    }
+//
+//    @Override
+//    public void onDirectionFinderSuccess(List<Route>routes) {
+//
+//    }
+
 }
 
