@@ -43,7 +43,7 @@
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 km"
+            android:text="0 miles"
             android:id="@+id/tvDistance" />
 
         <ImageView

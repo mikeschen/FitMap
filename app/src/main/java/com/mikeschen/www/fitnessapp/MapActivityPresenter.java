@@ -209,4 +209,5 @@ public class MapActivityPresenter implements
             polylinePaths.add(mMap.addPolyline(polylineOptions));
         }
     }
+
 }
