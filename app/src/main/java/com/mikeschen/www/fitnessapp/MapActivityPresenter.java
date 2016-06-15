@@ -198,7 +198,7 @@ public class MapActivityPresenter implements
 
             PolylineOptions polylineOptions = new PolylineOptions()
                     .color(Color.rgb(66,133,244))
-                    .width(25)
+                    .width(20)
                     .geodesic(true);
 
             for (int i = 0; i < route.points.size(); i++)
