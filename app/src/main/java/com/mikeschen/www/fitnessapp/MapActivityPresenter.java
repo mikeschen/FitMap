@@ -176,7 +176,6 @@ public class MapActivityPresenter implements
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
-        //PASS MTEXTVIEW
         progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
@@ -186,7 +185,7 @@ public class MapActivityPresenter implements
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             mMapView.showDistance(route.distance.text);
-//            ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            mMapView.showDuration(route.duration.text);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))

@@ -72,6 +72,11 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
         mTvDistance.setText(distance);
     }
 
+    @Override
+    public void showDuration(String duration) {
+        mTvDuration.setText(duration);
+    }
+
 
     @Override
     protected void onResumeFragments() {

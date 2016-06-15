@@ -9,6 +9,7 @@ public interface MapInterface {
         void updatePermissionStatus(boolean permissionStatus);
         void showMap();
         void showDistance(String distance);
+        void showDuration(String duration);
     }
 
     interface Presenter {

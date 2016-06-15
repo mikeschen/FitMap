@@ -181,7 +181,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void showDistance(String distance) {
+    }
 
+    @Override
+    public void showDuration(String duration) {
     }
 
     @Override
