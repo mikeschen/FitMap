@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,11 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
+import com.mikeschen.www.fitnessapp.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MapsActivity extends AppCompatActivity implements MapInterface.View {
+public class MapsActivity extends BaseActivity implements MapInterface.View {
     private boolean mPermissionDenied = false;
     private Context mContext;
     private MapActivityPresenter mMapActivityPresenter;

@@ -5,7 +5,7 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mikeschen.www.fitnessapp.MapsActivity"
+    tools:context=".maps.MapsActivity"
     android:orientation="vertical"  >
 
     <EditText
@@ -62,6 +62,7 @@
             android:layout_marginLeft="@dimen/activity_small_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/tvDistance"
             android:text="0 miles"/>
 
         <ImageView

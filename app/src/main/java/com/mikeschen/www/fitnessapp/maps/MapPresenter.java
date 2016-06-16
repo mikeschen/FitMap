@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 /**
  * Created by Ramon on 6/10/16.
@@ -34,11 +35,11 @@ public class MapPresenter implements
         LocationListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private final MapInterface.View mMapView;
+    public final MapInterface.View mMapView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private Context mContext;
-    private SupportMapFragment mMapFragment;
-    private GoogleMap mMap;
+    public Context mContext;
+    public SupportMapFragment mMapFragment;
+    public GoogleMap mMap;
     private boolean mPermissionDenied = false;
     private Location mLastLocation;
     private Marker marker;
@@ -50,7 +51,6 @@ public class MapPresenter implements
         mMapView = mapView;
         mContext = context;
         mMapFragment = mapFragment;
-
     }
 
 

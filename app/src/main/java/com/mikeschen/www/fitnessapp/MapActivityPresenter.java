@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
 import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
 import com.mikeschen.www.fitnessapp.Modules.Route;
+import com.mikeschen.www.fitnessapp.maps.MapInterface;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
