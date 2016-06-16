@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity implements
         View.OnClickListener {
 
     private boolean mPermissionDenied = false;
+    private int caloriesBurned = 0;
     private String buttonDisplay;
 //    private ListView mDrawerList;
 //    private DrawerLayout mDrawerLayout;
@@ -45,16 +47,19 @@ public class MainActivity extends BaseActivity implements
     private TipPresenter mTipPresenter;
     private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
+    private Steps stepRecord;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
 
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
         mMainButton.setTypeface(myTypeFace);
@@ -65,8 +70,11 @@ public class MainActivity extends BaseActivity implements
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         buttonDisplay = "Calories";
+        buttonDisplay = "Calories";
+        mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
         mContext =  this;
+
 
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,11 +82,17 @@ public class MainActivity extends BaseActivity implements
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
+        stepRecord = new Steps();
 
 //        addDrawerItems();
 //        setupDrawer();
         mTipPresenter.loadTip();
         mMapPresenter.loadMap();
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
     @Override
