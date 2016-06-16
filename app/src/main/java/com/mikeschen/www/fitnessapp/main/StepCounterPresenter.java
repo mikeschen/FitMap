@@ -85,7 +85,7 @@ public class StepCounterPresenter implements
                 }
                 localAverageSpeed = localGrossSpeed/speedData.size();
 
-                if(localAverageSpeed > 10) { // CHANGE THIS TO 20
+                if(localAverageSpeed > 20) {
                     speedCounted++;
                     grossTotalSpeed = grossTotalSpeed + speed;
                     totalAverageSpeed = (grossTotalSpeed) / speedCounted;

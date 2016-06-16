@@ -1,9 +1,6 @@
 package com.mikeschen.www.fitnessapp.main;
 
 import android.content.Context;
-
-import com.mikeschen.www.fitnessapp.main.MainInterface;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,9 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-/**
- * Created by Ramon on 6/9/16.
- */
 public class TipPresenter implements MainInterface.Presenter {
 
     private final MainInterface.View mMainActivityView;
@@ -28,7 +22,7 @@ public class TipPresenter implements MainInterface.Presenter {
     @Override
     public void loadTip() {
 
-        String json = null;
+        String json;
         try {
             InputStream is = mContext.getAssets().open("tips.json");
             int size = is.available();
@@ -41,7 +35,6 @@ public class TipPresenter implements MainInterface.Presenter {
                 Random randomNumberGenerator = new Random();
                 int randomNumber = randomNumberGenerator.nextInt(jsonObject.length());
                 String tip = jsonObject.getString(randomNumber + "");
-                //Instead of mTipTextView, will make method
                 mMainActivityView.showTip(tip);
             } catch (JSONException e) {
                 e.printStackTrace();

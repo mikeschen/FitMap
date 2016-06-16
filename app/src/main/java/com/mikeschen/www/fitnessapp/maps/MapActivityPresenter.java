@@ -3,7 +3,6 @@ package com.mikeschen.www.fitnessapp.maps;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
