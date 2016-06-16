@@ -1,8 +1,90 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mikeschen.www.fitnessapp.MapsActivity" />
+    tools:context=".maps.MapsActivity"
+    android:orientation="vertical"  >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_small_padding"
+        android:id="@+id/atOrigin"
+        android:text="Portland, OR"
+        android:hint="Enter origin address" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_small_padding"
+        android:text="97214"
+        android:hint="Enter destination address"
+        android:id="@+id/atDestination" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_small_padding"
+            android:layout_marginBottom="@dimen/activity_small_padding"
+            android:text="Find path"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/btnFindPath" />
+
+        <ImageView
+            android:layout_marginLeft="@dimen/activity_wide_margin"
+            android:layout_marginTop="@dimen/activity_small_padding"
+            android:layout_width="@dimen/activity_large_padding"
+            android:layout_height="@dimen/activity_large_padding"
+            android:src="@drawable/ic_restaurant_black_24dp"/>
+        <TextView
+            android:layout_marginLeft="@dimen/activity_small_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 cal"
+            android:id="@+id/tvCalorie" />
+
+        <ImageView
+            android:layout_marginLeft="@dimen/activity_wide_margin"
+            android:layout_marginTop="@dimen/activity_small_padding"
+            android:layout_width="@dimen/activity_large_padding"
+            android:layout_height="@dimen/activity_large_padding"
+            android:src="@drawable/ic_directions_walk_black_24dp"/>
+        <TextView
+            android:layout_marginLeft="@dimen/activity_small_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDistance"
+            android:text="0 miles"/>
+
+        <ImageView
+            android:layout_marginLeft="@dimen/activity_wide_margin"
+            android:layout_marginTop="@dimen/activity_small_padding"
+            android:layout_width="@dimen/activity_large_padding"
+            android:layout_height="@dimen/activity_large_padding"
+            android:padding="@dimen/activity_small_padding"
+            android:src="@drawable/ic_timer_black_24dp"/>
+        <TextView
+            android:layout_marginLeft="@dimen/activity_small_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 min"
+            android:id="@+id/tvDuration" />
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

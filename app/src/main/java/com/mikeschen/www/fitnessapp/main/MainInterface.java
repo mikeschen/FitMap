@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.main;
 
 /**
  * Created by Ramon on 6/9/16.

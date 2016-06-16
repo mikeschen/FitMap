@@ -1,8 +1,7 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.utils;
 
 //**
 
-import android.*;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
+
+import com.mikeschen.www.fitnessapp.R;
 
 /** Utility class for access to runtime permissions.
  */
@@ -77,7 +78,7 @@ public abstract class PermissionUtils {
             mFinishActivity = getArguments().getBoolean(ARGUMENT_FINISH_ACTIVITY);
 
             return new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.location_permission_denied)
+                    .setMessage(com.mikeschen.www.fitnessapp.R.string.location_permission_denied)
                     .setPositiveButton(android.R.string.ok, null)
                     .create();
         }

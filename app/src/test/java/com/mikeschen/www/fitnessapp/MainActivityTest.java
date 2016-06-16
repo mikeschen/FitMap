@@ -2,6 +2,8 @@ package com.mikeschen.www.fitnessapp;
 
 import android.widget.TextView;
 
+import com.mikeschen.www.fitnessapp.main.MainActivity;
+
 import org.junit.Before;
 import org.junit.Test;
 
