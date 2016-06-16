@@ -2,28 +2,18 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Steps;
-import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
-import com.mikeschen.www.fitnessapp.maps.MapsActivity;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,20 +51,15 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-<<<<<<< HEAD:app/src/main/java/com/mikeschen/www/fitnessapp/MainActivity.java
+
 //        previous font; may not need it anymore; calligraphy can change fonts to any files we want
 
 //        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
 //        mMainButton.setTypeface(myTypeFace);
 //        mTipsTextView.setTypeface(myTypeFace);
 //        mTipTextView.setTypeface(myTypeFace);
-=======
 
-        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
-        mMainButton.setTypeface(myTypeFace);
-        mTipsTextView.setTypeface(myTypeFace);
-        mTipTextView.setTypeface(myTypeFace);
->>>>>>> master:app/src/main/java/com/mikeschen/www/fitnessapp/main/MainActivity.java
+
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
