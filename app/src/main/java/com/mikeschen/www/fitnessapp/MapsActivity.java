@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
@@ -23,8 +25,8 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     @Bind(R.id.atOrigin) EditText atOrigin;
     @Bind(R.id.atDestination) EditText atDestination;
     @Bind(R.id.btnFindPath) Button btnFindPath;
-    @Bind(R.id.tvDistance) TextView mTvDistance;
-    @Bind(R.id.tvDuration) TextView mTvDuration;
+//    @Bind(R.id.tvDistance) TextView mTvDistance;
+//    @Bind(R.id.tvDuration) TextView mTvDuration;
 
     private void setHideSoftKeyboard(EditText editText){
         Log.d("works", "works");
