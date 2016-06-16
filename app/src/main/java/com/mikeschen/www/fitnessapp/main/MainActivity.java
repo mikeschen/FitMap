@@ -70,8 +70,11 @@ public class MainActivity extends BaseActivity implements
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         buttonDisplay = "Calories";
+        buttonDisplay = "Calories";
+        mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
         mContext =  this;
+
 
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
