@@ -2,12 +2,9 @@ package com.mikeschen.www.fitnessapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,11 +15,6 @@ import android.widget.ListView;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 
-import java.util.ArrayList;
-
-/**
- * Created by Matt on 6/15/2016.
- */
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -64,10 +56,12 @@ public class BaseActivity extends AppCompatActivity {
                     case 0:
                         Intent main = new Intent(BaseActivity.this, MainActivity.class);
                         startActivity(main);
+                        finish();
                         break;
                     case 1:
                         Intent maps = new Intent(BaseActivity.this, MapsActivity.class);
                         startActivity(maps);
+                        finish();
                         break;
                     default:
                 }
