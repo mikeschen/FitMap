@@ -18,11 +18,13 @@ import android.widget.ListView;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 
+import java.util.ArrayList;
+
 /**
  * Created by Matt on 6/15/2016.
  */
 public class BaseActivity extends AppCompatActivity {
-    private NavigationView mNavView;
+    private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -38,7 +40,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
-        mNavView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
+        mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.navList);
         FrameLayout activityContainer = (FrameLayout) mDrawerLayout.findViewById(R.id.activity_content);
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
         setupDrawer();
@@ -50,23 +52,24 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        String[] navArray = {"Main", "Maps", "Meals", "Stats", "About"};
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navArray);
+        mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Log.d("clicked", "nav");
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mDrawerLayout.closeDrawers();
-                switch (menuItem.getItemId()) {
-                    case R.id.main:
+                switch (position) {
+                    case 0:
                         Intent main = new Intent(BaseActivity.this, MainActivity.class);
                         startActivity(main);
-                        return true;
-                    case R.id.maps:
-                        Log.d("clicked", "maps");
+                        break;
+                    case 1:
                         Intent maps = new Intent(BaseActivity.this, MapsActivity.class);
                         startActivity(maps);
-                        return true;
+                        break;
                     default:
-                        return true;
                 }
             }
         });
