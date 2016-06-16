@@ -55,7 +55,7 @@ public class MapActivityPresenter implements
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-
+    private int calorie;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         mMapView = mapView;
@@ -177,17 +177,18 @@ public class MapActivityPresenter implements
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
-        //PASS MTEXTVIEW
         progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
 
+
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            //THIS SETS TEXT DURATION AND DISTANCE
-//            ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
-//            ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            mMapView.showDistance(route.distance.text);
+            mMapView.showDuration(route.duration.text);
+            calorie = ((int)(Math.round(route.distance.value/16.1)));
+            mMapView.showCalorieRoute(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
@@ -198,10 +199,10 @@ public class MapActivityPresenter implements
                     .title(route.endAddress)
                     .position(route.endLocation)));
 
-            PolylineOptions polylineOptions = new PolylineOptions().
-                    geodesic(true).
-                    color(Color.BLUE).
-                    width(10);
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .color(Color.rgb(66,133,244))
+                    .width(20)
+                    .geodesic(true);
 
             for (int i = 0; i < route.points.size(); i++)
                 polylineOptions.add(route.points.get(i));

@@ -44,7 +44,20 @@
             android:layout_marginTop="@dimen/activity_small_padding"
             android:layout_width="@dimen/activity_large_padding"
             android:layout_height="@dimen/activity_large_padding"
-            android:src="@drawable/ic_distance"/>
+            android:src="@drawable/ic_restaurant_black_24dp"/>
+        <TextView
+            android:layout_marginLeft="@dimen/activity_small_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 cal"
+            android:id="@+id/tvCalorie" />
+
+        <ImageView
+            android:layout_marginLeft="@dimen/activity_wide_margin"
+            android:layout_marginTop="@dimen/activity_small_padding"
+            android:layout_width="@dimen/activity_large_padding"
+            android:layout_height="@dimen/activity_large_padding"
+            android:src="@drawable/ic_directions_walk_black_24dp"/>
         <TextView
             android:layout_marginLeft="@dimen/activity_small_padding"
             android:layout_width="wrap_content"
@@ -57,7 +70,7 @@
             android:layout_width="@dimen/activity_large_padding"
             android:layout_height="@dimen/activity_large_padding"
             android:padding="@dimen/activity_small_padding"
-            android:src="@drawable/ic_clock"/>
+            android:src="@drawable/ic_timer_black_24dp"/>
         <TextView
             android:layout_marginLeft="@dimen/activity_small_padding"
             android:layout_width="wrap_content"

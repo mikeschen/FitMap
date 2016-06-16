@@ -25,6 +25,7 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     @Bind(R.id.btnFindPath) Button btnFindPath;
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
+    @Bind(R.id.tvCalorie) TextView mTvCalorie;
 
     private void setHideSoftKeyboard(EditText editText){
         Log.d("works", "works");
@@ -71,6 +72,21 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     }
 
     public void showMap() {
+    }
+
+    @Override
+    public void showDistance(String distance) {
+        mTvDistance.setText(distance);
+    }
+
+    @Override
+    public void showDuration(String duration) {
+        mTvDuration.setText(duration);
+    }
+
+    @Override
+    public void showCalorieRoute(int calorie) {
+        mTvCalorie.setText(calorie + "cal");
     }
 
     @Override
