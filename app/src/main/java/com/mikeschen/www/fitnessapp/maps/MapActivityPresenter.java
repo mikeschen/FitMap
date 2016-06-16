@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -25,6 +26,7 @@ import java.util.List;
 public class MapActivityPresenter extends MapPresenter implements DirectionFinderListener {
 
     private GoogleMap mMap;
+    private UiSettings mUiSettings;
     private Context mContext;
     private MapInterface.View mMapView;
     private List<Marker> originMarkers = new ArrayList<>();
@@ -44,6 +46,14 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     public void onMapReady(GoogleMap map) {
         super.onMapReady(map);
         mMap = map;
+        mUiSettings = mMap.getUiSettings();
+        mUiSettings.setZoomGesturesEnabled(true);
+        mUiSettings.setRotateGesturesEnabled(false);
+        mMap.setOnMyLocationButtonClickListener(this);
+        mUiSettings.setZoomControlsEnabled(true);
+
+
+
     }
 
     @Override
