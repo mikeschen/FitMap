@@ -5,11 +5,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -48,12 +50,9 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         mMap = map;
         mUiSettings = mMap.getUiSettings();
         mUiSettings.setZoomGesturesEnabled(true);
-        mUiSettings.setRotateGesturesEnabled(false);
+        mUiSettings.setRotateGesturesEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
         mUiSettings.setZoomControlsEnabled(true);
-
-
-
     }
 
     @Override
@@ -68,7 +67,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     @Override
     public void onDirectionFinderStart() {
         progressDialog = ProgressDialog.show(mContext, "Please wait...",
-                "Finding direction..!", true);
+                "Finding directions", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -111,6 +110,20 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
                     .title(route.endAddress)
                     .position(route.endLocation)));
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Marker marker : originMarkers) {
+                builder.include(marker.getPosition());
+            }
+            for (Marker marker : destinationMarkers) {
+                builder.include(marker.getPosition());
+            }
+
+            LatLngBounds bounds = builder.build();
+
+            int padding = 200; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+            mMap.moveCamera(cu);
 
             PolylineOptions polylineOptions = new PolylineOptions()
                     .color(Color.rgb(66,133,244))
