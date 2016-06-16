@@ -2,32 +2,22 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Steps;
-import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
-import com.mikeschen.www.fitnessapp.maps.MapsActivity;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends BaseActivity implements
         MainInterface.View,
@@ -57,14 +47,19 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
 
-        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
-        mMainButton.setTypeface(myTypeFace);
-        mTipsTextView.setTypeface(myTypeFace);
-        mTipTextView.setTypeface(myTypeFace);
+//        previous font; may not need it anymore; calligraphy can change fonts to any files we want
+
+//        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
+//        mMainButton.setTypeface(myTypeFace);
+//        mTipsTextView.setTypeface(myTypeFace);
+//        mTipTextView.setTypeface(myTypeFace);
+
+
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -94,6 +89,15 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
 
     }
+
+
+    //Calligraphy
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
+    }
+
 
     @Override
     public void showTip(String tip) {

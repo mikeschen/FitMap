@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp;
 
 import android.widget.TextView;
 
+import com.google.android.gms.maps.MapsInitializer;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 
 import org.junit.Before;
@@ -14,7 +15,7 @@ public class MainActivityTest {
 
     @Before
     public void setUp() {
-//        MapsInitializer.initialize(activity);
+        MapsInitializer.initialize(activity);
     }
 
     @Test
@@ -23,3 +24,4 @@ public class MainActivityTest {
         assertTrue("Tips/Suggestions".equals(tipsTextView.getText().toString()));
     }
 }
+
