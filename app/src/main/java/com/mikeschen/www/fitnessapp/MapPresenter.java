@@ -157,5 +157,4 @@ public class MapPresenter implements
     public void makeRequest(String origin, String destination) {
 
     }
-
 }

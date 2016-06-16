@@ -3,19 +3,15 @@ package com.mikeschen.www.fitnessapp;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
-import com.mikeschen.www.fitnessapp.Modules.Route;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,6 +26,14 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
+
+    private void setHideSoftKeyboard(EditText editText){
+        Log.d("works", "works");
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,11 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
             @Override
             public void onClick(View v) {
                 sendRequest();
+                setHideSoftKeyboard(atDestination);
             }
         });
     }
+
 
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
