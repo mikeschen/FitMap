@@ -3,7 +3,6 @@ package com.mikeschen.www.fitnessapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements
         MainInterface.View,
@@ -52,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
-        mMainButton.setTypeface(myTypeFace);
-        mTipsTextView.setTypeface(myTypeFace);
-        mTipTextView.setTypeface(myTypeFace);
+//        previous font; may not need it anymore; calligraphy can change fonts to any files we want
+
+//        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
+//        mMainButton.setTypeface(myTypeFace);
+//        mTipsTextView.setTypeface(myTypeFace);
+//        mTipTextView.setTypeface(myTypeFace);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

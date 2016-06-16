@@ -2,8 +2,8 @@ package com.mikeschen.www.fitnessapp;
 
 
 import android.app.Application;
-//import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class CalligraphyApplication extends Application {
@@ -15,7 +15,7 @@ public class CalligraphyApplication extends Application {
 
         // initalize Calligraphy
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/PTN77F.ttf")
+                .setDefaultFontPath("fonts/Lobster_1.3.otf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
