@@ -31,8 +31,7 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
 
     private void setHideSoftKeyboard(EditText editText){
-        Log.d("works", "works");
-
+        Log.d("softkeyboardworks", "works");
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
@@ -57,7 +56,6 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
             }
         });
     }
-
 
     private void sendRequest() {
         String origin = atOrigin.getText().toString();

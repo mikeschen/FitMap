@@ -67,7 +67,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     @Override
     public void onDirectionFinderStart() {
         progressDialog = ProgressDialog.show(mContext, "Please wait...",
-                "Finding directions", true);
+                "Finding Directions", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
