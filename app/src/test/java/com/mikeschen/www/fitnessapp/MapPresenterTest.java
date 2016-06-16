@@ -3,6 +3,9 @@ package com.mikeschen.www.fitnessapp;
 import android.content.Context;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
+import com.mikeschen.www.fitnessapp.maps.MapInterface;
+import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

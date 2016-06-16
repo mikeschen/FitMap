@@ -2,11 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@color/colorBackground"/>
-
     <item>
         <bitmap
             android:gravity="center"
             android:src="@drawable/apple_icon"/>
     </item>
-
 </layer-list>

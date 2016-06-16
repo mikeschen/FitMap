@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/main"
+            android:checked="false"
+            android:title="Main" />
+
+        <item
+            android:id="@+id/maps"
+            android:checked="false"
+            android:title="Maps" />
+
+        <item
+            android:id="@+id/meals"
+            android:checked="false"
+            android:title="Meals" />
+
+        <item
+            android:id="@+id/stats"
+            android:checked="false"
+            android:title="Stats" />
+        <item
+            android:id="@+id/about"
+            android:checked="false"
+            android:title="About" />
+
+    </group>
+</menu>

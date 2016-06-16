@@ -1,13 +1,15 @@
 package com.mikeschen.www.fitnessapp;
 
-import android.content.Context;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
+import com.mikeschen.www.fitnessapp.main.MainInterface;
+import com.mikeschen.www.fitnessapp.main.TipPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.times;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -22,22 +24,20 @@ public class TipPresenterTest {
     private MainInterface.View mTipView;
 
     @Mock
-    private Context context;
-
-
+    private MainActivity mMainActivity;
 
     @Before
     public void setUpTipPresenter() {
         MockitoAnnotations.initMocks(this);
-        context = new MainActivity();
+        mMainActivity = new MainActivity();
 
-        mTipPresenter = new TipPresenter(mTipView, context);
+        mTipPresenter = new TipPresenter(mTipView, mMainActivity);
     }
 
     @Test
     public void loadTipsIntoView() {
         mTipPresenter.loadTip();
-        verify(mTipPresenter, times(1)).loadTip();
+        verify(mTipView).showTip(any(String.class));
     }
 
 }

@@ -1,9 +1,7 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.maps;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -12,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,52 +23,45 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
-import com.mikeschen.www.fitnessapp.Modules.Route;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class MapActivityPresenter implements
+/**
+ * Created by Ramon on 6/10/16.
+ */
+public class MapPresenter implements
         MapInterface.Presenter,
         OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
         LocationListener,
-        ActivityCompat.OnRequestPermissionsResultCallback,
-        DirectionFinderListener {
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
+    public final MapInterface.View mMapView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    public Context mContext;
+    public SupportMapFragment mMapFragment;
+    public GoogleMap mMap;
     private boolean mPermissionDenied = false;
-    private GoogleMap mMap;
     private Location mLastLocation;
-    private UiSettings mUiSettings;
     private Marker marker;
-    private final MapInterface.View mMapView;
-    private Context mContext;
-    private SupportMapFragment mMapFragment;
-    private List<Marker> originMarkers = new ArrayList<>();
-    private List<Marker> destinationMarkers = new ArrayList<>();
-    private List<Polyline> polylinePaths = new ArrayList<>();
-    private ProgressDialog progressDialog;
+    private UiSettings mUiSettings;
 
 
-    public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
+
+    public MapPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         mMapView = mapView;
-        mContext= context;
+        mContext = context;
         mMapFragment = mapFragment;
     }
+
 
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mUiSettings = mMap.getUiSettings();
+        mUiSettings.setZoomGesturesEnabled(false);
+        mUiSettings.setRotateGesturesEnabled(false);
+
         mMap.setOnMyLocationButtonClickListener(this);
-        mUiSettings.setZoomControlsEnabled(true);
-        mUiSettings.setRotateGesturesEnabled(true);
 
         enableMyLocation();
 
@@ -77,6 +69,13 @@ public class MapActivityPresenter implements
         Criteria criteria = new Criteria();
 
         if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
@@ -90,43 +89,42 @@ public class MapActivityPresenter implements
                     .build();
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
+
     }
+
 
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
             PermissionUtils.requestPermission((FragmentActivity) mContext, LOCATION_PERMISSION_REQUEST_CODE,
                     android.Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (mMap != null) {
+            // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
         }
     }
 
     @Override
-    public void makeRequest(String origin, String destination) {
-        try {
-            new DirectionFinder(this, origin, destination).execute();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public boolean onMyLocationButtonClick() {
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
         return false;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d("onRequestPerm", "Hi");
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
 
         if (PermissionUtils.isPermissionGranted(permissions, grantResults,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
+            // Display the missing permission error dialog when the fragments resume.
             mMapView.updatePermissionStatus(true);
         }
     }
@@ -147,67 +145,13 @@ public class MapActivityPresenter implements
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
     }
 
+    @Override
     public void loadMap() {
         mMapFragment.getMapAsync(this);
     }
 
     @Override
-    public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(mContext, "Please wait...",
-                "Finding Directions", true);
+    public void makeRequest(String origin, String destination) {
 
-        if (originMarkers != null) {
-            for (Marker marker : originMarkers) {
-                marker.remove();
-            }
-        }
-
-        if (destinationMarkers != null) {
-            for (Marker marker : destinationMarkers) {
-                marker.remove();
-            }
-        }
-
-        if (polylinePaths != null) {
-            for (Polyline polyline:polylinePaths ) {
-                polyline.remove();
-            }
-        }
     }
-
-    @Override
-    public void onDirectionFinderSuccess(List<Route> routes) {
-        //PASS MTEXTVIEW
-        progressDialog.dismiss();
-        polylinePaths = new ArrayList<>();
-        originMarkers = new ArrayList<>();
-        destinationMarkers = new ArrayList<>();
-
-        for (Route route : routes) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            //THIS SETS TEXT DURATION AND DISTANCE
-//            ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
-//            ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
-
-            originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
-                    .title(route.startAddress)
-                    .position(route.startLocation)));
-            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
-                    .title(route.endAddress)
-                    .position(route.endLocation)));
-
-            PolylineOptions polylineOptions = new PolylineOptions().
-                    geodesic(true).
-                    color(Color.BLUE).
-                    width(10);
-
-            for (int i = 0; i < route.points.size(); i++)
-                polylineOptions.add(route.points.get(i));
-
-            polylinePaths.add(mMap.addPolyline(polylineOptions));
-        }
-    }
-
 }
