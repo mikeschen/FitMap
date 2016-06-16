@@ -79,10 +79,6 @@ public class MainActivity extends BaseActivity implements
 //        setupDrawer();
         mTipPresenter.loadTip();
         mMapPresenter.loadMap();
-
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -90,13 +86,11 @@ public class MainActivity extends BaseActivity implements
         mTipTextView.setText(tip);
     }
 
-
     //Google Maps
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
-            Log.d("onResumeFragments", "Here?");
             // Permission was not granted, display error dialog.
             showMissingPermissionError();
             mPermissionDenied = false;
@@ -110,10 +104,8 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void updatePermissionStatus(boolean permissionStatus) {
-        Log.d("UpdatePermissionStatus", "Hello");
         mPermissionDenied = permissionStatus;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -129,66 +121,21 @@ public class MainActivity extends BaseActivity implements
         }
     }
 
-//    private void addDrawerItems() {
-//        String[] navArray = {"Main", "Maps", "Meals", "Stats", "About"};
-//        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, navArray);
-//        mDrawerList.setAdapter(mAdapter);
-//
-//        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                switch (position) {
-//                    case 0:
-//                        Intent main = new Intent(MainActivity.this, MainActivity.class);
-//                        startActivity(main);
-//                        break;
-//                    case 1:
-//                        Intent maps = new Intent(MainActivity.this, MapsActivity.class);
-//                        startActivity(maps);
-//                        break;
-//                    default:
-//                }
-//            }
-//        });
-//    }
-//
-//    private void setupDrawer() {
-//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                getSupportActionBar().setTitle("Menu");
-//                invalidateOptionsMenu();
-//
-//
-//
-//            }
-//
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//                getSupportActionBar().setTitle(mActivityTitle);
-//                invalidateOptionsMenu();
-//            }
-//        };
-//        mDrawerToggle.setDrawerIndicatorEnabled(true);
-//        mDrawerLayout.addDrawerListener(mDrawerToggle);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (mDrawerToggle.onOptionsItemSelected(item)) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        mDrawerToggle.syncState();
-//    }
+    @Override
+    public void showMap() {
+    }
 
     @Override
-    public void showMap() {}
+    public void showDistance(String distance) {
+    }
+
+    @Override
+    public void showDuration(String duration) {
+    }
+
+    @Override
+    public void showCalorieRoute(int calorie) {
+    }
 
     @Override
     public void showSteps(int stepCount) {

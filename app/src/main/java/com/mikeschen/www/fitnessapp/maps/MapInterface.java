@@ -8,6 +8,9 @@ public interface MapInterface {
     interface View {
         void updatePermissionStatus(boolean permissionStatus);
         void showMap();
+        void showDistance(String distance);
+        void showDuration(String duration);
+        void showCalorieRoute(int calorie);
     }
 
     interface Presenter {

@@ -44,6 +44,7 @@
 
         <activity
             android:name=".maps.MapsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_maps"></activity>
     </application>

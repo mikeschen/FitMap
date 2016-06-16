@@ -3,7 +3,9 @@ package com.mikeschen.www.fitnessapp.maps;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +28,15 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.btnFindPath) Button btnFindPath;
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
+    @Bind(R.id.tvCalorie) TextView mTvCalorie;
+
+    private void setHideSoftKeyboard(EditText editText){
+        Log.d("works", "works");
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +53,11 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
             @Override
             public void onClick(View v) {
                 sendRequest();
+                setHideSoftKeyboard(atDestination);
             }
         });
     }
+
 
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
@@ -65,6 +78,21 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     }
 
     @Override
+    public void showDistance(String distance) {
+        mTvDistance.setText(distance);
+    }
+
+    @Override
+    public void showDuration(String duration) {
+        mTvDuration.setText(duration);
+    }
+
+    @Override
+    public void showCalorieRoute(int calorie) {
+        mTvCalorie.setText(calorie + "cal");
+    }
+
+    @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
@@ -82,16 +110,5 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     public void updatePermissionStatus(boolean permissionStatus) {
         mPermissionDenied = permissionStatus;
     }
-
-//    @Override
-//    public void onDirectionFinderStart() {
-//
-//    }
-//
-//    @Override
-//    public void onDirectionFinderSuccess(List<Route>routes) {
-//
-//    }
-
 }
 

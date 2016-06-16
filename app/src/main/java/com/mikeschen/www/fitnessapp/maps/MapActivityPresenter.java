@@ -26,14 +26,24 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 
     private GoogleMap mMap;
     private Context mContext;
+    private MapInterface.View mMapView;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-
+    private int calorie;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
+        mMapView = mapView;
+        mContext = context;
+        mMapFragment = mapFragment;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        super.onMapReady(map);
+        mMap = map;
     }
 
     @Override
@@ -47,8 +57,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 
     @Override
     public void onDirectionFinderStart() {
-        Log.d("onDirectionStart", "its started");
-        progressDialog = ProgressDialog.show(mContext, "Please wait.",
+        progressDialog = ProgressDialog.show(mContext, "Please wait...",
                 "Finding direction..!", true);
 
         if (originMarkers != null) {
@@ -79,6 +88,10 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            mMapView.showDistance(route.distance.text);
+            mMapView.showDuration(route.duration.text);
+            calorie = ((int)(Math.round(route.distance.value/16.1)));
+            mMapView.showCalorieRoute(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
@@ -89,10 +102,10 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .title(route.endAddress)
                     .position(route.endLocation)));
 
-            PolylineOptions polylineOptions = new PolylineOptions().
-                    geodesic(true).
-                    color(Color.BLUE).
-                    width(10);
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .color(Color.rgb(66,133,244))
+                    .width(20)
+                    .geodesic(true);
 
             for (int i = 0; i < route.points.size(); i++)
                 polylineOptions.add(route.points.get(i));
