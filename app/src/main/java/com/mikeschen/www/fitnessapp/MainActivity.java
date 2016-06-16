@@ -40,16 +40,19 @@ public class MainActivity extends AppCompatActivity implements
     private TipPresenter mTipPresenter;
     private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
+    private Steps stepRecord;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
 
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
         mMainButton.setTypeface(myTypeFace);
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
+        stepRecord = new Steps();
 
         addDrawerItems();
         setupDrawer();
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
     @Override
