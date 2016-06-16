@@ -10,6 +10,7 @@ public interface MapInterface {
         void showMap();
         void showDistance(String distance);
         void showDuration(String duration);
+        void showCalorieRoute(double calorie);
     }
 
     interface Presenter {

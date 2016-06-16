@@ -188,6 +188,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void showCalorieRoute(double calorie) {
+    }
+
+    @Override
     public void showSteps(int stepCount) {
         mMainButton.setText("Steps Taken: " + stepCount);
     }

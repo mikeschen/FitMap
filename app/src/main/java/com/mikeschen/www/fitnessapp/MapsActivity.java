@@ -29,6 +29,7 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     @Bind(R.id.btnFindPath) Button btnFindPath;
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
+    @Bind(R.id.tvCalorie) TextView mTvCalorie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,10 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
         mTvDuration.setText(duration);
     }
 
+    @Override
+    public void showCalorieRoute(double calorie) {
+        mTvCalorie.setText((int)(Math.round(calorie/16.1)) + "cal");
+    }
 
     @Override
     protected void onResumeFragments() {

@@ -186,6 +186,7 @@ public class MapActivityPresenter implements
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             mMapView.showDistance(route.distance.text);
             mMapView.showDuration(route.duration.text);
+            mMapView.showCalorieRoute(route.distance.value);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
