@@ -79,8 +79,8 @@ public class MapsActivity extends AppCompatActivity implements MapInterface.View
     }
 
     @Override
-    public void showCalorieRoute(double calorie) {
-        mTvCalorie.setText((int)(Math.round(calorie/16.1)) + "cal");
+    public void showCalorieRoute(int calorie) {
+        mTvCalorie.setText(calorie + "cal");
     }
 
     @Override

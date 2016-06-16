@@ -55,6 +55,7 @@ public class MapActivityPresenter implements
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
+    private int calorie;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         mMapView = mapView;
@@ -186,7 +187,8 @@ public class MapActivityPresenter implements
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             mMapView.showDistance(route.distance.text);
             mMapView.showDuration(route.duration.text);
-            mMapView.showCalorieRoute(route.distance.value);
+            calorie = ((int)(Math.round(route.distance.value/16.1)));
+            mMapView.showCalorieRoute(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))

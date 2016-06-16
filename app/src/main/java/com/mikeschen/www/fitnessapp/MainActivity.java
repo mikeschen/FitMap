@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showCalorieRoute(double calorie) {
+    public void showCalorieRoute(int calorie) {
     }
 
     @Override
