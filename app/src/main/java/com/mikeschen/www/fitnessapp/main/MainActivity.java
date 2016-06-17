@@ -207,6 +207,8 @@ public class MainActivity extends BaseActivity implements
     public void onPause() {
         long destroyTime = System.currentTimeMillis() / 1000;
         int destroySteps = mStepCounterPresenter.getStepCount();
+//        int destroyId = mStepCounterPresenter.
+
         Log.d("Destroy Time", destroyTime + "");
         Log.d("Destroy Steps", destroySteps + "");
         addToSharedPreferences(destroyTime, destroySteps);
