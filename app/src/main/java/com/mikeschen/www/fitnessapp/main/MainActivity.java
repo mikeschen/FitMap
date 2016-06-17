@@ -2,29 +2,24 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Steps;
-import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
+import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
-import com.mikeschen.www.fitnessapp.maps.MapsActivity;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,10 +43,23 @@ public class MainActivity extends BaseActivity implements
     private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
     private Steps stepRecord;
+    private Steps steps;
+    private int currentSteps;
+    DatabaseHelper db;
+
+    private Timer timer;
+    private TimerTask timerTask;
+
+    private int currentStepsTableId;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
+
+    //THIS IS A TEST TEXT VIEW TO SEE IF I CAN RETRIEVE DATA FROM SQL DB
+//    @Bind(R.id.testDBTextView1) TextView mTestDBTextView1;
+//    @Bind(R.id.testDBTextView2) TextView mTestDBTextView2;
+//    @Bind(R.id.testDBTextView3) TextView mTestDBTextView3;
 
 
     @Override
@@ -59,7 +67,10 @@ public class MainActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        currentSteps = 0;
+        currentStepsTableId = 1;
 
+//        stepRecord = new Steps(currentStepsTableId, currentSteps, 345);
 
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
         mMainButton.setTypeface(myTypeFace);
@@ -76,13 +87,15 @@ public class MainActivity extends BaseActivity implements
         mContext =  this;
 
 
+
+
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mActivityTitle = getTitle().toString();
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
-        stepRecord = new Steps();
+
 
 //        addDrawerItems();
 //        setupDrawer();
@@ -93,7 +106,13 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
+//        db = new DatabaseHelper(getApplicationContext());
+
+        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
     }
+
+
 
     @Override
     public void showTip(String tip) {
@@ -153,6 +172,14 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void showSteps(int stepCount) {
+//        stepRecord = new Steps(currentStepsTableId, stepCount+currentSteps, 345);
+//        db.updateSteps(stepRecord);
+//        mTestDBTextView.setText(String.valueOf(stepCount));
+
+//        mTestDBTextView1.setText(String.valueOf(db.getSteps(1).getStepsTaken()));
+//        mTestDBTextView2.setText(String.valueOf(db.getSteps(2).getStepsTaken()));
+//        mTestDBTextView3.setText(String.valueOf(db.getSteps(3).getStepsTaken()));
+
         mMainButton.setText("Steps Taken: " + stepCount);
     }
 
@@ -160,6 +187,7 @@ public class MainActivity extends BaseActivity implements
     public void showCalories(int caloriesBurned) {
         mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
+
 }
 
 

@@ -1,13 +1,19 @@
 package com.mikeschen.www.fitnessapp.main;
 
 import android.content.Context;
+import android.database.CursorIndexOutOfBoundsException;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import com.mikeschen.www.fitnessapp.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.Steps;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StepCounterPresenter implements
         StepCounterInterface.Presenter,
@@ -30,6 +36,14 @@ public class StepCounterPresenter implements
 
     private ArrayList<Float> speedData;
 
+    private Timer timer;
+    private TimerTask timerTask;
+
+    private int currentStepsTableId;
+    private Steps stepRecord;
+
+    DatabaseHelper db;
+
     public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
         mStepCounterView = stepCounterInterface;
         mContext = context;
@@ -44,7 +58,39 @@ public class StepCounterPresenter implements
         checkSpeedDirection = true;
         speedData = new ArrayList<>();
         caloriesBurned = 0;
+        currentStepsTableId = 1;
+
+        stepRecord = new Steps(currentStepsTableId, stepCount, 345);
+
+
+
+        db = new DatabaseHelper(mContext.getApplicationContext());
+        long stepRecord_id = db.logSteps(stepRecord);
+        stepRecord.setId(stepRecord_id);
+
+//        Steps lastKnownSteps = db.getSteps(stepRecord.getId());
+//        stepCount = lastKnownSteps.getStepsTaken();
+//        db.updateSteps(stepRecord);
+        db.closeDB();
+
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("Does", "it work?");
+//                currentStepsTableId++;
+                stepCount = 0;
+                stepRecord = new Steps(currentStepsTableId, stepCount, 345);
+                long stepRecord_id = db.logSteps(stepRecord);
+                stepRecord.setId(stepRecord_id);
+                Log.d("Current Steps", stepCount + "");
+            }
+        };
+
+        timer.scheduleAtFixedRate(timerTask, 0, 30000);
     }
+
 
     public int getStepCount() {
         return stepCount;
@@ -52,7 +98,7 @@ public class StepCounterPresenter implements
 
     public void setStepCount(int stepCount) {
         this.stepCount = stepCount;
-        mStepCounterView.showSteps(this.stepCount);
+        loadSteps();
     }
 
     @Override
@@ -121,8 +167,10 @@ public class StepCounterPresenter implements
 
     @Override
     public void loadSteps() {
-        Log.d("it", "works");
+        stepRecord = new Steps(stepRecord.getId(), stepCount, 345);
+        db.updateSteps(stepRecord);
         mStepCounterView.showSteps(getStepCount());
+        db.closeDB();
     }
 
     @Override

@@ -103,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c != null)
             c.moveToFirst();
 
-        Steps steps = new Steps();
+        Steps steps = new Steps(0, 0, 0);
         steps.setId(c.getInt(c.getColumnIndex(KEY_STEPS_ID)));
         steps.setStepsTaken((c.getInt(c.getColumnIndex(KEY_STEPS))));
         steps.setDate(c.getInt(c.getColumnIndex(KEY_STEPS_DAY)));
@@ -126,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                Steps steps = new Steps();
+                Steps steps = new Steps(1, 1001, 345);
                 steps.setId(c.getInt((c.getColumnIndex(KEY_STEPS_ID))));
                 steps.setStepsTaken((c.getInt(c.getColumnIndex(KEY_STEPS))));
                 steps.setDate(c.getInt(c.getColumnIndex(KEY_STEPS_DAY)));
