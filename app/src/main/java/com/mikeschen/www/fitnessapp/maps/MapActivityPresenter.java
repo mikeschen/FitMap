@@ -36,6 +36,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
     private int calorie;
+    private double myLong;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);

@@ -61,8 +61,8 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         String origin = atOrigin.getText().toString();
         String destination = atDestination.getText().toString();
         if (origin.isEmpty()) {
+            origin = mMapActivityPresenter.myLocationLat + "," + mMapActivityPresenter.myLocationLong;
             Toast.makeText(mContext, "Please enter origin address!", Toast.LENGTH_SHORT).show();
-            return;
         }
         if (destination.isEmpty()) {
             Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();
