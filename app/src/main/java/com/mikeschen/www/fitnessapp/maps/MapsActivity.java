@@ -2,7 +2,6 @@ package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -34,8 +33,6 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
 
 
     private void setHideSoftKeyboard(EditText editText){
-        Log.d("works", "works");
-
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }

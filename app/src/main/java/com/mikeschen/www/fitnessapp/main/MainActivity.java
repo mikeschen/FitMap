@@ -2,9 +2,16 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -13,6 +20,7 @@ import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
+import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import butterknife.Bind;
@@ -38,7 +46,7 @@ public class MainActivity extends BaseActivity implements
     private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
     private Steps stepRecord;
-
+    @Bind(R.id.destinationEditText) EditText mDestinationEditText;
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
@@ -70,7 +78,7 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setOnClickListener(this);
         mContext =  this;
 
-
+//
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mActivityTitle = getTitle().toString();
@@ -88,6 +96,41 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        ButterKnife.bind(this);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                String destination = mDestinationEditText.getText().toString();
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra("destination", destination);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
 
