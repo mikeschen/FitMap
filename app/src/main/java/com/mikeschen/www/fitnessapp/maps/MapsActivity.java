@@ -29,6 +29,7 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
+    private String destination;
 
     private void setHideSoftKeyboard(EditText editText){
         Log.d("softkeyboardworks", "works");
@@ -49,7 +50,8 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
         mMapActivityPresenter.loadMap();
         //pass string here
-        atDestination.setText("", TextView.BufferType.EDITABLE);
+        destination = getIntent().getStringExtra("destination");
+        atDestination.setText(destination, TextView.BufferType.EDITABLE);
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
