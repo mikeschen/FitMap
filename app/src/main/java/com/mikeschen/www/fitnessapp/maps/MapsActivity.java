@@ -49,7 +49,6 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
         mMapActivityPresenter.loadMap();
-        //pass string here
         destination = getIntent().getStringExtra("destination");
         atDestination.setText(destination, TextView.BufferType.EDITABLE);
         btnFindPath.setOnClickListener(new View.OnClickListener() {

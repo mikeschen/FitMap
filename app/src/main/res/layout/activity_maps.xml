@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_small_padding"
-        android:text="97214"
         android:hint="Enter Destination Address"
         android:id="@+id/atDestination" />
 
