@@ -66,7 +66,7 @@
         android:layout_alignParentEnd="true"
         android:textSize="20sp"
         android:textColor="#2E2E2E"
-        android:background="#ffffff" />
+        android:background="#ffffff"/>
 
         <TextView
             android:layout_width="match_parent"
