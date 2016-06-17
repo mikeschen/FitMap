@@ -104,11 +104,11 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             mMapView.showCalorieRoute(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.startmarker))
                     .title(route.startAddress)
                     .position(route.startLocation)));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.endmarker))
                     .title(route.endAddress)
                     .position(route.endLocation)));
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
