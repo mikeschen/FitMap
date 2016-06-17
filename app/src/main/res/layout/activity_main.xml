@@ -5,6 +5,26 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+    <!--<EditText-->
+    <!--android:id="@+id/searchView1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="34dp"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_marginLeft="@dimen/activity_wide_margin"-->
+    <!--android:layout_marginRight="@dimen/activity_wide_margin"-->
+    <!--android:layout_marginTop="@dimen/activity_medium_padding"-->
+    <!--android:hint="Walk Destination"-->
+    <!--android:padding="@dimen/activity_small_padding"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:background="@android:color/white" >-->
+    <!--</EditText>-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/atDestination"/>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -17,34 +37,17 @@
         android:layout_height="match_parent"
         tools:context=".main.MainActivity">
 
-        <EditText
-            android:id="@+id/searchView1"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/activity_wide_margin"
-            android:layout_marginRight="@dimen/activity_wide_margin"
-            android:layout_marginTop="@dimen/activity_medium_padding"
-            android:hint="Walk Destination"
-            android:padding="@dimen/activity_small_padding"
-            android:textColor="@android:color/black"
-            android:background="@android:color/white" >
-        </EditText>
 
         <Button
             android:id="@+id/button1"
             android:layout_width="28dp"
             android:layout_height="@dimen/activity_wide_margin"
             android:layout_marginBottom="@dimen/activity_small_padding"
-            android:layout_alignBottom="@+id/searchView1"
-            android:layout_alignRight="@+id/searchView1"
             android:background="@drawable/ic_search_black_24dp" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/mainButton"
-            android:layout_below="@+id/searchView1"
             android:layout_centerHorizontal="true"
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/colorWhite"
