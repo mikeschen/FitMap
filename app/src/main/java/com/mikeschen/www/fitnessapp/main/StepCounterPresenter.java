@@ -42,6 +42,7 @@ public class StepCounterPresenter implements
     private int currentStepsTableId;
     private Steps stepRecord;
 
+
     DatabaseHelper db;
 
     public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
@@ -80,15 +81,19 @@ public class StepCounterPresenter implements
             public void run() {
                 Log.d("Does", "it work?");
 //                currentStepsTableId++;
-                stepCount = 0;
-                stepRecord = new Steps(currentStepsTableId, stepCount, 345);
-                long stepRecord_id = db.logSteps(stepRecord);
-                stepRecord.setId(stepRecord_id);
-                Log.d("Current Steps", stepCount + "");
+                long currentTime = System.currentTimeMillis() / 1000;
+                if (currentTime %180 == 0) {
+
+                    stepCount = 0;
+                    stepRecord = new Steps(currentStepsTableId, stepCount, 345);
+                    long stepRecord_id = db.logSteps(stepRecord);
+                    stepRecord.setId(stepRecord_id);
+                }
             }
         };
 
-        timer.scheduleAtFixedRate(timerTask, 0, 30000);
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
     }
 
 

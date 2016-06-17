@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.DatabaseListAdapter;
@@ -15,9 +17,10 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class StatsActivity extends AppCompatActivity {
+public class StatsActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Bind(R.id.recyclerView) RecyclerView mStepsRecyclerView;
+    @Bind(R.id.button) Button mButton;
     private DatabaseListAdapter mDatabaseListAdapter;
     public ArrayList<Steps> mSteps = new ArrayList<>();
     DatabaseHelper db;
@@ -37,6 +40,18 @@ public class StatsActivity extends AppCompatActivity {
                 new LinearLayoutManager(StatsActivity.this);
         mStepsRecyclerView.setLayoutManager(layoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
+        mButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case(R.id.button) :
+                db.deleteAllStepsRecords();
+        }
     }
 }
+
+
+
 

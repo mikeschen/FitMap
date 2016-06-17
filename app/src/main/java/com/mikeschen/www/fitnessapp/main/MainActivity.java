@@ -2,8 +2,10 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.Steps;
@@ -33,7 +36,7 @@ public class MainActivity extends BaseActivity implements
     private boolean mPermissionDenied = false;
     private int caloriesBurned = 0;
     private String buttonDisplay;
-//    private ListView mDrawerList;
+    //    private ListView mDrawerList;
 //    private DrawerLayout mDrawerLayout;
 //    private ArrayAdapter<String> mAdapter;
 //    private ActionBarDrawerToggle mDrawerToggle;
@@ -52,9 +55,15 @@ public class MainActivity extends BaseActivity implements
 
     private int currentStepsTableId;
 
-    @Bind(R.id.mainButton) Button mMainButton;
-    @Bind(R.id.tipTextView) TextView mTipTextView;
-    @Bind(R.id.tipsTextView) TextView mTipsTextView;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+
+    @Bind(R.id.mainButton)
+    Button mMainButton;
+    @Bind(R.id.tipTextView)
+    TextView mTipTextView;
+    @Bind(R.id.tipsTextView)
+    TextView mTipsTextView;
 
     //THIS IS A TEST TEXT VIEW TO SEE IF I CAN RETRIEVE DATA FROM SQL DB
 //    @Bind(R.id.testDBTextView1) TextView mTestDBTextView1;
@@ -67,6 +76,12 @@ public class MainActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
+        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 1);
+        Log.d("Last known steps", lastKnownSteps + "");
+
         currentSteps = 0;
         currentStepsTableId = 1;
 
@@ -84,9 +99,10 @@ public class MainActivity extends BaseActivity implements
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
-        mContext =  this;
+        mContext = this;
 
-
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
 
 
 //        mDrawerList = (ListView) findViewById(R.id.navList);
@@ -109,9 +125,8 @@ public class MainActivity extends BaseActivity implements
 
 //        db = new DatabaseHelper(getApplicationContext());
 
-        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
+        mStepCounterPresenter.setStepCount(lastKnownSteps);//This sets text in Steps Taken Button on start
     }
-
 
 
     @Override
@@ -142,12 +157,12 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
-            case(R.id.mainButton) :
-                if(buttonDisplay.equals("Calories")) {
+        switch (v.getId()) {
+            case (R.id.mainButton):
+                if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
                     mStepCounterPresenter.loadSteps();
-                } else if(buttonDisplay.equals("Steps")) {
+                } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
                     mStepCounterPresenter.loadCalories();
                 }
@@ -188,10 +203,28 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
 
+    @Override
+    public void onPause() {
+        long destroyTime = System.currentTimeMillis() / 1000;
+        int destroySteps = mStepCounterPresenter.getStepCount();
+        Log.d("Destroy Time", destroyTime + "");
+        Log.d("Destroy Steps", destroySteps + "");
+        addToSharedPreferences(destroyTime, destroySteps);
+        Log.d("Shared Prefs", mSharedPreferences + "");
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    private void addToSharedPreferences(long time, int steps) {
+        mEditor.putLong(Constants.PREFERENCES_TIME_KEY, time).apply();
+        mEditor.putInt(Constants.PREFERENCES_STEPS_KEY, steps).apply();
+    }
+
 }
-
-
-
-
 
 

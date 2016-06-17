@@ -163,6 +163,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(steps_id)});
     }
 
+    public void deleteAllStepsRecords() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_STEPS);
+    }
+
 
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
