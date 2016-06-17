@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,15 +63,12 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
 //        previous font; may not need it anymore; calligraphy can change fonts to any files we want
 
 //        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
 //        mMainButton.setTypeface(myTypeFace);
 //        mTipsTextView.setTypeface(myTypeFace);
 //        mTipTextView.setTypeface(myTypeFace);
-
-
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -97,30 +99,6 @@ public class MainActivity extends BaseActivity implements
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-      inflater.inflate(R.menu.search_menu, menu);
-                ButterKnife.bind(this);
-               MenuItem menuItem = menu.findItem(R.id.action_search);
-                SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-
-                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                              @Override
-                               public boolean onQueryTextSubmit(String destination) {
-                                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                                       intent.putExtra("destination", destination);
-                                        startActivity(intent);
-                                       return false;
-                                   }
-                                        @Override
-                               public boolean onQueryTextChange(String newText) {
-                                      return false;
-                                 }
-                           });
-               return true;
-           }
-
-
     //Calligraphy
 
     @Override
@@ -128,6 +106,46 @@ public class MainActivity extends BaseActivity implements
         super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // hide action item
+                getSupportActionBar().setTitle("");
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                getSupportActionBar().setTitle("FitnessApp");
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String destination) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra("destination", destination);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
 
     @Override
     public void showTip(String tip) {

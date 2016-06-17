@@ -44,8 +44,8 @@ public class MapPresenter implements
     private Location mLastLocation;
     private Marker marker;
     private UiSettings mUiSettings;
-
-
+    public double myLocationLat;
+    public double myLocationLong;
 
     public MapPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         mMapView = mapView;
@@ -82,14 +82,14 @@ public class MapPresenter implements
         if (location != null) {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(location.getLatitude(), location.getLongitude()), 13));
-
+            myLocationLat = location.getLatitude();
+            myLocationLong = location.getLongitude();
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))
                     .zoom(16)
                     .build();
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-
     }
 
 
