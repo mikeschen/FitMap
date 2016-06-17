@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -46,7 +45,7 @@ public class MainActivity extends BaseActivity implements
     private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
     private Steps stepRecord;
-    @Bind(R.id.destinationEditText) EditText mDestinationEditText;
+
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
@@ -98,40 +97,28 @@ public class MainActivity extends BaseActivity implements
 
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-        ButterKnife.bind(this);
+      inflater.inflate(R.menu.search_menu, menu);
+                ButterKnife.bind(this);
+               MenuItem menuItem = menu.findItem(R.id.action_search);
+                SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
 
-        MenuItem menuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                String destination = mDestinationEditText.getText().toString();
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                intent.putExtra("destination", destination);
-                startActivity(intent);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        return true;
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                              @Override
+                               public boolean onQueryTextSubmit(String destination) {
+                                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                                       intent.putExtra("destination", destination);
+                                        startActivity(intent);
+                                       return false;
+                                   }
+                                        @Override
+                               public boolean onQueryTextChange(String newText) {
+                                      return false;
+                                 }
+                           });
+               return true;
+           }
 
 
     //Calligraphy
