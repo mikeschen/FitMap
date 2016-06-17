@@ -48,6 +48,8 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
         mMapActivityPresenter.loadMap();
+        //pass string here
+        atDestination.setText("", TextView.BufferType.EDITABLE);
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +64,6 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         String destination = atDestination.getText().toString();
         if (origin.isEmpty()) {
             origin = mMapActivityPresenter.myLocationLat + "," + mMapActivityPresenter.myLocationLong;
-            Toast.makeText(mContext, "Please enter origin address!", Toast.LENGTH_SHORT).show();
         }
         if (destination.isEmpty()) {
             Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();
