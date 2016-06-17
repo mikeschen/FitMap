@@ -73,6 +73,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="2dp"
         android:layout_margin="@dimen/activity_small_padding"
         android:layout_below="@+id/tvCalorie"
         android:text="Find Path"
