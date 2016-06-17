@@ -30,6 +30,7 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
+    private String destination;
 
 
     private void setHideSoftKeyboard(EditText editText){
@@ -49,7 +50,8 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
         mMapActivityPresenter.loadMap();
-        atDestination.setText("", TextView.BufferType.EDITABLE);
+        destination = getIntent().getStringExtra("destination");
+        atDestination.setText(destination, TextView.BufferType.EDITABLE);
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,14 +61,11 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         });
     }
 
-
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
         String destination = atDestination.getText().toString();
         if (origin.isEmpty()) {
-
-            Toast.makeText(mContext, "Please enter origin address!", Toast.LENGTH_SHORT).show();
-            return;
+            origin = mMapActivityPresenter.myLocationLat + "," + mMapActivityPresenter.myLocationLong;
         }
         if (destination.isEmpty()) {
             Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();

@@ -20,16 +20,11 @@
     <!--android:background="@android:color/white" >-->
     <!--</EditText>-->
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/atDestination"/>
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:src="@drawable/stairwalkmain"
+        android:src="@drawable/citymain"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
@@ -37,13 +32,6 @@
         android:layout_height="match_parent"
         tools:context=".main.MainActivity">
 
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="28dp"
-            android:layout_height="@dimen/activity_wide_margin"
-            android:layout_marginBottom="@dimen/activity_small_padding"
-            android:background="@drawable/ic_search_black_24dp" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
