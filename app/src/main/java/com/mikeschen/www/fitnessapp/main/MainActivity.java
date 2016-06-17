@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setOnClickListener(this);
         mContext =  this;
 
-
+//
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mActivityTitle = getTitle().toString();
@@ -98,14 +99,12 @@ public class MainActivity extends BaseActivity implements
 
     }
 
-
     //Calligraphy
 
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
