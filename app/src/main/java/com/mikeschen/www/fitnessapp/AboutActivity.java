@@ -21,7 +21,7 @@ public class AboutActivity extends AppCompatActivity {
         //create two strings to getText/setText to display the creation of the app and the benefits of passively working out
         //look for a different picture to be set as a background
         //try to write JUnit tests at list for the About page
-        //check how to tips were added to display
+
 
 
     }
