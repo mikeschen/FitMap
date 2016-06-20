@@ -23,5 +23,11 @@ public class MainActivityTest {
         TextView tipsTextView = (TextView) activity.findViewById(R.id.tipsTextView);
         assertTrue("Tips/Suggestions".equals(tipsTextView.getText().toString()));
     }
+
+//    @Test
+//    public void valideAboutPageClickable() {
+//        ListView navList = (ListView) activity.findViewById((R.id.navList));
+//        assertTrue("About".equals(navList.toString());
+//    }
 }
 
