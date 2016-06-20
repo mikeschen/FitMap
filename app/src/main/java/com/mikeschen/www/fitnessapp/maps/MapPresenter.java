@@ -9,8 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +42,7 @@ public class MapPresenter implements
     private Location mLastLocation;
     private Marker marker;
     private UiSettings mUiSettings;
+
     public double myLocationLat;
     public double myLocationLong;
 
@@ -114,7 +113,6 @@ public class MapPresenter implements
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d("onRequestPerm", "Hi");
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
@@ -123,6 +121,7 @@ public class MapPresenter implements
                 android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
+            mMapView.refresh();
         } else {
             // Display the missing permission error dialog when the fragments resume.
             mMapView.updatePermissionStatus(true);

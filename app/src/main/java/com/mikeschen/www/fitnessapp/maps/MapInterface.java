@@ -11,6 +11,7 @@ public interface MapInterface {
         void showDistance(String distance);
         void showDuration(String duration);
         void showCalorieRoute(int calorie);
+        void refresh();
     }
 
     interface Presenter {

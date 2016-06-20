@@ -26,6 +26,10 @@ android {
     buildTypes.each {
         it.buildConfigField "String", "GOOGLE_MAPS_KEY", GoogleMapsKey;
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 repositories {
@@ -39,17 +43,9 @@ dependencies {
     androidTestCompile 'com.android.support:support-annotations:23.4.0'
     compile 'com.google.android.gms:play-services:9.0.2'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:recyclerview-v7:+'
 
-    // These exclusions were put in in an attempt to fix the Inflate Exception error thrown by Robolectric testing
-//    {
-//        exclude group: 'commons-logging', module: 'commons-logging'
-//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-//        exclude group: 'com.android.support', module: 'appcompat'
-//        exclude group: 'com.android.support', module: 'support-v4'
-//        exclude group: 'com.android.support', module: 'recyclerview-v7'
-    //}
-
-
+    //implement callingraphy
 
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:multidex:1.0.0'
@@ -66,7 +62,7 @@ dependencies {
 //    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
 //    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-v4:23.4.0"
     compile "com.google.guava:guava:$rootProject.guavaVersion"
     compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.ext.espressoVersion"
