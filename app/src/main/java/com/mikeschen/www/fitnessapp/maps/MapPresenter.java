@@ -9,8 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,7 +21,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 /**
@@ -45,9 +42,9 @@ public class MapPresenter implements
     private Location mLastLocation;
     private Marker marker;
     private UiSettings mUiSettings;
-    private MainActivity mMainActivity;
 
-
+    public double myLocationLat;
+    public double myLocationLong;
 
     public MapPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         mMapView = mapView;
@@ -84,14 +81,14 @@ public class MapPresenter implements
         if (location != null) {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(location.getLatitude(), location.getLongitude()), 13));
-
+            myLocationLat = location.getLatitude();
+            myLocationLong = location.getLongitude();
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))
                     .zoom(16)
                     .build();
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-
     }
 
 
