@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.Steps;
@@ -43,6 +44,7 @@ public class StepCounterPresenter implements
 
     private int currentStepsTableId;
     private Steps stepRecord;
+    private Calories calorieRecord;
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -60,6 +62,7 @@ public class StepCounterPresenter implements
         long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);
         long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
+        int lastKnownCalories = lastKnownSteps * 175/3500;
         Log.d("Last known steps", lastKnownSteps + "");
         Log.d("Last Known id", lastKnownId + "");
 
@@ -93,18 +96,23 @@ public class StepCounterPresenter implements
         if (daysPassed == 0) { //THIS IS FOR TURNING ON AND OFF WITHIN THE SAME DAY
             Log.d("database", "works");
             stepRecord = new Steps(lastKnownId, lastKnownSteps, 345);
+            calorieRecord = new Calories(lastKnownId, lastKnownCalories, 345);
         } else {
             stepRecord = new Steps(lastKnownId, 0, 345);
+            calorieRecord = new Calories(lastKnownId, 0, 345);
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
                     db.logSteps(stepRecord);
+                    db.logCalories(calorieRecord);
                 }
             }
             long stepRecordId = db.logSteps(stepRecord); //FOR CURRENT DAY
+            db.logCalories(calorieRecord);
             stepRecord.setId(stepRecordId);
+            calorieRecord.setId(stepRecordId);
         }
 
-        stepRecord = new Steps(currentStepsTableId, lastKnownSteps, 345);
+//        stepRecord = new Steps(currentStepsTableId, lastKnownSteps, 345);
 
 //        long stepRecord_id = db.logSteps(stepRecord);
 //        stepRecord.setId(stepRecord_id);
@@ -119,18 +127,23 @@ public class StepCounterPresenter implements
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("Does", "it work?");
+                Log.d("timer", "start?");
                 long currentTime = System.currentTimeMillis() / 1000;
-                if (currentTime % (fullDayInMillis/60000) == 0) {
+//                if (currentTime % (fullDayInMillis/60000) == 0) {
+                if (currentTime % (60000/1000) == 0) {
+                    Log.d("tick", "tock");
 
                     stepRecord = new Steps(currentStepsTableId, 0, 345);
+                    calorieRecord = new Calories(currentStepsTableId, 0, 345);
                     long stepRecord_id = db.logSteps(stepRecord);
+                    db.logCalories(calorieRecord);
                     stepRecord.setId(stepRecord_id);
+                    calorieRecord.setId(stepRecord_id);
                 }
             }
         };
 
-        timer.scheduleAtFixedRate(timerTask, 0, 60000);
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
 
     }
 
@@ -212,6 +225,8 @@ public class StepCounterPresenter implements
     @Override
     public void loadCalories() {
         caloriesBurned = stepRecord.getStepsTaken() * 175/3500;
+        calorieRecord.setCaloriesBurned(caloriesBurned);
+        db.updateCalories(calorieRecord);
         mStepCounterView.showCalories(caloriesBurned);
     }
 

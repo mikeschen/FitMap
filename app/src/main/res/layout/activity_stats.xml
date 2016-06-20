@@ -9,11 +9,45 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.main.StatsActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Step Data"
+        android:id="@+id/stepsTextView"
+        android:layout_above="@+id/stepsRecyclerView"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/stepsRecyclerView"
+        android:layout_alignEnd="@+id/stepsRecyclerView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView"
-        android:layout_above="@+id/button" />
+        android:id="@+id/stepsRecyclerView"
+        android:layout_above="@+id/button"
+        android:layout_toLeftOf="@+id/calorieRecyclerView"
+        android:layout_below="@+id/calorieTextView" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:text="Calorie Data"
+        android:id="@+id/calorieTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_alignParentTop="true" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/calorieRecyclerView"
+        android:layout_above="@+id/button"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_below="@+id/stepsTextView" />
 
     <Button
         android:layout_width="wrap_content"
@@ -22,6 +56,7 @@
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
 
 
 </RelativeLayout>
