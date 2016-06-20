@@ -34,7 +34,7 @@ public class Calories {
         this.caloriesBurned = caloriesBurned;
     }
 
-    public int getint() {
+    public int getDate() {
         return date;
     }
 
