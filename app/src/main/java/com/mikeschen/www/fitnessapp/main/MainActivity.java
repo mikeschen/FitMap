@@ -2,8 +2,8 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -188,10 +188,6 @@ public class MainActivity extends BaseActivity implements
                     mStepCounterPresenter.loadCalories();
                 }
         }
-    }
-
-    @Override
-    public void showMap() {
     }
 
     @Override

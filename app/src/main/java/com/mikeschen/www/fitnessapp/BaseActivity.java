@@ -16,9 +16,6 @@ import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 
-/**
- * Created by Matt on 6/15/2016.
- */
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -60,10 +57,12 @@ public class BaseActivity extends AppCompatActivity {
                     case 0:
                         Intent main = new Intent(BaseActivity.this, MainActivity.class);
                         startActivity(main);
+                        finish();
                         break;
                     case 1:
                         Intent maps = new Intent(BaseActivity.this, MapsActivity.class);
                         startActivity(maps);
+                        finish();
                         break;
 
                     case 3:

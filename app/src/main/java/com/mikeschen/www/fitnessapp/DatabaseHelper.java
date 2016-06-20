@@ -10,9 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ramon on 6/15/16.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Logcat tag
