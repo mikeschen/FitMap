@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 
 /** Utility class for access to runtime permissions.
  */

@@ -3,24 +3,21 @@ package com.mikeschen.www.fitnessapp;
 public class Steps {
 
 
-    int id;
+    long id;
     int stepsTaken;
     int date;
 
-    public Steps() {
-    }
-
-    public Steps(int id, int stepsTaken, int date) {
+    public Steps(long id, int stepsTaken, int date) {
         this.id = id;
         this.stepsTaken = stepsTaken;
         this.date = date;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

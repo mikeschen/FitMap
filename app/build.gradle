@@ -26,6 +26,10 @@ android {
     buildTypes.each {
         it.buildConfigField "String", "GOOGLE_MAPS_KEY", GoogleMapsKey;
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 repositories {
@@ -39,54 +43,46 @@ dependencies {
     androidTestCompile 'com.android.support:support-annotations:23.4.0'
     compile 'com.google.android.gms:play-services:9.0.2'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:recyclerview-v7:+'
 
-    // These exclusions were put in in an attempt to fix the Inflate Exception error thrown by Robolectric testing
-//    {
-//        exclude group: 'commons-logging', module: 'commons-logging'
-//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-//        exclude group: 'com.android.support', module: 'appcompat'
-//        exclude group: 'com.android.support', module: 'support-v4'
-//        exclude group: 'com.android.support', module: 'recyclerview-v7'
-    //}
-
-
+    //implement callingraphy
 
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:multidex:1.0.0'
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test:runner:0.3') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestCompile('com.android.support.test:runner:0.3') {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
 
     // App's dependencies, including test
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 //    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
 //    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-v4:23.4.0"
     compile "com.google.guava:guava:$rootProject.guavaVersion"
     compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.ext.espressoVersion"
 
 
 //    // Dependencies for local unit tests
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
-    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+//    testCompile "junit:junit:$rootProject.ext.junitVersion"
+//    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+//    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+//    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
+//    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
     // Android Testing Support Library's runner and rules
-    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
-    androidTestCompile "com.android.support.test:rules:$rootProject.ext.rulesVersion"
+//    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+//    androidTestCompile "com.android.support.test:rules:$rootProject.ext.rulesVersion"
 
     // Espresso UI Testing dependencies.
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion"
+//    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+//    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
+//    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion"
 }
 
 

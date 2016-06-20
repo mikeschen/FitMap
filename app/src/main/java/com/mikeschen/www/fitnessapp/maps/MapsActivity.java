@@ -95,6 +95,11 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     }
 
     @Override
+    public void refresh() {
+
+    }
+
+    @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
