@@ -25,6 +25,10 @@ android {
     buildTypes.each {
         it.buildConfigField "String", "GOOGLE_MAPS_KEY", GoogleMapsKey;
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 repositories {

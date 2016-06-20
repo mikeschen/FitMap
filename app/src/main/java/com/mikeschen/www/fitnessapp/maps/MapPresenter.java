@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 /**
@@ -44,6 +45,7 @@ public class MapPresenter implements
     private Location mLastLocation;
     private Marker marker;
     private UiSettings mUiSettings;
+    private MainActivity mMainActivity;
 
 
 
@@ -114,7 +116,6 @@ public class MapPresenter implements
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d("onRequestPerm", "Hi");
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
@@ -123,6 +124,7 @@ public class MapPresenter implements
                 android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
+            mMapView.refresh();
         } else {
             // Display the missing permission error dialog when the fragments resume.
             mMapView.updatePermissionStatus(true);

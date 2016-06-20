@@ -1,5 +1,6 @@
 package com.mikeschen.www.fitnessapp.main;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,7 +49,14 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()) {
             case(R.id.button) :
                 db.deleteAllStepsRecords();
+                refresh();
         }
+    }
+
+    public void refresh() {
+        Intent intent = new Intent(StatsActivity.this, StatsActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
 
