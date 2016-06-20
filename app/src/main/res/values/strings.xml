@@ -12,9 +12,8 @@
 
     <string name="permission_required_toast">Location permission is required for this app.</string>
 
-    <string name="Benefits">Passive Active(whatever name is picked) is the app that will
-make you walk to work, explore places and start counting calories you consume on a daily basis without even realizing it!</string>
-    <string name="Information">Passive Active provides you with ability to check calories burned from walking, log/look up calories and suggest tips for walking paths!
+    <string name="Benefits">FitMap is the app that will make you walk to work, explore places and start counting calories you consume on a daily basis without even realizing it!</string>
+    <string name="Information">FitMap provides you with ability to check calories burned from walking, log/look up calories and suggest tips for walking paths!
     </string>
 
 </resources>
