@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -33,6 +35,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
     private int calorie;
+    private double myLong;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
@@ -47,12 +50,9 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         mMap = map;
         mUiSettings = mMap.getUiSettings();
         mUiSettings.setZoomGesturesEnabled(true);
-        mUiSettings.setRotateGesturesEnabled(false);
+        mUiSettings.setRotateGesturesEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
         mUiSettings.setZoomControlsEnabled(true);
-
-
-
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     @Override
     public void onDirectionFinderStart() {
         progressDialog = ProgressDialog.show(mContext, "Please wait...",
-                "Finding direction..!", true);
+                "Finding Directions", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -103,13 +103,27 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             mMapView.showCalorieRoute(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.startmarker))
                     .title(route.startAddress)
                     .position(route.startLocation)));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.endmarker))
                     .title(route.endAddress)
                     .position(route.endLocation)));
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Marker marker : originMarkers) {
+                builder.include(marker.getPosition());
+            }
+            for (Marker marker : destinationMarkers) {
+                builder.include(marker.getPosition());
+            }
+
+            LatLngBounds bounds = builder.build();
+
+            int padding = 200; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+            mMap.moveCamera(cu);
 
             PolylineOptions polylineOptions = new PolylineOptions()
                     .color(Color.rgb(66,133,244))

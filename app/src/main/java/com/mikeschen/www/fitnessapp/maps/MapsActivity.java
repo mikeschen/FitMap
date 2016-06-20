@@ -2,7 +2,10 @@ package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> 4d4e45fcfa5d7531a0a4c2702bae1e908cdf8bec
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -12,8 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,13 +28,16 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.atOrigin) EditText atOrigin;
     @Bind(R.id.atDestination) EditText atDestination;
     @Bind(R.id.btnFindPath) Button btnFindPath;
+
+//    @Bind(R.id.tvDistance) TextView mTvDistance;
+//    @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
+    private String destination;
+
 
     private void setHideSoftKeyboard(EditText editText){
-        Log.d("works", "works");
-
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
@@ -48,6 +54,8 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
         mMapActivityPresenter.loadMap();
+        destination = getIntent().getStringExtra("destination");
+        atDestination.setText(destination, TextView.BufferType.EDITABLE);
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,13 +65,11 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         });
     }
 
-
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
         String destination = atDestination.getText().toString();
         if (origin.isEmpty()) {
-            Toast.makeText(mContext, "Please enter origin address!", Toast.LENGTH_SHORT).show();
-            return;
+            origin = mMapActivityPresenter.myLocationLat + "," + mMapActivityPresenter.myLocationLong;
         }
         if (destination.isEmpty()) {
             Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();

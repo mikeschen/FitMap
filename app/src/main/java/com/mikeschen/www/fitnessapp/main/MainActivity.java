@@ -2,8 +2,13 @@ package com.mikeschen.www.fitnessapp.main;
 
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,10 +19,12 @@ import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
+import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends BaseActivity implements
         MainInterface.View,
@@ -47,14 +54,16 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+//        previous font; may not need it anymore; calligraphy can change fonts to any files we want
 
-        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
-        mMainButton.setTypeface(myTypeFace);
-        mTipsTextView.setTypeface(myTypeFace);
-        mTipTextView.setTypeface(myTypeFace);
+//        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
+//        mMainButton.setTypeface(myTypeFace);
+//        mTipsTextView.setTypeface(myTypeFace);
+//        mTipTextView.setTypeface(myTypeFace);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -65,7 +74,7 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setOnClickListener(this);
         mContext =  this;
 
-
+//
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mActivityTitle = getTitle().toString();
@@ -83,6 +92,54 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+    }
+
+    //Calligraphy
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // hide action item
+                getSupportActionBar().setTitle("");
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                getSupportActionBar().setTitle("FitnessApp");
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String destination) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra("destination", destination);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override

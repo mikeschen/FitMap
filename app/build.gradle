@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -40,14 +41,16 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
 
     // These exclusions were put in in an attempt to fix the Inflate Exception error thrown by Robolectric testing
-//    testCompile ('org.robolectric:robolectric:3.0') {
+//    {
 //        exclude group: 'commons-logging', module: 'commons-logging'
 //        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
 //        exclude group: 'com.android.support', module: 'appcompat'
 //        exclude group: 'com.android.support', module: 'support-v4'
 //        exclude group: 'com.android.support', module: 'recyclerview-v7'
     //}
-    //implement callingraphy
+
+
+
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:multidex:1.0.0'
 
@@ -70,11 +73,11 @@ dependencies {
 
 
 //    // Dependencies for local unit tests
-//    testCompile "junit:junit:$rootProject.ext.junitVersion"
-//    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-//    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-//    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
-//    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
+    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
     // Android Testing Support Library's runner and rules
     androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
