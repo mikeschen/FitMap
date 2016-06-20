@@ -1,6 +1,9 @@
 package com.mikeschen.www.fitnessapp.main;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
 import android.hardware.Sensor;
@@ -8,11 +11,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.Steps;
 
 import java.util.ArrayList;
@@ -52,6 +57,9 @@ public class StepCounterPresenter implements
     DatabaseHelper db;
 
     private int fullDayInMillis = 86400000;
+
+    private NotificationCompat.Builder mBuilder;
+
 
     public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
         mStepCounterView = stepCounterInterface;
@@ -123,15 +131,42 @@ public class StepCounterPresenter implements
         db.closeDB();
 
 
+
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.d("timer", "start?");
                 long currentTime = System.currentTimeMillis() / 1000;
-//                if (currentTime % (fullDayInMillis/60000) == 0) {
-                if (currentTime % (60000/1000) == 0) {
+                if (currentTime % (fullDayInMillis/60000) == 0) {
+//                if (currentTime % (60000/1000) == 0) { //CHECKS EVERY MINUTE (?) FOR DEBUGGING
                     Log.d("tick", "tock");
+
+
+                    mBuilder = new NotificationCompat.Builder(mContext)
+                            .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
+                            .setContentTitle("My notification")
+                            .setContentText("You walked " + stepRecord.getStepsTaken() + " steps today!");
+
+                    Intent resultIntent = new Intent(mContext, StatsActivity.class);
+
+                    PendingIntent resultPendingIntent =
+                            PendingIntent.getActivity(
+                                    mContext,
+                                    0,
+                                    resultIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                            );
+                    mBuilder.setContentIntent(resultPendingIntent);
+
+                    // Sets an ID for the notification
+                    int mNotificationId = 001;
+                    // Gets an instance of the NotificationManager service
+                    NotificationManager mNotifyMgr =
+                            (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
 
                     stepRecord = new Steps(currentStepsTableId, 0, 345);
                     calorieRecord = new Calories(currentStepsTableId, 0, 345);
@@ -139,12 +174,12 @@ public class StepCounterPresenter implements
                     db.logCalories(calorieRecord);
                     stepRecord.setId(stepRecord_id);
                     calorieRecord.setId(stepRecord_id);
+
                 }
             }
         };
 
         timer.scheduleAtFixedRate(timerTask, 0, 1000);
-
     }
 
 
