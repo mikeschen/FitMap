@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.mikeschen.www.fitnessapp.main.MainActivity;
+import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 
 /**
@@ -64,9 +65,16 @@ public class BaseActivity extends AppCompatActivity {
                         Intent maps = new Intent(BaseActivity.this, MapsActivity.class);
                         startActivity(maps);
                         break;
+
+                    case 3:
+                        Intent stats = new Intent(BaseActivity.this, StatsActivity.class);
+                        startActivity(stats);
+                        break;
+
                     case 4:
                         Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
+                        break;
                     default:
                 }
             }

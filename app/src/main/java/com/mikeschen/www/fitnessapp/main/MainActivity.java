@@ -5,11 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +16,6 @@ import android.widget.TextView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.Steps;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
@@ -40,21 +34,18 @@ public class MainActivity extends BaseActivity implements
     private boolean mPermissionDenied = false;
     private int caloriesBurned = 0;
     private String buttonDisplay;
-//    private ListView mDrawerList;
-//    private DrawerLayout mDrawerLayout;
-//    private ArrayAdapter<String> mAdapter;
-//    private ActionBarDrawerToggle mDrawerToggle;
-//    private String mActivityTitle;
+
     private Context mContext;
     private TipPresenter mTipPresenter;
     private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
-    private Steps stepRecord;
+
+//    private SharedPreferences mSharedPreferences;
+//    private SharedPreferences.Editor mEditor;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +54,13 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
+//        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 1);
+//        Log.d("Last known steps", lastKnownSteps + "");
+
 //        previous font; may not need it anymore; calligraphy can change fonts to any files we want
+
 
 //        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
 //        mMainButton.setTypeface(myTypeFace);
@@ -77,19 +74,20 @@ public class MainActivity extends BaseActivity implements
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
-        mContext =  this;
+        mContext = this;
+
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mEditor = mSharedPreferences.edit();
 
 //
 //        mDrawerList = (ListView) findViewById(R.id.navList);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mActivityTitle = getTitle().toString();
+
         mTipPresenter = new TipPresenter(this, mContext);
         mMapPresenter = new MapPresenter(this, mContext, mapFragment);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
-        stepRecord = new Steps();
 
-//        addDrawerItems();
-//        setupDrawer();
         mTipPresenter.loadTip();
         mMapPresenter.loadMap();
 
@@ -97,7 +95,11 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
+
+        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
     }
+
 
     //Calligraphy
 
@@ -147,6 +149,7 @@ public class MainActivity extends BaseActivity implements
         return true;
     }
 
+
     @Override
     public void showTip(String tip) {
         mTipTextView.setText(tip);
@@ -175,12 +178,12 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
-            case(R.id.mainButton) :
-                if(buttonDisplay.equals("Calories")) {
+        switch (v.getId()) {
+            case (R.id.mainButton):
+                if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
                     mStepCounterPresenter.loadSteps();
-                } else if(buttonDisplay.equals("Steps")) {
+                } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
                     mStepCounterPresenter.loadCalories();
                 }
@@ -212,10 +215,38 @@ public class MainActivity extends BaseActivity implements
     public void showCalories(int caloriesBurned) {
         mMainButton.setText("Calories Burned: " + caloriesBurned);
     }
+
+    @Override
+    public void onPause() {
+//        long destroyTime = System.currentTimeMillis() / 1000;
+//        int destroySteps = mStepCounterPresenter.getStepCount();
+//        int destroyId = mStepCounterPresenter.
+//
+//        Log.d("Destroy Time", destroyTime + "");
+//        Log.d("Destroy Steps", destroySteps + "");
+//        addToSharedPreferences(destroyTime, destroySteps);
+//        Log.d("Shared Prefs", mSharedPreferences + "");
+        mStepCounterPresenter.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+//    private void addToSharedPreferences(long time, int steps) {
+//        mEditor.putLong(Constants.PREFERENCES_TIME_KEY, time).apply();
+//        mEditor.putInt(Constants.PREFERENCES_STEPS_KEY, steps).apply();
+//    }
+
+    public void refresh() {
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
-
-
-
-
 
 
