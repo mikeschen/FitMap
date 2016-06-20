@@ -137,7 +137,7 @@ public class StepCounterPresenter implements
             @Override
             public void run() {
                 Log.d("timer", "start?");
-                long currentTime = System.currentTimeMillis() / 1000;
+                long currentTime = System.currentTimeMillis() / 60000;
                 if (currentTime % (fullDayInMillis/60000) == 0) {
 //                if (currentTime % (60000/1000) == 0) { //CHECKS EVERY MINUTE (?) FOR DEBUGGING
                     Log.d("tick", "tock");
@@ -179,7 +179,7 @@ public class StepCounterPresenter implements
             }
         };
 
-        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 60000); //CHANGE THIS NUMBER TO 1000 FOR DEBUGGING
     }
 
 
