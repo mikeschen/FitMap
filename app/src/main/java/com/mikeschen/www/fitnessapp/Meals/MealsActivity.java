@@ -1,7 +1,9 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.Meals;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.mikeschen.www.fitnessapp.R;
 
 public class MealsActivity extends AppCompatActivity {
 

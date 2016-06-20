@@ -25,6 +25,7 @@ android {
 
     buildTypes.each {
         it.buildConfigField "String", "GOOGLE_MAPS_KEY", GoogleMapsKey;
+        it.buildConfigField "String", "NUTRIONIX_API_KEY", NutrionixApiKey;
     }
 
     dexOptions {

@@ -49,7 +49,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".main.StatsActivity" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".MealsActivity"></activity>
+        <activity android:name=".Meals.MealsActivity"></activity>
     </application>
 
 </manifest>
