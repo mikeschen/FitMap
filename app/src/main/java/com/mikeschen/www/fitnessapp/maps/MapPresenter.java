@@ -52,7 +52,6 @@ public class MapPresenter implements
         mMapFragment = mapFragment;
     }
 
-
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;

@@ -36,7 +36,6 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
     private int calorie;
-    private double myLong;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
@@ -104,11 +103,10 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             mMapView.showCalorieRoute(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.startmarker))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .title(route.startAddress)
                     .position(route.startLocation)));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.endmarker))
                     .title(route.endAddress)
                     .position(route.endLocation)));
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
