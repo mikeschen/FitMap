@@ -91,6 +91,7 @@ public class StepCounterPresenter implements
         Log.d("days Passed", daysPassed + "");
 
         if (daysPassed == 0) { //THIS IS FOR TURNING ON AND OFF WITHIN THE SAME DAY
+            Log.d("database", "works");
             stepRecord = new Steps(lastKnownId, lastKnownSteps, 345);
         } else {
             stepRecord = new Steps(lastKnownId, 0, 345);
@@ -105,8 +106,8 @@ public class StepCounterPresenter implements
 
         stepRecord = new Steps(currentStepsTableId, lastKnownSteps, 345);
 
-        long stepRecord_id = db.logSteps(stepRecord);
-        stepRecord.setId(stepRecord_id);
+//        long stepRecord_id = db.logSteps(stepRecord);
+//        stepRecord.setId(stepRecord_id);
 
 //        Steps lastKnownSteps = db.getSteps(stepRecord.getId());
 //        stepCount = lastKnownSteps.getStepsTaken();
