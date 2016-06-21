@@ -1,10 +1,9 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
-/**
- * Created by alexnenchev on 6/21/16.
- */
+
+//import android.view.View;
+//
 //public class MealsPresenter implements
 //    MealsInterface.Presenter,
-//        View.OnClickListener,
-//{
+//        View.OnClickListener {
 //}
