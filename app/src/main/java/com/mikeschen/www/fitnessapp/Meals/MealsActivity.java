@@ -44,7 +44,7 @@ public class MealsActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         mSaveButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
-        mMealsPresenter = new MealsPresenter();
+        mMealsPresenter = new MealsPresenter(this, getApplicationContext());
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");

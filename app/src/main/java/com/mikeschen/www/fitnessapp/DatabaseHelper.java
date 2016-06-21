@@ -23,8 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table Names
     private static final String TABLE_STEPS = "steps";
-    private static final String TABLE_CALORIES_BURNED = "calories_burned";
-    private static final String TABLE_CALORIES_CONSUMED= "caloried_consumed";
+    private static final String TABLE_CALORIES_BURNED = "caloriesBurned";
+    private static final String TABLE_CALORIES_CONSUMED = "caloriesConsumed";
 
     // STEPS column names
     private static final String KEY_STEPS_ID = "id";
@@ -32,13 +32,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_STEPS_DAY = "day";
 
     // CALORIES BURNED Table - column names
-    private static final String KEY_CALORIES_BURNED_ID = "_burned_id";
+    private static final String KEY_CALORIES_BURNED_ID = "burnedId";
     private static final String KEY_CALORIES_BURNED = "calories";
     private static final String KEY_CALORIES_BURNED_DAY = "day";
 
     // CALORIES Table - column names
-    private static final String KEY_CALORIES_CONSUMED_ID = "consumed_id";
-    private static final String KEY_CALORIES_CONSUMED = "calories_consumed";
+    private static final String KEY_CALORIES_CONSUMED_ID = "consumedId";
+    private static final String KEY_CALORIES_CONSUMED = "caloriesConsumed";
     private static final String KEY_CALORIES_CONSUMED_DAY = "day";
 
     // Table Create Statements
@@ -193,7 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CALORIES_BURNED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_BURNED, calories.getCalories());
         values.put(KEY_CALORIES_BURNED_DAY, calories.getDate());
 
         // insert row
@@ -220,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Calories calories = new Calories(0, 0, 0);
         calories.setId(c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED_ID)));
-        calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
+        calories.setCalories((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
         calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED_DAY)));
 
         return calories;
@@ -243,7 +243,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Calories calories = new Calories(1, 1001, 345);
                 calories.setId(c.getInt((c.getColumnIndex(KEY_CALORIES_BURNED_ID))));
-                calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
+                calories.setCalories((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
                 calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED_DAY)));
 
                 // adding to todo list
@@ -261,7 +261,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CALORIES_BURNED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_BURNED, calories.getCalories());
         values.put(KEY_CALORIES_BURNED_DAY, calories.getDate());
 
         // updating row
@@ -294,11 +294,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CALORIES_CONSUMED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_CONSUMED, calories.getCalories());
         values.put(KEY_CALORIES_CONSUMED_DAY, calories.getDate());
 
         // insert row
         long calories_id = db.insert(TABLE_CALORIES_CONSUMED, null, values);
+        Log.d("Calories", "" + calories_id);
 
         return calories_id;
     }
@@ -321,7 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Calories calories = new Calories(0, 0, 0);
         calories.setId(c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED_ID)));
-        calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
+        calories.setCalories((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
         calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED_DAY)));
 
         return calories;
@@ -344,7 +345,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Calories calories = new Calories(1, 1001, 345);
                 calories.setId(c.getInt((c.getColumnIndex(KEY_CALORIES_CONSUMED_ID))));
-                calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
+                calories.setCalories((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
                 calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED_DAY)));
 
                 // adding to todo list
@@ -362,7 +363,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CALORIES_CONSUMED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_CONSUMED, calories.getCalories());
         values.put(KEY_CALORIES_CONSUMED_DAY, calories.getDate());
 
         // updating row
