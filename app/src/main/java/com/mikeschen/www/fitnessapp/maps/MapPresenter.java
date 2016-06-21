@@ -62,11 +62,12 @@ public class MapPresenter implements
 
         LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
         if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
         Log.d("Current Location", location + "");
         if (location != null) {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
