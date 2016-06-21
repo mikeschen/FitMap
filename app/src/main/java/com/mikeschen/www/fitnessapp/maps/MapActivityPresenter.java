@@ -91,6 +91,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
+        counter = 0;
         progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
@@ -107,13 +108,13 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-            if (counter == 0) {
+            if (counter > 0) {
                 destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
                         .title(route.endAddress)
                         .position(route.endLocation)));
             } else {
                 destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
                         .title(route.endAddress)
                         .position(route.endLocation)));
             }

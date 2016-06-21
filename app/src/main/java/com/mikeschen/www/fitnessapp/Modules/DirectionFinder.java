@@ -30,6 +30,10 @@ public class DirectionFinder {
     private List<Route> routes;
     private int routeCount;
     private int currentCount;
+    private double originLat;
+    private double originLong;
+    private double destinationLat;
+    private double destinationLong;
 
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
         this.listener = listener;
@@ -56,7 +60,8 @@ public class DirectionFinder {
     private String createSecondUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=40.7128,-74.0059" + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        String urlWaypoint = calculateWaypoint();
+        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
@@ -118,8 +123,12 @@ public class DirectionFinder {
             route.distance = new Distance(jsonDistance.getString("text"), jsonDistance.getInt("value"));
             route.endAddress = jsonLeg.getString("end_address");
             route.startAddress = jsonLeg.getString("start_address");
-            route.startLocation = new LatLng(jsonStartLocation.getDouble("lat"), jsonStartLocation.getDouble("lng"));
-            route.endLocation = new LatLng(jsonEndLocation.getDouble("lat"), jsonEndLocation.getDouble("lng"));
+            originLat = jsonStartLocation.getDouble("lat");
+            originLong = jsonStartLocation.getDouble("lng");
+            destinationLat = jsonEndLocation.getDouble("lat");
+            destinationLong = jsonEndLocation.getDouble("lng");
+            route.startLocation = new LatLng(originLat, originLong);
+            route.endLocation = new LatLng(destinationLat, destinationLong);
             route.points = decodePolyLine(overview_polylineJson.getString("points"));
 
             routes.add(route);
@@ -134,6 +143,18 @@ public class DirectionFinder {
                 e.printStackTrace();
             }
         }
+    }
+
+    private String calculateWaypoint() {
+        double midLat = (originLat + destinationLat)/2;
+        double midLong = (originLong + destinationLong)/2;
+        double angle = Math.atan(Math.abs(originLat - destinationLat)/Math.abs(originLong - destinationLong));
+        double theta =  90 - angle;
+        double wayPointLat = midLat + .015 * Math.sin(Math.toRadians(theta));
+        Log.d("waypointLat", wayPointLat + "");
+        double wayPointLong = midLong + .015 * Math.cos(Math.toRadians(theta));
+        Log.d("waypointLong", wayPointLong + "");
+        return wayPointLat + "," + wayPointLong;
     }
 
     private List<LatLng> decodePolyLine(final String poly) {
