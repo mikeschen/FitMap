@@ -51,6 +51,8 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".Meals.MealsActivity" />
         <activity android:name=".Meals.MealsDetailActivity"></activity>
+        <activity android:name=".Meals.MealsSearchResultActivity"></activity>
+
     </application>
 
 </manifest>
