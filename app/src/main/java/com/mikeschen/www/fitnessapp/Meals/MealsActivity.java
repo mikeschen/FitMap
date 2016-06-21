@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,6 +37,11 @@ public class MealsActivity extends AppCompatActivity implements
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
 
+    private void setHideSoftKeyboard(EditText editText){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +52,7 @@ public class MealsActivity extends AppCompatActivity implements
         mSaveButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
         mMealsPresenter = new MealsPresenter(this, getApplicationContext());
+
 
 
         Calendar calendar = Calendar.getInstance();
@@ -60,6 +67,7 @@ public class MealsActivity extends AppCompatActivity implements
             case (R.id.saveButton):
                 String strCalories = mCalorieInputEditText.getText().toString();
                 Integer calories = Integer.parseInt(strCalories);
+                setHideSoftKeyboard(mCalorieInputEditText);
                 mMealsPresenter.saveCalories(calories);
                 break;
         }
