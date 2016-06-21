@@ -38,12 +38,6 @@ public class MealsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-//        final Calendar c = Calendar.getInstance();
-//        char[] day = c.get(Calendar.DAY_OF_MONTH);
-//        int month = c.get(Calendar.MONTH);
-//        int year = c.get(Calendar.YEAR);
-//        mTodaysDate.setText(day, month, year);
-
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
