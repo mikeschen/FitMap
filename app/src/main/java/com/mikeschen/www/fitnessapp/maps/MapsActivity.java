@@ -75,9 +75,6 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mMapActivityPresenter.makeRequest(origin, destination);
     }
 
-    public void showMap() {
-    }
-
     @Override
     public void showDistance(String distance) {
         mTvDistance.setText(distance);

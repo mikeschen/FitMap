@@ -1,17 +1,22 @@
 package com.mikeschen.www.fitnessapp.main;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.CursorIndexOutOfBoundsException;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.Steps;
 
 import java.util.ArrayList;
@@ -43,6 +48,7 @@ public class StepCounterPresenter implements
 
     private int currentStepsTableId;
     private Steps stepRecord;
+    private Calories calorieRecord;
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -50,6 +56,9 @@ public class StepCounterPresenter implements
     DatabaseHelper db;
 
     private int fullDayInMillis = 86400000;
+
+    private NotificationCompat.Builder mBuilder;
+
 
     public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
         mStepCounterView = stepCounterInterface;
@@ -60,6 +69,7 @@ public class StepCounterPresenter implements
         long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);
         long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
+        int lastKnownCalories = lastKnownSteps * 175/3500;
         Log.d("Last known steps", lastKnownSteps + "");
         Log.d("Last Known id", lastKnownId + "");
 
@@ -91,22 +101,28 @@ public class StepCounterPresenter implements
         Log.d("days Passed", daysPassed + "");
 
         if (daysPassed == 0) { //THIS IS FOR TURNING ON AND OFF WITHIN THE SAME DAY
+            Log.d("database", "works");
             stepRecord = new Steps(lastKnownId, lastKnownSteps, 345);
+            calorieRecord = new Calories(lastKnownId, lastKnownCalories, 345);
         } else {
             stepRecord = new Steps(lastKnownId, 0, 345);
+            calorieRecord = new Calories(lastKnownId, 0, 345);
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
                     db.logSteps(stepRecord);
+                    db.logCalories(calorieRecord);
                 }
             }
             long stepRecordId = db.logSteps(stepRecord); //FOR CURRENT DAY
+            db.logCalories(calorieRecord);
             stepRecord.setId(stepRecordId);
+            calorieRecord.setId(stepRecordId);
         }
 
-        stepRecord = new Steps(currentStepsTableId, lastKnownSteps, 345);
+//        stepRecord = new Steps(currentStepsTableId, lastKnownSteps, 345);
 
-        long stepRecord_id = db.logSteps(stepRecord);
-        stepRecord.setId(stepRecord_id);
+//        long stepRecord_id = db.logSteps(stepRecord);
+//        stepRecord.setId(stepRecord_id);
 
 //        Steps lastKnownSteps = db.getSteps(stepRecord.getId());
 //        stepCount = lastKnownSteps.getStepsTaken();
@@ -114,23 +130,55 @@ public class StepCounterPresenter implements
         db.closeDB();
 
 
+
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("Does", "it work?");
-                long currentTime = System.currentTimeMillis() / 1000;
+                Log.d("timer", "start?");
+                long currentTime = System.currentTimeMillis() / 60000;
                 if (currentTime % (fullDayInMillis/60000) == 0) {
+//                if (currentTime % (60000/1000) == 0) { //CHECKS EVERY MINUTE (?) FOR DEBUGGING
+                    Log.d("tick", "tock");
+
+
+                    mBuilder = new NotificationCompat.Builder(mContext)
+                            .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
+                            .setContentTitle("My notification")
+                            .setContentText("You walked " + stepRecord.getStepsTaken() + " steps today!");
+
+                    Intent resultIntent = new Intent(mContext, StatsActivity.class);
+
+                    PendingIntent resultPendingIntent =
+                            PendingIntent.getActivity(
+                                    mContext,
+                                    0,
+                                    resultIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                            );
+                    mBuilder.setContentIntent(resultPendingIntent);
+
+                    // Sets an ID for the notification
+                    int mNotificationId = 001;
+                    // Gets an instance of the NotificationManager service
+                    NotificationManager mNotifyMgr =
+                            (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
 
                     stepRecord = new Steps(currentStepsTableId, 0, 345);
+                    calorieRecord = new Calories(currentStepsTableId, 0, 345);
                     long stepRecord_id = db.logSteps(stepRecord);
+                    db.logCalories(calorieRecord);
                     stepRecord.setId(stepRecord_id);
+                    calorieRecord.setId(stepRecord_id);
+
                 }
             }
         };
 
-        timer.scheduleAtFixedRate(timerTask, 0, 60000);
-
+        timer.scheduleAtFixedRate(timerTask, 0, 60000); //CHANGE THIS NUMBER TO 1000 FOR DEBUGGING
     }
 
 
@@ -164,7 +212,7 @@ public class StepCounterPresenter implements
                 }
                 localAverageSpeed = localGrossSpeed/speedData.size();
 
-                if(localAverageSpeed > 10) { // CHANGE THIS TO 20
+                if(localAverageSpeed > 20) {
                     speedCounted++;
                     grossTotalSpeed = grossTotalSpeed + speed;
                     totalAverageSpeed = (grossTotalSpeed) / speedCounted;
@@ -211,6 +259,8 @@ public class StepCounterPresenter implements
     @Override
     public void loadCalories() {
         caloriesBurned = stepRecord.getStepsTaken() * 175/3500;
+        calorieRecord.setCaloriesBurned(caloriesBurned);
+        db.updateCalories(calorieRecord);
         mStepCounterView.showCalories(caloriesBurned);
     }
 

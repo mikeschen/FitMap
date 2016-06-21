@@ -10,9 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ramon on 6/15/16.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Logcat tag
@@ -112,7 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
- * getting all todos
+ * getting all calories
  * */
     public List<Steps> getAllStepRecords() {
         List<Steps> allStepRecords = new ArrayList<Steps>();
@@ -166,6 +163,104 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteAllStepsRecords() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_STEPS);
+    }
+
+
+    /*
+* Logging calories consumed
+*/
+    public long logCalories(Calories calories) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CALORIES, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_DAY, calories.getDate());
+
+        // insert row
+        long calories_id = db.insert(TABLE_CALORIES, null, values);
+
+        return calories_id;
+    }
+
+    /*
+ * get single calories burned record
+ */
+    public Calories getCalories(long calories_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES + " WHERE "
+                + KEY_CALORIES_ID + " = " + calories_id;
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        Calories calories = new Calories(0, 0, 0);
+        calories.setId(c.getInt(c.getColumnIndex(KEY_CALORIES_ID)));
+        calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES))));
+        calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_DAY)));
+
+        return calories;
+    }
+
+    /*
+ * getting all calories
+ * */
+    public List<Calories> getAllCalorieRecords() {
+        List<Calories> allCalorieRecords = new ArrayList<Calories>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES;
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Calories calories = new Calories(1, 1001, 345);
+                calories.setId(c.getInt((c.getColumnIndex(KEY_CALORIES_ID))));
+                calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES))));
+                calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_DAY)));
+
+                // adding to todo list
+                allCalorieRecords.add(calories);
+            } while (c.moveToNext());
+        }
+
+        return allCalorieRecords;
+    }
+
+    /*
+ * Updating a calorie record
+ */
+    public int updateCalories(Calories calories) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CALORIES, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_DAY, calories.getDate());
+
+        // updating row
+        return db.update(TABLE_CALORIES, values, KEY_CALORIES_ID + " = ?",
+                new String[] { String.valueOf(calories.getId()) });
+    }
+
+    /*
+ * Deleting a calorie record
+ */
+    public void deleteCalorieRecord(long calories_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CALORIES, KEY_CALORIES_ID + " = ?",
+                new String[] { String.valueOf(calories_id)});
+    }
+
+    public void deleteAllCalorieRecords() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_CALORIES);
     }
 
 

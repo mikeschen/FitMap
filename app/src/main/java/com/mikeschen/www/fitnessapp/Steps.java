@@ -1,8 +1,5 @@
 package com.mikeschen.www.fitnessapp;
 
-/**
- * Created by Ramon on 6/15/16.
- */
 public class Steps {
 
 
