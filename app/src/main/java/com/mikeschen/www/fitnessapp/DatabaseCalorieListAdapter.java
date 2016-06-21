@@ -58,7 +58,7 @@ public class DatabaseCalorieListAdapter extends RecyclerView.Adapter<DatabaseCal
 
         public void bindCalories(Calories calories) {
             mTextViewId.setText(String.valueOf(calories.getId()));
-            mTextViewCount.setText(String.valueOf(calories.getCaloriesBurned()));
+            mTextViewCount.setText(String.valueOf(calories.getCalories()));
             mTextViewDate.setText(String.valueOf(calories.getDate()));
 
         }

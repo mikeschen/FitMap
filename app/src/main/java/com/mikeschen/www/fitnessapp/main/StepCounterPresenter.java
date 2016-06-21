@@ -259,7 +259,7 @@ public class StepCounterPresenter implements
     @Override
     public void loadCalories() {
         caloriesBurned = stepRecord.getStepsTaken() * 175/3500;
-        calorieRecord.setCaloriesBurned(caloriesBurned);
+        calorieRecord.setCalories(caloriesBurned);
         db.updateCaloriesBurned(calorieRecord);
         mStepCounterView.showCalories(caloriesBurned);
     }
