@@ -84,8 +84,8 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     }
 
     @Override
-    public void showCalorieRoute(int calorie) {
-        mTvCalorie.setText(calorie + "cal");
+    public void showCalorieRoute(Long calorie) {
+        mTvCalorie.setText(calorie + " cal");
     }
 
     @Override

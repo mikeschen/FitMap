@@ -35,14 +35,20 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private int calorie;
+    private Long calorie;
     private int counter = 0;
+    private ArrayList<String> distances;
+    private ArrayList<String> durations;
+    private ArrayList<Long> routeCalories;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
         mMapView = mapView;
         mContext = context;
         mMapFragment = mapFragment;
+        distances = new ArrayList<>();
+        durations = new ArrayList<>();
+        routeCalories = new ArrayList<>();
     }
 
     @Override
@@ -87,6 +93,10 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                 polyline.remove();
             }
         }
+
+        distances.clear();
+        durations.clear();
+        routeCalories.clear();
     }
 
     @Override
@@ -98,11 +108,17 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
+            Long miles = Math.round(route.distance.value * 0.000621371);
+            Long minutes = Math.round(route.duration.value / 60.0);
+            durations.add(minutes + " minutes");
+            distances.add(miles + " miles");
+
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            mMapView.showDistance(route.distance.text);
-            mMapView.showDuration(route.duration.text);
-            calorie = ((int)(Math.round(route.distance.value/16.1)));
+            mMapView.showDistance(miles.toString());
+            mMapView.showDuration(minutes.toString());
+            calorie = Math.round(route.distance.value / 16.1);
             mMapView.showCalorieRoute(calorie);
+            routeCalories.add(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
@@ -135,7 +151,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             mMap.moveCamera(cu);
 
             PolylineOptions polylineOptions = new PolylineOptions()
-                    .color(Color.rgb(66,133,244))
+                    .color(Color.rgb(66, 133, 244))
                     .width(20)
                     .geodesic(true);
 
@@ -145,5 +161,24 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             polylinePaths.add(mMap.addPolyline(polylineOptions));
             counter++;
         }
+        for (Polyline polyline : polylinePaths) {
+            polyline.setClickable(true);
+        }
+        mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick (Polyline clickedPolyline) {
+                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
+                for (int i = 0; i < polylinePaths.size(); i++) {
+                    if (polylinePaths.get(i).getId().equals(clickedPolyline.getId())) {
+                        clickedPolyline.setColor(Color.rgb(78, 160, 257));
+                        mMapView.showDistance(distances.get(i));
+                        mMapView.showDuration(durations.get(i));
+                        mMapView.showCalorieRoute(routeCalories.get(i));
+                    } else {
+                        polylinePaths.get(i).setColor(Color.rgb(66, 133, 244));
+                    }
+                }
+            }
+        });
     }
 }

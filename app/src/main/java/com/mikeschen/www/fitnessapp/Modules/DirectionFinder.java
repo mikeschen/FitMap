@@ -64,6 +64,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         String urlWaypoint = calculateWaypoint();
+        Log.d("curentURl2", DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY);
         return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
     }
 
@@ -104,7 +105,7 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-//        Log.d("json", data);
+        Log.d("json", data);
         if (data == null)
             return;
 
@@ -121,9 +122,20 @@ public class DirectionFinder {
             JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
             JSONObject jsonEndLocation = jsonLeg.getJSONObject("end_location");
             JSONObject jsonStartLocation = jsonLeg.getJSONObject("start_location");
-
-            route.duration = new Duration(jsonDuration.getString("text"), jsonDuration.getInt("value"));
-            route.distance = new Distance(jsonDistance.getString("text"), jsonDistance.getInt("value"));
+            int totalDistance;
+            int totalDuration;
+            if(currentCount > 0) {
+                JSONObject jsonLeg2 = jsonLegs.getJSONObject(1);
+                JSONObject jsonDistance2 = jsonLeg2.getJSONObject("distance");
+                JSONObject jsonDuration2 = jsonLeg2.getJSONObject("duration");
+                totalDistance = jsonDistance.getInt("value") + jsonDistance2.getInt("value");
+                totalDuration = jsonDuration.getInt("value") + jsonDuration2.getInt("value");
+            } else {
+                totalDistance = jsonDistance.getInt("value");
+                totalDuration = jsonDuration.getInt("value");
+            }
+            route.duration = new Duration(jsonDuration.getString("text"), totalDistance);
+            route.distance = new Distance(jsonDistance.getString("text"), totalDuration);
             route.endAddress = jsonLeg.getString("end_address");
             route.startAddress = jsonLeg.getString("start_address");
             originLat = jsonStartLocation.getDouble("lat");
