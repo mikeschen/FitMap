@@ -8,12 +8,8 @@ import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Ramon on 6/13/16.
@@ -41,9 +37,9 @@ public class MapPresenterTest {
         mMapPresenter = new MapPresenter(mMapView, context, mMapFragment);
     }
 
-    @Test
-    public void loadMapIntoView() {
-        mMapPresenter.loadMap();
-        verify(mMapView).showMap();
-    }
+//    @Test
+//    public void loadMapIntoView() {
+//        mMapPresenter.loadMap();
+//        verify(mMapView).showMap();
+//    }
 }

@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp;
 
 public class Constants {
     public static final String GOOGLE_MAPS_KEY = BuildConfig.GOOGLE_MAPS_KEY;
+    public static final String NUTRIONIX_API_KEY = BuildConfig.NUTRIONIX_API_KEY;
 
     public static final String PREFERENCES_STEPS_ID_KEY ="steps_id";
     public static final String PREFERENCES_STEPS_KEY = "steps";

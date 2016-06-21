@@ -25,6 +25,7 @@ android {
 
     buildTypes.each {
         it.buildConfigField "String", "GOOGLE_MAPS_KEY", GoogleMapsKey;
+        it.buildConfigField "String", "NUTRIONIX_API_KEY", NutrionixApiKey;
     }
 
     dexOptions {
@@ -69,20 +70,21 @@ dependencies {
 
 
 //    // Dependencies for local unit tests
-//    testCompile "junit:junit:$rootProject.ext.junitVersion"
-//    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-//    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-//    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
-//    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
+    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+//
+//     Android Testing Support Library's runner and rules
+    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+    androidTestCompile "com.android.support.test:rules:$rootProject.ext.rulesVersion"
 
-    // Android Testing Support Library's runner and rules
-//    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
-//    androidTestCompile "com.android.support.test:rules:$rootProject.ext.rulesVersion"
-
-    // Espresso UI Testing dependencies.
-//    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-//    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
-//    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion"
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'junit:junit:4.12'
 }
 
 
