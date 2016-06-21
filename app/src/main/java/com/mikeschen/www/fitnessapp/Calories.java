@@ -1,28 +1,25 @@
 package com.mikeschen.www.fitnessapp;
 
-/**
- * Created by Ramon on 6/15/16.
- */
 public class Calories {
 
-    int id;
+    long id;
     int caloriesBurned;
     int date;
 
     public Calories() {
     }
 
-    public Calories(int id, int caloriesBurned, int date) {
+    public Calories(long id, int caloriesBurned, int date) {
         this.id = id;
         this.caloriesBurned = caloriesBurned;
         this.date = date;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -34,7 +31,7 @@ public class Calories {
         this.caloriesBurned = caloriesBurned;
     }
 
-    public int getint() {
+    public int getDate() {
         return date;
     }
 

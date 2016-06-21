@@ -28,12 +28,12 @@ public class MainActivityInstrumentationTest {
 
     @Test
     public void doNotClickMainButton() {
-        onView(withId(R.id.mainButton)).check(matches(withText("Calories Burned: 200")));
+        onView(withId(R.id.mainButton)).check(matches(withText("Calories Burned: 0")));
     }
 
     @Test
     public void clickMainButton() {
         onView(withId(R.id.mainButton)).perform(click())
-                .check(matches(withText("Steps Taken: 75")));
+                .check(matches(withText("Steps Taken: 0")));
     }
 }

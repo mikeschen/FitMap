@@ -15,24 +15,24 @@ import butterknife.ButterKnife;
 /**
  * Created by Ramon on 6/17/16.
  */
-public class DatabaseListAdapter extends RecyclerView.Adapter<DatabaseListAdapter.DatabaseViewHolder> {
+public class DatabaseStepsListAdapter extends RecyclerView.Adapter<DatabaseStepsListAdapter.DatabaseViewHolder> {
     private ArrayList<Steps> mSteps = new ArrayList<>();
     private Context mContext;
 
-    public DatabaseListAdapter(Context context, ArrayList<Steps> steps) {
+    public DatabaseStepsListAdapter(Context context, ArrayList<Steps> steps) {
         mContext = context;
         mSteps = steps;
     }
 
     @Override
-    public DatabaseListAdapter.DatabaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DatabaseStepsListAdapter.DatabaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.database_list_item, parent, false);
         DatabaseViewHolder viewHolder = new DatabaseViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DatabaseListAdapter.DatabaseViewHolder holder, int position) {
+    public void onBindViewHolder(DatabaseStepsListAdapter.DatabaseViewHolder holder, int position) {
         holder.bindSteps(mSteps.get(position));
     }
 
@@ -43,7 +43,7 @@ public class DatabaseListAdapter extends RecyclerView.Adapter<DatabaseListAdapte
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.textViewId) TextView mTextViewId;
-        @Bind(R.id.textViewSteps) TextView mTextViewSteps;
+        @Bind(R.id.textViewCount) TextView mTextViewCount;
         @Bind(R.id.textViewDate) TextView mTextViewDate;
         private Context mContext;
 
@@ -55,7 +55,7 @@ public class DatabaseListAdapter extends RecyclerView.Adapter<DatabaseListAdapte
 
         public void bindSteps(Steps steps) {
             mTextViewId.setText(String.valueOf(steps.getId()));
-            mTextViewSteps.setText(String.valueOf(steps.getStepsTaken()));
+            mTextViewCount.setText(String.valueOf(steps.getStepsTaken()));
             mTextViewDate.setText(String.valueOf(steps.getDate()));
 
         }

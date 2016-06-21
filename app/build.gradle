@@ -50,12 +50,12 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:multidex:1.0.0'
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test:runner:0.3') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestCompile('com.android.support.test:runner:0.3') {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
 
     // App's dependencies, including test
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
@@ -69,20 +69,20 @@ dependencies {
 
 
 //    // Dependencies for local unit tests
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
-    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+//    testCompile "junit:junit:$rootProject.ext.junitVersion"
+//    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+//    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+//    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
+//    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
     // Android Testing Support Library's runner and rules
-    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
-    androidTestCompile "com.android.support.test:rules:$rootProject.ext.rulesVersion"
+//    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+//    androidTestCompile "com.android.support.test:rules:$rootProject.ext.rulesVersion"
 
     // Espresso UI Testing dependencies.
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion"
+//    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+//    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
+//    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion"
 }
 
 

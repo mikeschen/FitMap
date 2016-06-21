@@ -3,6 +3,7 @@ package com.mikeschen.www.fitnessapp.maps;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -70,9 +71,6 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         }
 
         mMapActivityPresenter.makeRequest(origin, destination);
-    }
-
-    public void showMap() {
     }
 
     @Override

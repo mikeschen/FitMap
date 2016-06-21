@@ -24,9 +24,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
-/**
- * Created by Ramon on 6/10/16.
- */
 public class MapPresenter implements
         MapInterface.Presenter,
         OnMapReadyCallback,
@@ -39,7 +36,6 @@ public class MapPresenter implements
     public Context mContext;
     public SupportMapFragment mMapFragment;
     public GoogleMap mMap;
-    private boolean mPermissionDenied = false;
     private Location mLastLocation;
     private Marker marker;
     private UiSettings mUiSettings;
@@ -68,13 +64,6 @@ public class MapPresenter implements
         Criteria criteria = new Criteria();
 
         if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
@@ -96,19 +85,15 @@ public class MapPresenter implements
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Permission to access the location is missing.
             PermissionUtils.requestPermission((FragmentActivity) mContext, LOCATION_PERMISSION_REQUEST_CODE,
                     android.Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (mMap != null) {
-            // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
         }
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
         return false;
     }
 
@@ -120,11 +105,9 @@ public class MapPresenter implements
 
         if (PermissionUtils.isPermissionGranted(permissions, grantResults,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
             enableMyLocation();
             mMapView.refresh();
         } else {
-            // Display the missing permission error dialog when the fragments resume.
             mMapView.updatePermissionStatus(true);
         }
     }

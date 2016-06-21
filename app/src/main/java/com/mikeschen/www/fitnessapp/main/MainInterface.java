@@ -1,8 +1,5 @@
 package com.mikeschen.www.fitnessapp.main;
 
-/**
- * Created by Ramon on 6/9/16.
- */
 public interface MainInterface {
 
     interface View {
