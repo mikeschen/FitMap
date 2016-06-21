@@ -23,17 +23,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table Names
     private static final String TABLE_STEPS = "steps";
-    private static final String TABLE_CALORIES = "calories";
+    private static final String TABLE_CALORIES_BURNED = "calories_burned";
+    private static final String TABLE_CALORIES_CONSUMED= "caloried_consumed";
 
     // STEPS column names
     private static final String KEY_STEPS_ID = "id";
     private static final String KEY_STEPS = "steps";
     private static final String KEY_STEPS_DAY = "day";
 
+    // CALORIES BURNED Table - column names
+    private static final String KEY_CALORIES_BURNED_ID = "_burned_id";
+    private static final String KEY_CALORIES_BURNED = "calories";
+    private static final String KEY_CALORIES_BURNED_DAY = "day";
+
     // CALORIES Table - column names
-    private static final String KEY_CALORIES_ID = "id";
-    private static final String KEY_CALORIES = "calories";
-    private static final String KEY_CALORIES_DAY = "day";
+    private static final String KEY_CALORIES_CONSUMED_ID = "consumed_id";
+    private static final String KEY_CALORIES_CONSUMED = "calories_consumed";
+    private static final String KEY_CALORIES_CONSUMED_DAY = "day";
 
     // Table Create Statements
     // Steps table create statement
@@ -41,11 +47,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_STEPS + "(" + KEY_STEPS_ID + " INTEGER PRIMARY KEY," + KEY_STEPS
             + " TEXT," + KEY_STEPS_DAY + " INTEGER" + ")";
 
-    // Table Create Statements
-    // Calories table create statement
-    private static final String CREATE_TABLE_CALORIES = "CREATE TABLE "
-            + TABLE_CALORIES + "(" + KEY_CALORIES_ID + " INTEGER PRIMARY KEY," + KEY_CALORIES
-            + " TEXT," + KEY_CALORIES_DAY + " INTEGER" + ")";
+    // Calories burned table create statement
+    private static final String CREATE_TABLE_CALORIES_BURNED = "CREATE TABLE "
+            + TABLE_CALORIES_BURNED + "(" + KEY_CALORIES_BURNED_ID + " INTEGER PRIMARY KEY," + KEY_CALORIES_BURNED
+            + " TEXT," + KEY_CALORIES_BURNED_DAY + " INTEGER" + ")";
+
+    // Calories consumed table create statement
+    private static final String CREATE_TABLE_CALORIES_CONSUMED = "CREATE TABLE "
+            + TABLE_CALORIES_CONSUMED + "(" + KEY_CALORIES_CONSUMED_ID + " INTEGER PRIMARY KEY," + KEY_CALORIES_CONSUMED
+            + " TEXT," + KEY_CALORIES_CONSUMED_DAY + " INTEGER" + ")";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,19 +65,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // creating required tables
         db.execSQL(CREATE_TABLE_STEPS);
-        db.execSQL(CREATE_TABLE_CALORIES);
+        db.execSQL(CREATE_TABLE_CALORIES_BURNED);
+        db.execSQL(CREATE_TABLE_CALORIES_CONSUMED);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on upgrade drop older tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STEPS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CALORIES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CALORIES_BURNED);
+        db.execSQL("DROP TALBE IF EXISTS " + TABLE_CALORIES_CONSUMED);
 
         // create new tables
         onCreate(db);
     }
 
+
+    /*
+    STEPS
+     */
     /*
  * Logging steps taken
  */
@@ -167,17 +183,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /*
-* Logging calories consumed
+    CALORIES BURNED
+
+     */
+    /*
+* Logging calories BURNED
 */
-    public long logCalories(Calories calories) {
+    public long logCaloriesBurned(Calories calories) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CALORIES, calories.getCaloriesBurned());
-        values.put(KEY_CALORIES_DAY, calories.getDate());
+        values.put(KEY_CALORIES_BURNED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_BURNED_DAY, calories.getDate());
 
         // insert row
-        long calories_id = db.insert(TABLE_CALORIES, null, values);
+        long calories_id = db.insert(TABLE_CALORIES_BURNED, null, values);
 
         return calories_id;
     }
@@ -185,11 +205,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
  * get single calories burned record
  */
-    public Calories getCalories(long calories_id) {
+    public Calories getCaloriesBurned(long calories_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES + " WHERE "
-                + KEY_CALORIES_ID + " = " + calories_id;
+        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES_BURNED + " WHERE "
+                + KEY_CALORIES_BURNED_ID + " = " + calories_id;
 
         Log.e(LOG, selectQuery);
 
@@ -199,9 +219,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             c.moveToFirst();
 
         Calories calories = new Calories(0, 0, 0);
-        calories.setId(c.getInt(c.getColumnIndex(KEY_CALORIES_ID)));
-        calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES))));
-        calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_DAY)));
+        calories.setId(c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED_ID)));
+        calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
+        calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED_DAY)));
 
         return calories;
     }
@@ -209,9 +229,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
  * getting all calories
  * */
-    public List<Calories> getAllCalorieRecords() {
+    public List<Calories> getAllCaloriesBurnedRecords() {
         List<Calories> allCalorieRecords = new ArrayList<Calories>();
-        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES;
+        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES_BURNED;
 
         Log.e(LOG, selectQuery);
 
@@ -222,9 +242,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 Calories calories = new Calories(1, 1001, 345);
-                calories.setId(c.getInt((c.getColumnIndex(KEY_CALORIES_ID))));
-                calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES))));
-                calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_DAY)));
+                calories.setId(c.getInt((c.getColumnIndex(KEY_CALORIES_BURNED_ID))));
+                calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
+                calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED_DAY)));
 
                 // adding to todo list
                 allCalorieRecords.add(calories);
@@ -237,30 +257,131 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
  * Updating a calorie record
  */
-    public int updateCalories(Calories calories) {
+    public int updateCaloriesBurned(Calories calories) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CALORIES, calories.getCaloriesBurned());
-        values.put(KEY_CALORIES_DAY, calories.getDate());
+        values.put(KEY_CALORIES_BURNED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_BURNED_DAY, calories.getDate());
 
         // updating row
-        return db.update(TABLE_CALORIES, values, KEY_CALORIES_ID + " = ?",
+        return db.update(TABLE_CALORIES_BURNED, values, KEY_CALORIES_BURNED_ID + " = ?",
                 new String[] { String.valueOf(calories.getId()) });
     }
 
     /*
  * Deleting a calorie record
  */
-    public void deleteCalorieRecord(long calories_id) {
+    public void deleteCaloriesBurnedRecord(long calories_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CALORIES, KEY_CALORIES_ID + " = ?",
+        db.delete(TABLE_CALORIES_BURNED, KEY_CALORIES_BURNED_ID + " = ?",
                 new String[] { String.valueOf(calories_id)});
     }
 
-    public void deleteAllCalorieRecords() {
+    public void deleteAllCaloriesBurnedRecords() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from " + TABLE_CALORIES);
+        db.execSQL("delete from " + TABLE_CALORIES_BURNED);
+    }
+
+
+    /*
+    CALORIES CONSUMED
+     */
+    /*
+* Logging calories consumed
+*/
+    public long logCaloriesConsumed(Calories calories) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CALORIES_CONSUMED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_CONSUMED_DAY, calories.getDate());
+
+        // insert row
+        long calories_id = db.insert(TABLE_CALORIES_CONSUMED, null, values);
+
+        return calories_id;
+    }
+
+    /*
+ * get single calories consumed record
+ */
+    public Calories getCaloriesConsumed(long calories_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES_CONSUMED + " WHERE "
+                + KEY_CALORIES_CONSUMED_ID + " = " + calories_id;
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        Calories calories = new Calories(0, 0, 0);
+        calories.setId(c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED_ID)));
+        calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
+        calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED_DAY)));
+
+        return calories;
+    }
+
+    /*
+ * getting all calories
+ * */
+    public List<Calories> getAllCalorieConsumedRecords() {
+        List<Calories> allCalorieRecords = new ArrayList<Calories>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CALORIES_CONSUMED;
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Calories calories = new Calories(1, 1001, 345);
+                calories.setId(c.getInt((c.getColumnIndex(KEY_CALORIES_CONSUMED_ID))));
+                calories.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
+                calories.setDate(c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED_DAY)));
+
+                // adding to todo list
+                allCalorieRecords.add(calories);
+            } while (c.moveToNext());
+        }
+
+        return allCalorieRecords;
+    }
+
+    /*
+ * Updating a calorie record
+ */
+    public int updateCaloriesConsumed(Calories calories) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CALORIES_CONSUMED, calories.getCaloriesBurned());
+        values.put(KEY_CALORIES_CONSUMED_DAY, calories.getDate());
+
+        // updating row
+        return db.update(TABLE_CALORIES_CONSUMED, values, KEY_CALORIES_CONSUMED_ID + " = ?",
+                new String[] { String.valueOf(calories.getId()) });
+    }
+
+    /*
+ * Deleting a calorie record
+ */
+    public void deleteCalorieConsumedRecord(long calories_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CALORIES_CONSUMED, KEY_CALORIES_CONSUMED_ID + " = ?",
+                new String[] { String.valueOf(calories_id)});
+    }
+
+    public void deleteAllCaloriesConsumedRecords() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_CALORIES_CONSUMED);
     }
 
 

@@ -110,11 +110,11 @@ public class StepCounterPresenter implements
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
                     db.logSteps(stepRecord);
-                    db.logCalories(calorieRecord);
+                    db.logCaloriesBurned(calorieRecord);
                 }
             }
             long stepRecordId = db.logSteps(stepRecord); //FOR CURRENT DAY
-            db.logCalories(calorieRecord);
+            db.logCaloriesBurned(calorieRecord);
             stepRecord.setId(stepRecordId);
             calorieRecord.setId(stepRecordId);
         }
@@ -170,7 +170,7 @@ public class StepCounterPresenter implements
                     stepRecord = new Steps(currentStepsTableId, 0, 345);
                     calorieRecord = new Calories(currentStepsTableId, 0, 345);
                     long stepRecord_id = db.logSteps(stepRecord);
-                    db.logCalories(calorieRecord);
+                    db.logCaloriesBurned(calorieRecord);
                     stepRecord.setId(stepRecord_id);
                     calorieRecord.setId(stepRecord_id);
 
@@ -260,7 +260,7 @@ public class StepCounterPresenter implements
     public void loadCalories() {
         caloriesBurned = stepRecord.getStepsTaken() * 175/3500;
         calorieRecord.setCaloriesBurned(caloriesBurned);
-        db.updateCalories(calorieRecord);
+        db.updateCaloriesBurned(calorieRecord);
         mStepCounterView.showCalories(caloriesBurned);
     }
 

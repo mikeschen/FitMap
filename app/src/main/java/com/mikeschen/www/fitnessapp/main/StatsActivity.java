@@ -39,7 +39,7 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
 
         db = new DatabaseHelper(getApplicationContext());
         mSteps = (ArrayList<Steps>) db.getAllStepRecords();
-        mCalories = (ArrayList<Calories>) db.getAllCalorieRecords();
+        mCalories = (ArrayList<Calories>) db.getAllCaloriesBurnedRecords();
 
         mDatabaseStepsListAdapter = new DatabaseStepsListAdapter(getApplicationContext(), mSteps);
         mStepsRecyclerView.setAdapter(mDatabaseStepsListAdapter);
@@ -63,7 +63,7 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()) {
             case(R.id.button) :
                 db.deleteAllStepsRecords();
-                db.deleteAllCalorieRecords();
+                db.deleteAllCaloriesBurnedRecords();
                 refresh();
         }
     }
