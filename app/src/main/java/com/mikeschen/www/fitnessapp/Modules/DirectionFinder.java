@@ -34,6 +34,8 @@ public class DirectionFinder {
     private double originLong;
     private double destinationLat;
     private double destinationLong;
+    private double shortestDistance;
+    private double wayPointDistance;
 
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
         this.listener = listener;
@@ -42,6 +44,7 @@ public class DirectionFinder {
         this.routes = new ArrayList<>();
         this.routeCount = 2;
         this.currentCount = 0;
+        this.wayPointDistance = .015;
     }
 
     public void execute() throws UnsupportedEncodingException {
@@ -101,7 +104,7 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-        Log.d("json", data);
+//        Log.d("json", data);
         if (data == null)
             return;
 
@@ -131,8 +134,25 @@ public class DirectionFinder {
             route.endLocation = new LatLng(destinationLat, destinationLong);
             route.points = decodePolyLine(overview_polylineJson.getString("points"));
 
+            if(currentCount == 0) {
+                shortestDistance = jsonDistance.getInt("value");
+            }
+            else {
+                if(jsonDistance.getInt("value") - shortestDistance < 0.1){
+                    wayPointDistance += .01;
+                    try {
+                        new DownloadRawData().execute(createSecondUrl());
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                } else {
+                    wayPointDistance = .015;
+                }
+            }
             routes.add(route);
         }
+
         currentCount++;
         if(currentCount == routeCount) {
             listener.onDirectionFinderSuccess(routes);
@@ -148,12 +168,24 @@ public class DirectionFinder {
     private String calculateWaypoint() {
         double midLat = (originLat + destinationLat)/2;
         double midLong = (originLong + destinationLong)/2;
-        double angle = Math.atan(Math.abs(originLat - destinationLat)/Math.abs(originLong - destinationLong));
+        double latDiff = originLat - destinationLat;
+        double lngDiff = originLong - destinationLong;
+        double angle = Math.atan(latDiff/lngDiff);
         double theta =  90 - angle;
-        double wayPointLat = midLat + .015 * Math.sin(Math.toRadians(theta));
-        Log.d("waypointLat", wayPointLat + "");
-        double wayPointLong = midLong + .015 * Math.cos(Math.toRadians(theta));
-        Log.d("waypointLong", wayPointLong + "");
+//        Log.d(originLat+"", ""+originLong);
+//        Log.d(destinationLat+"", destinationLong+"");
+//        Log.d(Math.abs(originLat - destinationLat)+"", Math.abs(originLong-destinationLong)+"");
+        Log.d("atanguts", (originLat - destinationLat)/(originLong - destinationLong)+"");
+        Log.d("theta", theta+"");
+        double wayPointLat;
+        double wayPointLong;
+        if(latDiff > lngDiff) {
+            wayPointLat = midLat + wayPointDistance * Math.cos(Math.toRadians(theta));
+            wayPointLong = midLong + wayPointDistance * Math.sin(Math.toRadians(theta));
+        } else {
+            wayPointLat = midLat + wayPointDistance * Math.sin(Math.toRadians(theta));
+            wayPointLong = midLong + wayPointDistance * Math.cos(Math.toRadians(theta));
+        }
         return wayPointLat + "," + wayPointLong;
     }
 
