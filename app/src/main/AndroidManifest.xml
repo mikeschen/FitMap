@@ -47,9 +47,9 @@
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".main.StatsActivity"></activity>
-
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".main.StatsActivity" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".Meals.MealsActivity"></activity>
     </application>
 
 </manifest>

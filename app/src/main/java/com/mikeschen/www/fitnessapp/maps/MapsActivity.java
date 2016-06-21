@@ -2,10 +2,6 @@ package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.util.Log;
-=======
->>>>>>> 4d4e45fcfa5d7531a0a4c2702bae1e908cdf8bec
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
