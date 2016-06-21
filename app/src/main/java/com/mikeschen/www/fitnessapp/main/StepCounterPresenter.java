@@ -110,7 +110,7 @@ public class StepCounterPresenter implements
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
                     db.logSteps(stepRecord);
-                    db.logCaloriesBurned(calorieRecord);
+                    db.logCalories(calorieRecord);
                 }
             }
             long stepRecordId = db.logSteps(stepRecord); //FOR CURRENT DAY
