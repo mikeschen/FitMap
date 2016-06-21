@@ -2,6 +2,8 @@ package com.mikeschen.www.fitnessapp.maps;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -24,27 +26,23 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.atOrigin) EditText atOrigin;
     @Bind(R.id.atDestination) EditText atDestination;
     @Bind(R.id.btnFindPath) Button btnFindPath;
-
-//    @Bind(R.id.tvDistance) TextView mTvDistance;
-//    @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     private String destination;
-
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
-
+        atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mContext = this;
