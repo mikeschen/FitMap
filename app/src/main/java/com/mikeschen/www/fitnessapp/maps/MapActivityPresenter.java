@@ -3,6 +3,7 @@ package com.mikeschen.www.fitnessapp.maps;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +36,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
     private int calorie;
+    private int counter = 0;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
@@ -105,9 +107,17 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .title(route.endAddress)
-                    .position(route.endLocation)));
+            if (counter == 0) {
+                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                        .title(route.endAddress)
+                        .position(route.endLocation)));
+            } else {
+                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
+                        .title(route.endAddress)
+                        .position(route.endLocation)));
+            }
+            Log.d("destination", destinationMarkers + "");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Marker marker : originMarkers) {
                 builder.include(marker.getPosition());
@@ -132,6 +142,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                 polylineOptions.add(route.points.get(i));
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
+            counter++;
         }
     }
 }

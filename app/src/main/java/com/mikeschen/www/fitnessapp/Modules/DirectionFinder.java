@@ -55,8 +55,8 @@ public class DirectionFinder {
 
     private String createSecondUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
-        String urlDestination = URLEncoder.encode("San Francisco", "utf-8");
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        String urlDestination = URLEncoder.encode(destination, "utf-8");
+        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=40.7128,-74.0059" + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
