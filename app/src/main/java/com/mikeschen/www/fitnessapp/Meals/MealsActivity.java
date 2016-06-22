@@ -196,3 +196,8 @@ public class MealsActivity extends BaseActivity implements
         });
     }
 }
+
+
+//Together with steptracker we also are implementing meal tracker. Once you open the app, the user can navigate to the meals tab using the navigation drawer. The main idea of the meal tracker is for the user to be able to check how many calories she/he consumes per day. We believe that calories burned and calories consumed are great way to check how you are doing throughout the day.
+//the user wil have a few options of find food item;can be searchable using Nutrininix API call; can be searched using scanning UPC code and the user can enter custom item. Once the item is enterned pr scanned, calories will be displayed. Throughout the day, food items will be added and total calories will be displayed at the bottom of the page.
+//Another feature we are implementing is saving food items to Database, tips/suggestions for healthy life style.
