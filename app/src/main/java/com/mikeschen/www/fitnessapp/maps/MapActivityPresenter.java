@@ -124,16 +124,17 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-            if (counter > 0) {
+//            if (counter > 0) {
+//                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
+//                        .title(route.endAddress)
+//                        .position(route.endLocation)));
+//            } else {
+            Log.d("endLat", route.endLocation.latitude+"");
                 destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
                         .title(route.endAddress)
                         .position(route.endLocation)));
-            } else {
-                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                        .title(route.endAddress)
-                        .position(route.endLocation)));
-            }
+//            }
             Log.d("destination", destinationMarkers + "");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Marker marker : originMarkers) {
