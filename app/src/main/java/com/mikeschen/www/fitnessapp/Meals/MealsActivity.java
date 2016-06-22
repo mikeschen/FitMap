@@ -61,9 +61,9 @@ public class MealsActivity extends AppCompatActivity implements
         mSearchString = intent.getStringExtra("inputText");
 //        mSearchType = mSharedPreferences.getString(Constants.PREFERENCES_SEARCH_TYPE_KEY, null);
         if(mSearchType != null && mSearchType.equals("string")){
-            searchDatabaseByTerm();
+//            searchDatabaseByTerm();
         } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
-            mMealsPresenter.searchUPC(String upc);
+//            mMealsPresenter.searchUPC(String upc);
         }
         mAuthProgressDialog.show();
 
