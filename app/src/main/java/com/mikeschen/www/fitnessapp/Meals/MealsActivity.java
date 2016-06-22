@@ -1,5 +1,6 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,9 @@ public class MealsActivity extends AppCompatActivity implements
     @Bind(R.id.todaysDate) TextView mTodaysDate;
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
+    private String mSearchString;
+    private String mSearchType;
+    private ProgressDialog mAuthProgressDialog;
 
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
@@ -48,6 +52,20 @@ public class MealsActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_meals);
 
         ButterKnife.bind(this);
+
+        mAuthProgressDialog = new ProgressDialog(this);
+        mAuthProgressDialog.setTitle("Loading...");
+        mAuthProgressDialog.setMessage("Searching for food items...");
+        mAuthProgressDialog.setCancelable(false);
+        Intent intent = getIntent();
+        mSearchString = intent.getStringExtra("inputText");
+//        mSearchType = mSharedPreferences.getString(Constants.PREFERENCES_SEARCH_TYPE_KEY, null);
+        if(mSearchType != null && mSearchType.equals("string")){
+            searchDatabaseByTerm();
+        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
+            mMealsPresenter.searchUPC(String upc);
+        }
+        mAuthProgressDialog.show();
 
         mSaveButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
