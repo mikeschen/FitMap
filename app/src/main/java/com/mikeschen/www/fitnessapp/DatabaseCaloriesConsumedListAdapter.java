@@ -13,26 +13,26 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Ramon on 6/20/16.
+ * Created by Ramon on 6/21/16.
  */
-public class DatabaseCalorieListAdapter extends RecyclerView.Adapter<DatabaseCalorieListAdapter.DatabaseViewHolder> {
+public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder> {
     private ArrayList<Calories> mCalories = new ArrayList<>();
     private Context mContext;
 
-    public DatabaseCalorieListAdapter(Context context, ArrayList<Calories> calories) {
+    public DatabaseCaloriesConsumedListAdapter(Context context, ArrayList<Calories> calories) {
         mContext = context;
         mCalories = calories;
     }
 
     @Override
-    public DatabaseCalorieListAdapter.DatabaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.database_list_item, parent, false);
         DatabaseViewHolder viewHolder = new DatabaseViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DatabaseCalorieListAdapter.DatabaseViewHolder holder, int position) {
+    public void onBindViewHolder(DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder holder, int position) {
         holder.bindCalories(mCalories.get(position));
     }
 
@@ -42,12 +42,9 @@ public class DatabaseCalorieListAdapter extends RecyclerView.Adapter<DatabaseCal
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.textViewId)
-        TextView mTextViewId;
-        @Bind(R.id.textViewCount)
-        TextView mTextViewCount;
-        @Bind(R.id.textViewDate)
-        TextView mTextViewDate;
+        @Bind(R.id.textViewId) TextView mTextViewId;
+        @Bind(R.id.textViewCount) TextView mTextViewCount;
+        @Bind(R.id.textViewDate) TextView mTextViewDate;
         private Context mContext;
 
         public DatabaseViewHolder(View itemView) {

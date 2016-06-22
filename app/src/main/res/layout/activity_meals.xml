@@ -14,38 +14,75 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/Meals"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_medium"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/todaysDate"
+        android:hint="Enter Today's Date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/caloriesTextView"
+        android:layout_above="@+id/foodInputEditText"
+        android:elevation="1dp"
+        android:gravity="center_horizontal" />
+
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/foodInputEditText"
         android:layout_marginBottom="344dp"
         android:layout_alignParentBottom="true"
+        android:hint="Enter Food Item"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/calorieInputEditText"
+        android:hint="Enter Calories"
+        android:layout_below="@+id/todaysDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Enter Food Item/Calories" />
+        android:layout_marginTop="36dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total Calories Burned for Today:"
-        android:id="@+id/dayCaloriesBurnedTextView"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="112dp"
+        android:id="@+id/dailyCaloriesBurnedTextView"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="TOTAL CALORIES:"
         android:id="@+id/totalCaloriesTextView"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/activity_wide_margin"
+        android:layout_marginRight="@dimen/activity_wide_margin"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textSize="@dimen/text_medium"
+        android:id="@+id/saveButton"
+        android:layout_below="@+id/calorieInputEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorAbout"/>
 </RelativeLayout>
