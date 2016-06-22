@@ -16,12 +16,12 @@ import butterknife.ButterKnife;
  * Created by Ramon on 6/21/16.
  */
 public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder> {
-    private ArrayList<Calories> mCalories = new ArrayList<>();
+    private ArrayList<Calories> mCaloriesConsumed = new ArrayList<>();
     private Context mContext;
 
     public DatabaseCaloriesConsumedListAdapter(Context context, ArrayList<Calories> calories) {
         mContext = context;
-        mCalories = calories;
+        mCaloriesConsumed = calories;
     }
 
     @Override
@@ -33,12 +33,12 @@ public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<Da
 
     @Override
     public void onBindViewHolder(DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder holder, int position) {
-        holder.bindCalories(mCalories.get(position));
+        holder.bindCalories(mCaloriesConsumed.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mCalories.size();
+        return mCaloriesConsumed.size();
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {

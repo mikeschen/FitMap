@@ -19,6 +19,7 @@ public interface MealsInterface {
 
     interface Presenter {
         void saveCalories(Integer calories);
+//        void loadCalories();
         void loadFoodItem();
         void searchFoods(String foodItem);
         void searchUPC(String upc);

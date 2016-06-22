@@ -117,11 +117,10 @@ public class MealsActivity extends BaseActivity implements
     @Override
     public void showCalories(Calories calories) {
         Calories caloriesConsumed;
-        caloriesConsumed = new Calories(7, calories.getCalories(), calories.getDate());
-
         caloriesConsumed = db.getCaloriesConsumed(calories.getId());
+        Log.d("Calories boo hiss", caloriesConsumed + "");
         mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + caloriesConsumed);
-        Log.d("Calories consumed", caloriesConsumed + "");
+        db.close();
     }
 
     @Override

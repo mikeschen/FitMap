@@ -51,6 +51,13 @@ public class MealsPresenter implements
         db.close();
     }
 
+//    @Override
+//    public void loadCalories(long calories_id) {
+//        Calories caloriesConsumed;
+//        caloriesConsumed = new Calories(calories_id, calories.getCalories(), 345);
+//        db.getCaloriesConsumed()
+//    }
+
     @Override
     public void loadFoodItem() {
 
