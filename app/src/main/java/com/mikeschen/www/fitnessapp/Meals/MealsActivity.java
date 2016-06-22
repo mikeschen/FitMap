@@ -2,11 +2,15 @@ package com.mikeschen.www.fitnessapp.Meals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +42,7 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
+    @Bind(R.id.dialogButton) Button mDialogButton;
 
     private String mSearchString;
     private String mSearchType;
@@ -85,6 +90,7 @@ public class MealsActivity extends BaseActivity implements
 
 
         mSaveButton.setOnClickListener(this);
+        mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
         mMealsPresenter = new MealsPresenter(this, getApplicationContext());
 
@@ -106,8 +112,13 @@ public class MealsActivity extends BaseActivity implements
                 setHideSoftKeyboard(mCalorieInputEditText);
                 mMealsPresenter.saveCalories(calories);
                 break;
+            case (R.id.dialogButton):
+                openDialog();
+                break;
         }
     }
+
+
 
     @Override
     public void showFoodItem(String foodItem) {
@@ -122,17 +133,17 @@ public class MealsActivity extends BaseActivity implements
     @Override
     public void showCalories(Calories calories) {
         Calories caloriesConsumed;
-        caloriesConsumed = new Calories(7, calories.getCalories(), calories.getDate());
-
         caloriesConsumed = db.getCaloriesConsumed(calories.getId());
+        Log.d("Calories boo hiss", caloriesConsumed + "");
         mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + caloriesConsumed);
-        Log.d("Calories consumed", caloriesConsumed + "");
+        db.close();
     }
 
     @Override
     public void refresh() {
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -195,9 +206,59 @@ public class MealsActivity extends BaseActivity implements
             }
         });
     }
+
+    @Override
+    public void displayFoodByItem(ArrayList<Food> foods) {
+        MealsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsActivity.this);
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                mContext.startActivity(intent);
+                mAuthProgressDialog.dismiss();
+            }
+        });
+    }
+
+    private void openDialog() {
+        LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
+        View subView = inflater.inflate(R.layout.search_fragment_item, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Item To List");
+        builder.setMessage("Enter Item Info, Select List, and Click 'Okay'");
+        builder.setView(subView);
+        AlertDialog alertDialog = builder.create();
+
+        final EditText subEditText = (EditText) subView.findViewById(R.id.searchFoodItemEditText);
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                subEditText.setText("You need an item name!");
+
+                String foodItem = subEditText.getText().toString();
+
+
+                mMealsPresenter.searchFoods(foodItem);
+//
+//                Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.show();
+    }
+
 }
 
-
-//Together with steptracker we also are implementing meal tracker. Once you open the app, the user can navigate to the meals tab using the navigation drawer. The main idea of the meal tracker is for the user to be able to check how many calories she/he consumes per day. We believe that calories burned and calories consumed are great way to check how you are doing throughout the day.
-//the user wil have a few options of find food item;can be searchable using Nutrininix API call; can be searched using scanning UPC code and the user can enter custom item. Once the item is enterned pr scanned, calories will be displayed. Throughout the day, food items will be added and total calories will be displayed at the bottom of the page.
-//Another feature we are implementing is saving food items to Database, tips/suggestions for healthy life style.

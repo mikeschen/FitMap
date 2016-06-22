@@ -15,10 +15,12 @@ public interface MealsInterface {
         void showCalories(Calories calories);
         void refresh();
         void displayFood(ArrayList<Food> foods);
+        void displayFoodByItem(ArrayList<Food> foods);
     }
 
     interface Presenter {
         void saveCalories(Integer calories);
+//        void loadCalories();
         void loadFoodItem();
         void searchFoods(String foodItem);
         void searchUPC(String upc);

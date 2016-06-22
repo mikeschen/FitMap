@@ -302,7 +302,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // insert row
         long calories_id = db.insert(TABLE_CALORIES_CONSUMED, null, values);
-        Log.d("Calories", "" + calories_id);
+        Log.d("Inside DB Helper", "fires on save " + calories_id);
 
         return calories_id;
     }

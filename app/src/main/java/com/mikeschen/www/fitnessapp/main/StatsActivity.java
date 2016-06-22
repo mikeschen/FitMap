@@ -31,7 +31,8 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
     private DatabaseCalorieListAdapter mDatabaseCaloriesBurnedListAdapter;
     private DatabaseCaloriesConsumedListAdapter mDatabaseCaloriesConsumedListAdapter;
     public ArrayList<Steps> mSteps = new ArrayList<>();
-    public ArrayList<Calories> mCalories = new ArrayList<>();
+    public ArrayList<Calories> mCaloriesBurned = new ArrayList<>();
+    public ArrayList<Calories> mCaloriesConsumed = new ArrayList<>();
     DatabaseHelper db;
 
     @Override
@@ -42,7 +43,8 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
 
         db = new DatabaseHelper(getApplicationContext());
         mSteps = (ArrayList<Steps>) db.getAllStepRecords();
-        mCalories = (ArrayList<Calories>) db.getAllCaloriesBurnedRecords();
+        mCaloriesBurned = (ArrayList<Calories>) db.getAllCaloriesBurnedRecords();
+        mCaloriesConsumed = (ArrayList<Calories>) db.getAllCalorieConsumedRecords();
 
         mDatabaseStepsListAdapter = new DatabaseStepsListAdapter(getApplicationContext(), mSteps);
         mStepsRecyclerView.setAdapter(mDatabaseStepsListAdapter);
@@ -51,14 +53,14 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
 
-        mDatabaseCaloriesBurnedListAdapter = new DatabaseCalorieListAdapter(getApplicationContext(), mCalories);
+        mDatabaseCaloriesBurnedListAdapter = new DatabaseCalorieListAdapter(getApplicationContext(), mCaloriesBurned);
         mCaloriesBurnedRecyclerView.setAdapter(mDatabaseCaloriesBurnedListAdapter);
         RecyclerView.LayoutManager calorieLayoutManager =
                 new LinearLayoutManager(StatsActivity.this);
         mCaloriesBurnedRecyclerView.setLayoutManager(calorieLayoutManager);
         mCaloriesBurnedRecyclerView.setHasFixedSize(true);
 
-        mDatabaseCaloriesConsumedListAdapter = new DatabaseCaloriesConsumedListAdapter(getApplicationContext(), mCalories);
+        mDatabaseCaloriesConsumedListAdapter = new DatabaseCaloriesConsumedListAdapter(getApplicationContext(), mCaloriesConsumed);
         mCaloriesConsumedRecyclerView.setAdapter(mDatabaseCaloriesConsumedListAdapter);
         RecyclerView.LayoutManager caloriesConsumedLayoutManager =
                 new LinearLayoutManager(StatsActivity.this);
