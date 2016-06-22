@@ -141,6 +141,7 @@ public class StepCounterPresenter implements
 
 //                if (currentTime % (fullDayInMillis/60000) == 0) { //CHECKS EVERY DAY, BUT MAYBE NOT...
                 if (currentTime % (60000/1000) == 0) { //CHECKS EVERY MINUTE (?) FOR DEBUGGING
+                    //(60000/1000) == 0 is 1 hour
                     Log.d("tick", "tock");
 
 
