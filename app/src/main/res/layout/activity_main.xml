@@ -65,23 +65,6 @@
                 android:layout_below="@+id/mainButton" />
         </LinearLayout>
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:layout_below="@+id/tipsTextView"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="20sp"
-        android:textColor="#2E2E2E"
-        android:background="#ffffff"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,6 +79,7 @@
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:background="@color/colorWhite"
+            android:alpha="0.85"
             android:elevation="2dp"
             android:layout_below="@+id/mapLayout" />
 
@@ -110,6 +94,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textSize="@dimen/text_small"
+            android:alpha="0.85"
             android:elevation="1dp"
             android:background="@color/colorWhite"/>
 

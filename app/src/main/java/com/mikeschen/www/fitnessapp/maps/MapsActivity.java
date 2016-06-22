@@ -30,6 +30,7 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     private String destination;
+    GPSTracker gps;
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -62,8 +63,9 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
         String destination = atDestination.getText().toString();
+        gps = new GPSTracker(mContext);
         if (origin.isEmpty()) {
-            origin = mMapActivityPresenter.myLocationLat + "," + mMapActivityPresenter.myLocationLong;
+            origin = gps.getLatitude() + "," + gps.getLongitude();
         }
         if (destination.isEmpty()) {
             Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();

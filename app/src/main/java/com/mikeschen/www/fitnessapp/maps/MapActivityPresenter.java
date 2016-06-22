@@ -16,9 +16,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinder;
-import com.mikeschen.www.fitnessapp.Modules.DirectionFinderListener;
-import com.mikeschen.www.fitnessapp.Modules.Route;
+import com.mikeschen.www.fitnessapp.utils.DirectionFinder;
+import com.mikeschen.www.fitnessapp.utils.DirectionFinderListener;
+import com.mikeschen.www.fitnessapp.models.Route;
 import com.mikeschen.www.fitnessapp.R;
 
 import java.io.UnsupportedEncodingException;
@@ -108,7 +108,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            Long miles = Math.round(route.distance.value * 0.000621371);
+            double miles = Math.round((route.distance.value * 0.000621371) * 10d) / 10d;
             Long minutes = Math.round(route.duration.value / 60.0);
             durations.add(minutes + " minutes");
             distances.add(miles + " miles");
@@ -124,17 +124,18 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-            if (counter > 0) {
+//            if (counter > 0) {
+//                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
+//                        .title(route.endAddress)
+//                        .position(route.endLocation)));
+//            } else {
+//            Log.d("endLat", route.endLocation.latitude+"");
                 destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
                         .title(route.endAddress)
                         .position(route.endLocation)));
-            } else {
-                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                        .title(route.endAddress)
-                        .position(route.endLocation)));
-            }
-            Log.d("destination", destinationMarkers + "");
+//            }
+//            Log.d("destination", destinationMarkers + "");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Marker marker : originMarkers) {
                 builder.include(marker.getPosition());
@@ -155,9 +156,9 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .width(20)
                     .geodesic(true);
 
-            for (int i = 0; i < route.points.size(); i++)
+            for (int i = 0; i < route.points.size(); i++) {
                 polylineOptions.add(route.points.get(i));
-
+            }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
             counter++;
         }
@@ -167,7 +168,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
             @Override
             public void onPolylineClick (Polyline clickedPolyline) {
-                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
+//                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
                 for (int i = 0; i < polylinePaths.size(); i++) {
                     if (polylinePaths.get(i).getId().equals(clickedPolyline.getId())) {
                         clickedPolyline.setColor(Color.rgb(78, 160, 257));

@@ -16,6 +16,7 @@ import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
+import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
 
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;

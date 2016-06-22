@@ -13,11 +13,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.mikeschen.www.fitnessapp.Calories;
+import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.Constants;
-import com.mikeschen.www.fitnessapp.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.Steps;
+import com.mikeschen.www.fitnessapp.models.Steps;
 
 import java.util.ArrayList;
 import java.util.Timer;

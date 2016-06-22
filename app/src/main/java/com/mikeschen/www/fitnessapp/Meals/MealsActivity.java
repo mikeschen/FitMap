@@ -22,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Calories;
-import com.mikeschen.www.fitnessapp.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
 
 import java.text.SimpleDateFormat;
