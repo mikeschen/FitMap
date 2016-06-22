@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
-    public void showCalorieRoute(int calorie) {
+    public void showCalorieRoute(Long calorie) {
     }
 
     @Override

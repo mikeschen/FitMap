@@ -3,15 +3,15 @@ package com.mikeschen.www.fitnessapp;
 public class Calories {
 
     long id;
-    int caloriesBurned;
+    Integer calories;
     int date;
 
     public Calories() {
     }
 
-    public Calories(long id, int caloriesBurned, int date) {
+    public Calories(long id, Integer calories, int date) {
         this.id = id;
-        this.caloriesBurned = caloriesBurned;
+        this.calories = calories;
         this.date = date;
     }
 
@@ -23,12 +23,12 @@ public class Calories {
         this.id = id;
     }
 
-    public int getCaloriesBurned() {
-        return caloriesBurned;
+    public Integer getCalories() {
+        return calories;
     }
 
-    public void setCaloriesBurned(int caloriesBurned) {
-        this.caloriesBurned = caloriesBurned;
+    public void setCalories(Integer calories) {
+        this.calories = calories;
     }
 
     public int getDate() {

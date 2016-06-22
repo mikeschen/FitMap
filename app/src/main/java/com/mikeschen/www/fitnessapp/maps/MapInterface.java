@@ -7,7 +7,7 @@ public interface MapInterface {
         void updatePermissionStatus(boolean permissionStatus);
         void showDistance(String distance);
         void showDuration(String duration);
-        void showCalorieRoute(int calorie);
+        void showCalorieRoute(Long calorie);
         void refresh();
     }
 
