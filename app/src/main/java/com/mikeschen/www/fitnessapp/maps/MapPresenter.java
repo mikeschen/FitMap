@@ -38,9 +38,8 @@ public class MapPresenter implements
     public Context mContext;
     public SupportMapFragment mMapFragment;
     public GoogleMap mMap;
-    private Location mLastLocation;
-    private Marker marker;
     private UiSettings mUiSettings;
+    GPSTracker gps;
 
     public double myLocationLat;
     public double myLocationLong;
@@ -62,55 +61,27 @@ public class MapPresenter implements
 
         enableMyLocation();
 
-//        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-//        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-
         if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Location location = getLastKnownLocation();
-        Log.d("Current Location", location + "");
-        if (location != null) {
+        gps = new GPSTracker(mContext);
+        if(gps.canGetLocation()) {
+            Log.d("Current Lat", gps.getLatitude() + "");
+            Log.d("Current Long", gps.getLongitude() + "");
+
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(location.getLatitude(), location.getLongitude()), 13));
-            myLocationLat = location.getLatitude();
-            myLocationLong = location.getLongitude();
+                    new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
+            myLocationLat = gps.getLatitude();
+            myLocationLong = gps.getLongitude();
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .target(new LatLng(gps.getLatitude(), gps.getLongitude()))
                     .zoom(16)
                     .build();
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        } else {
+            gps.showSettingsAlert();
         }
     }
-
-    private Location getLastKnownLocation() {
-        if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            return;
-        }
-        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = locationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
-            Location l = locationManager.getLastKnownLocation(provider);
-//            ALog.d("last known location, provider: %s, location: %s", provider,
-//                    l);
-
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null
-                    || l.getAccuracy() < bestLocation.getAccuracy()) {
-                Log.d("location: %s", l +"");
-                bestLocation = l;
-            }
-        }
-        if (bestLocation == null) {
-            return null;
-        }
-        return bestLocation;
-    }
-
 
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -144,18 +115,18 @@ public class MapPresenter implements
 
     @Override
     public void onLocationChanged(Location location) {
-        mLastLocation = location;
-
-        if (marker != null) {
-            marker.remove();
-        }
-
-        double dLatitude = mLastLocation.getLatitude();
-        double dLongitude = mLastLocation.getLongitude();
-        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(dLatitude, dLongitude))
-                .title("My Location").icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
+//        mLastLocation = location;
+//
+//        if (marker != null) {
+//            marker.remove();
+//        }
+//
+//        double dLatitude = mLastLocation.getLatitude();
+//        double dLongitude = mLastLocation.getLongitude();
+//        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(dLatitude, dLongitude))
+//                .title("My Location").icon(BitmapDescriptorFactory
+//                        .defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 8));
     }
 
     @Override
