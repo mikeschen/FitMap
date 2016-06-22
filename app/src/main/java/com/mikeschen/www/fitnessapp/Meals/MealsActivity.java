@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
@@ -72,12 +70,19 @@ public class MealsActivity extends BaseActivity implements
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
 //        mSearchType = mSharedPreferences.getString(Constants.PREFERENCES_SEARCH_TYPE_KEY, null);
+        if(mSearchType != null && mSearchType.equals("string")){
+//            searchDatabaseByTerm();
+        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
+//            mMealsPresenter.searchUPC(String upc);
+        }
+
 //        if(mSearchType != null && mSearchType.equals("string")){
 //            searchDatabaseByTerm();
 //        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
 //            mMealsPresenter.searchUPC(upc);
 //        }
 //        mAuthProgressDialog.show();
+
 
         mSaveButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
@@ -191,3 +196,8 @@ public class MealsActivity extends BaseActivity implements
         });
     }
 }
+
+
+//Together with steptracker we also are implementing meal tracker. Once you open the app, the user can navigate to the meals tab using the navigation drawer. The main idea of the meal tracker is for the user to be able to check how many calories she/he consumes per day. We believe that calories burned and calories consumed are great way to check how you are doing throughout the day.
+//the user wil have a few options of find food item;can be searchable using Nutrininix API call; can be searched using scanning UPC code and the user can enter custom item. Once the item is enterned pr scanned, calories will be displayed. Throughout the day, food items will be added and total calories will be displayed at the bottom of the page.
+//Another feature we are implementing is saving food items to Database, tips/suggestions for healthy life style.
