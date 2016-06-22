@@ -25,12 +25,12 @@ public class MealsPresenter implements
     private Context mContext;
     private int consumedCalories;
     private int totalCalories;
-    DatabaseHelper db;
     private String mSearchString;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
-
     public ArrayList<Food> mFoods = new ArrayList<>();
+
+    DatabaseHelper db;
 
 
     public MealsPresenter(MealsInterface.View mealsView, Context context) {
@@ -99,3 +99,10 @@ public class MealsPresenter implements
 
     }
 }
+
+//create a presenter for searchUPC and take all code from BaseActivity
+//MealsTracker activity that never changes and then impliment fragment that handles the search data
+//dialog with fields and btn save and closes
+//list fragment and meals fragment; savedmeals fragment
+//last green activity will be separate activity
+//how to display the calories on the screen as well
