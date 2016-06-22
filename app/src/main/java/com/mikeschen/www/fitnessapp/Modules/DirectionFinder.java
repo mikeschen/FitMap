@@ -38,6 +38,7 @@ public class DirectionFinder {
         Log.d("listener", listener+"");
 
         listener.onDirectionFinderStart();
+
         new DownloadRawData().execute(createUrl());
     }
 

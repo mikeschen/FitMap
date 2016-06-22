@@ -128,9 +128,9 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .width(20)
                     .geodesic(true);
 
-            for (int i = 0; i < route.points.size(); i++)
+            for (int i = 0; i < route.points.size(); i++) {
                 polylineOptions.add(route.points.get(i));
-
+            }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
         }
     }
