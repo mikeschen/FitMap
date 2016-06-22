@@ -114,8 +114,8 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             distances.add(miles + " miles");
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            mMapView.showDistance(miles.toString());
-            mMapView.showDuration(minutes.toString());
+            mMapView.showDistance(miles + " miles");
+            mMapView.showDuration(minutes + " minutes");
             calorie = Math.round(route.distance.value / 16.1);
             mMapView.showCalorieRoute(calorie);
             routeCalories.add(calorie);
