@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,38 +7,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.models.Steps;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Ramon on 6/21/16.
+ * Created by Ramon on 6/17/16.
  */
-public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder> {
-    private ArrayList<Calories> mCalories = new ArrayList<>();
+public class DatabaseStepsListAdapter extends RecyclerView.Adapter<DatabaseStepsListAdapter.DatabaseViewHolder> {
+    private ArrayList<Steps> mSteps = new ArrayList<>();
     private Context mContext;
 
-    public DatabaseCaloriesConsumedListAdapter(Context context, ArrayList<Calories> calories) {
+    public DatabaseStepsListAdapter(Context context, ArrayList<Steps> steps) {
         mContext = context;
-        mCalories = calories;
+        mSteps = steps;
     }
 
     @Override
-    public DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DatabaseStepsListAdapter.DatabaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.database_list_item, parent, false);
         DatabaseViewHolder viewHolder = new DatabaseViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DatabaseCaloriesConsumedListAdapter.DatabaseViewHolder holder, int position) {
-        holder.bindCalories(mCalories.get(position));
+    public void onBindViewHolder(DatabaseStepsListAdapter.DatabaseViewHolder holder, int position) {
+        holder.bindSteps(mSteps.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mCalories.size();
+        return mSteps.size();
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
@@ -53,10 +56,10 @@ public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<Da
             mContext = itemView.getContext();
         }
 
-        public void bindCalories(Calories calories) {
-            mTextViewId.setText(String.valueOf(calories.getId()));
-            mTextViewCount.setText(String.valueOf(calories.getCalories()));
-            mTextViewDate.setText(String.valueOf(calories.getDate()));
+        public void bindSteps(Steps steps) {
+            mTextViewId.setText(String.valueOf(steps.getId()));
+            mTextViewCount.setText(String.valueOf(steps.getStepsTaken()));
+            mTextViewDate.setText(String.valueOf(steps.getDate()));
 
         }
     }

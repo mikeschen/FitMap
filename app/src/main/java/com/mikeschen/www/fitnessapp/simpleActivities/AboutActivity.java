@@ -1,8 +1,11 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.simpleActivities;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

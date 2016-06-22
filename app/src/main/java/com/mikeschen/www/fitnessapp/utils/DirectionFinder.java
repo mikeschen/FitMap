@@ -1,10 +1,13 @@
-package com.mikeschen.www.fitnessapp.Modules;
+package com.mikeschen.www.fitnessapp.utils;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikeschen.www.fitnessapp.Constants;
+import com.mikeschen.www.fitnessapp.models.Distance;
+import com.mikeschen.www.fitnessapp.models.Duration;
+import com.mikeschen.www.fitnessapp.models.Route;
 
 import org.json.JSONArray;
 import org.json.JSONException;

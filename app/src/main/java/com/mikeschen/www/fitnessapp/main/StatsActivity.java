@@ -1,7 +1,6 @@
 package com.mikeschen.www.fitnessapp.main;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,13 +8,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Calories;
-import com.mikeschen.www.fitnessapp.DatabaseCalorieListAdapter;
-import com.mikeschen.www.fitnessapp.DatabaseCaloriesConsumedListAdapter;
-import com.mikeschen.www.fitnessapp.DatabaseHelper;
-import com.mikeschen.www.fitnessapp.DatabaseStepsListAdapter;
+import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.adapters.DatabaseCalorieListAdapter;
+import com.mikeschen.www.fitnessapp.adapters.DatabaseCaloriesConsumedListAdapter;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.adapters.DatabaseStepsListAdapter;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.Steps;
+import com.mikeschen.www.fitnessapp.models.Steps;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp.Modules;
+package com.mikeschen.www.fitnessapp.models;
 
 /**
  * Created by alexnenchev on 6/14/16.

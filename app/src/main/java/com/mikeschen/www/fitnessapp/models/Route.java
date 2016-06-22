@@ -1,7 +1,9 @@
-package com.mikeschen.www.fitnessapp.Modules;
+package com.mikeschen.www.fitnessapp.models;
 
 
 import com.google.android.gms.maps.model.LatLng;
+import com.mikeschen.www.fitnessapp.models.Distance;
+import com.mikeschen.www.fitnessapp.models.Duration;
 
 import java.util.List;
 

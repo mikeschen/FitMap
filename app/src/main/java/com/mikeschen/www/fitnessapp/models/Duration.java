@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp.Modules;
+package com.mikeschen.www.fitnessapp.models;
 
 
 public class Duration {
