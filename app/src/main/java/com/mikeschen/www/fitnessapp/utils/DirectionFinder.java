@@ -61,7 +61,7 @@ public class DirectionFinder {
     private String createUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
-        Log.d("url", urlDestination);
+//        Log.d("url", urlDestination);
         return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
     }
 
@@ -69,7 +69,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         String urlWaypoint = calculateWaypoint();
-        Log.d("curentURl2", DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY);
+//        Log.d("curentURl2", DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY);
         return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
     }
 
@@ -110,7 +110,7 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-        Log.d("json", data);
+//        Log.d("json", data);
         if (data == null)
             return;
 
@@ -149,7 +149,7 @@ public class DirectionFinder {
             route.startAddress = jsonLeg.getString("start_address");
             originLat = jsonStartLocation.getDouble("lat");
             originLong = jsonStartLocation.getDouble("lng");
-            Log.d("route end", ""+destinationLat);
+//            Log.d("route end", ""+destinationLat);
             route.startLocation = new LatLng(originLat, originLong);
             route.endLocation = new LatLng(destinationLat, destinationLong);
             route.points = decodePolyLine(overview_polylineJson.getString("points"));
@@ -157,7 +157,8 @@ public class DirectionFinder {
             if(currentCount == 0) {
                 shortestDistance = jsonDistance.getInt("value");
             } else {
-                if(Math.abs(totalDistance - shortestDistance) < 10){
+                Log.d("distanceDiff", ""+Math.abs(totalDistance - shortestDistance));
+                if(Math.abs(totalDistance - shortestDistance) < 200){
                     wayPointDistance += .001;
                     try {
                         new DownloadRawData().execute(createSecondUrl());
@@ -193,7 +194,7 @@ public class DirectionFinder {
 
         distance = Math.sqrt((latDiff*latDiff) + (lngDiff*lngDiff));
         if(wayPointDistance == 0) {
-            wayPointDistance = distance / 2;
+            wayPointDistance = distance / 3;
         }
 
         double angle = Math.atan2(latDiff,lngDiff);
@@ -205,10 +206,12 @@ public class DirectionFinder {
         Log.d("theta", theta+"");
         double wayPointLat;
         double wayPointLong;
-//            wayPointLat = midLat + wayPointDistance * Math.cos(theta);
-//            wayPointLong = midLong + wayPointDistance * Math.sin(theta);
-            wayPointLat = midLat + wayPointDistance * Math.sin(theta);
-            wayPointLong = midLong + wayPointDistance * Math.cos(theta);
+            wayPointLat = midLat + wayPointDistance * Math.cos(theta);
+            wayPointLong = midLong + wayPointDistance * Math.sin(theta);
+        Log.d("verticalDistance", wayPointDistance * Math.sin(theta)+"");
+        Log.d("horizontalDistance", wayPointDistance * Math.cos(theta)+"");
+//            wayPointLat = midLat + wayPointDistance * Math.sin(theta);
+//            wayPointLong = midLong + wayPointDistance * Math.cos(theta);
         return wayPointLat + "," + wayPointLong;
     }
 

@@ -130,12 +130,12 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 //                        .title(route.endAddress)
 //                        .position(route.endLocation)));
 //            } else {
-            Log.d("endLat", route.endLocation.latitude+"");
+//            Log.d("endLat", route.endLocation.latitude+"");
                 destinationMarkers.add(mMap.addMarker(new MarkerOptions()
                         .title(route.endAddress)
                         .position(route.endLocation)));
 //            }
-            Log.d("destination", destinationMarkers + "");
+//            Log.d("destination", destinationMarkers + "");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Marker marker : originMarkers) {
                 builder.include(marker.getPosition());
@@ -168,7 +168,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
             @Override
             public void onPolylineClick (Polyline clickedPolyline) {
-                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
+//                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
                 for (int i = 0; i < polylinePaths.size(); i++) {
                     if (polylinePaths.get(i).getId().equals(clickedPolyline.getId())) {
                         clickedPolyline.setColor(Color.rgb(78, 160, 257));
