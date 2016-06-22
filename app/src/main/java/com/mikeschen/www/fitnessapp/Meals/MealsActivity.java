@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,31 +15,39 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MealsActivity extends AppCompatActivity implements
+public class MealsActivity extends BaseActivity implements
         MealsInterface.View,
         View.OnClickListener{
     @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
-    @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     @Bind(R.id.dailyCaloriesBurnedTextView) TextView mDailyCaloriesBurnedTextView;
     @Bind(R.id.todaysDate) TextView mTodaysDate;
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
+    @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
+
     private String mSearchString;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
 
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
+
+    private Context mContext;
+    public ArrayList<Food> mFoods = new ArrayList<>();
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -53,6 +61,8 @@ public class MealsActivity extends AppCompatActivity implements
 
         ButterKnife.bind(this);
 
+
+        mContext = this;
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
         mAuthProgressDialog.setMessage("Searching for food items...");
@@ -65,7 +75,14 @@ public class MealsActivity extends AppCompatActivity implements
         } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
 //            mMealsPresenter.searchUPC(String upc);
         }
-        mAuthProgressDialog.show();
+
+//        if(mSearchType != null && mSearchType.equals("string")){
+//            searchDatabaseByTerm();
+//        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
+//            mMealsPresenter.searchUPC(upc);
+//        }
+//        mAuthProgressDialog.show();
+
 
         mSaveButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
@@ -77,6 +94,7 @@ public class MealsActivity extends AppCompatActivity implements
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
+
     }
 
     @Override
@@ -102,8 +120,13 @@ public class MealsActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showCalories(int calorie) {
+    public void showCalories(Calories calories) {
+        Calories caloriesConsumed;
+        caloriesConsumed = new Calories(7, calories.getCalories(), calories.getDate());
 
+        caloriesConsumed = db.getCaloriesConsumed(calories.getId());
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + caloriesConsumed);
+        Log.d("Calories consumed", caloriesConsumed + "");
     }
 
     @Override
@@ -154,5 +177,22 @@ public class MealsActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void displayFood(ArrayList<Food> foods) {
+        MealsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mFoods == null) {
+                    mAuthProgressDialog.dismiss();
+                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                    mContext.startActivity(intent);
+                } else {
+                    mAuthProgressDialog.dismiss();
+                }
+            }
+        });
     }
 }

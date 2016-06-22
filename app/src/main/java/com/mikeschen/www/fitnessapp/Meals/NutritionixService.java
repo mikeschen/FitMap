@@ -52,7 +52,7 @@ public class NutritionixService {
 
     }
 
-    public void searchUPC(String upc, ItemTouchHelper.Callback callback){
+    public void searchUPC(String upc, Callback callback){
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
         urlBuilder.addPathSegment(ITEM_PATH_SEGMENT);

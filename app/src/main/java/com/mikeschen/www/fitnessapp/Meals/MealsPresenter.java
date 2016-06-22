@@ -2,12 +2,19 @@ package com.mikeschen.www.fitnessapp.Meals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 public class MealsPresenter implements
@@ -56,18 +63,19 @@ public class MealsPresenter implements
 
     @Override
     public void searchUPC(String upc) {
-//        final NutritionixService nutritionixService = new NutritionixService();
-//        nutritionixService.searchUPC(mSearchString, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                mFoods = nutritionixService.processResultsUpc(response);
-//
-//                MealsActivity.runOnUiThread(new Runnable() {
+        final NutritionixService nutritionixService = new NutritionixService();
+        nutritionixService.searchUPC(mSearchString, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                mFoods = nutritionixService.processResultsUpc(response);
+                mMealsView.displayFood(mFoods);
+
+//                MealsActivity.this.runOnUiThread(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        if (mFoods == null) {
@@ -80,10 +88,10 @@ public class MealsPresenter implements
 //                        }
 //                    }
 //                });
-//
-//            }
-//
-//        });
+
+            }
+
+        });
     }
 
     @Override
