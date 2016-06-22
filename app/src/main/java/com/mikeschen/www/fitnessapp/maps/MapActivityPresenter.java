@@ -3,6 +3,7 @@ package com.mikeschen.www.fitnessapp.maps;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,14 +35,20 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private int calorie;
-    private double myLong;
+    private Long calorie;
+    private int counter = 0;
+    private ArrayList<String> distances;
+    private ArrayList<String> durations;
+    private ArrayList<Long> routeCalories;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
         mMapView = mapView;
         mContext = context;
         mMapFragment = mapFragment;
+        distances = new ArrayList<>();
+        durations = new ArrayList<>();
+        routeCalories = new ArrayList<>();
     }
 
     @Override
@@ -86,30 +93,48 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                 polyline.remove();
             }
         }
+
+        distances.clear();
+        durations.clear();
+        routeCalories.clear();
     }
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
+        counter = 0;
         progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
+            Long miles = Math.round(route.distance.value * 0.000621371);
+            Long minutes = Math.round(route.duration.value / 60.0);
+            durations.add(minutes + " minutes");
+            distances.add(miles + " miles");
+
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            mMapView.showDistance(route.distance.text);
-            mMapView.showDuration(route.duration.text);
-            calorie = ((int)(Math.round(route.distance.value/16.1)));
+            mMapView.showDistance(miles.toString());
+            mMapView.showDuration(minutes.toString());
+            calorie = Math.round(route.distance.value / 16.1);
             mMapView.showCalorieRoute(calorie);
+            routeCalories.add(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.startmarker))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.endmarker))
-                    .title(route.endAddress)
-                    .position(route.endLocation)));
+            if (counter > 0) {
+                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
+                        .title(route.endAddress)
+                        .position(route.endLocation)));
+            } else {
+                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                        .title(route.endAddress)
+                        .position(route.endLocation)));
+            }
+            Log.d("destination", destinationMarkers + "");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Marker marker : originMarkers) {
                 builder.include(marker.getPosition());
@@ -126,7 +151,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             mMap.moveCamera(cu);
 
             PolylineOptions polylineOptions = new PolylineOptions()
-                    .color(Color.rgb(66,133,244))
+                    .color(Color.rgb(66, 133, 244))
                     .width(20)
                     .geodesic(true);
 
@@ -134,6 +159,26 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                 polylineOptions.add(route.points.get(i));
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
+            counter++;
         }
+        for (Polyline polyline : polylinePaths) {
+            polyline.setClickable(true);
+        }
+        mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick (Polyline clickedPolyline) {
+                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
+                for (int i = 0; i < polylinePaths.size(); i++) {
+                    if (polylinePaths.get(i).getId().equals(clickedPolyline.getId())) {
+                        clickedPolyline.setColor(Color.rgb(78, 160, 257));
+                        mMapView.showDistance(distances.get(i));
+                        mMapView.showDuration(durations.get(i));
+                        mMapView.showCalorieRoute(routeCalories.get(i));
+                    } else {
+                        polylinePaths.get(i).setColor(Color.rgb(66, 133, 244));
+                    }
+                }
+            }
+        });
     }
 }

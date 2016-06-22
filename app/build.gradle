@@ -47,6 +47,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
 
     //implement callingraphy
 

@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_small_padding"
         android:id="@+id/atOrigin"
+        android:text="902 e myrtle ave phoenix"
         android:hint="My Location" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_small_padding"
+        android:text="phoenix"
         android:hint="Enter Destination Address"
         android:id="@+id/atDestination" />
 
