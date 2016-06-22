@@ -1,8 +1,6 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
 
-import android.support.v7.widget.helper.ItemTouchHelper;
-
 import com.mikeschen.www.fitnessapp.Constants;
 
 import org.json.JSONArray;
@@ -33,7 +31,7 @@ public class NutritionixService {
     private String ITEM_PATH_SEGMENT = Constants.ITEM_PATH_SEGMENT;
     private String UPC_QUERY = Constants.UPC_QUERY;
 
-    public void searchFoods(String foodItem, ItemTouchHelper.Callback callback){
+    public void searchFoods(String foodItem, Callback callback){
 
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();

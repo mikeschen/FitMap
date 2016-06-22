@@ -15,6 +15,7 @@ public interface MealsInterface {
         void showCalories(Calories calories);
         void refresh();
         void displayFood(ArrayList<Food> foods);
+        void displayFoodByItem(ArrayList<Food> foods);
     }
 
     interface Presenter {

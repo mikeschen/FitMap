@@ -2,12 +2,15 @@ package com.mikeschen.www.fitnessapp.Meals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +21,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
@@ -40,6 +42,7 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
+    @Bind(R.id.dialogButton) Button mDialogButton;
 
     private String mSearchString;
     private String mSearchType;
@@ -72,6 +75,12 @@ public class MealsActivity extends BaseActivity implements
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
 //        mSearchType = mSharedPreferences.getString(Constants.PREFERENCES_SEARCH_TYPE_KEY, null);
+        if(mSearchType != null && mSearchType.equals("string")){
+//            searchDatabaseByTerm();
+        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
+//            mMealsPresenter.searchUPC(String upc);
+        }
+
 //        if(mSearchType != null && mSearchType.equals("string")){
 //            searchDatabaseByTerm();
 //        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
@@ -79,7 +88,9 @@ public class MealsActivity extends BaseActivity implements
 //        }
 //        mAuthProgressDialog.show();
 
+
         mSaveButton.setOnClickListener(this);
+        mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
         mMealsPresenter = new MealsPresenter(this, getApplicationContext());
 
@@ -101,8 +112,13 @@ public class MealsActivity extends BaseActivity implements
                 setHideSoftKeyboard(mCalorieInputEditText);
                 mMealsPresenter.saveCalories(calories);
                 break;
+            case (R.id.dialogButton):
+                openDialog();
+                break;
         }
     }
+
+
 
     @Override
     public void showFoodItem(String foodItem) {
@@ -127,6 +143,7 @@ public class MealsActivity extends BaseActivity implements
     public void refresh() {
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -189,4 +206,59 @@ public class MealsActivity extends BaseActivity implements
             }
         });
     }
+
+    @Override
+    public void displayFoodByItem(ArrayList<Food> foods) {
+        MealsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsActivity.this);
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                mContext.startActivity(intent);
+                mAuthProgressDialog.dismiss();
+            }
+        });
+    }
+
+    private void openDialog() {
+        LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
+        View subView = inflater.inflate(R.layout.search_fragment_item, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Item To List");
+        builder.setMessage("Enter Item Info, Select List, and Click 'Okay'");
+        builder.setView(subView);
+        AlertDialog alertDialog = builder.create();
+
+        final EditText subEditText = (EditText) subView.findViewById(R.id.searchFoodItemEditText);
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                subEditText.setText("You need an item name!");
+
+                String foodItem = subEditText.getText().toString();
+
+
+                mMealsPresenter.searchFoods(foodItem);
+//
+//                Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.show();
+    }
+
 }
+
