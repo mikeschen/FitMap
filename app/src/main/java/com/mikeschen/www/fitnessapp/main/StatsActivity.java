@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseCalorieListAdapter;
 import com.mikeschen.www.fitnessapp.DatabaseCaloriesConsumedListAdapter;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class StatsActivity extends AppCompatActivity implements View.OnClickListener{
+public class StatsActivity extends BaseActivity implements View.OnClickListener{
 
     @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
     @Bind(R.id.caloriesBurnedRecyclerView) RecyclerView mCaloriesBurnedRecyclerView;

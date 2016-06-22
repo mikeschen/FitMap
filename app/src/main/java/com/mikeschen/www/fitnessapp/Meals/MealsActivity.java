@@ -77,7 +77,7 @@ public class MealsActivity extends BaseActivity implements
 //        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
 //            mMealsPresenter.searchUPC(upc);
 //        }
-        mAuthProgressDialog.show();
+//        mAuthProgressDialog.show();
 
         mSaveButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
