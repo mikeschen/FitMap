@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseCalorieListAdapter;
+import com.mikeschen.www.fitnessapp.DatabaseCaloriesConsumedListAdapter;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.DatabaseStepsListAdapter;
 import com.mikeschen.www.fitnessapp.R;
@@ -23,10 +24,12 @@ import butterknife.ButterKnife;
 public class StatsActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
-    @Bind(R.id.calorieRecyclerView) RecyclerView mCaloriesRecyclerView;
+    @Bind(R.id.caloriesBurnedRecyclerView) RecyclerView mCaloriesBurnedRecyclerView;
+    @Bind(R.id.caloriesConsumedRecyclerView) RecyclerView mCaloriesConsumedRecyclerView;
     @Bind(R.id.button) Button mButton;
     private DatabaseStepsListAdapter mDatabaseStepsListAdapter;
-    private DatabaseCalorieListAdapter mDatabaseCalorieListAdapter;
+    private DatabaseCalorieListAdapter mDatabaseCaloriesBurnedListAdapter;
+    private DatabaseCaloriesConsumedListAdapter mDatabaseCaloriesConsumedListAdapter;
     public ArrayList<Steps> mSteps = new ArrayList<>();
     public ArrayList<Calories> mCalories = new ArrayList<>();
     DatabaseHelper db;
@@ -48,12 +51,19 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
 
-        mDatabaseCalorieListAdapter = new DatabaseCalorieListAdapter(getApplicationContext(), mCalories);
-        mCaloriesRecyclerView.setAdapter(mDatabaseCalorieListAdapter);
+        mDatabaseCaloriesBurnedListAdapter = new DatabaseCalorieListAdapter(getApplicationContext(), mCalories);
+        mCaloriesBurnedRecyclerView.setAdapter(mDatabaseCaloriesBurnedListAdapter);
         RecyclerView.LayoutManager calorieLayoutManager =
                 new LinearLayoutManager(StatsActivity.this);
-        mCaloriesRecyclerView.setLayoutManager(calorieLayoutManager);
-        mCaloriesRecyclerView.setHasFixedSize(true);
+        mCaloriesBurnedRecyclerView.setLayoutManager(calorieLayoutManager);
+        mCaloriesBurnedRecyclerView.setHasFixedSize(true);
+
+        mDatabaseCaloriesConsumedListAdapter = new DatabaseCaloriesConsumedListAdapter(getApplicationContext(), mCalories);
+        mCaloriesConsumedRecyclerView.setAdapter(mDatabaseCaloriesConsumedListAdapter);
+        RecyclerView.LayoutManager caloriesConsumedLayoutManager =
+                new LinearLayoutManager(StatsActivity.this);
+        mCaloriesConsumedRecyclerView.setLayoutManager(caloriesConsumedLayoutManager);
+        mCaloriesConsumedRecyclerView.setHasFixedSize(true);
 
         mButton.setOnClickListener(this);
     }
@@ -64,6 +74,7 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
             case(R.id.button) :
                 db.deleteAllStepsRecords();
                 db.deleteAllCaloriesBurnedRecords();
+                db.deleteAllCaloriesConsumedRecords();
                 refresh();
         }
     }

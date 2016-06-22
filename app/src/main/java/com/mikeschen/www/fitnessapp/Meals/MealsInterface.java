@@ -1,5 +1,7 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
+import com.mikeschen.www.fitnessapp.Calories;
+
 /**
  * Created by alexnenchev on 6/21/16.
  */
@@ -8,7 +10,7 @@ public interface MealsInterface {
     interface View {
         void showFoodItem(String foodItem);
         void saveFoodItem(String foodItem);
-        void showCalories(int calorie);
+        void showCalories(Calories calories);
         void refresh();
     }
 

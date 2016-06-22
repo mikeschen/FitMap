@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
+import com.mikeschen.www.fitnessapp.Calories;
 import com.mikeschen.www.fitnessapp.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
 
@@ -27,12 +30,11 @@ public class MealsActivity extends AppCompatActivity implements
         MealsInterface.View,
         View.OnClickListener{
     @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
-    @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     @Bind(R.id.dailyCaloriesBurnedTextView) TextView mDailyCaloriesBurnedTextView;
     @Bind(R.id.todaysDate) TextView mTodaysDate;
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
-
+    @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
 
@@ -50,6 +52,7 @@ public class MealsActivity extends AppCompatActivity implements
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
+
     }
 
     @Override
@@ -74,8 +77,13 @@ public class MealsActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showCalories(int calorie) {
+    public void showCalories(Calories calories) {
+        Calories caloriesConsumed;
+        caloriesConsumed = new Calories(7, calories.getCalories(), calories.getDate());
 
+        caloriesConsumed = db.getCaloriesConsumed(calories.getId());
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + caloriesConsumed);
+        Log.d("Calories consumed", caloriesConsumed + "");
     }
 
     @Override
