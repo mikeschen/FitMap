@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.models;
 
 public class Calories {
 

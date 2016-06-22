@@ -1,7 +1,9 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.utils;
 
 
 import android.app.Application;
+
+import com.mikeschen.www.fitnessapp.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

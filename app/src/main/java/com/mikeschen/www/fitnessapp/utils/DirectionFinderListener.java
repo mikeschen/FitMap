@@ -1,5 +1,7 @@
-package com.mikeschen.www.fitnessapp.Modules;
+package com.mikeschen.www.fitnessapp.utils;
 
+
+import com.mikeschen.www.fitnessapp.models.Route;
 
 import java.util.List;
 

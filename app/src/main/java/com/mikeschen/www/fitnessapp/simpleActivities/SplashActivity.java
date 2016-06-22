@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp;
+package com.mikeschen.www.fitnessapp.simpleActivities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
