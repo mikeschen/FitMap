@@ -62,7 +62,6 @@ public class MealsPresenter implements
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 mFoods = nutritionixService.processResults(response);
                 mMealsView.displayFoodByItem(mFoods);
             }

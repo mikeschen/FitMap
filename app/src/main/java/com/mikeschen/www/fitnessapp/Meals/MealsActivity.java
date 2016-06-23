@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,10 +42,12 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     @Bind(R.id.dialogButton) Button mDialogButton;
+//    @Bind(R.id.foodItemRecyclerView) RecyclerView mFoodItemRecyclerView;
 
     private String mSearchString;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
+//    private SearchListAdapter mAdapter;
 
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
@@ -76,7 +77,7 @@ public class MealsActivity extends BaseActivity implements
         mSearchString = intent.getStringExtra("inputText");
 //        mSearchType = mSharedPreferences.getString(Constants.PREFERENCES_SEARCH_TYPE_KEY, null);
         if(mSearchType != null && mSearchType.equals("string")){
-//            searchDatabaseByTerm();
+//            mMealsPresenter.searchFoods(String foodItem);
         } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
 //            mMealsPresenter.searchUPC(String upc);
         }
@@ -210,16 +211,25 @@ public class MealsActivity extends BaseActivity implements
 
     @Override
     public void displayFoodByItem(ArrayList<Food> foods) {
-        MealsActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsActivity.this);
-                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                mContext.startActivity(intent);
-                mAuthProgressDialog.dismiss();
-            }
-        });
+
     }
+//
+//    @Override
+//    public void displayFoodByItem(ArrayList<Food> foods) {
+//        MealsActivity.this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+////                mAdapter = new SearchListAdapter(getApplicationContext(), mFoods);
+////                mFoodItemRecyclerView.setAdapter(mAdapter);
+////                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsActivity.this);
+////                mFoodItemRecyclerView.setLayoutManager(layoutManager);
+//                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+//                mContext.startActivity(intent);
+//                mAuthProgressDialog.dismiss();
+//            }
+//        });
+//    }
 
     private void openDialog() {
         LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
@@ -242,12 +252,12 @@ public class MealsActivity extends BaseActivity implements
                 subEditText.setText("You need an item name!");
 
                 String foodItem = subEditText.getText().toString();
-
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
 
                 mMealsPresenter.searchFoods(foodItem);
+                mContext.startActivity(intent);
 //
 //                Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
-
             }
         });
 
