@@ -111,7 +111,7 @@ public class MealsActivity extends BaseActivity implements
                 String strCalories = mCalorieInputEditText.getText().toString();
                 Integer calories = Integer.parseInt(strCalories);
                 setHideSoftKeyboard(mCalorieInputEditText);
-                mMealsPresenter.saveCalories(calories);
+                saveCalories(calories);
                 break;
             case (R.id.dialogButton):
                 openDialog();
@@ -129,6 +129,13 @@ public class MealsActivity extends BaseActivity implements
     @Override
     public void saveFoodItem(String foodItem) {
 
+    }
+
+    public void saveCalories(Integer calories) {
+        Calories caloriesConsumed;
+        caloriesConsumed = new Calories(1, calories, 345);
+        db.logCaloriesConsumed(caloriesConsumed);
+        db.close();
     }
 
     @Override

@@ -27,40 +27,38 @@ import java.util.List;
 
 public class MapActivityPresenter extends MapPresenter implements DirectionFinderListener {
 
-    private GoogleMap mMap;
+//    private GoogleMap mMap;
     private UiSettings mUiSettings;
-    private Context mContext;
+//    private Context mContext;
     private MapInterface.View mMapView;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
-    private ProgressDialog progressDialog;
+//    private ProgressDialog progressDialog;
     private Long calorie;
     private int counter = 0;
     private ArrayList<String> distances;
     private ArrayList<String> durations;
     private ArrayList<Long> routeCalories;
 
-    public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
-        super(mapView, context, mapFragment);
+    public MapActivityPresenter(MapInterface.View mapView) {
+        super(mapView);
         mMapView = mapView;
-        mContext = context;
-        mMapFragment = mapFragment;
         distances = new ArrayList<>();
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        super.onMapReady(map);
-        mMap = map;
-        mUiSettings = mMap.getUiSettings();
-        mUiSettings.setZoomGesturesEnabled(true);
-        mUiSettings.setRotateGesturesEnabled(true);
-        mMap.setOnMyLocationButtonClickListener(this);
-        mUiSettings.setZoomControlsEnabled(true);
-    }
+//    @Override
+//    public void onMapReady(GoogleMap map) {
+//        super.onMapReady(map);
+//        mMap = map;
+//        mUiSettings = mMap.getUiSettings();
+//        mUiSettings.setZoomGesturesEnabled(true);
+//        mUiSettings.setRotateGesturesEnabled(true);
+//        mMap.setOnMyLocationButtonClickListener(this);
+//        mUiSettings.setZoomControlsEnabled(true);
+//    }
 
     @Override
     public void makeRequest(String origin, String destination) {
@@ -73,8 +71,8 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(mContext, "Please wait...",
-                "Finding Directions", true);
+//        progressDialog = ProgressDialog.show(mContext, "Please wait...",
+//                "Finding Directions", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -102,7 +100,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
         counter = 0;
-        progressDialog.dismiss();
+//        progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();

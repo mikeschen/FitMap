@@ -14,6 +14,7 @@ import android.util.Log;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -28,70 +29,67 @@ import java.util.List;
 
 public class MapPresenter implements
         MapInterface.Presenter,
-        OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
         LocationListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
     public final MapInterface.View mMapView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    public Context mContext;
-    public SupportMapFragment mMapFragment;
-    public GoogleMap mMap;
-    private UiSettings mUiSettings;
-    GPSTracker gps;
+//    public Context mContext;
+//    public SupportMapFragment mMapFragment;
+//    public GoogleMap mMap;
+//    private UiSettings mUiSettings;
+//    GPSTracker gps;
+//
+//    public double myLocationLat;
+//    public double myLocationLong;
 
-    public double myLocationLat;
-    public double myLocationLong;
-
-    public MapPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
+    public MapPresenter(MapInterface.View mapView) {
         mMapView = mapView;
-        mContext = context;
-        mMapFragment = mapFragment;
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
-        mUiSettings = mMap.getUiSettings();
-        mUiSettings.setZoomGesturesEnabled(false);
-        mUiSettings.setRotateGesturesEnabled(false);
-
-        mMap.setOnMyLocationButtonClickListener(this);
-
-        enableMyLocation();
-
-        if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        gps = new GPSTracker(mContext);
-        if(gps.canGetLocation()) {
-            Log.d("Current Lat", gps.getLatitude() + "");
-            Log.d("Current Long", gps.getLongitude() + "");
-
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
-            myLocationLat = gps.getLatitude();
-            myLocationLong = gps.getLongitude();
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(gps.getLatitude(), gps.getLongitude()))
-                    .zoom(16)
-                    .build();
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        } else {
-            gps.showSettingsAlert();
-        }
-    }
-
-    private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            PermissionUtils.requestPermission((FragmentActivity) mContext, LOCATION_PERMISSION_REQUEST_CODE,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
-        } else if (mMap != null) {
-            mMap.setMyLocationEnabled(true);
-        }
-    }
+//    @Override
+//    public void onMapReady(GoogleMap map) {
+//        mMap = map;
+//        mUiSettings = mMap.getUiSettings();
+//        mUiSettings.setZoomGesturesEnabled(false);
+//        mUiSettings.setRotateGesturesEnabled(false);
+//
+//        mMap.setOnMyLocationButtonClickListener(this);
+//
+//        enableMyLocation();
+//
+//        if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+//        gps = new GPSTracker(mContext);
+//        if(gps.canGetLocation()) {
+//            Log.d("Current Lat", gps.getLatitude() + "");
+//            Log.d("Current Long", gps.getLongitude() + "");
+//
+//            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                    new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
+//            myLocationLat = gps.getLatitude();
+//            myLocationLong = gps.getLongitude();
+//            CameraPosition cameraPosition = new CameraPosition.Builder()
+//                    .target(new LatLng(gps.getLatitude(), gps.getLongitude()))
+//                    .zoom(16)
+//                    .build();
+//            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//        } else {
+//            gps.showSettingsAlert();
+//        }
+//    }
+//
+//    private void enableMyLocation() {
+//        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            PermissionUtils.requestPermission((FragmentActivity) mContext, LOCATION_PERMISSION_REQUEST_CODE,
+//                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
+//        } else if (mMap != null) {
+//            mMap.setMyLocationEnabled(true);
+//        }
+//    }
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -106,7 +104,7 @@ public class MapPresenter implements
 
         if (PermissionUtils.isPermissionGranted(permissions, grantResults,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-            enableMyLocation();
+            mMapView.enableMyLocation();
             mMapView.refresh();
         } else {
             mMapView.updatePermissionStatus(true);
@@ -131,7 +129,7 @@ public class MapPresenter implements
 
     @Override
     public void loadMap() {
-        mMapFragment.getMapAsync(this);
+//        mMapFragment.getMapAsync(this);
     }
 
     @Override

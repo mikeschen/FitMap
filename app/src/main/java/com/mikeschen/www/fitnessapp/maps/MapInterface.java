@@ -9,6 +9,7 @@ public interface MapInterface {
         void showDuration(String duration);
         void showCalorieRoute(Long calorie);
         void refresh();
+        void enableMyLocation();
     }
 
     interface Presenter {
