@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp.Meals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import com.mikeschen.www.fitnessapp.models.Calories;
@@ -71,6 +72,7 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResults(response);
+                Log.d("search return", mFoods + "");
                 mMealsView.displayFoodByItem(mFoods);
             }
         });
@@ -89,7 +91,7 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResultsUpc(response);
-                mMealsView.displayFood(mFoods);
+                mMealsView.displayFoodByUPC(mFoods);
 
             }
 

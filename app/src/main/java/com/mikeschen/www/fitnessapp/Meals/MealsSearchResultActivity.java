@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
@@ -24,7 +26,10 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     private SearchListAdapter mSearchListAdapter;
     private ItemTouchHelperAdapter mItemTouchHelperAdapter;
     private Context mContext;
+    private MealsPresenter mMealsPresenter;
+
     public ArrayList<Food> mFoods = new ArrayList<>();
+
 
     private ItemTouchHelper mItemTouchHelper;
     @Bind(R.id.searchResultsRecyclerView) RecyclerView mSearchResultsRecyclerView;
@@ -36,7 +41,13 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         setContentView(R.layout.activity_meals_search_result);
         ButterKnife.bind(this);
 
+        mMealsPresenter = new MealsPresenter(this, getApplicationContext());
+
         setUpRecyclerView();
+        Intent intent = getIntent();
+        intent.getStringExtra("food item");
+        Log.d("Food Item?", intent.getStringExtra("food item"));
+        mMealsPresenter.searchFoods("food item");
     }
 
     private void setUpRecyclerView() {
@@ -82,8 +93,8 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
                 mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
                 mSearchResultsRecyclerView.setLayoutManager(layoutManager);
-                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+//                mContext.startActivity(intent);
             }
         });
     }
