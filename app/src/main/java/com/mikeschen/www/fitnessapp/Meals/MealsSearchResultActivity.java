@@ -1,17 +1,30 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
+import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperViewHolder;
+import com.mikeschen.www.fitnessapp.utils.SimpleItemTouchHelperCallback;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MealsSearchResultActivity extends AppCompatActivity {
+
+public class MealsSearchResultActivity extends AppCompatActivity implements MealsInterface.View {
+
+    private SearchListAdapter mSearchListAdapter;
+    private ItemTouchHelperAdapter mItemTouchHelperAdapter;
+    private Context mContext;
+    public ArrayList<Food> mFoods = new ArrayList<>();
 
     private ItemTouchHelper mItemTouchHelper;
     @Bind(R.id.searchResultsRecyclerView) RecyclerView mSearchResultsRecyclerView;
@@ -26,6 +39,52 @@ public class MealsSearchResultActivity extends AppCompatActivity {
         setUpRecyclerView();
     }
 
-    private void setUpRecyclerView();
-    mSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void setUpRecyclerView() {
+        mSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mItemTouchHelperAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mSearchResultsRecyclerView);
+    }
+
+    @Override
+    public void showFoodItem(String foodItem) {
+
+    }
+
+    @Override
+    public void saveFoodItem(String foodItem) {
+
+    }
+
+    @Override
+    public void showCalories(Calories calories) {
+
+    }
+
+    @Override
+    public void refresh() {
+
+    }
+
+    @Override
+    public void displayFoodByUPC(ArrayList<Food> foods) {
+
+    }
+
+    @Override
+    public void displayFoodByItem(ArrayList<Food> foods) {
+        MealsSearchResultActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSearchListAdapter = new SearchListAdapter(getApplicationContext(), mFoods);
+                mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
+                mSearchResultsRecyclerView.setLayoutManager(layoutManager);
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+    }
 }
