@@ -40,6 +40,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     private ArrayList<String> distances;
     private ArrayList<String> durations;
     private ArrayList<Long> routeCalories;
+    private boolean switcher = true;
 
     public MapActivityPresenter(MapInterface.View mapView, Context context, SupportMapFragment mapFragment) {
         super(mapView, context, mapFragment);
@@ -134,8 +135,6 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                 destinationMarkers.add(mMap.addMarker(new MarkerOptions()
                         .title(route.endAddress)
                         .position(route.endLocation)));
-//            }
-//            Log.d("destination", destinationMarkers + "");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Marker marker : originMarkers) {
                 builder.include(marker.getPosition());
@@ -155,6 +154,10 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                     .color(Color.rgb(66, 133, 244))
                     .width(20)
                     .geodesic(true);
+            if (switcher == true) {
+                polylineOptions.color(Color.rgb(78, 160, 257));
+                switcher = false;
+            }
 
             for (int i = 0; i < route.points.size(); i++) {
                 polylineOptions.add(route.points.get(i));
@@ -168,7 +171,6 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
             @Override
             public void onPolylineClick (Polyline clickedPolyline) {
-//                Log.d("PLYlineGETId!", clickedPolyline.getId() + "");
                 for (int i = 0; i < polylinePaths.size(); i++) {
                     if (polylinePaths.get(i).getId().equals(clickedPolyline.getId())) {
                         clickedPolyline.setColor(Color.rgb(78, 160, 257));
