@@ -5,21 +5,6 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <!--<EditText-->
-    <!--android:id="@+id/searchView1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="34dp"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_marginLeft="@dimen/activity_wide_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_wide_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_medium_padding"-->
-    <!--android:hint="Walk Destination"-->
-    <!--android:padding="@dimen/activity_small_padding"-->
-    <!--android:textColor="@android:color/black"-->
-    <!--android:background="@android:color/white" >-->
-    <!--</EditText>-->
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
