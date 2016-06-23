@@ -208,13 +208,9 @@ public class MealsActivity extends BaseActivity implements
         });
     }
 
+
     @Override
     public void displayFoodByItem(ArrayList<Food> foods) {
-
-    }
-//
-//    @Override
-//    public void displayFoodByItem(ArrayList<Food> foods) {
 //        MealsActivity.this.runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -228,7 +224,7 @@ public class MealsActivity extends BaseActivity implements
 //                mAuthProgressDialog.dismiss();
 //            }
 //        });
-//    }
+    }
 
     private void openDialog() {
         LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
@@ -248,12 +244,14 @@ public class MealsActivity extends BaseActivity implements
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                subEditText.setText("You need an item name!");
+//               subEditText.setText("You need an item name!");
 
                 String foodItem = subEditText.getText().toString();
                 Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                intent.putExtra("food item", foodItem);
+                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
 
-                mMealsPresenter.searchFoods(foodItem);
+//                mMealsPresenter.searchFoods(foodItem);
                 mContext.startActivity(intent);
 //
 //                Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
