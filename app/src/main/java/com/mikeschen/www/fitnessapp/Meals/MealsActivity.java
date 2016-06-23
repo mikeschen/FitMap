@@ -231,10 +231,9 @@ public class MealsActivity extends BaseActivity implements
         View subView = inflater.inflate(R.layout.search_fragment_item, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Item To List");
-        builder.setMessage("Enter Item Info, Select List, and Click 'Okay'");
+        builder.setTitle("Search for a food item");
         builder.setView(subView);
-        AlertDialog alertDialog = builder.create();
+//        AlertDialog alertDialog = builder.create();
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.searchFoodItemEditText);
 
