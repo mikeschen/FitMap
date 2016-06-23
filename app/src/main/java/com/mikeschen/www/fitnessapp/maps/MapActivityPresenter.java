@@ -122,7 +122,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             routeCalories.add(calorie);
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
                     .title(route.startAddress)
                     .position(route.startLocation)));
 //            if (counter > 0) {
@@ -164,6 +164,9 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
             counter++;
+            mMapView.showDistance(distances.get(0));
+            mMapView.showDuration(durations.get(0));
+            mMapView.showCalorieRoute(routeCalories.get(0));
         }
         for (Polyline polyline : polylinePaths) {
             polyline.setClickable(true);
@@ -183,5 +186,6 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
                 }
             }
         });
+        switcher = true;
     }
 }
