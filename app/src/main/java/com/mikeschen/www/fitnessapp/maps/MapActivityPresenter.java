@@ -111,6 +111,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
         for (Route route : routes) {
             double miles = Math.round((route.distance.value * 0.000621371) * 10d) / 10d;
             Long minutes = Math.round(route.duration.value / 60.0);
+            Log.d("first jsonmiles", miles + "");
             durations.add(minutes + " minutes");
             distances.add(miles + " miles");
 

@@ -39,7 +39,7 @@ public class DirectionFinder {
     private double destinationLong;
     private double shortestDistance;
     private double wayPointDistance;
-    private double distance;
+    private double distance1;
 
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
         this.listener = listener;
@@ -141,8 +141,10 @@ public class DirectionFinder {
                 destinationLat = jsonEndLocation.getDouble("lat");
                 destinationLong = jsonEndLocation.getDouble("lng");
             }
+            Log.d("currentCount!!", currentCount +  "");
             route.duration = new Duration(jsonDuration.getString("text"), totalDistance);
             route.distance = new Distance(jsonDistance.getString("text"), totalDuration);
+            Log.d("routeDistance!!", route.distance.text + "");
             route.endAddress = jsonLeg.getString("end_address");
             route.startAddress = jsonLeg.getString("start_address");
             originLat = jsonStartLocation.getDouble("lat");
@@ -189,9 +191,9 @@ public class DirectionFinder {
         double latDiff = originLat - destinationLat;
         double lngDiff = originLong - destinationLong;
 
-        distance = Math.sqrt((latDiff*latDiff) + (lngDiff*lngDiff));
+        distance1 = Math.sqrt((latDiff*latDiff) + (lngDiff*lngDiff));
         if(wayPointDistance == 0) {
-            wayPointDistance = distance / 3;
+            wayPointDistance = distance1 / 3;
         }
 
         double angle = Math.atan2(latDiff,lngDiff);
