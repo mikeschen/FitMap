@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +53,19 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         mMapActivityPresenter.loadMap();
         destination = getIntent().getStringExtra("destination");
         atDestination.setText(destination, TextView.BufferType.EDITABLE);
+
+        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    sendRequest();
+                    setHideSoftKeyboard(atDestination);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

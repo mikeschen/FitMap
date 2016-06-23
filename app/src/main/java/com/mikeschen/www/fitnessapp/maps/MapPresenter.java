@@ -64,11 +64,9 @@ public class MapPresenter implements
         if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
         gps = new GPSTracker(mContext);
         if(gps.canGetLocation()) {
-            Log.d("Current Lat", gps.getLatitude() + "");
-            Log.d("Current Long", gps.getLongitude() + "");
-
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
             myLocationLat = gps.getLatitude();
