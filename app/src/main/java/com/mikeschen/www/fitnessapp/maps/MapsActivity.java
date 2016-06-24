@@ -199,7 +199,6 @@ public class MapsActivity extends BaseActivity implements
     @Override
     public void displayDirections(List<Route> routes) {
         counter = 0;
-//        progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
@@ -222,13 +221,6 @@ public class MapsActivity extends BaseActivity implements
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-//            if (counter > 0) {
-//                destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
-//                        .title(route.endAddress)
-//                        .position(route.endLocation)));
-//            } else {
-//            Log.d("endLat", route.endLocation.latitude+"");
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
                     .title(route.endAddress)
                     .position(route.endLocation)));

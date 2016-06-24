@@ -41,8 +41,6 @@ public class MainActivity extends BaseActivity implements
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
 
-//    private SharedPreferences mSharedPreferences;
-//    private SharedPreferences.Editor mEditor;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -55,33 +53,11 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
-//        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 1);
-//        Log.d("Last known steps", lastKnownSteps + "");
-
-//        previous font; may not need it anymore; calligraphy can change fonts to any files we want
-
-
-//        Typeface myTypeFace = Typeface.createFromAsset(getAssets(), "fonts/PTN77F.ttf");
-//        mMainButton.setTypeface(myTypeFace);
-//        mTipsTextView.setTypeface(myTypeFace);
-//        mTipTextView.setTypeface(myTypeFace);
-
-
         buttonDisplay = "Calories";
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
         mContext = this;
-
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mEditor = mSharedPreferences.edit();
-
-//
-//        mDrawerList = (ListView) findViewById(R.id.navList);
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mActivityTitle = getTitle().toString();
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
@@ -191,14 +167,6 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void onPause() {
-//        long destroyTime = System.currentTimeMillis() / 1000;
-//        int destroySteps = mStepCounterPresenter.getStepCount();
-//        int destroyId = mStepCounterPresenter.
-//
-//        Log.d("Destroy Time", destroyTime + "");
-//        Log.d("Destroy Steps", destroySteps + "");
-//        addToSharedPreferences(destroyTime, destroySteps);
-//        Log.d("Shared Prefs", mSharedPreferences + "");
         mStepCounterPresenter.onPause();
         super.onPause();
     }
@@ -208,11 +176,6 @@ public class MainActivity extends BaseActivity implements
         super.onResume();
 
     }
-
-//    private void addToSharedPreferences(long time, int steps) {
-//        mEditor.putLong(Constants.PREFERENCES_TIME_KEY, time).apply();
-//        mEditor.putInt(Constants.PREFERENCES_STEPS_KEY, steps).apply();
-//    }
 
     public void refresh() {
         Intent intent = new Intent(MainActivity.this, MainActivity.class);
