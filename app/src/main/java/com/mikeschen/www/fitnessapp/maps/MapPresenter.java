@@ -91,6 +91,7 @@ public class MapPresenter implements
 //        }
 //    }
 
+
     @Override
     public boolean onMyLocationButtonClick() {
         return false;
