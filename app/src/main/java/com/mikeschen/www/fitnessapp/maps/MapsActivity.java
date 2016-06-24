@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -76,8 +77,6 @@ public class MapsActivity extends BaseActivity implements
     private ArrayList<String> durations;
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
-
-
 
     public double myLocationLat;
     public double myLocationLong;
