@@ -21,13 +21,15 @@ import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends BaseActivity implements
         MainInterface.View,
-        MapInterface.View,
         StepCounterInterface.View,
         View.OnClickListener {
 
@@ -37,7 +39,6 @@ public class MainActivity extends BaseActivity implements
 
     private Context mContext;
     private TipPresenter mTipPresenter;
-    private MapPresenter mMapPresenter;
     private StepCounterPresenter mStepCounterPresenter;
 
 //    private SharedPreferences mSharedPreferences;
@@ -67,8 +68,6 @@ public class MainActivity extends BaseActivity implements
 //        mTipsTextView.setTypeface(myTypeFace);
 //        mTipTextView.setTypeface(myTypeFace);
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         buttonDisplay = "Calories";
         buttonDisplay = "Calories";
@@ -84,13 +83,22 @@ public class MainActivity extends BaseActivity implements
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mActivityTitle = getTitle().toString();
 
-        mTipPresenter = new TipPresenter(this, mContext);
-        mMapPresenter = new MapPresenter(this, mContext, mapFragment);
+        mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
 
-        mTipPresenter.loadTip();
-        mMapPresenter.loadMap();
 
+        String json;
+        try {
+            InputStream is = mContext.getAssets().open("tips.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+            mTipPresenter.loadTip(json);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -155,26 +163,6 @@ public class MainActivity extends BaseActivity implements
         mTipTextView.setText(tip);
     }
 
-    //Google Maps
-    @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
-        if (mPermissionDenied) {
-            // Permission was not granted, display error dialog.
-            showMissingPermissionError();
-            mPermissionDenied = false;
-        }
-    }
-
-    private void showMissingPermissionError() {
-        PermissionUtils.PermissionDeniedDialog
-                .newInstance(true).show(getSupportFragmentManager(), "dialog");
-    }
-
-    @Override
-    public void updatePermissionStatus(boolean permissionStatus) {
-        mPermissionDenied = permissionStatus;
-    }
 
     @Override
     public void onClick(View v) {
@@ -190,17 +178,6 @@ public class MainActivity extends BaseActivity implements
         }
     }
 
-    @Override
-    public void showDistance(String distance) {
-    }
-
-    @Override
-    public void showDuration(String duration) {
-    }
-
-    @Override
-    public void showCalorieRoute(Long calorie) {
-    }
 
     @Override
     public void showSteps(int stepCount) {
