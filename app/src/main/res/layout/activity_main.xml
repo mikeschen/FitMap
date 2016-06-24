@@ -1,51 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:src="@drawable/stairwalkmain"
+        android:src="@drawable/citymain"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.mikeschen.www.fitnessapp.MainActivity">
+        tools:context=".main.MainActivity">
 
-        <EditText
-            android:id="@+id/searchView1"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/activity_wide_margin"
-            android:layout_marginRight="@dimen/activity_wide_margin"
-            android:layout_marginTop="@dimen/activity_medium_padding"
-            android:hint="Walk Destination"
-            android:padding="@dimen/activity_small_padding"
-            android:textColor="@android:color/black"
-            android:background="@android:color/white" >
-        </EditText>
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="28dp"
-            android:layout_height="@dimen/activity_wide_margin"
-            android:layout_marginBottom="@dimen/activity_small_padding"
-            android:layout_alignBottom="@+id/searchView1"
-            android:layout_alignRight="@+id/searchView1"
-            android:background="@drawable/ic_search_black_24dp" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/mainButton"
-            android:layout_below="@+id/searchView1"
             android:layout_centerHorizontal="true"
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/colorWhite"
@@ -62,35 +37,7 @@
             android:gravity="center"
             android:layout_marginTop="@dimen/activity_medium_padding">
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:map="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="@dimen/activity_wide_margin"
-                android:layout_marginRight="@dimen/activity_wide_margin"
-                tools:context="com.mikeschen.www.fitnessapp.MapsActivity"
-                android:layout_below="@+id/mainButton" />
         </LinearLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:layout_below="@+id/tipsTextView"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="20sp"
-        android:textColor="#2E2E2E"
-        android:background="#ffffff" />
 
         <TextView
             android:layout_width="match_parent"
@@ -106,6 +53,7 @@
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:background="@color/colorWhite"
+            android:alpha="0.85"
             android:elevation="2dp"
             android:layout_below="@+id/mapLayout" />
 
@@ -120,16 +68,12 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textSize="@dimen/text_small"
+            android:alpha="0.85"
             android:elevation="1dp"
             android:background="@color/colorWhite"/>
 
+
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/navList"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left|start"
-        android:background="#ffeeeeee"/>
 
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>
