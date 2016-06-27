@@ -86,6 +86,7 @@ public class MealsActivity extends BaseActivity implements
         db = new DatabaseHelper(getApplicationContext());
         List<Calories> calories = db.getAllCalorieConsumedRecords();
         mMealsPresenter = new MealsPresenter(this);
+        //TODO: Fix this so that calories are loaded whether or not pre-existing data is there
         mMealsPresenter.loadCalories(calories.get(calories.size()-1));
 
 

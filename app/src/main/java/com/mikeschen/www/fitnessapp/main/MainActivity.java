@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements
         mContext = this;
 
         mTipPresenter = new TipPresenter(this);
-        mStepCounterPresenter = new StepCounterPresenter(this, mContext);
+        mStepCounterPresenter = new StepCounterPresenter(this);
 
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

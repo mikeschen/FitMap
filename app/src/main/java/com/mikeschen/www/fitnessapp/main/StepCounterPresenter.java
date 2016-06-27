@@ -27,9 +27,6 @@ public class StepCounterPresenter implements
         StepCounterInterface.Presenter {
 
     private StepCounterInterface.View mStepCounterView;
-    private Context mContext;
-//    private SensorManager mSensorManager;
-//    private Sensor mAccelerometer;
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
 
@@ -53,9 +50,8 @@ public class StepCounterPresenter implements
 
 
 
-    public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
+    public StepCounterPresenter(StepCounterInterface.View stepCounterInterface) {
         mStepCounterView = stepCounterInterface;
-        mContext = context;
 
         totalAverageSpeed = 1;
         speedCounted = 1;
@@ -64,9 +60,7 @@ public class StepCounterPresenter implements
         speedData = new ArrayList<>();
         caloriesBurned = 0;
         currentStepsTableId = 1;
-
-
-
+        stepRecord = new Steps(1, 0, 345);
 
         timer = new Timer();
         timerTask = new TimerTask() {
@@ -76,22 +70,7 @@ public class StepCounterPresenter implements
                 long currentTime = System.currentTimeMillis() / 60000;
                 Log.d("currentTime", currentTime + "");
 
-                if (currentTime % (60000/1000) == 0) {
-                    //TODO
-                    //Do more thorough math with these numbers
-                    //(60000/1000) == 0 is 1 hour, BUT ONLY FROM 1PM - 4PM
-                    Log.d("tick", "tock");
-
-                    mStepCounterView.buildNotification(stepRecord.getStepsTaken());
-
-
-                    stepRecord = new Steps(currentStepsTableId, 0, 345);
-                    calorieRecord = new Calories(currentStepsTableId, 0, 345);
-                    long stepRecord_id = mStepCounterView.createNewDBRows(stepRecord, calorieRecord);
-                    stepRecord.setId(stepRecord_id);
-                    calorieRecord.setId(stepRecord_id);
-
-                }
+                checkMidnight(currentTime);
             }
         };
 
@@ -187,7 +166,7 @@ public class StepCounterPresenter implements
         long currentTime = System.currentTimeMillis();
         long daysPassed;
         if (lastKnownTime > 0) {
-            daysPassed = (currentTime / fullDayInMillis) - (lastKnownTime / fullDayInMillis);
+            daysPassed = (currentTime / (1000*60*60)) - (lastKnownTime / (1000*60*60));
         } else {
             daysPassed = 0;
         }
@@ -210,6 +189,24 @@ public class StepCounterPresenter implements
             long stepRecordId = mStepCounterView.createNewDBRows(stepRecord, calorieRecord); //FOR CURRENT DAY
             stepRecord.setId(stepRecordId);
             calorieRecord.setId(stepRecordId);
+        }
+    }
+
+    public void checkMidnight(long currentTime) {
+        if (currentTime % (60000/1000) == 0) {
+            //TODO
+            //Do more thorough math with these numbers
+            //(60000/1000) == 0 is 1 hour, BUT ONLY FROM 1PM - 4PM
+//            Log.d("tick", "tock");
+            mStepCounterView.buildNotification(stepRecord.getStepsTaken());
+
+
+            stepRecord = new Steps(currentStepsTableId, 0, 345);
+            calorieRecord = new Calories(currentStepsTableId, 0, 345);
+            long stepRecord_id = mStepCounterView.createNewDBRows(stepRecord, calorieRecord);
+            stepRecord.setId(stepRecord_id);
+            calorieRecord.setId(stepRecord_id);
+
         }
     }
 }

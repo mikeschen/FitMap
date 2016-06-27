@@ -19,21 +19,14 @@ public class MapPresenterTest {
     private MapPresenter mMapPresenter;
 
     @Mock
-    private SupportMapFragment mMapFragment;
-
-    @Mock
     private MapInterface.View mMapView;
-
-    @Mock
-    private Context context;
 
 
     @Before
     public void setUpMapPresenter() {
         MockitoAnnotations.initMocks(this);
-        context = new MainActivity();
 
-        mMapPresenter = new MapPresenter(mMapView, context, mMapFragment);
+        mMapPresenter = new MapPresenter(mMapView);
     }
 
 //    @Test

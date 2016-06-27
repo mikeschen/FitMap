@@ -28,10 +28,6 @@ android {
         it.buildConfigField "String", "NUTRITIONIX_API_KEY", NutrionixApiKey;
         it.buildConfigField "String", 'NUTRITIONIX_APP_ID', NutritionixAppId
     }
-
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
 }
 
 repositories {
