@@ -41,7 +41,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         setContentView(R.layout.activity_meals_search_result);
         ButterKnife.bind(this);
 
-        mMealsPresenter = new MealsPresenter(this, getApplicationContext());
+        mMealsPresenter = new MealsPresenter(this);
 
         Intent intent = getIntent();
         String foodItem = intent.getStringExtra("food item");
@@ -62,7 +62,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     }
 
     @Override
-    public void showCalories(Calories calories) {
+    public void showCalories(long calorieId) {
 
     }
 
@@ -90,5 +90,10 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
 //                mContext.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void saveCalories(Integer calories) {
+
     }
 }

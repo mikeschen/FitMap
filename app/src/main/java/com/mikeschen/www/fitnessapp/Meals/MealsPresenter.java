@@ -28,7 +28,7 @@ public class MealsPresenter implements
 
 
 
-    public MealsPresenter(MealsInterface.View mealsView, Context context) {
+    public MealsPresenter(MealsInterface.View mealsView) {
 
         mMealsView = mealsView;
         consumedCalories = 0;
@@ -38,6 +38,12 @@ public class MealsPresenter implements
 
     @Override
     public void loadFoodItem() {
+
+    }
+
+    @Override
+    public void loadCalories(Calories calories) {
+        mMealsView.showCalories(calories.getId());
 
     }
 
