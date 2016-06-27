@@ -53,7 +53,7 @@ public class MealsActivity extends BaseActivity implements
 
     private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
-//    private List<Calories> mCalories = db.getAllCalorieConsumedRecords();
+    private Calories calorieRecord;
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -88,11 +88,13 @@ public class MealsActivity extends BaseActivity implements
         List<Calories> calories = db.getAllCalorieConsumedRecords();
         mMealsPresenter = new MealsPresenter(this);
 
-//        if (calories.size() >= 1) {
-            mMealsPresenter.loadCalories(calories.get(calories.size()-1));
-//        } else {
-//            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
-//        }
+        if (calories.size() > 0) {
+            calorieRecord = calories.get(calories.size() - 1);
+            mMealsPresenter.loadCalories(calorieRecord);
+        } else {
+            calorieRecord = new Calories(1, 0, 345);
+            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+        }
 
 
 
@@ -110,7 +112,10 @@ public class MealsActivity extends BaseActivity implements
                 String strCalories = mCalorieInputEditText.getText().toString();
                 Integer calories = Integer.parseInt(strCalories);
                 setHideSoftKeyboard(mCalorieInputEditText);
-                saveCalories(calories);
+
+
+
+                mMealsPresenter.computeCalories(calories, calorieRecord);
                 break;
             case (R.id.dialogButton):
                 openDialog();
@@ -130,20 +135,24 @@ public class MealsActivity extends BaseActivity implements
 
     }
 
-    @Override
-    public void saveCalories(Integer calories) {
-        Calories caloriesConsumed;
-        caloriesConsumed = new Calories(1, calories, 345);
-        db.updateCaloriesConsumed(caloriesConsumed);
-        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
-        db.close();//MOVE THIS TO PRESENTER, MOVE db.STUFF TO showCalories VEIW METHOD
-    }
+//    @Override
+//    public void saveCalories(Integer calories) {
+//        Calories caloriesConsumed;
+//        caloriesConsumed = new Calories(1, calories, 345);
+//        db.updateCaloriesConsumed(caloriesConsumed);
+//        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
+//        db.close();//MOVE THIS TO PRESENTER, MOVE db.STUFF TO showCalories VEIW METHOD
+//    }
 
     @Override
-    public void showCalories(long calorieId) {
-        Calories caloriesConsumed = db.getCaloriesConsumed(calorieId);
-        Log.d("showCalories", caloriesConsumed + "");
-        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + caloriesConsumed.getCalories());
+    public void showCalories(Calories calorieRecord) {
+//        Calories caloriesConsumed = db.getCaloriesConsumed(calorieRecord.getId());
+
+
+        db.updateCaloriesConsumed(calorieRecord);
+
+        Log.d("showCalories", calorieRecord + "");
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + calorieRecord.getCalories());
         db.close();
     }
 
