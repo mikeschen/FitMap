@@ -169,7 +169,6 @@ public class DirectionFinder {
                     wayPointDistance = 0;
                 }
             }
-
             routes.add(route);
         }
 
