@@ -19,6 +19,7 @@ import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
+import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
 
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
@@ -49,8 +50,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] navArray = {"Main", "Maps", "Meals", "Stats", "About"};
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navArray);
+        String[] navArray = {"Main", "Maps", "Meals", "Stats", "Prefs", "About"};
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, navArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,6 +79,11 @@ public class BaseActivity extends AppCompatActivity {
                         break;
 
                     case 4:
+                        Intent prefs = new Intent(BaseActivity.this, PrefsActivity.class);
+                        startActivity(prefs);
+                        break;
+
+                    case 5:
                         Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
                         break;
