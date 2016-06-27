@@ -82,8 +82,6 @@ public class MapsActivity extends BaseActivity implements
     public double myLocationLong;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
-
-
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
@@ -93,6 +91,7 @@ public class MapsActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        setTitle("Maps");
         ButterKnife.bind(this);
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);

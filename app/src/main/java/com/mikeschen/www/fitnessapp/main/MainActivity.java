@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity implements
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                getSupportActionBar().setTitle("FitnessApp");
+                getSupportActionBar().setTitle("FitMap");
                 return false;
             }
         });

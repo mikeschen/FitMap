@@ -46,7 +46,7 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(mDrawerLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        setTitle("FitnessApp");
+        setTitle("FitMap");
     }
 
     private void addDrawerItems() {
