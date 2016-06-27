@@ -203,9 +203,12 @@ public class MapsActivity extends BaseActivity implements
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
+            Log.d("mapsActivityDist!", route.distance.value + "");
+            Log.d("mapsActivityDurat", route.duration.value + "");
             double miles = Math.round((route.distance.value * 0.000621371) * 10d) / 10d;
             Long minutes = Math.round(route.duration.value / 60.0);
             Log.d("first jsonmiles", miles + "");
+            Log.d("first jsonMinutes", minutes +"");
             durations.add(minutes + " minutes");
             distances.add(miles + " miles");
 

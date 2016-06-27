@@ -135,9 +135,7 @@ public class StepCounterPresenter implements
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("timer", "start?");
                 long currentTime = System.currentTimeMillis() / 60000;
-                Log.d("currentTime", currentTime + "");
 
 //                if (currentTime % (fullDayInMillis/60000) == 0) { //CHECKS EVERY DAY, BUT MAYBE NOT...
                 if (currentTime % (60000/1000) == 0) { //CHECKS EVERY MINUTE (?) FOR DEBUGGING
