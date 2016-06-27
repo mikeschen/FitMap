@@ -1,11 +1,21 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.content.Intent;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,10 +25,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
+import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Steps;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import java.io.IOException;
@@ -31,7 +45,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class MainActivity extends BaseActivity implements
         MainInterface.View,
         StepCounterInterface.View,
-        View.OnClickListener {
+        View.OnClickListener,
+        SensorEventListener {
 
     private boolean mPermissionDenied = false;
     private int caloriesBurned = 0;
@@ -41,6 +56,14 @@ public class MainActivity extends BaseActivity implements
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
 
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+
+    private NotificationCompat.Builder mBuilder;
+    DatabaseHelper db;
+
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -61,6 +84,23 @@ public class MainActivity extends BaseActivity implements
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
+
+        mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        db = new DatabaseHelper(mContext.getApplicationContext());
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mEditor = mSharedPreferences.edit();
+
+        long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
+        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);
+        long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
+        int lastKnownCalories = lastKnownSteps * 175/3500;
+
+        mStepCounterPresenter.checkDaysPassed(lastKnownSteps, lastKnownCalories, lastKnownTime, lastKnownId);
+//        Log.d("Last known steps", lastKnownSteps + "");
+//        Log.d("Last Known id", lastKnownId + "");
 
 
         String json;
@@ -156,13 +196,16 @@ public class MainActivity extends BaseActivity implements
 
 
     @Override
-    public void showSteps(int stepCount) {
-        mMainButton.setText("Steps Taken: " + stepCount);
+    public void showSteps(Steps steps) {
+        db.updateSteps(steps);
+        mMainButton.setText("Steps Taken: " + steps.getStepsTaken());
+        db.closeDB();
     }
 
     @Override
-    public void showCalories(int caloriesBurned) {
-        mMainButton.setText("Calories Burned: " + caloriesBurned);
+    public void showCalories(Calories calories) {
+        db.updateCaloriesBurned(calories);
+        mMainButton.setText("Calories Burned: " + calories.getCalories());
     }
 
     @Override
@@ -183,6 +226,57 @@ public class MainActivity extends BaseActivity implements
         finish();
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        mStepCounterPresenter.calculateSteps(sensorEvent);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void buildNotification(int steps) {
+        mBuilder = new NotificationCompat.Builder(mContext)
+                .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
+                .setContentTitle("My notification")
+                .setContentText("You walked " + steps + " steps today!");
+
+        Intent resultIntent = new Intent(mContext, StatsActivity.class);
+
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                        mContext,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        // Sets an ID for the notification
+        int mNotificationId = 001;
+        // Gets an instance of the NotificationManager service
+        NotificationManager mNotifyMgr =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+    }
+
+    @Override
+    public long createNewDBRows(Steps stepRecord, Calories calorieRecord) {
+        long stepRecord_id = db.logSteps(stepRecord);
+        db.logCaloriesBurned(calorieRecord);
+        db.closeDB();
+        return stepRecord_id;
+    }
+
+    @Override
+    public void addToSharedPreferences(long time, int steps, long id) {
+        mEditor.putLong(Constants.PREFERENCES_TIME_KEY, time).apply();
+        mEditor.putInt(Constants.PREFERENCES_STEPS_KEY, steps).apply();
+        mEditor.putLong(Constants.PREFERENCES_STEPS_ID_KEY, id).apply();
+    }
 }
 
 
