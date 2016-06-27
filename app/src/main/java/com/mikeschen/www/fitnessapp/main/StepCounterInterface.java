@@ -11,7 +11,7 @@ public interface StepCounterInterface {
         void showSteps(Steps steps);
         void showCalories(Calories calories);
         void buildNotification(int steps);
-        long createNewDBRows(Steps stepRecord, Calories calorieRecord);
+        long createNewDBRows(Steps stepRecord, Calories caloriesBurnedRecord, Calories caloriesConsumedRecord);
         void addToSharedPreferences(long time, int steps, long id);
     }
 

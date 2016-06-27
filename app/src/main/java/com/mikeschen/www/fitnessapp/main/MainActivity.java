@@ -37,6 +37,7 @@ import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,6 +62,9 @@ public class MainActivity extends BaseActivity implements
 
     private NotificationCompat.Builder mBuilder;
     DatabaseHelper db;
+    Steps newSteps;
+    Calories newCaloriesBurned;
+    Calories newCaloriesConsumed;
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -82,6 +86,8 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setOnClickListener(this);
         mContext = this;
 
+
+
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
 
@@ -93,15 +99,25 @@ public class MainActivity extends BaseActivity implements
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mEditor = mSharedPreferences.edit();
 
+        List<Steps> stepsList = db.getAllStepRecords();
+
+        if (stepsList.size() == 0) {
+            newSteps = new Steps(1, 0, 345);
+            newCaloriesBurned = new Calories(1, 0 ,345);
+            newCaloriesConsumed = new Calories(1, 0, 345);
+            db.logSteps(newSteps);
+            db.logCaloriesBurned(newCaloriesBurned);
+            db.logCaloriesConsumed(newCaloriesConsumed);
+            db.closeDB();
+        }
+
+
         long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);
         long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
         int lastKnownCalories = lastKnownSteps * 175/3500;
 
         mStepCounterPresenter.checkDaysPassed(lastKnownSteps, lastKnownCalories, lastKnownTime, lastKnownId);
-//        Log.d("Last known steps", lastKnownSteps + "");
-//        Log.d("Last Known id", lastKnownId + "");
-
 
         String json;
         try {
@@ -206,6 +222,7 @@ public class MainActivity extends BaseActivity implements
     public void showCalories(Calories calories) {
         db.updateCaloriesBurned(calories);
         mMainButton.setText("Calories Burned: " + calories.getCalories());
+        db.closeDB();
     }
 
     @Override
@@ -264,9 +281,10 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
-    public long createNewDBRows(Steps stepRecord, Calories calorieRecord) {
+    public long createNewDBRows(Steps stepRecord, Calories caloriesBurnedRecord, Calories caloriesConsumedRecord) {
         long stepRecord_id = db.logSteps(stepRecord);
-        db.logCaloriesBurned(calorieRecord);
+        db.logCaloriesBurned(caloriesBurnedRecord);
+        db.logCaloriesConsumed(caloriesConsumedRecord);
         db.closeDB();
         return stepRecord_id;
     }
