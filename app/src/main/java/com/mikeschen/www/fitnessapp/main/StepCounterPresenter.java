@@ -47,7 +47,8 @@ public class StepCounterPresenter implements
 
     private int currentStepsTableId;
     private Steps stepRecord;
-    private Calories calorieRecord;
+    private Calories caloriesBurnedRecord;
+    private Calories caloriesConsumedRecord;
 
     private int fullDayInMillis = 86400000;
 
@@ -76,26 +77,28 @@ public class StepCounterPresenter implements
                 long currentTime = System.currentTimeMillis() / 60000;
                 Log.d("currentTime", currentTime + "");
 
-                if (currentTime % (60000/1000) == 0) {
+                if (currentTime % (60000/1000) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
                     //TODO
                     //Do more thorough math with these numbers
-                    //(60000/1000) == 0 is 1 hour, BUT ONLY FROM 1PM - 4PM
+                    //(60000/1000) == 0 is 1 hour, BUT ONLY FROM 1PM - 8PM?
                     Log.d("tick", "tock");
+
 
                     mStepCounterView.buildNotification(stepRecord.getStepsTaken());
 
-
                     stepRecord = new Steps(currentStepsTableId, 0, 345);
-                    calorieRecord = new Calories(currentStepsTableId, 0, 345);
-                    long stepRecord_id = mStepCounterView.createNewDBRows(stepRecord, calorieRecord);
+                    caloriesBurnedRecord = new Calories(currentStepsTableId, 0, 345);
+                    caloriesConsumedRecord = new Calories(currentStepsTableId, 0, 345);
+                    long stepRecord_id = mStepCounterView.createNewDBRows(stepRecord, caloriesBurnedRecord, caloriesConsumedRecord);
                     stepRecord.setId(stepRecord_id);
-                    calorieRecord.setId(stepRecord_id);
+                    caloriesBurnedRecord.setId(stepRecord_id);
+                    caloriesConsumedRecord.setId(stepRecord_id);
 
                 }
             }
         };
 
-        timer.scheduleAtFixedRate(timerTask, 0, 1000); //CHANGE THIS NUMBER TO 1000 FOR DEBUGGING
+        timer.scheduleAtFixedRate(timerTask, 0, 60000); //CHANGE THIS NUMBER TO 1000 FOR DEBUGGING
     }
 
     @Override
@@ -168,8 +171,8 @@ public class StepCounterPresenter implements
     @Override
     public void loadCalories() {
         caloriesBurned = stepRecord.getStepsTaken() * 175/3500;
-        calorieRecord.setCalories(caloriesBurned);
-        mStepCounterView.showCalories(calorieRecord);
+        caloriesBurnedRecord.setCalories(caloriesBurned);
+        mStepCounterView.showCalories(caloriesBurnedRecord);
     }
 
     public void onPause() {
@@ -187,7 +190,9 @@ public class StepCounterPresenter implements
         long currentTime = System.currentTimeMillis();
         long daysPassed;
         if (lastKnownTime > 0) {
-            daysPassed = (currentTime / fullDayInMillis) - (lastKnownTime / fullDayInMillis);
+//            daysPassed = (currentTime / fullDayInMillis) - (lastKnownTime / fullDayInMillis);
+            daysPassed = (currentTime / 1000 * 60 * 60 ) - (lastKnownTime / 1000 * 60 * 60 ); //THIS SHOULD SYNC WITH TIMER RUNNING EVERY HOUR
+
         } else {
             daysPassed = 0;
         }
@@ -198,18 +203,20 @@ public class StepCounterPresenter implements
         if (daysPassed == 0) { //THIS IS FOR TURNING ON AND OFF WITHIN THE SAME DAY
             Log.d("database", "works");
             stepRecord = new Steps(lastKnownId, lastKnownSteps, 345);
-            calorieRecord = new Calories(lastKnownId, lastKnownCalories, 345);
+            caloriesBurnedRecord = new Calories(lastKnownId, lastKnownCalories, 345);
         } else {
             stepRecord = new Steps(lastKnownId, 0, 345);
-            calorieRecord = new Calories(lastKnownId, 0, 345);
+            caloriesBurnedRecord = new Calories(lastKnownId, 0, 345);
+            caloriesConsumedRecord = new Calories(lastKnownId, 0, 345);
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
-                    mStepCounterView.createNewDBRows(stepRecord, calorieRecord);
+                    mStepCounterView.createNewDBRows(stepRecord, caloriesBurnedRecord, caloriesConsumedRecord);
                 }
             }
-            long stepRecordId = mStepCounterView.createNewDBRows(stepRecord, calorieRecord); //FOR CURRENT DAY
+            long stepRecordId = mStepCounterView.createNewDBRows(stepRecord, caloriesBurnedRecord, caloriesConsumedRecord); //FOR CURRENT DAY
             stepRecord.setId(stepRecordId);
-            calorieRecord.setId(stepRecordId);
+            caloriesBurnedRecord.setId(stepRecordId);
+            caloriesConsumedRecord.setId(stepRecordId);
         }
     }
 }

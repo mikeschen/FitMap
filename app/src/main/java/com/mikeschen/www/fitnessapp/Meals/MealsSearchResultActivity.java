@@ -62,7 +62,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     }
 
     @Override
-    public void showCalories(long calorieId) {
+    public void showCalories(Calories calorieRecord) {
 
     }
 
@@ -92,8 +92,4 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         });
     }
 
-    @Override
-    public void saveCalories(Integer calories) {
-
-    }
 }
