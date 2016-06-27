@@ -74,7 +74,7 @@ public class MapsActivity extends BaseActivity implements
     private List<Polyline> polylinePaths = new ArrayList<>();
 
     private ArrayList<String> distances;
-    private ArrayList<String> durations;
+    private ArrayList<Integer> durations;
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
 
@@ -203,18 +203,14 @@ public class MapsActivity extends BaseActivity implements
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            Log.d("mapsActivityDist!", route.distance.value + "");
-            Log.d("mapsActivityDurat", route.duration.value + "");
             double miles = Math.round((route.distance.value * 0.000621371) * 10d) / 10d;
-            Long minutes = Math.round(route.duration.value / 60.0);
-            Log.d("first jsonmiles", miles + "");
-            Log.d("first jsonMinutes", minutes +"");
-            durations.add(minutes + " minutes");
+            int minutes = Math.round(route.duration.value / 60);
+            durations.add(minutes);
             distances.add(miles + " miles");
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             showDistance(miles + " miles");
-            showDuration(minutes + " minutes");
+            showDuration(minutes);
             calorie = Math.round(route.distance.value / 16.1);
             showCalorieRoute(calorie);
             routeCalories.add(calorie);
@@ -312,8 +308,10 @@ public class MapsActivity extends BaseActivity implements
     }
 
     @Override
-    public void showDuration(String duration) {
-        mTvDuration.setText(duration);
+    public void showDuration(int duration) {
+        int hours = duration / 60;
+        int minutes = duration % 60;
+        mTvDuration.setText(hours + " h " + minutes + " min");
     }
 
     @Override

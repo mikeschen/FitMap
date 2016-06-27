@@ -137,15 +137,12 @@ public class DirectionFinder {
                 destinationLong = jsonLeg2.getJSONObject("end_location").getDouble("lng");
             } else {
                 totalDistance = jsonDistance.getInt("value");
-                Log.d("totalDistance", totalDistance + "");
                 totalDuration = jsonDuration.getInt("value");
                 destinationLat = jsonEndLocation.getDouble("lat");
                 destinationLong = jsonEndLocation.getDouble("lng");
             }
-            Log.d("currentCount!!", currentCount +  "");
             route.duration = new Duration(jsonDuration.getString("text"), totalDuration);
             route.distance = new Distance(jsonDistance.getString("text"), totalDistance);
-            Log.d("routeDistance!!Correct1", route.distance.text + "");
             route.endAddress = jsonLeg.getString("end_address");
             route.startAddress = jsonLeg.getString("start_address");
             originLat = jsonStartLocation.getDouble("lat");
@@ -156,9 +153,7 @@ public class DirectionFinder {
 
             if(currentCount == 0) {
                 shortestDistance = jsonDistance.getInt("value");
-                Log.d("shortDist!", shortestDistance + "");
             } else {
-                Log.d("distanceDiff", "" + Math.abs(totalDistance - shortestDistance));
                 if(Math.abs(totalDistance - shortestDistance) < 200){
                     wayPointDistance += .001;
                     try {
@@ -171,7 +166,6 @@ public class DirectionFinder {
                     wayPointDistance = 0;
                 }
             }
-            Log.d("frist time correct", route.distance.text);
             routes.add(route);
         }
 
