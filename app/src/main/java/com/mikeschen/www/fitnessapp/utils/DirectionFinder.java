@@ -158,7 +158,7 @@ public class DirectionFinder {
                 shortestDistance = jsonDistance.getInt("value");
             } else {
                 Log.d("distanceDiff", ""+Math.abs(totalDistance - shortestDistance));
-                if(Math.abs(totalDistance - shortestDistance) < 200){
+                if(Math.abs(totalDistance - shortestDistance) < 300){
                     wayPointDistance += .001;
                     try {
                         new DownloadRawData().execute(createSecondUrl());
