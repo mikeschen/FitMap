@@ -50,6 +50,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
             mMealsPresenter.searchFoods(foodItem);
         } else {
             Log.d("scanResult", scanResult);
+            mMealsPresenter.searchUPC(scanResult);
         }
 
     }
@@ -76,8 +77,17 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     }
 
     @Override
-    public void displayFoodByUPC(ArrayList<Food> foods) {
-
+    public void displayFoodByUPC(final ArrayList<Food> foods) {
+        MealsSearchResultActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("displayFoodByUPC", foods + "");
+                mSearchListAdapter = new SearchListAdapter(getApplicationContext(), foods);
+                mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
+                mSearchResultsRecyclerView.setLayoutManager(layoutManager);
+            }
+        });
     }
 
     @Override
@@ -90,8 +100,6 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
                 mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
                 mSearchResultsRecyclerView.setLayoutManager(layoutManager);
-//                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-//                mContext.startActivity(intent);
             }
         });
     }

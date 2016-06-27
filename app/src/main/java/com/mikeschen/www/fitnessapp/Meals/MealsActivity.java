@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 
 public class MealsActivity extends BaseActivity implements
         MealsInterface.View,
-        View.OnClickListener{
+        View.OnClickListener {
     @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
     @Bind(R.id.todaysDate) TextView mTodaysDate;
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
@@ -51,11 +51,13 @@ public class MealsActivity extends BaseActivity implements
 
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
+    private SearchListAdapter mAdapter;
+
 
     private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
 
-    private void setHideSoftKeyboard(EditText editText){
+    private void setHideSoftKeyboard(EditText editText) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
@@ -67,7 +69,6 @@ public class MealsActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-
         mContext = this;
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
@@ -75,8 +76,8 @@ public class MealsActivity extends BaseActivity implements
         mAuthProgressDialog.setCancelable(false);
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
-        if(mSearchType != null && mSearchType.equals("string")){
-        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
+        if (mSearchType != null && mSearchType.equals("string")) {
+        } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
         }
 
         mSaveButton.setOnClickListener(this);
@@ -85,13 +86,10 @@ public class MealsActivity extends BaseActivity implements
         db = new DatabaseHelper(getApplicationContext());
         mMealsPresenter = new MealsPresenter(this, getApplicationContext());
 
-
-
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
-
     }
 
     @Override
@@ -122,15 +120,15 @@ public class MealsActivity extends BaseActivity implements
         integrator.initiateScan();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if(scanningResult != null && resultCode==RESULT_OK){
+        if (scanningResult != null && resultCode == RESULT_OK) {
             String scanContent = scanningResult.getContents();
             Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
             searchIntent.putExtra("inputText", scanContent);
             startActivity(searchIntent);
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -163,7 +161,6 @@ public class MealsActivity extends BaseActivity implements
 
     @Override
     public void refresh() {
-
     }
 
 
@@ -208,16 +205,15 @@ public class MealsActivity extends BaseActivity implements
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_photo:
-//                displayFoodByUPC(mFoods);
-//                break;
-//            }
-//        return false;
-//        }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_photo:
+                displayFoodByUPC(mFoods);
+                break;
+        }
+        return false;
+    }
 
 
     @Override
@@ -227,6 +223,7 @@ public class MealsActivity extends BaseActivity implements
             public void run() {
                 if (mFoods == null) {
                     mAuthProgressDialog.dismiss();
+
                     Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                     mContext.startActivity(intent);
@@ -236,7 +233,6 @@ public class MealsActivity extends BaseActivity implements
             }
         });
     }
-
 
     @Override
     public void displayFoodByItem(ArrayList<Food> foods) {
@@ -279,4 +275,28 @@ public class MealsActivity extends BaseActivity implements
     }
 
 }
+
+
+
+//Design notes
+//- animation, only do animation that should be refclected on the data
+//-screen transition - can do trans on child screeen e.g food search child screeen - add animation
+//        -get ride of the search on the top on the meals activities
+//        -determine what is the main method of the app and decide what one will be the main one
+//main meal feature is the scanning upc bar
+//possibly divide hierchy in the map activity
+//change the icons to a smaller size
+//try to use material design
+//preferences: this is the screen for us in order to start the app and be more active
+//have the name changing of the actual activity the user is on.
+// stats activity: focus on how to present the base information
+//
+//end of the day notification:
+// main activity: move tips down the bottom of the page
+//separate the two bottom
+//change background- something that is related to the data/app we are presenting
+//leave the tips as it is ...
+//have plus + instead of search view widget
+//make sure we pre-plan everything before we start with the code
+
 

@@ -57,9 +57,9 @@ public class MealsPresenter implements
 
 
     @Override
-    public void searchUPC(String upc) {
+    public void searchUPC(String scanResult) {
         final NutritionixService nutritionixService = new NutritionixService();
-        nutritionixService.searchUPC(upc, new Callback() {
+        nutritionixService.searchUPC(scanResult, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
