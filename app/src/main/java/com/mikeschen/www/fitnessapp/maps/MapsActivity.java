@@ -1,25 +1,54 @@
 package com.mikeschen.www.fitnessapp.maps;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.models.Route;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MapsActivity extends BaseActivity implements MapInterface.View {
+public class MapsActivity extends BaseActivity implements
+        MapInterface.View,
+        OnMapReadyCallback,
+        GoogleMap.OnMyLocationButtonClickListener {
+
     private boolean mPermissionDenied = false;
     private Context mContext;
     private MapActivityPresenter mMapActivityPresenter;
@@ -30,7 +59,31 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     private String destination;
+    private ProgressDialog progressDialog;
+
+    private Long calorie;
+    private int counter = 0;
+
+    public GoogleMap mMap;
+    private UiSettings mUiSettings;
     GPSTracker gps;
+
+    private List<Marker> originMarkers = new ArrayList<>();
+    private List<Marker> destinationMarkers = new ArrayList<>();
+    private List<Polyline> polylinePaths = new ArrayList<>();
+
+    private ArrayList<String> distances;
+    private ArrayList<String> durations;
+    private ArrayList<Long> routeCalories;
+    private boolean switcher = true;
+
+
+
+    public double myLocationLat;
+    public double myLocationLong;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -47,10 +100,28 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mContext = this;
-        mMapActivityPresenter = new MapActivityPresenter(this, mContext, mapFragment);
-        mMapActivityPresenter.loadMap();
+        mMapActivityPresenter = new MapActivityPresenter(this);
+        mapFragment.getMapAsync(this);
         destination = getIntent().getStringExtra("destination");
         atDestination.setText(destination, TextView.BufferType.EDITABLE);
+
+        distances = new ArrayList<>();
+        durations = new ArrayList<>();
+        routeCalories = new ArrayList<>();
+
+
+        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    sendRequest();
+                    setHideSoftKeyboard(atDestination);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +130,54 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
             }
         });
     }
+
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+        mUiSettings = mMap.getUiSettings();
+        mUiSettings.setZoomGesturesEnabled(true);
+        mUiSettings.setRotateGesturesEnabled(false);
+        mUiSettings.setZoomControlsEnabled(true);
+
+        mMap.setOnMyLocationButtonClickListener(this);
+
+        enableMyLocation();
+
+        if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        gps = new GPSTracker(mContext);
+        if(gps.canGetLocation()) {
+            Log.d("Current Lat", gps.getLatitude() + "");
+            Log.d("Current Long", gps.getLongitude() + "");
+
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
+            myLocationLat = gps.getLatitude();
+            myLocationLong = gps.getLongitude();
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(gps.getLatitude(), gps.getLongitude()))
+                    .zoom(16)
+                    .build();
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        } else {
+            gps.showSettingsAlert();
+        }
+    }
+
+    @Override
+    public void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            PermissionUtils.requestPermission((FragmentActivity) mContext, LOCATION_PERMISSION_REQUEST_CODE,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            mMap.setMyLocationEnabled(true);
+        }
+    }
+
+
 
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
@@ -72,11 +191,121 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
             return;
         }
 
+        progressDialog = ProgressDialog.show(mContext, "Please wait...",
+                "Finding Directions", true);
         mMapActivityPresenter.makeRequest(origin, destination);
     }
 
     @Override
+    public void displayDirections(List<Route> routes) {
+        counter = 0;
+        polylinePaths = new ArrayList<>();
+        originMarkers = new ArrayList<>();
+        destinationMarkers = new ArrayList<>();
+
+        for (Route route : routes) {
+            double miles = Math.round((route.distance.value * 0.000621371) * 10d) / 10d;
+            Long minutes = Math.round(route.duration.value / 60.0);
+            Log.d("first jsonmiles", miles + "");
+            durations.add(minutes + " minutes");
+            distances.add(miles + " miles");
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            showDistance(miles + " miles");
+            showDuration(minutes + " minutes");
+            calorie = Math.round(route.distance.value / 16.1);
+            showCalorieRoute(calorie);
+            routeCalories.add(calorie);
+
+            originMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.invisible))
+                    .title(route.startAddress)
+                    .position(route.startLocation)));
+            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .title(route.endAddress)
+                    .position(route.endLocation)));
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Marker marker : originMarkers) {
+                builder.include(marker.getPosition());
+            }
+            for (Marker marker : destinationMarkers) {
+                builder.include(marker.getPosition());
+            }
+
+            LatLngBounds bounds = builder.build();
+
+            int padding = 200; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+            mMap.moveCamera(cu);
+
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .color(Color.rgb(66, 133, 244))
+                    .width(20)
+                    .geodesic(true);
+            if (switcher == true) {
+                polylineOptions.color(Color.rgb(78, 160, 257));
+                switcher = false;
+            }
+
+            for (int i = 0; i < route.points.size(); i++) {
+                polylineOptions.add(route.points.get(i));
+            }
+            polylinePaths.add(mMap.addPolyline(polylineOptions));
+            counter++;
+            showDistance(distances.get(0));
+            showDuration(durations.get(0));
+            showCalorieRoute(routeCalories.get(0));
+        }
+        for (Polyline polyline : polylinePaths) {
+            polyline.setClickable(true);
+        }
+        mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick (Polyline clickedPolyline) {
+                for (int i = 0; i < polylinePaths.size(); i++) {
+                    if (polylinePaths.get(i).getId().equals(clickedPolyline.getId())) {
+                        clickedPolyline.setColor(Color.rgb(78, 160, 257));
+                        showDistance(distances.get(i));
+                        showDuration(durations.get(i));
+                        showCalorieRoute(routeCalories.get(i));
+                    } else {
+                        polylinePaths.get(i).setColor(Color.rgb(66, 133, 244));
+                    }
+                }
+            }
+        });
+        switcher = true;
+    }
+
+    @Override
+    public void clearMap() {
+        if (originMarkers != null) {
+            for (Marker marker : originMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (destinationMarkers != null) {
+            for (Marker marker : destinationMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (polylinePaths != null) {
+            for (Polyline polyline:polylinePaths ) {
+                polyline.remove();
+            }
+        }
+
+        distances.clear();
+        durations.clear();
+        routeCalories.clear();
+    }
+
+    @Override
     public void showDistance(String distance) {
+        progressDialog.dismiss();
         mTvDistance.setText(distance);
     }
 
@@ -93,6 +322,11 @@ public class MapsActivity extends BaseActivity implements MapInterface.View {
     @Override
     public void refresh() {
 
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        return false;
     }
 
     @Override

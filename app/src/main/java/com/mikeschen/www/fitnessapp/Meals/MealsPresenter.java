@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp.Meals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import com.mikeschen.www.fitnessapp.models.Calories;
@@ -19,40 +20,21 @@ public class MealsPresenter implements
         MealsInterface.Presenter {
 
     private MealsInterface.View mMealsView;
-    private Context mContext;
     private int consumedCalories;
     private int totalCalories;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
     public ArrayList<Food> mFoods = new ArrayList<>();
 
-    DatabaseHelper db;
 
 
     public MealsPresenter(MealsInterface.View mealsView, Context context) {
 
         mMealsView = mealsView;
-        mContext = context;
-        db = new DatabaseHelper(mContext.getApplicationContext());
         consumedCalories = 0;
         totalCalories = 0;
 
     }
-
-    @Override
-    public void saveCalories(Integer calories) {
-        Calories caloriesConsumed;
-        caloriesConsumed = new Calories(1, calories, 345);
-        db.logCaloriesConsumed(caloriesConsumed);
-        db.close();
-    }
-
-//    @Override
-//    public void loadCalories(long calories_id) {
-//        Calories caloriesConsumed;
-//        caloriesConsumed = new Calories(calories_id, calories.getCalories(), 345);
-//        db.getCaloriesConsumed()
-//    }
 
     @Override
     public void loadFoodItem() {
@@ -70,8 +52,8 @@ public class MealsPresenter implements
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 mFoods = nutritionixService.processResults(response);
+                Log.d("search return", mFoods + "");
                 mMealsView.displayFoodByItem(mFoods);
             }
         });
@@ -90,7 +72,7 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResultsUpc(response);
-                mMealsView.displayFood(mFoods);
+                mMealsView.displayFoodByUPC(mFoods);
 
             }
 

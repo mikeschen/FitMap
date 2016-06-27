@@ -26,11 +26,11 @@ android {
     buildTypes.each {
         it.buildConfigField "String", "GOOGLE_MAPS_KEY", GoogleMapsKey;
         it.buildConfigField "String", "NUTRITIONIX_API_KEY", NutrionixApiKey;
-        it.buildConfigField 'String', 'NUTRITIONIX_APP_ID', NutritionixAppId
+        it.buildConfigField "String", 'NUTRITIONIX_APP_ID', NutritionixAppId
     }
 
     dexOptions {
-//        javaMaxHeapSize "4g"
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -56,18 +56,18 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:multidex:1.0.0'
 
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    }
-//    androidTestCompile('com.android.support.test:runner:0.3') {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    }
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile('com.android.support.test:runner:0.3') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
 
     // App's dependencies, including test
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-//    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
-//    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:23.4.0"
     compile "com.google.guava:guava:$rootProject.guavaVersion"
     compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"

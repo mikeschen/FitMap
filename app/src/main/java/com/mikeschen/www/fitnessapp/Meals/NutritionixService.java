@@ -1,6 +1,8 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
 
+import android.util.Log;
+
 import com.mikeschen.www.fitnessapp.Constants;
 
 import org.json.JSONArray;
@@ -97,12 +99,14 @@ public class NutritionixService {
     }
 
     public ArrayList<Food> processResults(Response response) {
+        Log.d("processResultes", "Are you here?");
         ArrayList<Food> foods = new ArrayList<>();
 
         try {
             String jsonData = response.body().string();
             if(response.isSuccessful()) {
                 JSONObject nutritionJSON  = new JSONObject(jsonData);
+                Log.d("JSON?", nutritionJSON + "");
                 JSONArray hitsArrayJSON = nutritionJSON.getJSONArray("hits");
                 for (int i = 0; i < hitsArrayJSON.length(); i++  ){
                     JSONObject foodsJSON = hitsArrayJSON.getJSONObject(i).getJSONObject("fields");
@@ -110,12 +114,12 @@ public class NutritionixService {
                     String itemName = foodsJSON.getString("item_name");
                     String brandName = foodsJSON.getString("brand_name");
                     String itemDescription = foodsJSON.getString("item_description");
-                    double calories = foodsJSON.getDouble("nf_calories");
-                    double totalFat = foodsJSON.getDouble("nf_total_fat");
-                    double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
-                    double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
+                    Double calories = foodsJSON.getDouble("nf_calories");
+                    Double totalFat = foodsJSON.getDouble("nf_total_fat");
+                    Double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
+                    Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
                     String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
-                    double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
+                    Double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
                     Food food = new Food(itemId, itemName, brandName, itemDescription, calories, totalFat, servingsPerContainer, servingSizeQuantity, servingSizeUnit, servingWeightGrams);
                     foods.add(food);
                 }

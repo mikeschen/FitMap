@@ -7,6 +7,6 @@ public interface MainInterface {
     }
 
     interface Presenter {
-        void loadTip();
+        void loadTip(String json);
     }
 }

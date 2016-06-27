@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,20 +73,9 @@ public class MealsActivity extends BaseActivity implements
         mAuthProgressDialog.setCancelable(false);
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
-//        mSearchType = mSharedPreferences.getString(Constants.PREFERENCES_SEARCH_TYPE_KEY, null);
         if(mSearchType != null && mSearchType.equals("string")){
-//            searchDatabaseByTerm();
         } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
-//            mMealsPresenter.searchUPC(String upc);
         }
-
-//        if(mSearchType != null && mSearchType.equals("string")){
-//            searchDatabaseByTerm();
-//        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
-//            mMealsPresenter.searchUPC(upc);
-//        }
-//        mAuthProgressDialog.show();
-
 
         mSaveButton.setOnClickListener(this);
         mDialogButton.setOnClickListener(this);
@@ -110,7 +98,7 @@ public class MealsActivity extends BaseActivity implements
                 String strCalories = mCalorieInputEditText.getText().toString();
                 Integer calories = Integer.parseInt(strCalories);
                 setHideSoftKeyboard(mCalorieInputEditText);
-                mMealsPresenter.saveCalories(calories);
+                saveCalories(calories);
                 break;
             case (R.id.dialogButton):
                 openDialog();
@@ -128,6 +116,13 @@ public class MealsActivity extends BaseActivity implements
     @Override
     public void saveFoodItem(String foodItem) {
 
+    }
+
+    public void saveCalories(Integer calories) {
+        Calories caloriesConsumed;
+        caloriesConsumed = new Calories(1, calories, 345);
+        db.logCaloriesConsumed(caloriesConsumed);
+        db.close();
     }
 
     @Override
@@ -191,7 +186,7 @@ public class MealsActivity extends BaseActivity implements
     }
 
     @Override
-    public void displayFood(ArrayList<Food> foods) {
+    public void displayFoodByUPC(ArrayList<Food> foods) {
         MealsActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -207,17 +202,9 @@ public class MealsActivity extends BaseActivity implements
         });
     }
 
+
     @Override
     public void displayFoodByItem(ArrayList<Food> foods) {
-        MealsActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsActivity.this);
-                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                mContext.startActivity(intent);
-                mAuthProgressDialog.dismiss();
-            }
-        });
     }
 
     private void openDialog() {
@@ -225,10 +212,8 @@ public class MealsActivity extends BaseActivity implements
         View subView = inflater.inflate(R.layout.search_fragment_item, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Item To List");
-        builder.setMessage("Enter Item Info, Select List, and Click 'Okay'");
+        builder.setTitle("Search for a food item");
         builder.setView(subView);
-        AlertDialog alertDialog = builder.create();
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.searchFoodItemEditText);
 
@@ -238,15 +223,13 @@ public class MealsActivity extends BaseActivity implements
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                subEditText.setText("You need an item name!");
 
                 String foodItem = subEditText.getText().toString();
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                intent.putExtra("food item", foodItem);
+                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
 
-
-                mMealsPresenter.searchFoods(foodItem);
-//
-//                Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
-
+                mContext.startActivity(intent);
             }
         });
 
