@@ -81,22 +81,4 @@ public class MealsPresenter implements
 
 }
 
-//    public void scanUPC(){
-//        addSearchTypeToSharedPreferences("upc");
-//        IntentIntegrator integrator = new IntentIntegrator(this);
-//        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-//        integrator.setPrompt("Scan a food barcode");
-//        integrator.setCameraId(0);
-//        integrator.setBeepEnabled(true);
-//        integrator.setBarcodeImageEnabled(true);
-//        integrator.initiateScan();
-//    }
 
-
-//create a presenter for searchUPC and take all code from BaseActivity
-//MealsTracker activity that never changes and then implement fragment that handles the search data
-//dialog with fields and btn save and closes
-//list fragment and meals fragment; savedmeals fragment
-//last green activity will be separate activity
-//how to display the calories on the screen as well
-//include endless scrow

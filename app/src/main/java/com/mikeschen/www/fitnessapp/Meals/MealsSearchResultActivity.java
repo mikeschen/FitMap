@@ -12,8 +12,6 @@ import android.util.Log;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
-import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperViewHolder;
-import com.mikeschen.www.fitnessapp.utils.SimpleItemTouchHelperCallback;
 
 import java.util.ArrayList;
 
@@ -45,8 +43,14 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
 
         Intent intent = getIntent();
         String foodItem = intent.getStringExtra("food item");
-        Log.d("Food Item?", intent.getStringExtra("food item"));
-        mMealsPresenter.searchFoods(foodItem);
+        String scanResult = intent.getStringExtra("inputText");
+        if ( scanResult == null) {
+
+            Log.d("Food Item?", intent.getStringExtra("food item"));
+            mMealsPresenter.searchFoods(foodItem);
+        } else {
+            Log.d("scanResult", scanResult);
+        }
 
     }
 

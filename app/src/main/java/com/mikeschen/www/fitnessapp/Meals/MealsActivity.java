@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
@@ -120,25 +121,19 @@ public class MealsActivity extends BaseActivity implements
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan();
     }
-//    @Override
-//    public void onFinishEditDialog(String inputText) {
-//        Intent intent = new Intent(this, MealsSearchResultActivity.class);
-//        intent.putExtra("inputText", inputText);
-//        startActivity(intent);
-//    }
-//
-//    public void onActivityResult(int requestCode, int resultCode, Intent intent){
-//        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-//        if(scanningResult != null && resultCode==RESULT_OK){
-//            String scanContent = scanningResult.getContents();
-//            Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
-//            searchIntent.putExtra("inputText", scanContent);
-//            startActivity(searchIntent);
-//        } else {
-//            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
-//            toast.show();
-//        }
-//    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if(scanningResult != null && resultCode==RESULT_OK){
+            String scanContent = scanningResult.getContents();
+            Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
+            searchIntent.putExtra("inputText", scanContent);
+            startActivity(searchIntent);
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 
     @Override
     public void showFoodItem(String foodItem) {

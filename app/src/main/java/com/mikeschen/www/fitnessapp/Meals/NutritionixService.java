@@ -61,6 +61,7 @@ public class NutritionixService {
         urlBuilder.addQueryParameter(APPKEY_QUERY, API_KEY);
 
         String url = urlBuilder.build().toString();
+        Log.d("works", url);
         Request request = new Request.Builder().url(url).build();
 
         Call call = client.newCall(request);
@@ -104,9 +105,9 @@ public class NutritionixService {
 
         try {
             String jsonData = response.body().string();
+            Log.d("JSON?", jsonData+ "");
             if(response.isSuccessful()) {
                 JSONObject nutritionJSON  = new JSONObject(jsonData);
-                Log.d("JSON?", nutritionJSON + "");
                 JSONArray hitsArrayJSON = nutritionJSON.getJSONArray("hits");
                 for (int i = 0; i < hitsArrayJSON.length(); i++  ){
                     JSONObject foodsJSON = hitsArrayJSON.getJSONObject(i).getJSONObject("fields");
