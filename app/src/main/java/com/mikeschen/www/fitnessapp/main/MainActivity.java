@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity implements
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
 
-
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
@@ -49,7 +48,6 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -61,7 +59,6 @@ public class MainActivity extends BaseActivity implements
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
-
 
         String json;
         try {
@@ -79,14 +76,10 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
-
         mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
     }
 
-
     //Calligraphy
-
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
@@ -133,12 +126,10 @@ public class MainActivity extends BaseActivity implements
         return true;
     }
 
-
     @Override
     public void showTip(String tip) {
         mTipTextView.setText(tip);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -153,7 +144,6 @@ public class MainActivity extends BaseActivity implements
                 }
         }
     }
-
 
     @Override
     public void showSteps(int stepCount) {
@@ -182,7 +172,6 @@ public class MainActivity extends BaseActivity implements
         startActivity(intent);
         finish();
     }
-
 }
 
 
