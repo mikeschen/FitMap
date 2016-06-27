@@ -24,7 +24,6 @@ public interface MealsInterface {
         void loadFoodItem();
         void searchFoods(String foodItem);
         void searchUPC(String upc);
-        //do we need Callback callback????
-        //how to set the processUpcResults???
+        void scanUpc();
     }
 }

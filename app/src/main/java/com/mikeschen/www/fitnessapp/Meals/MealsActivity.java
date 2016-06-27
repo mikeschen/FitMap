@@ -20,10 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
-import com.mikeschen.www.fitnessapp.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,12 +37,12 @@ public class MealsActivity extends BaseActivity implements
         MealsInterface.View,
         View.OnClickListener{
     @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
-    @Bind(R.id.dailyCaloriesBurnedTextView) TextView mDailyCaloriesBurnedTextView;
     @Bind(R.id.todaysDate) TextView mTodaysDate;
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     @Bind(R.id.dialogButton) Button mDialogButton;
+    @Bind(R.id.upcButton) Button mUpcButton;
 
     private String mSearchString;
     private String mSearchType;
@@ -78,6 +79,7 @@ public class MealsActivity extends BaseActivity implements
         }
 
         mSaveButton.setOnClickListener(this);
+        mUpcButton.setOnClickListener(this);
         mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
         mMealsPresenter = new MealsPresenter(this, getApplicationContext());
@@ -103,10 +105,40 @@ public class MealsActivity extends BaseActivity implements
             case (R.id.dialogButton):
                 openDialog();
                 break;
+            case (R.id.upcButton):
+                scanUpc();
+                break;
         }
     }
 
-
+    private void scanUpc() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Scan a food barcode");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.initiateScan();
+    }
+//    @Override
+//    public void onFinishEditDialog(String inputText) {
+//        Intent intent = new Intent(this, MealsSearchResultActivity.class);
+//        intent.putExtra("inputText", inputText);
+//        startActivity(intent);
+//    }
+//
+//    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+//        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+//        if(scanningResult != null && resultCode==RESULT_OK){
+//            String scanContent = scanningResult.getContents();
+//            Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
+//            searchIntent.putExtra("inputText", scanContent);
+//            startActivity(searchIntent);
+//        } else {
+//            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+//    }
 
     @Override
     public void showFoodItem(String foodItem) {
@@ -144,6 +176,7 @@ public class MealsActivity extends BaseActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_photo, menu);
         ButterKnife.bind(this);
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
@@ -180,10 +213,17 @@ public class MealsActivity extends BaseActivity implements
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_photo:
+//                displayFoodByUPC(mFoods);
+//                break;
+//            }
+//        return false;
+//        }
+
+
 
     @Override
     public void displayFoodByUPC(ArrayList<Food> foods) {

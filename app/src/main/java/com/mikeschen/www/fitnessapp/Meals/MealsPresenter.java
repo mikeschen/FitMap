@@ -4,9 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
-import com.mikeschen.www.fitnessapp.models.Calories;
-import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -78,7 +75,22 @@ public class MealsPresenter implements
         });
     }
 
+    @Override
+    public void scanUpc() {
+    }
+
 }
+
+//    public void scanUPC(){
+//        addSearchTypeToSharedPreferences("upc");
+//        IntentIntegrator integrator = new IntentIntegrator(this);
+//        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+//        integrator.setPrompt("Scan a food barcode");
+//        integrator.setCameraId(0);
+//        integrator.setBeepEnabled(true);
+//        integrator.setBarcodeImageEnabled(true);
+//        integrator.initiateScan();
+//    }
 
 
 //create a presenter for searchUPC and take all code from BaseActivity
