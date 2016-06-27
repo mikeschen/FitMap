@@ -43,21 +43,13 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
 
         mMealsPresenter = new MealsPresenter(this, getApplicationContext());
 
-        setUpRecyclerView();
         Intent intent = getIntent();
-        intent.getStringExtra("food item");
+        String foodItem = intent.getStringExtra("food item");
         Log.d("Food Item?", intent.getStringExtra("food item"));
-        mMealsPresenter.searchFoods("food item");
+        mMealsPresenter.searchFoods(foodItem);
+
     }
 
-    private void setUpRecyclerView() {
-        mSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
-
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mItemTouchHelperAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(mSearchResultsRecyclerView);
-    }
 
     @Override
     public void showFoodItem(String foodItem) {
@@ -85,11 +77,12 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     }
 
     @Override
-    public void displayFoodByItem(ArrayList<Food> foods) {
+    public void displayFoodByItem(final ArrayList<Food> foods) {
         MealsSearchResultActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mSearchListAdapter = new SearchListAdapter(getApplicationContext(), mFoods);
+                Log.d("displayFoodByItem", foods + "");
+                mSearchListAdapter = new SearchListAdapter(getApplicationContext(), foods);
                 mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
                 mSearchResultsRecyclerView.setLayoutManager(layoutManager);

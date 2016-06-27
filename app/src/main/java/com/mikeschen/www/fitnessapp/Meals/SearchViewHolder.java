@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTouchHelperViewHolder {
 
     @Bind(R.id.searchTextView) TextView mSearchTextView;
+    @Bind(R.id.calorieTextView) TextView mCalorieTextView;
 
     private Context mContext;
     private ArrayList<Food> mFood = new ArrayList<>();
@@ -42,6 +43,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
 
     public void bindFood(Food food) {
         mSearchTextView.setText(food.getItemName());
+        mCalorieTextView.setText(food.getCalories() + "");
     }
 
     @Override

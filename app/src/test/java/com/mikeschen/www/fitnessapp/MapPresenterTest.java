@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
  */
 public class MapPresenterTest {
 
-    @Mock
     private MapPresenter mMapPresenter;
 
     @Mock
