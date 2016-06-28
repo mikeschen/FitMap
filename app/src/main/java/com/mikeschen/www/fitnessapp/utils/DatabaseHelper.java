@@ -141,12 +141,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c != null)
             c.moveToFirst();
 
-        Days days = new Days (0, 0, 0, 0, 0);
+        Days days = new Days (0, 0, 0, 0, "");
         days.setId(c.getInt(c.getColumnIndex(KEY_DAY_ID)));
         days.setStepsTaken((c.getInt(c.getColumnIndex(KEY_STEPS))));
         days.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
         days.setCaloriesConsumed((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
-        days.setDate((c.getInt(c.getColumnIndex(KEY_DATE))));
+        days.setDate((c.getString(c.getColumnIndex(KEY_DATE))));
         return days;
      }
 
@@ -165,12 +165,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                Days days = new Days(1, 1, 1, 1, 1);
+                Days days = new Days(1, 1, 1, 1, "");
                 days.setId(c.getInt((c.getColumnIndex(KEY_DAY_ID))));
                 days.setStepsTaken((c.getInt(c.getColumnIndex(KEY_STEPS))));
                 days.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
                 days.setCaloriesConsumed((c.getInt(c.getColumnIndex(KEY_CALORIES_CONSUMED))));
-                days.setDate((c.getInt(c.getColumnIndex(KEY_DATE))));
+                days.setDate((c.getString(c.getColumnIndex(KEY_DATE))));
 
                 allDaysRecords.add(days);
             } while (c.moveToNext());
@@ -198,7 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Deleting a day record
     */
-    public void deleteDayRecor(long day_id) {
+    public void deleteDayRecord(long day_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_DAY, KEY_DAY_ID + " = ?",
                 new String[] { String.valueOf(day_id) });

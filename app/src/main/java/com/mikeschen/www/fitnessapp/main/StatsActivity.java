@@ -68,7 +68,7 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
 //        mCaloriesConsumedRecyclerView.setLayoutManager(caloriesConsumedLayoutManager);
 //        mCaloriesConsumedRecyclerView.setHasFixedSize(true);
 //
-//        mButton.setOnClickListener(this);
+        mButton.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +78,7 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
                 db.deleteAllDayRecords();
 //                db.deleteAllCaloriesBurnedRecords();
 //                db.deleteAllCaloriesConsumedRecords();
+                db.closeDB();
                 refresh();
         }
     }

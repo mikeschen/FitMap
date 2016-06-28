@@ -21,7 +21,9 @@ public class Constants {
     public static final String QUERY_FIELD_DEFAULTS = "item_name,brand_name,item_id";
 
     public static final String PREFERENCES_CURRENT_STEPS_KEY = "currentSteps";
-    public static final String PREFERENCES_CURRENT_CALORIES_KEY = "calories";
+    public static final String PREFERENCES_CURRENT_CALORIES_BURNED_KEY = "caloriesBurned";
+    public static final String PREFERENCES_CURRENT_CALORIES_CONSUIMED_KEY = "caloriesConsumed";
+    public static final String PREFERENCES_CURRENT_DATE = "date";
 
 
     public static final String PREFERENCES_STEPS_ID_KEY ="steps_id";

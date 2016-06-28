@@ -20,7 +20,10 @@ import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Steps;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -79,16 +82,17 @@ public class StepCounterPresenter implements
             public void run() {
                 long currentTime = System.currentTimeMillis() / 60000;
 
-                if (currentTime % (60000/1000) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
+                if (currentTime % (60 * 24) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
                     //TODO
                     //Do more thorough math with these numbers
-                    //(60000/1000) == 0 is 1 hour, BUT ONLY FROM 1PM - 8PM?
                     Log.d("tick", "tock");
 
-
+                    daysRecord = mStepCounterView.endOfDaySave();
                     mStepCounterView.buildNotification(daysRecord.getStepsTaken());
 
-                    daysRecord = new Days(currentDaysTableId, 0, 0, 0, 0);
+                    // Builds new, empty database row when notification fires
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+                    daysRecord = new Days(currentDaysTableId, 0, 0, 0, dateFormat.toString());
 //                    caloriesBurnedRecord = new Calories(currentStepsTableId, 0, 345);
 //                    caloriesConsumedRecord = new Calories(currentStepsTableId, 0, 345);
                     long daysRecord_id = mStepCounterView.createNewDBRows(daysRecord);
@@ -145,6 +149,10 @@ public class StepCounterPresenter implements
                         if (localAverageSpeed > totalAverageSpeed) {
                             checkSpeedDirection = false;
                             daysRecord.setStepsTaken(daysRecord.getStepsTaken()+1);
+
+                            caloriesBurned = daysRecord.getStepsTaken() * 175/3500;
+                            daysRecord.setCaloriesBurned(caloriesBurned);
+
                             loadSteps();
                         }
                     } else {
@@ -201,17 +209,23 @@ public class StepCounterPresenter implements
         Log.d("passed last known", lastKnownTime + "");
         Log.d("days Passed", daysPassed + "");
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+
         if (daysPassed == 0) { //THIS IS FOR TURNING ON AND OFF WITHIN THE SAME DAY
             Log.d("database", "works");
-            daysRecord = new Days(lastKnownId, lastKnownSteps, 0, 0, 0);
+
+            daysRecord = new Days(lastKnownId, lastKnownSteps, lastKnownCalories, 0, dateFormat.format(lastKnownTime));
 //            caloriesBurnedRecord = new Calories(lastKnownId, lastKnownCalories, 345);
         } else {
-            daysRecord = new Days(lastKnownId, 0, 0, 0, 0);
+            long dateInMillis = lastKnownTime + fullDayInMillis;
+            daysRecord = new Days(lastKnownId, 0, 0, 0, dateFormat.format(dateInMillis));
 //            caloriesBurnedRecord = new Calories(lastKnownId, 0, 345);
 //            caloriesConsumedRecord = new Calories(lastKnownId, 0, 345);
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
                     mStepCounterView.createNewDBRows(daysRecord);
+                    dateInMillis += fullDayInMillis;
+                    daysRecord.setDate(dateFormat.format(dateInMillis));
                 }
             }
             long stepRecordId = mStepCounterView.createNewDBRows(daysRecord); //FOR CURRENT DAY

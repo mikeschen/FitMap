@@ -1,5 +1,7 @@
 package com.mikeschen.www.fitnessapp.models;
 
+import java.util.Calendar;
+
 /**
  * Created by Ramon on 6/28/16.
  */
@@ -9,9 +11,9 @@ public class Days {
     int stepsTaken;
     int caloriesBurned;
     int caloriesConsumed;
-    int date;
+    String date;
 
-    public Days (long id, Integer stepsTaken, int caloriesBurned, int caloriesConsumed, int date) {
+    public Days (long id, Integer stepsTaken, int caloriesBurned, int caloriesConsumed, String date) {
         this.id = id;
         this.stepsTaken = stepsTaken;
         this.caloriesBurned = caloriesBurned;
@@ -52,11 +54,11 @@ public class Days {
         this.caloriesConsumed = caloriesConsumed;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

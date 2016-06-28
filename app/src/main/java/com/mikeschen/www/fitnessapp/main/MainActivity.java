@@ -32,7 +32,9 @@ import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,13 +94,10 @@ public class MainActivity extends BaseActivity implements
 
         // This creates a table on first use of app
         if (daysList.size() == 0) {
-            newDays = new Days(1, 0, 0, 0, 0);
-//            newSteps = new Steps(1, 0, 345);
-//            newCaloriesBurned = new Calories(1, 0 ,345);
-//            newCaloriesConsumed = new Calories(1, 0, 345);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            newDays = new Days(1, 0, 0, 0, dateFormat.toString());
+            mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             db.logDays(newDays);
-//            db.logCaloriesBurned(newCaloriesBurned);
-//            db.logCaloriesConsumed(newCaloriesConsumed);
             db.closeDB();
         }
 
@@ -200,7 +199,7 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void showSteps(Days days) {
         mEditor.putInt(Constants.PREFERENCES_CURRENT_STEPS_KEY, days.getStepsTaken());
-        mEditor.putInt(Constants.PREFERENCES_CURRENT_CALORIES_KEY, days.getCaloriesBurned());
+        mEditor.putInt(Constants.PREFERENCES_CURRENT_CALORIES_BURNED_KEY, days.getCaloriesBurned());
 
         if (buttonDisplay.equals("Calories")) {
             mMainButton.setText("Calories Burned: " + days.getCaloriesBurned());
@@ -244,6 +243,8 @@ public class MainActivity extends BaseActivity implements
                 .setContentTitle("My notification")
                 .setContentText("You walked " + steps + " steps today!");
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
         Intent resultIntent = new Intent(mContext, StatsActivity.class);
         Log.d("buildNotification", "Is it building?");
 
@@ -268,7 +269,6 @@ public class MainActivity extends BaseActivity implements
     @Override
     public long createNewDBRows(Days dayRecord) {
         long stepRecord_id = db.logDays(dayRecord);
-
         db.closeDB();
         return stepRecord_id;
     }
@@ -278,6 +278,18 @@ public class MainActivity extends BaseActivity implements
         mEditor.putLong(Constants.PREFERENCES_LAST_KNOWN_TIME_KEY, time).apply();
         mEditor.putInt(Constants.PREFERENCES_LAST_KNOWN_STEPS_KEY, steps).apply();
         mEditor.putLong(Constants.PREFERENCES_STEPS_ID_KEY, id).apply();
+    }
+
+    @Override
+    public Days endOfDaySave() {
+        int stepsTaken = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_STEPS_KEY, 0);
+        int caloriesBurned = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_CALORIES_BURNED_KEY, 0);
+        int caloriesConsumed = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_CALORIES_CONSUIMED_KEY, 0);
+        String date = mSharedPreferences.getString(Constants.PREFERENCES_CURRENT_DATE, null);
+
+
+        Days day = new Days(1, stepsTaken, caloriesBurned, caloriesConsumed, date);
+        return day;
     }
 }
 

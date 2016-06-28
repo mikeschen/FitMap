@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -96,7 +97,8 @@ public class MealsActivity extends BaseActivity implements
             daysRecord = days.get(days.size() - 1);
 //            mMealsPresenter.loadCalories(daysRecord);
         } else {
-            daysRecord = new Days(1, 0, 0, 0, 0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
 //            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
         }
 
