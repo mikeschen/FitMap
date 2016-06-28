@@ -50,8 +50,8 @@
         <activity android:name=".main.StatsActivity" />
         <activity android:name=".simpleActivities.AboutActivity" />
         <activity android:name=".Meals.MealsActivity" />
-        <activity android:name=".Meals.MealsSearchResultActivity"></activity>
-
+        <activity android:name=".Meals.MealsSearchResultActivity"/>
+        <activity android:name=".simpleActivities.PrefsActivity"/>
     </application>
 
 </manifest>

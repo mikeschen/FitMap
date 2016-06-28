@@ -4,18 +4,17 @@ package com.mikeschen.www.fitnessapp.main;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,17 +22,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.SupportMapFragment;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.maps.MapInterface;
-import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.models.Steps;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
-import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,20 +47,16 @@ public class MainActivity extends BaseActivity implements
     private boolean mPermissionDenied = false;
     private int caloriesBurned = 0;
     private String buttonDisplay;
-
     private Context mContext;
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
-
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
-
     private NotificationCompat.Builder mBuilder;
     DatabaseHelper db;
     Steps newSteps;
     Calories newCaloriesBurned;
     Calories newCaloriesConsumed;
-
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -76,7 +67,6 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -85,8 +75,6 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
         mContext = this;
-
-
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this, mContext);
@@ -111,7 +99,6 @@ public class MainActivity extends BaseActivity implements
             db.closeDB();
         }
 
-
         long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);
         long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
@@ -135,14 +122,10 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
-
         mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
     }
 
-
     //Calligraphy
-
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
@@ -156,18 +139,17 @@ public class MainActivity extends BaseActivity implements
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-
+        searchView.setQueryHint("Enter Destination...");
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // hide action item
                 getSupportActionBar().setTitle("");
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                getSupportActionBar().setTitle("FitnessApp");
+                getSupportActionBar().setTitle("FitMap");
                 return false;
             }
         });
@@ -189,12 +171,10 @@ public class MainActivity extends BaseActivity implements
         return true;
     }
 
-
     @Override
     public void showTip(String tip) {
         mTipTextView.setText(tip);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -209,7 +189,6 @@ public class MainActivity extends BaseActivity implements
                 }
         }
     }
-
 
     @Override
     public void showSteps(Steps steps) {

@@ -73,9 +73,7 @@ public class StepCounterPresenter implements
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("timer", "start?");
                 long currentTime = System.currentTimeMillis() / 60000;
-                Log.d("currentTime", currentTime + "");
 
                 if (currentTime % (60000/1000) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
                     //TODO
