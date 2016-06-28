@@ -25,6 +25,7 @@
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_medium"
+            android:elevation="@dimen/activity_elevation"
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:layout_marginRight="50dp" />
 
@@ -34,7 +35,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Tips/Suggestions"
             android:id="@+id/tipsTextView"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             android:padding="@dimen/activity_medium_padding"
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:layout_marginRight="@dimen/activity_wide_margin"
@@ -56,7 +57,7 @@
             android:padding="@dimen/activity_medium_padding"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/text_tiny"
             android:alpha="0.85"
             android:elevation="1dp"
             android:background="@color/colorWhite"/>

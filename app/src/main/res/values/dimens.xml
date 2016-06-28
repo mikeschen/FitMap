@@ -6,6 +6,7 @@
     <dimen name="activity_small_padding">5dp</dimen>
     <dimen name="text_medium">24sp</dimen>
     <dimen name="text_small">20sp</dimen>
+    <dimen name="text_tiny">18sp</dimen>
     <dimen name="activity_elevation">2dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
 </resources>
