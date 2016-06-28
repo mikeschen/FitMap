@@ -42,3 +42,6 @@ public class MapPresenterTest {
 //        verify(mMapView).showMap();
 //    }
 }
+
+
+//since we are testing the presenter we don't need to have @Mock for the presenter-only write "private MapPresenter mMapPresenter;

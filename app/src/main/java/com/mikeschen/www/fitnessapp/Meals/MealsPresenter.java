@@ -3,7 +3,6 @@ package com.mikeschen.www.fitnessapp.Meals;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
@@ -105,3 +104,4 @@ public class MealsPresenter implements
 //list fragment and meals fragment; savedmeals fragment
 //last green activity will be separate activity
 //how to display the calories on the screen as well
+//include endless scrow
