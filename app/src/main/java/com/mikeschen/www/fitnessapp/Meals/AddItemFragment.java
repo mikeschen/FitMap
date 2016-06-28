@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.mikeschen.www.fitnessapp.R;
 
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
 public class AddItemFragment extends Fragment {
     private static Context mContext;
     @Bind(R.id.foodItemAddRecyclerView) RecyclerView mFoodItemAddRecyclerView;
+    @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
+    @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
 
 
 

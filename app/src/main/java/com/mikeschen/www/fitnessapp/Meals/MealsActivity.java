@@ -43,8 +43,8 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
-    @Bind(R.id.dialogButton) Button mDialogButton;
-    @Bind(R.id.upcButton) Button mUpcButton;
+//    @Bind(R.id.dialogButton) Button mDialogButton;
+//    @Bind(R.id.upcButton) Button mUpcButton;
 
 
     private String mSearchString;
@@ -87,8 +87,8 @@ public class MealsActivity extends BaseActivity implements
         }
 
         mSaveButton.setOnClickListener(this);
-        mUpcButton.setOnClickListener(this);
-        mDialogButton.setOnClickListener(this);
+//        mUpcButton.setOnClickListener(this);
+//        mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
         List<Calories> calories = db.getAllCalorieConsumedRecords();
         mMealsPresenter = new MealsPresenter(this);
@@ -107,32 +107,32 @@ public class MealsActivity extends BaseActivity implements
         mTodaysDate.setText(strDate);
     }
 
+////
+//        @Override
+//        public void onClick(View view){
+//            switch (view.getId()) {
+//                case (R.id.saveButton):
+////                    String strCalories = mCalorieInputEditText.getText().toString();
+////                    if(strCalories.length() > 0) {
+////                        Integer calories = Integer.parseInt(strCalories);
+////                        mMealsPresenter.computeCalories(calories, calorieRecord);
+////                    }
+////                    setHideSoftKeyboard(mCalorieInputEditText);
+//                    break;
+
+//                case (R.id.dialogButton):
+//                    openDialog();
+//                    break;
 //
-        @Override
-        public void onClick(View view){
-            switch (view.getId()) {
-                case (R.id.saveButton):
-                    String strCalories = mCalorieInputEditText.getText().toString();
-                    if(strCalories.length() > 0) {
-                        Integer calories = Integer.parseInt(strCalories);
-                        mMealsPresenter.computeCalories(calories, calorieRecord);
-                    }
-                    setHideSoftKeyboard(mCalorieInputEditText);
-                    break;
-
-                case (R.id.dialogButton):
-                    openDialog();
-                    break;
-
-                case (R.id.upcButton):
-                    scanUpc();
-                    break;
-                case (R.id.add_item):
-                    openAddItemDialog();
-                    break;
-                default:
-            }
-        }
+//                case (R.id.upcButton):
+//                    scanUpc();
+//                    break;
+//                case (R.id.add_item):
+//                    openAddItemDialog();
+//                    break;
+//                default:
+//            }
+//        }
 
 
 
@@ -249,6 +249,7 @@ public class MealsActivity extends BaseActivity implements
             case R.id.add_item:
                 openAddItemDialog();
                 break;
+            default:
         }
         return false;
     }
@@ -296,8 +297,7 @@ public class MealsActivity extends BaseActivity implements
                 String foodItem = subEditText.getText().toString();
                 Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                 intent.putExtra("food item", foodItem);
-                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
-
+//                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
                 mContext.startActivity(intent);
             }
         });
@@ -352,7 +352,20 @@ public class MealsActivity extends BaseActivity implements
         builder.show();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case (R.id.saveButton):
+                String strCalories = mCalorieInputEditText.getText().toString();
+                if (strCalories.length() > 0) {
+                    Integer calories = Integer.parseInt(strCalories);
+                    mMealsPresenter.computeCalories(calories, calorieRecord);
+                }
+                setHideSoftKeyboard(mCalorieInputEditText);
+                break;
 
+        }
+    }
 
     //TODO
     //Create a "food" object so we can add from API call and manual entry
@@ -363,27 +376,6 @@ public class MealsActivity extends BaseActivity implements
 }
 
 
-
-//Design notes
-//- animation, only do animation that should be refclected on the data
-//-screen transition - can do trans on child screeen e.g food search child screeen - add animation
-//        -get ride of the search on the top on the meals activities
-//        -determine what is the main method of the app and decide what one will be the main one
-//main meal feature is the scanning upc bar
-//possibly divide hierchy in the map activity
-//change the icons to a smaller size
-//try to use material design
-//preferences: this is the screen for us in order to start the app and be more active
-//have the name changing of the actual activity the user is on.
-// stats activity: focus on how to present the base information
-//
-//end of the day notification:
-// main activity: move tips down the bottom of the page
-//separate the two bottom
-//change background- something that is related to the data/app we are presenting
-//leave the tips as it is ...
-//have plus + instead of search view widget
-//make sure we pre-plan everything before we start with the code
 
 //if the user doesnt enter anything in the search dialog, make a toast to say enter an item
 //button that open dialog with information of how to use the app
