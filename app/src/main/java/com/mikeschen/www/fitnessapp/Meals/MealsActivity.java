@@ -349,12 +349,14 @@ public class MealsActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 String foodItem = subEditText.getText().toString();
                 String foodCalories = secondEditText.getText().toString();
-                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                intent.putExtra("food item", foodItem);
-                intent.putExtra("food calories", foodCalories);
-                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
-
-                mContext.startActivity(intent);
+                //need to change this for calories to be added to this activity
+                Integer calories = Integer.parseInt(foodCalories);
+                mMealsPresenter.computeCalories(calories, calorieRecord);
+//                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+//                intent.putExtra("food item", foodItem);
+//                intent.putExtra("food calories", foodCalories);
+//
+//                mContext.startActivity(intent);
             }
         });
 
