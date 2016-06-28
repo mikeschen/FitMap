@@ -15,7 +15,7 @@
     <string name="Benefits">FitMap is the app that will make you walk to work, explore places and start counting calories you consume on a daily basis without even realizing it!</string>
     <string name="Information">FitMap provides you with ability to check calories burned from walking, log/look up calories and suggest tips for walking paths!
     </string>
-    <string name="Meals">Total Calories Consumed!</string>
+    <string name="Meals">Calories Consumed!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
