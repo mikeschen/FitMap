@@ -46,6 +46,7 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.dialogButton) Button mDialogButton;
     @Bind(R.id.upcButton) Button mUpcButton;
 
+
     private String mSearchString;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
@@ -126,6 +127,9 @@ public class MealsActivity extends BaseActivity implements
                 case (R.id.upcButton):
                     scanUpc();
                     break;
+                case (R.id.add_item):
+                    openAddItemDialog();
+                    break;
                 default:
             }
         }
@@ -193,7 +197,7 @@ public class MealsActivity extends BaseActivity implements
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.add_item, menu);
         inflater.inflate(R.menu.menu_photo, menu);
         ButterKnife.bind(this);
 
@@ -241,6 +245,9 @@ public class MealsActivity extends BaseActivity implements
                 break;
             case R.id.action_search:
                 openDialog();
+                break;
+            case R.id.add_item:
+                openAddItemDialog();
                 break;
         }
         return false;
@@ -306,6 +313,46 @@ public class MealsActivity extends BaseActivity implements
     }
 
 
+    private void openAddItemDialog() {
+        LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
+        View subView = inflater.inflate(R.layout.fragment_add_item, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add food item");
+        builder.setView(subView);
+
+        final EditText subEditText = (EditText) subView.findViewById(R.id.foodInputEditText);
+        final EditText secondEditText = (EditText) subView.findViewById(R.id.calorieInputEditText);
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                String foodItem = subEditText.getText().toString();
+                String foodCalories = secondEditText.getText().toString();
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                intent.putExtra("food item", foodItem);
+                intent.putExtra("food calories", foodCalories);
+                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
+
+                mContext.startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.show();
+    }
+
+
 
     //TODO
     //Create a "food" object so we can add from API call and manual entry
@@ -337,5 +384,9 @@ public class MealsActivity extends BaseActivity implements
 //leave the tips as it is ...
 //have plus + instead of search view widget
 //make sure we pre-plan everything before we start with the code
+
+//if the user doesnt enter anything in the search dialog, make a toast to say enter an item
+//button that open dialog with information of how to use the app
+//have the plus
 
 

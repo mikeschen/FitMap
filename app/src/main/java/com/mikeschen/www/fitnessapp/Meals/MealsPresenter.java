@@ -136,7 +136,6 @@ public class MealsPresenter implements
 
 
     public MealsPresenter(MealsInterface.View mealsView) {
-
         mMealsView = mealsView;
         consumedCalories = 0;
         totalCalories = 0;
@@ -152,8 +151,6 @@ public class MealsPresenter implements
     public void computeCalories(Integer calories, Calories calorieRecord) {
 
         calorieRecord.setCalories(calorieRecord.getCalories() + calories);
-
-//        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
         mMealsView.showCalories(calorieRecord);
     }
 
