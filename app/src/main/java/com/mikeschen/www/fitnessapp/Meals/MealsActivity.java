@@ -28,6 +28,7 @@ import com.mikeschen.www.fitnessapp.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,6 +53,7 @@ public class MealsActivity extends BaseActivity implements
 
     private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
+    private Calories calorieRecord;
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -72,14 +74,26 @@ public class MealsActivity extends BaseActivity implements
         mAuthProgressDialog.setCancelable(false);
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
+
         if(mSearchType != null && mSearchType.equals("string")){
+
         } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
+
         }
 
         mSaveButton.setOnClickListener(this);
         mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
-        mMealsPresenter = new MealsPresenter(this, getApplicationContext());
+        List<Calories> calories = db.getAllCalorieConsumedRecords();
+        mMealsPresenter = new MealsPresenter(this);
+
+        if (calories.size() > 0) {
+            calorieRecord = calories.get(calories.size() - 1);
+            mMealsPresenter.loadCalories(calorieRecord);
+        } else {
+            calorieRecord = new Calories(1, 0, 345);
+            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+        }
 
 
 
@@ -97,7 +111,10 @@ public class MealsActivity extends BaseActivity implements
                 String strCalories = mCalorieInputEditText.getText().toString();
                 Integer calories = Integer.parseInt(strCalories);
                 setHideSoftKeyboard(mCalorieInputEditText);
-                saveCalories(calories);
+
+
+
+                mMealsPresenter.computeCalories(calories, calorieRecord);
                 break;
             case (R.id.dialogButton):
                 openDialog();
@@ -117,19 +134,24 @@ public class MealsActivity extends BaseActivity implements
 
     }
 
-    public void saveCalories(Integer calories) {
-        Calories caloriesConsumed;
-        caloriesConsumed = new Calories(1, calories, 345);
-        db.logCaloriesConsumed(caloriesConsumed);
-        db.close();
-    }
+//    @Override
+//    public void saveCalories(Integer calories) {
+//        Calories caloriesConsumed;
+//        caloriesConsumed = new Calories(1, calories, 345);
+//        db.updateCaloriesConsumed(caloriesConsumed);
+//        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
+//        db.close();//MOVE THIS TO PRESENTER, MOVE db.STUFF TO showCalories VEIW METHOD
+//    }
 
     @Override
-    public void showCalories(Calories calories) {
-        Calories caloriesConsumed;
-        caloriesConsumed = db.getCaloriesConsumed(calories.getId());
-        Log.d("Calories boo hiss", caloriesConsumed + "");
-        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + caloriesConsumed);
+    public void showCalories(Calories calorieRecord) {
+//        Calories caloriesConsumed = db.getCaloriesConsumed(calorieRecord.getId());
+
+
+        db.updateCaloriesConsumed(calorieRecord);
+
+        Log.d("showCalories", calorieRecord + "");
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + calorieRecord.getCalories());
         db.close();
     }
 
@@ -138,8 +160,6 @@ public class MealsActivity extends BaseActivity implements
 
     }
 
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
