@@ -71,7 +71,6 @@ public class MealsActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals);
-        setTitle("Meals");
         ButterKnife.bind(this);
 
         mContext = this;
@@ -81,6 +80,7 @@ public class MealsActivity extends BaseActivity implements
         mAuthProgressDialog.setCancelable(false);
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
+
         if (mSearchType != null && mSearchType.equals("string")) {
         } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
 
@@ -100,14 +100,9 @@ public class MealsActivity extends BaseActivity implements
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
 //            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+
         }
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
-        String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
-        mTodaysDate.setText(strDate);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -127,6 +122,10 @@ public class MealsActivity extends BaseActivity implements
                 break;
         }
     }
+
+
+
+
 
     private void scanUpc() {
         IntentIntegrator integrator = new IntentIntegrator(this);
@@ -205,7 +204,6 @@ public class MealsActivity extends BaseActivity implements
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                getSupportActionBar().setTitle("FitMap");
                 return false;
             }
         });
@@ -294,6 +292,8 @@ public class MealsActivity extends BaseActivity implements
 
         builder.show();
     }
+
+
 
     //TODO
     //Create a "food" object so we can add from API call and manual entry

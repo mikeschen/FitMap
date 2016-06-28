@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity implements
         View.OnClickListener,
         SensorEventListener {
 
-    private boolean mPermissionDenied = false;
+//    private boolean mPermissionDenied = false;
     private int caloriesBurned = 0;
     private String buttonDisplay;
     private Context mContext;
@@ -155,7 +155,6 @@ public class MainActivity extends BaseActivity implements
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                getSupportActionBar().setTitle("FitMap");
                 return false;
             }
         });

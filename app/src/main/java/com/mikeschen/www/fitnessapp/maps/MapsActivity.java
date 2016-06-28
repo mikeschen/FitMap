@@ -13,10 +13,13 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,8 +94,8 @@ public class MapsActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        setTitle("Maps");
         ButterKnife.bind(this);
+
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
@@ -174,8 +177,6 @@ public class MapsActivity extends BaseActivity implements
             mMap.setMyLocationEnabled(true);
         }
     }
-
-
 
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
