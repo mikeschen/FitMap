@@ -108,6 +108,8 @@ public class MainActivity extends BaseActivity implements
         long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
         int lastKnownCalories = lastKnownSteps * 175/3500;
 
+        Log.d("lastKnownSteps", lastKnownSteps + "");
+
         mStepCounterPresenter.checkDaysPassed(lastKnownSteps, lastKnownCalories, lastKnownTime, lastKnownId);
 
         //Calls tips

@@ -192,7 +192,7 @@ public class StepCounterPresenter implements
         long daysPassed;
         if (lastKnownTime > 0) {
 //            daysPassed = (currentTime / fullDayInMillis) - (lastKnownTime / fullDayInMillis);
-            daysPassed = (currentTime / 1000 * 60 * 60 ) - (lastKnownTime / 1000 * 60 * 60 ); //THIS SHOULD SYNC WITH TIMER RUNNING EVERY HOUR
+            daysPassed = (currentTime / (1000 * 60 * 60 )) - (lastKnownTime / (1000 * 60 * 60 )); //THIS SHOULD SYNC WITH TIMER RUNNING EVERY HOUR
 
         } else {
             daysPassed = 0;
