@@ -39,7 +39,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         setContentView(R.layout.activity_meals_search_result);
         ButterKnife.bind(this);
 
-        mMealsPresenter = new MealsPresenter(this, getApplicationContext());
+        mMealsPresenter = new MealsPresenter(this);
 
         Intent intent = getIntent();
         String foodItem = intent.getStringExtra("food item");
@@ -67,7 +67,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     }
 
     @Override
-    public void showCalories(Calories calories) {
+    public void showCalories(Calories calorieRecord) {
 
     }
 
@@ -103,6 +103,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
             }
         });
     }
+
 }
 
 //bar code scanned from meals activity the item shows on the mealsSearchResultActivity. From there, the actual item is clicked and it goes

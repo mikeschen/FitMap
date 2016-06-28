@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,7 +25,8 @@ public class MealsPresenter implements
 
 
 
-    public MealsPresenter(MealsInterface.View mealsView, Context context) {
+
+    public MealsPresenter(MealsInterface.View mealsView) {
 
         mMealsView = mealsView;
         consumedCalories = 0;
@@ -34,6 +36,21 @@ public class MealsPresenter implements
 
     @Override
     public void loadFoodItem() {
+
+    }
+
+    @Override
+    public void computeCalories(Integer calories, Calories calorieRecord) {
+
+        calorieRecord.setCalories(calorieRecord.getCalories() + calories);
+
+//        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
+        mMealsView.showCalories(calorieRecord);
+    }
+
+    @Override
+    public void loadCalories(Calories calories) {
+        mMealsView.showCalories(calories);
 
     }
 

@@ -13,7 +13,7 @@ public class Food {
     double servingWeightGrams;
 
     public Food() {}
-    public Food(String itemId, String itemName, String brandName, String itemDescription, double calories, double totalFat, double servingsPerContainer, double servingSizeQuantity, String servingSizeUnit, double servingWeightGrams) {
+    public Food(String itemId, String itemName, double calories) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.brandName = brandName;
