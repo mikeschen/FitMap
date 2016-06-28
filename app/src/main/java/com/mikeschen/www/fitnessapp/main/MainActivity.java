@@ -93,11 +93,10 @@ public class MainActivity extends BaseActivity implements
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-
+        searchView.setQueryHint("Enter Destination...");
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // hide action item
                 getSupportActionBar().setTitle("");
             }
         });
