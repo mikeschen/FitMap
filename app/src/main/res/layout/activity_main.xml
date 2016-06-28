@@ -2,20 +2,22 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    tools:context=".main.MainActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/imageView"
-        android:src="@drawable/citymain"
-        android:scaleType="centerCrop" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:src="@drawable/citymain"-->
+        <!--android:scaleType="centerCrop" />-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".main.MainActivity">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:context=".main.MainActivity">-->
 
         <Button
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mealsMainButton"
+                android:id="@+id/mapsMainButton"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/buttonred2"
                 android:text="Maps"
@@ -55,7 +57,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mapsMainButton"
+                android:id="@+id/mealsMainButton"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/buttonred"
                 android:text="Meals"
@@ -80,7 +82,7 @@
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:layout_marginRight="@dimen/activity_wide_margin"
             android:layout_marginLeft="@dimen/activity_wide_margin"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorAbout"
             android:textStyle="bold"
             android:background="@color/colorWhite"
             android:alpha="0.85"
@@ -103,4 +105,3 @@
             android:background="@color/colorWhite"/>
 
     </RelativeLayout>
-</RelativeLayout>
