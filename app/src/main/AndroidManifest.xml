@@ -47,12 +47,17 @@
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".main.StatsActivity" />
-        <activity android:name=".simpleActivities.AboutActivity" />
-        <activity android:name=".Meals.MealsActivity" />
-        <activity android:name=".Meals.MealsDetailActivity" />
+
+        <activity android:name=".main.StatsActivity"
+            android:label="@string/title_activity_stats"/>
+        <activity android:name=".simpleActivities.AboutActivity"
+            android:label="@string/title_activity_about"/>
+        <activity android:name=".Meals.MealsActivity"
+            android:label="@string/title_activity_meals"/>
+        <!--<activity android:name=".Meals.MealsDetailActivity" />-->
         <activity android:name=".Meals.MealsSearchResultActivity" />
-        <activity android:name=".simpleActivities.PrefsActivity"></activity>
+        <activity android:name=".simpleActivities.PrefsActivity"
+            android:label="@string/title_activity_prefs"></activity>
     </application>
 
 </manifest>

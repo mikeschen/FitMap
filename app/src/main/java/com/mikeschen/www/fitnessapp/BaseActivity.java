@@ -46,7 +46,7 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(mDrawerLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        setTitle("FitMap");
+//        setTitle("FitMap");
     }
 
     private void addDrawerItems() {
@@ -99,9 +99,6 @@ public class BaseActivity extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle("Menu");
                 invalidateOptionsMenu();
-
-
-
             }
 
             public void onDrawerClosed(View view) {
