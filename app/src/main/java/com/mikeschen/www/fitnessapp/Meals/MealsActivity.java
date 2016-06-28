@@ -48,10 +48,8 @@ public class MealsActivity extends BaseActivity implements
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
 
-    DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
 
-    private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
 
     private void setHideSoftKeyboard(EditText editText){
@@ -66,8 +64,6 @@ public class MealsActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-
-        mContext = this;
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
         mAuthProgressDialog.setMessage("Searching for food items...");
@@ -83,19 +79,15 @@ public class MealsActivity extends BaseActivity implements
 
         mSaveButton.setOnClickListener(this);
         mDialogButton.setOnClickListener(this);
-        db = new DatabaseHelper(getApplicationContext());
         List<Calories> calories = db.getAllCalorieConsumedRecords();
         mMealsPresenter = new MealsPresenter(this);
         //TODO: Fix this so that calories are loaded whether or not pre-existing data is there
         mMealsPresenter.loadCalories(calories.get(calories.size()-1));
 
-
-
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
-
     }
 
     @Override
@@ -112,8 +104,6 @@ public class MealsActivity extends BaseActivity implements
                 break;
         }
     }
-
-
 
     @Override
     public void showFoodItem(String foodItem) {

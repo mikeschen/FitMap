@@ -1,7 +1,10 @@
 package com.mikeschen.www.fitnessapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,8 @@ import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
+import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
@@ -26,12 +31,24 @@ public class BaseActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
+    public Context mContext;
+    public SharedPreferences mSharedPreferences;
+    public SharedPreferences.Editor mEditor;
+    public DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         mActivityTitle = getTitle().toString();
+
+        mContext = this;
+
+        db = new DatabaseHelper(mContext.getApplicationContext());
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mEditor = mSharedPreferences.edit();
+
     }
 
     @Override
@@ -49,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] navArray = {"Main", "Maps", "Meals", "Stats", "About"};
+        String[] navArray = {"Main", "Maps", "Meals", "Stats", "About", "DB"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -73,7 +90,7 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(meals);
                         break;
                     case 3:
-                        Intent stats = new Intent(BaseActivity.this, StatsActivity.class);
+                        Intent stats = new Intent(BaseActivity.this, RealStatsActivity.class);
                         startActivity(stats);
                         break;
 
@@ -81,6 +98,9 @@ public class BaseActivity extends AppCompatActivity {
                         Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
                         break;
+                    case 5:
+                        Intent db = new Intent(BaseActivity.this, StatsActivity.class);
+                        startActivity(db);
                     default:
                 }
             }

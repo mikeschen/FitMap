@@ -1,7 +1,5 @@
 package com.mikeschen.www.fitnessapp;
 
-import android.util.Log;
-
 import com.mikeschen.www.fitnessapp.main.StepCounterInterface;
 import com.mikeschen.www.fitnessapp.main.StepCounterPresenter;
 import com.mikeschen.www.fitnessapp.models.Steps;

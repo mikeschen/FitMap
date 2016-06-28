@@ -52,7 +52,6 @@ public class MainActivity extends BaseActivity implements
     private int caloriesBurned = 0;
     private String buttonDisplay;
 
-    private Context mContext;
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
 
@@ -60,10 +59,6 @@ public class MainActivity extends BaseActivity implements
     private Sensor mAccelerometer;
 
     private NotificationCompat.Builder mBuilder;
-    DatabaseHelper db;
-
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -80,18 +75,13 @@ public class MainActivity extends BaseActivity implements
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
-        mContext = this;
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this);
 
-        mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
-        db = new DatabaseHelper(mContext.getApplicationContext());
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        mEditor = mSharedPreferences.edit();
 
         long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);

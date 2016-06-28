@@ -14,17 +14,17 @@
         android:layout_height="20dp"
         android:text="Step Data"
         android:id="@+id/stepsTextView"
-        android:layout_above="@+id/stepsRecyclerView"
+        android:layout_above="@+id/foodRecyclerView"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/stepsRecyclerView"
-        android:layout_alignEnd="@+id/stepsRecyclerView"
+        android:layout_alignRight="@+id/foodRecyclerView"
+        android:layout_alignEnd="@+id/foodRecyclerView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/stepsRecyclerView"
+        android:id="@+id/foodRecyclerView"
         android:layout_above="@+id/button"
         android:layout_toLeftOf="@+id/caloriesBurnedRecyclerView"
         android:layout_below="@+id/caloriesBurnedTextView" />

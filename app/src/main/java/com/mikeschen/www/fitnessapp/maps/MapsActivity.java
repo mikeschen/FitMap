@@ -50,7 +50,6 @@ public class MapsActivity extends BaseActivity implements
         GoogleMap.OnMyLocationButtonClickListener {
 
     private boolean mPermissionDenied = false;
-    private Context mContext;
     private MapActivityPresenter mMapActivityPresenter;
     @Bind(R.id.atOrigin) EditText atOrigin;
     @Bind(R.id.atDestination) EditText atDestination;
@@ -77,13 +76,9 @@ public class MapsActivity extends BaseActivity implements
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
 
-
-
     public double myLocationLat;
     public double myLocationLong;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
-
 
     private void setHideSoftKeyboard(EditText editText){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -99,7 +94,6 @@ public class MapsActivity extends BaseActivity implements
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this);
         mapFragment.getMapAsync(this);
         destination = getIntent().getStringExtra("destination");
