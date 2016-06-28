@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">FitnessApp</string>
+    <string name="app_name">FitMap</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Maps</string>
+    <string name="title_activity_meals">Meals</string>
+    <string name="title_activity_stats">Stats</string>
+    <string name="title_activity_prefs">Preferences</string>
+    <string name="title_activity_about">About</string>
 
     //Used to make PermissionUtils work
 

@@ -22,11 +22,52 @@
             android:layout_height="wrap_content"
             android:id="@+id/mainButton"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/button"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
+            android:elevation="@dimen/activity_elevation"
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:layout_marginRight="50dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/buttonMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mainButton"
+            android:layout_centerInParent="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mealsMainButton"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button"
+                android:text="Maps"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                android:elevation="@dimen/activity_elevation"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="@dimen/activity_small_padding"
+                android:layout_gravity="center" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mapsMainButton"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button"
+                android:text="Meals"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                android:elevation="@dimen/activity_elevation"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="@dimen/activity_small_padding"
+                android:layout_gravity="center" />
+
+    </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -34,7 +75,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Tips/Suggestions"
             android:id="@+id/tipsTextView"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             android:padding="@dimen/activity_medium_padding"
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:layout_marginRight="@dimen/activity_wide_margin"
@@ -44,7 +85,7 @@
             android:background="@color/colorWhite"
             android:alpha="0.85"
             android:elevation="2dp"
-            android:layout_below="@+id/mainButton" />
+            android:layout_below="@+id/buttonMenu" />
 
         <TextView
             android:layout_width="match_parent"
@@ -56,7 +97,7 @@
             android:padding="@dimen/activity_medium_padding"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/text_tiny"
             android:alpha="0.85"
             android:elevation="1dp"
             android:background="@color/colorWhite"/>

@@ -18,7 +18,6 @@ public class PrefsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prefs);
-        setTitle("Preferences");
         ButterKnife.bind(this);
 
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("MYLABEL", "myStringToSave").commit();
