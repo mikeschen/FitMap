@@ -84,7 +84,7 @@ public class NutritionixService {
                 double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
                 String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
                 double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
-                Food food = new Food(itemId, itemName, brandName, itemDescription, calories, totalFat, servingsPerContainer, servingSizeQuantity, servingSizeUnit, servingWeightGrams);
+                Food food = new Food(itemId, itemName, calories);
                 foods.add(food);
             }
             else {
@@ -120,7 +120,7 @@ public class NutritionixService {
                     Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
                     String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
                     Double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
-                    Food food = new Food(itemId, itemName, brandName, itemDescription, calories, totalFat, servingsPerContainer, servingSizeQuantity, servingSizeUnit, servingWeightGrams);
+                    Food food = new Food(itemId, itemName, calories);
                     foods.add(food);
                 }
             }

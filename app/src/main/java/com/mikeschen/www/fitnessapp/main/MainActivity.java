@@ -261,6 +261,7 @@ public class MainActivity extends BaseActivity implements
                 .setContentText("You walked " + steps + " steps today!");
 
         Intent resultIntent = new Intent(mContext, StatsActivity.class);
+        Log.d("buildNotification", "Is it building?");
 
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
