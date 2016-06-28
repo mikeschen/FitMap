@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,10 +38,10 @@ import butterknife.ButterKnife;
 public class MealsActivity extends BaseActivity implements
         MealsInterface.View,
         View.OnClickListener {
-    @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
+//    @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
     @Bind(R.id.todaysDate) TextView mTodaysDate;
-    @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
-    @Bind(R.id.saveButton) Button mSaveButton;
+//    @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
+//    @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
 //    @Bind(R.id.dialogButton) Button mDialogButton;
 //    @Bind(R.id.upcButton) Button mUpcButton;
@@ -54,6 +54,9 @@ public class MealsActivity extends BaseActivity implements
     DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
     private SearchListAdapter mAdapter;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+
 
 
     private Context mContext;
@@ -78,6 +81,9 @@ public class MealsActivity extends BaseActivity implements
         mAuthProgressDialog.setMessage("Searching for food items...");
         mAuthProgressDialog.setCancelable(false);
         Intent intent = getIntent();
+        //setup recycler view
+//        int position = intent.getIntExtra("position", -1);
+//        ArrayList<Food> mFoods = intent.getParcelableExtra("food");
         mSearchString = intent.getStringExtra("inputText");
 
         if (mSearchType != null && mSearchType.equals("string")) {
@@ -86,7 +92,7 @@ public class MealsActivity extends BaseActivity implements
 
         }
 
-        mSaveButton.setOnClickListener(this);
+//        mSaveButton.setOnClickListener(this);
 //        mUpcButton.setOnClickListener(this);
 //        mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
@@ -293,12 +299,24 @@ public class MealsActivity extends BaseActivity implements
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-
                 String foodItem = subEditText.getText().toString();
-                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                intent.putExtra("food item", foodItem);
-//                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+//                intent.putExtra("food item", foodItem);
+////                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
+//                mContext.startActivity(intent);
+//            }
+//        });
+                if (foodItem == null) {
+//                    mAuthProgressDialog.dismiss();
+
+                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+//                    mContext.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                    intent.putExtra("food item", foodItem);
+                    mContext.startActivity(intent);
+                }
             }
         });
 
@@ -329,8 +347,6 @@ public class MealsActivity extends BaseActivity implements
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-
                 String foodItem = subEditText.getText().toString();
                 String foodCalories = secondEditText.getText().toString();
                 Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
@@ -354,17 +370,17 @@ public class MealsActivity extends BaseActivity implements
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case (R.id.saveButton):
-                String strCalories = mCalorieInputEditText.getText().toString();
-                if (strCalories.length() > 0) {
-                    Integer calories = Integer.parseInt(strCalories);
-                    mMealsPresenter.computeCalories(calories, calorieRecord);
-                }
-                setHideSoftKeyboard(mCalorieInputEditText);
-                break;
-
-        }
+//        switch (view.getId()) {
+//            case (R.id.saveButton):
+//                String strCalories = mCalorieInputEditText.getText().toString();
+//                if (strCalories.length() > 0) {
+//                    Integer calories = Integer.parseInt(strCalories);
+//                    mMealsPresenter.computeCalories(calories, calorieRecord);
+//                }
+//                setHideSoftKeyboard(mCalorieInputEditText);
+//                break;
+//
+//        }
     }
 
     //TODO
@@ -377,8 +393,5 @@ public class MealsActivity extends BaseActivity implements
 
 
 
-//if the user doesnt enter anything in the search dialog, make a toast to say enter an item
-//button that open dialog with information of how to use the app
-//have the plus
 
 

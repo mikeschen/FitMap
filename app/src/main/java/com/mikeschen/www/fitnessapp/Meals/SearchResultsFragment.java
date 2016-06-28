@@ -22,7 +22,6 @@ public class SearchResultsFragment extends Fragment  {
     private static Context mContext;
 
 
-
     public SearchResultsFragment() {}
 
     public static SearchResultsFragment newInstance(Context context, String foodItem) {

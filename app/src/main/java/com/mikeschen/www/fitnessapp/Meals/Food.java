@@ -1,5 +1,8 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Food {
     String itemId;
     String itemName;
@@ -13,6 +16,7 @@ public class Food {
     double servingWeightGrams;
 
     public Food() {}
+
     public Food(String itemId, String itemName, double calories) {
         this.itemId = itemId;
         this.itemName = itemName;
