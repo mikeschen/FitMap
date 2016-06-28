@@ -21,10 +21,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
+import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
@@ -34,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -46,7 +49,6 @@ public class MainActivity extends BaseActivity implements
         View.OnClickListener,
         SensorEventListener {
 
-//    private boolean mPermissionDenied = false;
     private int caloriesBurned = 0;
     private String buttonDisplay;
     private Context mContext;
@@ -62,20 +64,28 @@ public class MainActivity extends BaseActivity implements
 //    Calories newCaloriesConsumed;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+    int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
+    @Bind(R.id.mapsMainButton) Button mMapsMainButton;
+    @Bind(R.id.mealsMainButton) Button mMealsMainButton;
+    @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if(relativeLayout != null)
+            relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
+        mMapsMainButton.setOnClickListener(this);
+        mMealsMainButton.setOnClickListener(this);
         mContext = this;
 
         mTipPresenter = new TipPresenter(this);
@@ -129,6 +139,17 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
+    }
+
+    protected void onResume()
+    {
+        if(relativeLayout != null)
+            relativeLayout.setBackgroundResource(images[getRandomNumber()]);
+        super.onResume();
+    }
+
+    private int getRandomNumber() {
+        return new Random().nextInt(4);
     }
 
     //Calligraphy
@@ -192,6 +213,15 @@ public class MainActivity extends BaseActivity implements
                     buttonDisplay = "Calories";
                     mStepCounterPresenter.loadSteps();
                 }
+                break;
+            case (R.id.mapsMainButton):
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.mealsMainButton):
+                Intent intent2 = new Intent(MainActivity.this, MealsActivity.class);
+                startActivity(intent2);
+                break;
         }
     }
 
@@ -211,12 +241,6 @@ public class MainActivity extends BaseActivity implements
     public void onPause() {
         mStepCounterPresenter.onPause();
         super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
     }
 
     public void refresh() {
