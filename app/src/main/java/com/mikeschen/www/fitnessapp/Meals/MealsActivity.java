@@ -68,7 +68,7 @@ public class MealsActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals);
-
+        setTitle("Meals");
         ButterKnife.bind(this);
 
         mContext = this;
@@ -211,7 +211,7 @@ public class MealsActivity extends BaseActivity implements
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                getSupportActionBar().setTitle("FitnessApp");
+                getSupportActionBar().setTitle("FitMap");
                 return false;
             }
         });

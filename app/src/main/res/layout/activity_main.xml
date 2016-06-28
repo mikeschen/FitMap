@@ -28,17 +28,6 @@
             android:layout_marginTop="@dimen/activity_medium_padding"
             android:layout_marginRight="50dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mainButton"
-            android:id="@+id/mapLayout"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/activity_medium_padding">
-
-        </LinearLayout>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +44,7 @@
             android:background="@color/colorWhite"
             android:alpha="0.85"
             android:elevation="2dp"
-            android:layout_below="@+id/mapLayout" />
+            android:layout_below="@+id/mainButton" />
 
         <TextView
             android:layout_width="match_parent"
@@ -72,8 +61,5 @@
             android:elevation="1dp"
             android:background="@color/colorWhite"/>
 
-
     </RelativeLayout>
-
-
 </RelativeLayout>

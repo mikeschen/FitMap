@@ -56,6 +56,8 @@
         <activity android:name=".simpleActivities.AboutActivity" />
         <activity android:name=".Meals.MealsActivity" />
         <activity android:name=".Meals.MealsSearchResultActivity" />
+        <activity android:name=".simpleActivities.PrefsActivity"></activity>
+
     </application>
 
 </manifest>

@@ -27,7 +27,6 @@ import java.util.List;
 
 public class MapActivityPresenter extends MapPresenter implements DirectionFinderListener {
 
-    private UiSettings mUiSettings;
     private MapInterface.View mMapView;
 
     public MapActivityPresenter(MapInterface.View mapView) {
