@@ -39,6 +39,7 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+        setTitle("Stats");
         ButterKnife.bind(this);
 
         db = new DatabaseHelper(getApplicationContext());
