@@ -8,6 +8,11 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -54,7 +59,6 @@
             android:label="@string/title_activity_about"/>
         <activity android:name=".Meals.MealsActivity"
             android:label="@string/title_activity_meals"/>
-        <!--<activity android:name=".Meals.MealsDetailActivity" />-->
         <activity android:name=".Meals.MealsSearchResultActivity" />
         <activity android:name=".simpleActivities.PrefsActivity"
             android:label="@string/title_activity_prefs"></activity>
