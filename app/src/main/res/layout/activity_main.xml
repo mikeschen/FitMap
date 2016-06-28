@@ -47,7 +47,9 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_small"
                 android:elevation="@dimen/activity_elevation"
-                android:layout_margin="@dimen/activity_small_padding"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="@dimen/activity_small_padding"
                 android:layout_gravity="center" />
 
             <Button
@@ -60,7 +62,9 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_small"
                 android:elevation="@dimen/activity_elevation"
-                android:layout_margin="@dimen/activity_small_padding"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="@dimen/activity_small_padding"
                 android:layout_gravity="center" />
 
     </LinearLayout>
