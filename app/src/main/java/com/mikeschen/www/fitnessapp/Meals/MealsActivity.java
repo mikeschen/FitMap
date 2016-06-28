@@ -80,44 +80,43 @@ public class MealsActivity extends BaseActivity implements
         mSearchString = intent.getStringExtra("inputText");
 
         if (mSearchType != null && mSearchType.equals("string")) {
+
         } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
 
-            if (mSearchType != null && mSearchType.equals("string")) {
-
-            } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
-            }
-
-            mSaveButton.setOnClickListener(this);
-            mUpcButton.setOnClickListener(this);
-            mDialogButton.setOnClickListener(this);
-            db = new DatabaseHelper(getApplicationContext());
-            List<Calories> calories = db.getAllCalorieConsumedRecords();
-            mMealsPresenter = new MealsPresenter(this);
-
-            if (calories.size() > 0) {
-                calorieRecord = calories.get(calories.size() - 1);
-                mMealsPresenter.loadCalories(calorieRecord);
-            } else {
-                calorieRecord = new Calories(1, 0, 345);
-                mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
-            }
-
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
-            String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
-            mTodaysDate.setText(strDate);
         }
+
+        mSaveButton.setOnClickListener(this);
+        mUpcButton.setOnClickListener(this);
+        mDialogButton.setOnClickListener(this);
+        db = new DatabaseHelper(getApplicationContext());
+        List<Calories> calories = db.getAllCalorieConsumedRecords();
+        mMealsPresenter = new MealsPresenter(this);
+
+        if (calories.size() > 0) {
+            calorieRecord = calories.get(calories.size() - 1);
+            mMealsPresenter.loadCalories(calorieRecord);
+        } else {
+            calorieRecord = new Calories(1, 0, 345);
+            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
+        String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
+        mTodaysDate.setText(strDate);
     }
+
 //
         @Override
         public void onClick(View view){
             switch (view.getId()) {
                 case (R.id.saveButton):
                     String strCalories = mCalorieInputEditText.getText().toString();
-                    Integer calories = Integer.parseInt(strCalories);
+                    if(strCalories.length() > 0) {
+                        Integer calories = Integer.parseInt(strCalories);
+                        mMealsPresenter.computeCalories(calories, calorieRecord);
+                    }
                     setHideSoftKeyboard(mCalorieInputEditText);
-
-                    mMealsPresenter.computeCalories(calories, calorieRecord);
                     break;
 
                 case (R.id.dialogButton):
@@ -194,49 +193,54 @@ public class MealsActivity extends BaseActivity implements
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+//        inflater.inflate(R.menu.menu_search, menu);
         inflater.inflate(R.menu.menu_photo, menu);
         ButterKnife.bind(this);
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
 
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // hide action item
-                getSupportActionBar().setTitle("");
-            }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                getSupportActionBar().setTitle("FitMap");
-                return false;
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String mFoodInputEditText) {
-                Intent intent = new Intent(MealsActivity.this, MealsSearchResultActivity.class);
-                intent.putExtra("mFoodInputEditText", mFoodInputEditText);
-                startActivity(intent);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        searchView.setOnSearchClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // hide action item
+//                getSupportActionBar().setTitle("");
+//            }
+//        });
+//        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+//            @Override
+//            public boolean onClose() {
+//                getSupportActionBar().setTitle("FitMap");
+//                return false;
+//            }
+//        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String mFoodInputEditText) {
+//                Intent intent = new Intent(MealsActivity.this, MealsSearchResultActivity.class);
+//                intent.putExtra("mFoodInputEditText", mFoodInputEditText);
+//                startActivity(intent);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_photo:
-                displayFoodByUPC(mFoods);
+                Log.d("menuItem", item.getItemId()+"");
+                scanUpc();
+                break;
+            case R.id.action_search:
+                openDialog();
                 break;
         }
         return false;
