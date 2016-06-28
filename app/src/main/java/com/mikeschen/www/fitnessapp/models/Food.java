@@ -1,7 +1,7 @@
 package com.mikeschen.www.fitnessapp.models;
 
 public class Food {
-    String itemId;
+    long itemId;
     String itemName;
     String brandName;
     String itemDescription;
@@ -12,8 +12,20 @@ public class Food {
     String servingSizeUnit;
     double servingWeightGrams;
 
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
     public Food() {}
-    public Food(String itemId, String itemName, double calories) {
+    public Food(long itemId, String itemName, double calories) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.brandName = brandName;
@@ -26,7 +38,7 @@ public class Food {
         this.servingWeightGrams = servingWeightGrams;
     }
 
-    public String getItemId() {
+    public long getItemId() {
         return itemId;
     }
 

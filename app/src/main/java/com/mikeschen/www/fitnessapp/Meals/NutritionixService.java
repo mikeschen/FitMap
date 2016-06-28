@@ -76,7 +76,7 @@ public class NutritionixService {
             String jsonData = response.body().string();
             if(response.isSuccessful()) {
                 JSONObject foodsJSON = new JSONObject(jsonData);
-                String itemId = foodsJSON.getString("item_id");
+                long itemId = foodsJSON.getLong("item_id");
                 String itemName = foodsJSON.getString("item_name");
 //                String brandName = foodsJSON.getString("brand_name");
 //                String itemDescription = foodsJSON.getString("item_description");
@@ -112,7 +112,7 @@ public class NutritionixService {
                 JSONArray hitsArrayJSON = nutritionJSON.getJSONArray("hits");
                 for (int i = 0; i < hitsArrayJSON.length(); i++  ){
                     JSONObject foodsJSON = hitsArrayJSON.getJSONObject(i).getJSONObject("fields");
-                    String itemId = foodsJSON.getString("item_id");
+                    long itemId = foodsJSON.getLong("item_id");
                     String itemName = foodsJSON.getString("item_name");
                     String brandName = foodsJSON.getString("brand_name");
 //                    String itemDescription = foodsJSON.getString("item_description");
