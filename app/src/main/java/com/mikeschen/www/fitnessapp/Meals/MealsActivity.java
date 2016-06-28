@@ -263,5 +263,11 @@ public class MealsActivity extends BaseActivity implements
         builder.show();
     }
 
+    //TODO
+    //Create a "food" object so we can add from API call and manual entry
+    //MealsActivity becomes RecyclerView of all saved food objects
+    //Calorie values of "food" object are totaled, rather than Calories consumed from DB table
+    //Refactor to remove calories consumed DB table?
+
 }
 
