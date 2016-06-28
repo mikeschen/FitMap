@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
 
 import java.util.ArrayList;

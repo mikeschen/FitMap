@@ -25,6 +25,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
@@ -78,16 +79,9 @@ public class MealsActivity extends BaseActivity implements
         mAuthProgressDialog.setCancelable(false);
         Intent intent = getIntent();
         mSearchString = intent.getStringExtra("inputText");
-<<<<<<< HEAD
         if (mSearchType != null && mSearchType.equals("string")) {
         } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
-=======
 
-        if(mSearchType != null && mSearchType.equals("string")){
-
-        } else if(mSearchType != null && mSearchType.equals("upc") && mSearchString != null){
-
->>>>>>> 1febe3b8e3ef89d93cbade0e4fbbb769cfc6c058
         }
 
         mSaveButton.setOnClickListener(this);
@@ -118,8 +112,6 @@ public class MealsActivity extends BaseActivity implements
                 String strCalories = mCalorieInputEditText.getText().toString();
                 Integer calories = Integer.parseInt(strCalories);
                 setHideSoftKeyboard(mCalorieInputEditText);
-
-
 
                 mMealsPresenter.computeCalories(calories, calorieRecord);
                 break;

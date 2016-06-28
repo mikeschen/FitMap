@@ -4,6 +4,7 @@ package com.mikeschen.www.fitnessapp.Meals;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.Constants;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,19 +81,11 @@ public class NutritionixService {
 //                String brandName = foodsJSON.getString("brand_name");
 //                String itemDescription = foodsJSON.getString("item_description");
                 double calories = foodsJSON.getDouble("nf_calories");
-<<<<<<< HEAD
-                double totalFat = foodsJSON.optDouble("nf_total_fat", 0);
-                double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
-                double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
-                String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
-                double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
-=======
 //                double totalFat = foodsJSON.optDouble("nf_total_fat", 0);
 //                double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
 //                double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
 //                String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
 //                double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
->>>>>>> f5870bf4724f9782a43f82fc3097d5b92d747f05
                 Food food = new Food(itemId, itemName, calories);
                 foods.add(food);
             }
@@ -124,19 +117,12 @@ public class NutritionixService {
                     String brandName = foodsJSON.getString("brand_name");
 //                    String itemDescription = foodsJSON.getString("item_description");
                     Double calories = foodsJSON.getDouble("nf_calories");
-<<<<<<< HEAD
-                    Double totalFat = foodsJSON.getDouble("nf_total_fat");
-                    Double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
-                    Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
-                    String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
-                    Double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
-=======
+
 //                    Double totalFat = foodsJSON.getDouble("nf_total_fat");
 //                    Double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
 //                    Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
 //                    String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
 //                    Double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
->>>>>>> f5870bf4724f9782a43f82fc3097d5b92d747f05
                     Food food = new Food(itemId, itemName, calories);
                     foods.add(food);
                 }

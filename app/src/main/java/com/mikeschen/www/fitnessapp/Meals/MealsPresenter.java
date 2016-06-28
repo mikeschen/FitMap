@@ -113,6 +113,7 @@ import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.io.IOException;
 import java.util.ArrayList;
