@@ -77,15 +77,15 @@ public class NutritionixService {
                 JSONObject foodsJSON = new JSONObject(jsonData);
                 String itemId = foodsJSON.getString("item_id");
                 String itemName = foodsJSON.getString("item_name");
-                String brandName = foodsJSON.getString("brand_name");
-                String itemDescription = foodsJSON.getString("item_description");
+//                String brandName = foodsJSON.getString("brand_name");
+//                String itemDescription = foodsJSON.getString("item_description");
                 double calories = foodsJSON.getDouble("nf_calories");
-                double totalFat = foodsJSON.optDouble("nf_total_fat", 0);
-                double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
-                double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
-                String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
-                double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
-                Food food = new Food(itemId, itemName, brandName, itemDescription, calories, totalFat, servingsPerContainer, servingSizeQuantity, servingSizeUnit, servingWeightGrams);
+//                double totalFat = foodsJSON.optDouble("nf_total_fat", 0);
+//                double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
+//                double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
+//                String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
+//                double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
+                Food food = new Food(itemId, itemName, calories);
                 foods.add(food);
             }
             else {
@@ -114,14 +114,14 @@ public class NutritionixService {
                     String itemId = foodsJSON.getString("item_id");
                     String itemName = foodsJSON.getString("item_name");
                     String brandName = foodsJSON.getString("brand_name");
-                    String itemDescription = foodsJSON.getString("item_description");
+//                    String itemDescription = foodsJSON.getString("item_description");
                     Double calories = foodsJSON.getDouble("nf_calories");
-                    Double totalFat = foodsJSON.getDouble("nf_total_fat");
-                    Double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
-                    Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
-                    String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
-                    Double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
-                    Food food = new Food(itemId, itemName, brandName, itemDescription, calories, totalFat, servingsPerContainer, servingSizeQuantity, servingSizeUnit, servingWeightGrams);
+//                    Double totalFat = foodsJSON.getDouble("nf_total_fat");
+//                    Double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
+//                    Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
+//                    String servingSizeUnit = foodsJSON.getString("nf_serving_size_unit");
+//                    Double servingWeightGrams = foodsJSON.optDouble("nf_serving_weight_grams", 0);
+                    Food food = new Food(itemId, itemName, calories);
                     foods.add(food);
                 }
             }
