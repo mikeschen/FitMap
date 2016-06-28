@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp.Meals;
+package com.mikeschen.www.fitnessapp.models;
 
 public class Food {
     String itemId;

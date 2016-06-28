@@ -4,6 +4,7 @@ package com.mikeschen.www.fitnessapp.Meals;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.Constants;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -116,6 +117,7 @@ public class NutritionixService {
                     String brandName = foodsJSON.getString("brand_name");
 //                    String itemDescription = foodsJSON.getString("item_description");
                     Double calories = foodsJSON.getDouble("nf_calories");
+
 //                    Double totalFat = foodsJSON.getDouble("nf_total_fat");
 //                    Double servingsPerContainer = foodsJSON.optDouble("nf_servings_per_container", 0);
 //                    Double servingSizeQuantity = foodsJSON.optDouble("nf_serving_size_qty", 0);
