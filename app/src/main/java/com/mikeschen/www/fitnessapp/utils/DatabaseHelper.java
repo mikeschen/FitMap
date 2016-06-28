@@ -20,7 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = DatabaseHelper.class.getName();
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
+    //v.1 DB had three tables, one for steps, one for calories burned, and one for calories consumed
+    //v.2 Refactored DB so everything is compiled into one table
 
     // Database Name
     private static final String DATABASE_NAME = "savedDays";
@@ -58,10 +60,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Days table create statement
     private static final String CREATE_TABLE_DAY = "CREATE TABLE "
-            + TABLE_DAY + "(" + KEY_DAY_ID + " INTEGER PRIMARY KEY," + KEY_STEPS
-            + " TEXT," + KEY_CALORIES_BURNED + " INTEGER,"
-            + " TEXT," + KEY_CALORIES_CONSUMED + " INTEGER,"
-            + " TEXT," + KEY_DATE + " INTEGER" + ")";
+            + TABLE_DAY + "(" + KEY_DAY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_STEPS + " INTEGER,"
+            + KEY_CALORIES_BURNED + " INTEGER,"
+            + KEY_CALORIES_CONSUMED + " INTEGER,"
+            + KEY_DATE + " INTEGER" + ")";
 //    // Steps table create statement
 //    private static final String CREATE_TABLE_STEPS = "CREATE TABLE "
 //            + TABLE_STEPS + "(" + KEY_STEPS_ID + " INTEGER PRIMARY KEY," + KEY_STEPS
@@ -162,7 +165,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                Days days = new Days(0, 0, 0, 0, 0);
+                Days days = new Days(1, 1, 1, 1, 1);
                 days.setId(c.getInt((c.getColumnIndex(KEY_DAY_ID))));
                 days.setStepsTaken((c.getInt(c.getColumnIndex(KEY_STEPS))));
                 days.setCaloriesBurned((c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED))));
@@ -208,6 +211,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteAllDayRecords() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_DAY);
+    }
+
+    /*
+    * Close the database
+    */
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
     }
 
 //    /*

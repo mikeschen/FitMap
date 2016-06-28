@@ -11,7 +11,7 @@ public class Days {
     int caloriesConsumed;
     int date;
 
-    public Days (long id, int stepsTaken, int caloriesBurned, int caloriesConsumed, int date) {
+    public Days (long id, Integer stepsTaken, int caloriesBurned, int caloriesConsumed, int date) {
         this.id = id;
         this.stepsTaken = stepsTaken;
         this.caloriesBurned = caloriesBurned;

@@ -25,6 +25,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
@@ -58,7 +59,7 @@ public class MealsActivity extends BaseActivity implements
 
     private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
-    private Calories calorieRecord;
+    private Days daysRecord;
 
     private void setHideSoftKeyboard(EditText editText) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -88,15 +89,15 @@ public class MealsActivity extends BaseActivity implements
         mUpcButton.setOnClickListener(this);
         mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
-        List<Calories> calories = db.getAllCalorieConsumedRecords();
+        List<Days> days = db.getAllDaysRecords();
         mMealsPresenter = new MealsPresenter(this);
 
-        if (calories.size() > 0) {
-            calorieRecord = calories.get(calories.size() - 1);
-            mMealsPresenter.loadCalories(calorieRecord);
+        if (days.size() > 0) {
+            daysRecord = days.get(days.size() - 1);
+//            mMealsPresenter.loadCalories(daysRecord);
         } else {
-            calorieRecord = new Calories(1, 0, 345);
-            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+            daysRecord = new Days(1, 0, 0, 0, 0);
+//            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
         }
 
         Calendar calendar = Calendar.getInstance();
@@ -109,11 +110,12 @@ public class MealsActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.saveButton):
-                String strCalories = mCalorieInputEditText.getText().toString();
-                Integer calories = Integer.parseInt(strCalories);
-                setHideSoftKeyboard(mCalorieInputEditText);
-
-                mMealsPresenter.computeCalories(calories, calorieRecord);
+                String strDays = mCalorieInputEditText.getText().toString();
+                Integer days = Integer.parseInt(strDays);
+//                setHideSoftKeyboard(mCalorieInputEditText);
+//
+//                mMealsPresenter.computeDays(days, daysRecord);
+                Toast.makeText(MealsActivity.this, "Clicky!", Toast.LENGTH_SHORT).show();
                 break;
             case (R.id.dialogButton):
                 openDialog();
@@ -167,14 +169,14 @@ public class MealsActivity extends BaseActivity implements
 //    }
 
     @Override
-    public void showCalories(Calories calorieRecord) {
-//        Calories caloriesConsumed = db.getCaloriesConsumed(calorieRecord.getId());
+    public void showDays(Days daysRecord) {
+//        Days caloriesConsumed = db.getCaloriesConsumed(daysRecord.getId());
 
 
-        db.updateCaloriesConsumed(calorieRecord);
+        db.updateDays(daysRecord);
 
-        Log.d("showCalories", calorieRecord + "");
-        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + calorieRecord.getCalories());
+        Log.d("showCalories", daysRecord + "");
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + daysRecord.getCaloriesConsumed());
         db.close();
     }
 

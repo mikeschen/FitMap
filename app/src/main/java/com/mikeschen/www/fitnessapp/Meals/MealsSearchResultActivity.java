@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
 
@@ -68,9 +69,14 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
     }
 
     @Override
-    public void showCalories(Calories calorieRecord) {
+    public void showDays(Days days) {
 
     }
+
+//    @Override
+//    public void showCalories(Calories calorieRecord) {
+//
+//    }
 
     @Override
     public void refresh() {

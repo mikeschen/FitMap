@@ -27,8 +27,7 @@ import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
-import com.mikeschen.www.fitnessapp.models.Calories;
-import com.mikeschen.www.fitnessapp.models.Steps;
+import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import java.io.IOException;
@@ -55,9 +54,10 @@ public class MainActivity extends BaseActivity implements
     private Sensor mAccelerometer;
     private NotificationCompat.Builder mBuilder;
     DatabaseHelper db;
-    Steps newSteps;
-    Calories newCaloriesBurned;
-    Calories newCaloriesConsumed;
+    Days newDays;
+//    Steps newSteps;
+//    Calories newCaloriesBurned;
+//    Calories newCaloriesConsumed;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -71,7 +71,6 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        buttonDisplay = "Calories";
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
@@ -88,25 +87,30 @@ public class MainActivity extends BaseActivity implements
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mEditor = mSharedPreferences.edit();
 
-        List<Steps> stepsList = db.getAllStepRecords();
+        List<Days> daysList = db.getAllDaysRecords();
 
-        if (stepsList.size() == 0) {
-            newSteps = new Steps(1, 0, 345);
-            newCaloriesBurned = new Calories(1, 0 ,345);
-            newCaloriesConsumed = new Calories(1, 0, 345);
-            db.logSteps(newSteps);
-            db.logCaloriesBurned(newCaloriesBurned);
-            db.logCaloriesConsumed(newCaloriesConsumed);
+
+        // This creates a table on first use of app
+        if (daysList.size() == 0) {
+            newDays = new Days(1, 0, 0, 0, 0);
+//            newSteps = new Steps(1, 0, 345);
+//            newCaloriesBurned = new Calories(1, 0 ,345);
+//            newCaloriesConsumed = new Calories(1, 0, 345);
+            db.logDays(newDays);
+//            db.logCaloriesBurned(newCaloriesBurned);
+//            db.logCaloriesConsumed(newCaloriesConsumed);
             db.closeDB();
         }
 
-        long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_TIME_KEY, 0);
-        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_STEPS_KEY, 0);
+        // Retrieves data when app is opened after crash/close and creates tables for each day app was not used
+        long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_LAST_KNOWN_TIME_KEY, 0);
+        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_LAST_KNOWN_STEPS_KEY, 0);
         long lastKnownId = mSharedPreferences.getLong(Constants.PREFERENCES_STEPS_ID_KEY, 0);
         int lastKnownCalories = lastKnownSteps * 175/3500;
 
         mStepCounterPresenter.checkDaysPassed(lastKnownSteps, lastKnownCalories, lastKnownTime, lastKnownId);
 
+        //Calls tips
         String json;
         try {
             InputStream is = mContext.getAssets().open("tips.json");
@@ -186,23 +190,21 @@ public class MainActivity extends BaseActivity implements
                     mStepCounterPresenter.loadSteps();
                 } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mStepCounterPresenter.loadCalories();
+                    mStepCounterPresenter.loadSteps();
                 }
         }
     }
 
     @Override
-    public void showSteps(Steps steps) {
-        db.updateSteps(steps);
-        mMainButton.setText("Steps Taken: " + steps.getStepsTaken());
-        db.closeDB();
-    }
+    public void showSteps(Days days) {
+        mEditor.putInt(Constants.PREFERENCES_CURRENT_STEPS_KEY, days.getStepsTaken());
+        mEditor.putInt(Constants.PREFERENCES_CURRENT_CALORIES_KEY, days.getCaloriesBurned());
 
-    @Override
-    public void showCalories(Calories calories) {
-        db.updateCaloriesBurned(calories);
-        mMainButton.setText("Calories Burned: " + calories.getCalories());
-        db.closeDB();
+        if (buttonDisplay.equals("Calories")) {
+            mMainButton.setText("Calories Burned: " + days.getCaloriesBurned());
+        } else if (buttonDisplay.equals("Steps")) {
+            mMainButton.setText("Steps Taken: " + days.getStepsTaken());
+        }
     }
 
     @Override
@@ -262,18 +264,17 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
-    public long createNewDBRows(Steps stepRecord, Calories caloriesBurnedRecord, Calories caloriesConsumedRecord) {
-        long stepRecord_id = db.logSteps(stepRecord);
-        db.logCaloriesBurned(caloriesBurnedRecord);
-        db.logCaloriesConsumed(caloriesConsumedRecord);
+    public long createNewDBRows(Days dayRecord) {
+        long stepRecord_id = db.logDays(dayRecord);
+
         db.closeDB();
         return stepRecord_id;
     }
 
     @Override
     public void addToSharedPreferences(long time, int steps, long id) {
-        mEditor.putLong(Constants.PREFERENCES_TIME_KEY, time).apply();
-        mEditor.putInt(Constants.PREFERENCES_STEPS_KEY, steps).apply();
+        mEditor.putLong(Constants.PREFERENCES_LAST_KNOWN_TIME_KEY, time).apply();
+        mEditor.putInt(Constants.PREFERENCES_LAST_KNOWN_STEPS_KEY, steps).apply();
         mEditor.putLong(Constants.PREFERENCES_STEPS_ID_KEY, id).apply();
     }
 }

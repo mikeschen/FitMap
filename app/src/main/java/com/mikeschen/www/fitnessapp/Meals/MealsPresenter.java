@@ -155,12 +155,12 @@ public class MealsPresenter implements
         calorieRecord.setCalories(calorieRecord.getCalories() + calories);
 
 //        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
-        mMealsView.showCalories(calorieRecord);
+//        mMealsView.showCalories(calorieRecord);
     }
 
     @Override
     public void loadCalories(Calories calories) {
-        mMealsView.showCalories(calories);
+//        mMealsView.showCalories(calories);
 
     }
 
