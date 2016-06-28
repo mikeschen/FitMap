@@ -113,6 +113,7 @@ import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,12 +155,12 @@ public class MealsPresenter implements
         calorieRecord.setCalories(calorieRecord.getCalories() + calories);
 
 //        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
-        mMealsView.showCalories(calorieRecord);
+//        mMealsView.showCalories(calorieRecord);
     }
 
     @Override
     public void loadCalories(Calories calories) {
-        mMealsView.showCalories(calories);
+//        mMealsView.showCalories(calories);
 
     }
 
