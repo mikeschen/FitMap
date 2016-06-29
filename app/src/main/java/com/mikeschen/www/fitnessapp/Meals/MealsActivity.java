@@ -116,7 +116,7 @@ public class MealsActivity extends BaseActivity implements
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
 
-        mTotalCaloriesTextView.setText(getFoodFromDB());
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
 
         mAdapter.setOnFoodClickedListener(this);
     }
