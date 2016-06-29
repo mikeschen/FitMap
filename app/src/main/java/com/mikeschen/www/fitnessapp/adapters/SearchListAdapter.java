@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp.Meals;
+package com.mikeschen.www.fitnessapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mikeschen.www.fitnessapp.Meals.OnFoodClickedListener;
+import com.mikeschen.www.fitnessapp.Meals.SearchViewHolder;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
 
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class SearchListAdapter extends RecyclerView.Adapter<SearchViewHolder> {
     private ArrayList<Food> mFood = new ArrayList<>();
     private Context mContext;
+    private OnFoodClickedListener mOnFoodClickedListener;
 
     public SearchListAdapter(Context context, ArrayList<Food> foods) {
         mContext = context;
@@ -35,5 +38,10 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchViewHolder> {
     @Override
     public int getItemCount() {
         return mFood.size();
+    }
+
+    public void setOnFoodClickedListener(OnFoodClickedListener listener) {
+        mOnFoodClickedListener = listener;
+
     }
 }

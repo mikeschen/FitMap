@@ -1,7 +1,9 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import org.parceler.Parcels;
 
@@ -27,20 +30,33 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
     private Context mContext;
     private ArrayList<Food> mFoods = new ArrayList<>();
 
+    private OnFoodClickedListener mOnFoodClickListener;
+
     public SearchViewHolder(View foodView, ArrayList<Food> foods) {
         super(foodView);
         ButterKnife.bind(this, foodView);
         mContext = foodView.getContext();
         mFoods = foods;
+
+        if (mContext instanceof OnFoodClickedListener) {
+            mOnFoodClickListener = (OnFoodClickedListener) foodView.getContext();
+        }
+
         foodView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int foodPosition = getLayoutPosition();
-                Toast.makeText(mContext, "Click", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, MealsActivity.class);
-                intent.putExtra("position", foodPosition);
-                intent.putExtra("food", Parcels.wrap(mFoods));
-                mContext.startActivity(intent);
+
+                if (mContext.getClass() == MealsSearchResultActivity.class) {
+                    Intent intent = new Intent(mContext, MealsActivity.class);
+                    intent.putExtra("position", foodPosition);
+                    intent.putExtra("food", Parcels.wrap(mFoods));
+                    mContext.startActivity(intent);
+                } else {
+                    if (mOnFoodClickListener != null) {
+                        mOnFoodClickListener.onFoodClicked(foodPosition, mFoods);
+                    }
+                }
             }
         });
     }
@@ -59,5 +75,6 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
     public void onFoodClear() {
 
     }
+
 }
 

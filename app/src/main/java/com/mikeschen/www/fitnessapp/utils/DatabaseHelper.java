@@ -58,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Food table create statement
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
             + TABLE_FOOD + "(" + KEY_FOOD_ID + " INTEGER PRIMARY KEY,"
-            + KEY_FOOD_NAME + "TEXT,"
+            + KEY_FOOD_NAME + " TEXT,"
             + KEY_FOOD_CALORIES + " INTEGER" + ")";
 
 

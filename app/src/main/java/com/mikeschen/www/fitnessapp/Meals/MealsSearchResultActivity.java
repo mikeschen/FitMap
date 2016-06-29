@@ -10,6 +10,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.adapters.DatabaseDaysListAdapter;
+import com.mikeschen.www.fitnessapp.adapters.SearchListAdapter;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;

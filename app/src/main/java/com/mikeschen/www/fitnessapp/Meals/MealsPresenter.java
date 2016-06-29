@@ -175,7 +175,6 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResults(response);
-                Log.d("search return", mFoods + "");
                 mMealsView.displayFoodByItem(mFoods);
             }
         });
@@ -194,6 +193,7 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResultsUpc(response);
+                Log.d("search return", mFoods + "");
                 mMealsView.displayFoodByUPC(mFoods);
 
             }
