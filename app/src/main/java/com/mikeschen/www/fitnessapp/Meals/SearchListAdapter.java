@@ -11,9 +11,6 @@ import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ramon on 6/21/16.
- */
 public class SearchListAdapter extends RecyclerView.Adapter<SearchViewHolder> {
     private ArrayList<Food> mFood = new ArrayList<>();
     private Context mContext;
