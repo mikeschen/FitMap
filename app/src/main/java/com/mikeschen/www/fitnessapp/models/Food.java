@@ -1,5 +1,8 @@
 package com.mikeschen.www.fitnessapp.models;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Food {
     long itemId;
     String itemName;
@@ -25,18 +28,19 @@ public class Food {
     }
 
     public Food() {}
-    public Food(long itemId, String itemName, double calories) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.brandName = brandName;
-        this.itemDescription = itemDescription;
-        this.calories = calories;
-        this.totalFat = totalFat;
-        this.servingsPerContainer = servingsPerContainer;
-        this.servingSizeQuantity = servingSizeQuantity;
-        this.servingSizeUnit = servingSizeUnit;
-        this.servingWeightGrams = servingWeightGrams;
-    }
+
+    public Food(long itemId, String itemName, double calories){
+            this.itemId = itemId;
+            this.itemName = itemName;
+            this.brandName = brandName;
+            this.itemDescription = itemDescription;
+            this.calories = calories;
+            this.totalFat = totalFat;
+            this.servingsPerContainer = servingsPerContainer;
+            this.servingSizeQuantity = servingSizeQuantity;
+            this.servingSizeUnit = servingSizeUnit;
+            this.servingWeightGrams = servingWeightGrams;
+        }
 
     public long getItemId() {
         return itemId;
