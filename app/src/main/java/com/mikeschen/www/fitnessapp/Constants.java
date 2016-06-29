@@ -31,4 +31,7 @@ public class Constants {
     public static final String PREFERENCES_LAST_KNOWN_TIME_KEY = "time";
 
     public static final String PREFERENCES_CALORIES_ID_KEY = "calories_id";
+
+    public static final String PREFERENCES_HOME = "myHome";
+    public static final String PREFERENCES_WORK = "myWork";
 }
