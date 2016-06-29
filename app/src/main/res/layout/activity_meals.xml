@@ -18,9 +18,9 @@
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/upcButton"
-        android:layout_toEndOf="@+id/upcButton" />
+        android:layout_alignParentTop="true"/>
+        <!--android:layout_toRightOf="@+id/upcButton"-->
+        <!--android:layout_toEndOf="@+id/upcButton" />-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,25 +33,26 @@
         android:elevation="1dp"
         android:gravity="center_horizontal" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/foodInputEditText"
-        android:layout_marginBottom="344dp"
-        android:layout_alignParentBottom="true"
-        android:hint="Enter Food Item"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/foodInputEditText"-->
+        <!--android:layout_marginBottom="344dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:hint="Enter Food Item"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/calorieInputEditText"
-        android:hint="Enter Calories"
-        android:layout_below="@+id/todaysDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="36dp" />
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/calorieInputEditText"-->
+        <!--android:hint="Enter Calories"-->
+        <!--android:layout_below="@+id/todaysDate"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginTop="36dp"-->
+        <!--android:inputType="number" />-->
 
     <TextView
         android:layout_width="match_parent"
@@ -66,42 +67,42 @@
         android:layout_marginRight="@dimen/activity_wide_margin"
         android:textStyle="bold" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:textSize="@dimen/text_medium"
-        android:id="@+id/saveButton"
-        android:layout_below="@+id/calorieInputEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/colorPrimaryDark"
-        android:background="@color/colorAbout"/>
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Save"-->
+        <!--android:textSize="@dimen/text_medium"-->
+        <!--android:id="@+id/saveButton"-->
+        <!--android:layout_below="@+id/calorieInputEditText"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:textColor="@color/colorPrimaryDark"-->
+        <!--android:background="@color/colorAbout"/>-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:textSize="@dimen/text_medium"
-        android:id="@+id/dialogButton"
-        android:layout_above="@+id/totalCaloriesTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="71dp" />
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Search"-->
+        <!--android:textSize="@dimen/text_medium"-->
+        <!--android:id="@+id/dialogButton"-->
+        <!--android:layout_above="@+id/totalCaloriesTextView"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginBottom="71dp" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="OR"
-        android:id="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:layout_above="@+id/dialogButton"
-        android:textSize="@dimen/text_small"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="OR"-->
+        <!--android:id="@+id/textView2"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="40dp"-->
+        <!--android:layout_above="@+id/dialogButton"-->
+        <!--android:textSize="@dimen/text_small"/>-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/upcButton"/>
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/upcButton"/>-->
 </RelativeLayout>

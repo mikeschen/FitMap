@@ -296,7 +296,7 @@ public class MainActivity extends BaseActivity implements
     public Days endOfDaySave() {
         int stepsTaken = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_STEPS_KEY, 0);
         int caloriesBurned = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_CALORIES_BURNED_KEY, 0);
-        int caloriesConsumed = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_CALORIES_CONSUIMED_KEY, 0);
+        int caloriesConsumed = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_CALORIES_CONSUMED_KEY, 0);
         String date = mSharedPreferences.getString(Constants.PREFERENCES_CURRENT_DATE, null);
 
 

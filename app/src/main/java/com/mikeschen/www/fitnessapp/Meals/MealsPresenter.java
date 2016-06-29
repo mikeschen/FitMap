@@ -137,11 +137,9 @@ public class MealsPresenter implements
 
 
     public MealsPresenter(MealsInterface.View mealsView) {
-
         mMealsView = mealsView;
         consumedCalories = 0;
         totalCalories = 0;
-
     }
 
     @Override
@@ -156,6 +154,7 @@ public class MealsPresenter implements
 
 //        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
 //        mMealsView.showCalories(calorieRecord);
+
     }
 
     @Override
@@ -210,9 +209,5 @@ public class MealsPresenter implements
 }
 
 
-//create a presenter for searchUPC and take all code from BaseActivity
 //MealsTracker activity that never changes and then implement fragment that handles the search data
-//dialog with fields and btn save and closes
 //list fragment and meals fragment; savedmeals fragment
-//last green activity will be separate activity
-//how to display the calories on the screen as well

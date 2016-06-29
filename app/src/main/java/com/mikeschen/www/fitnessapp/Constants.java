@@ -22,7 +22,7 @@ public class Constants {
 
     public static final String PREFERENCES_CURRENT_STEPS_KEY = "currentSteps";
     public static final String PREFERENCES_CURRENT_CALORIES_BURNED_KEY = "caloriesBurned";
-    public static final String PREFERENCES_CURRENT_CALORIES_CONSUIMED_KEY = "caloriesConsumed";
+    public static final String PREFERENCES_CURRENT_CALORIES_CONSUMED_KEY = "caloriesConsumed";
     public static final String PREFERENCES_CURRENT_DATE = "date";
 
 
