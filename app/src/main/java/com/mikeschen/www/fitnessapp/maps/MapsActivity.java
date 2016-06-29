@@ -126,6 +126,13 @@ public class MapsActivity extends BaseActivity implements
             public void onClick(View v) {
                 sendRequest();
                 setHideSoftKeyboard(atDestination);
+                LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+                pathFinder.setVisibility(LinearLayout.VISIBLE);
+                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+                animation.setDuration(1000);
+                pathFinder.setAnimation(animation);
+                pathFinder.animate();
+                animation.start();
             }
         });
     }
