@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -12,10 +13,13 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +76,7 @@ public class MapsActivity extends BaseActivity implements
     private List<Polyline> polylinePaths = new ArrayList<>();
 
     private ArrayList<String> distances;
-    private ArrayList<String> durations;
+    private ArrayList<Integer> durations;
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
 
@@ -90,6 +94,7 @@ public class MapsActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
+
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
@@ -171,8 +176,6 @@ public class MapsActivity extends BaseActivity implements
         }
     }
 
-
-
     private void sendRequest() {
         String origin = atOrigin.getText().toString();
         String destination = atDestination.getText().toString();
@@ -199,14 +202,13 @@ public class MapsActivity extends BaseActivity implements
 
         for (Route route : routes) {
             double miles = Math.round((route.distance.value * 0.000621371) * 10d) / 10d;
-            Long minutes = Math.round(route.duration.value / 60.0);
-            Log.d("first jsonmiles", miles + "");
-            durations.add(minutes + " minutes");
+            int minutes = Math.round(route.duration.value / 60);
+            durations.add(minutes);
             distances.add(miles + " miles");
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             showDistance(miles + " miles");
-            showDuration(minutes + " minutes");
+            showDuration(minutes);
             calorie = Math.round(route.distance.value / 16.1);
             showCalorieRoute(calorie);
             routeCalories.add(calorie);
@@ -304,8 +306,10 @@ public class MapsActivity extends BaseActivity implements
     }
 
     @Override
-    public void showDuration(String duration) {
-        mTvDuration.setText(duration);
+    public void showDuration(int duration) {
+        int hours = duration / 60;
+        int minutes = duration % 60;
+        mTvDuration.setText(hours + " h " + minutes + " min");
     }
 
     @Override

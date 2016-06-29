@@ -24,17 +24,42 @@
         android:hint="Enter Destination Address"
         android:id="@+id/atDestination" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:layout_margin="@dimen/activity_small_padding"
+        android:layout_below="@+id/tvCalorie"
+        android:text="Find Path"
+        android:textSize="@dimen/text_small"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button"
+        android:id="@+id/btnFindPath" />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/pathFinder"
+        android:layout_below="@+id/map"
+        android:layout_margin="@dimen/activity_small_padding"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:layout_marginLeft="@dimen/activity_wide_margin"
             android:layout_marginTop="@dimen/activity_small_padding"
             android:layout_width="@dimen/activity_large_padding"
             android:layout_height="@dimen/activity_large_padding"
-            android:src="@drawable/ic_restaurant_black_24dp"/>
+            android:src="@drawable/ic_whatshot_black_24dp"/>
         <TextView
             android:layout_marginLeft="@dimen/activity_small_padding"
             android:layout_width="wrap_content"
@@ -48,6 +73,7 @@
             android:layout_width="@dimen/activity_large_padding"
             android:layout_height="@dimen/activity_large_padding"
             android:src="@drawable/ic_directions_walk_black_24dp"/>
+
         <TextView
             android:layout_marginLeft="@dimen/activity_small_padding"
             android:layout_width="wrap_content"
@@ -69,21 +95,6 @@
             android:text="0 min"
             android:id="@+id/tvDuration" />
 
-    </LinearLayout>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_below="@+id/tvCalorie"
-        android:text="Find Path"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/btnFindPath" />
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        </LinearLayout>
 
 </LinearLayout>

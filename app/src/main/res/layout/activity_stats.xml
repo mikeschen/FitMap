@@ -24,50 +24,9 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/foodRecyclerView"
-        android:layout_above="@+id/button"
-        android:layout_toLeftOf="@+id/caloriesBurnedRecyclerView"
-        android:layout_below="@+id/caloriesBurnedTextView" />
+        android:id="@+id/stepsRecyclerView"
+        android:layout_above="@+id/button"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:text="Calories Burned"
-        android:id="@+id/caloriesBurnedTextView"
-        android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/stepsTextView"
-        android:layout_alignBottom="@+id/caloriesConsumedTextView"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/stepsTextView" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/caloriesBurnedRecyclerView"
-        android:layout_above="@+id/button"
-        android:layout_below="@+id/stepsTextView"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:text="Calories Consumed"
-        android:id="@+id/caloriesConsumedTextView"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/caloriesConsumedRecyclerView"
-        android:layout_above="@+id/button"
-        android:layout_below="@+id/stepsTextView"
-        android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

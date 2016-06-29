@@ -141,10 +141,8 @@ public class DirectionFinder {
                 destinationLat = jsonEndLocation.getDouble("lat");
                 destinationLong = jsonEndLocation.getDouble("lng");
             }
-            Log.d("currentCount!!", currentCount +  "");
-            route.duration = new Duration(jsonDuration.getString("text"), totalDistance);
-            route.distance = new Distance(jsonDistance.getString("text"), totalDuration);
-            Log.d("routeDistance!!", route.distance.text + "");
+            route.duration = new Duration(jsonDuration.getString("text"), totalDuration);
+            route.distance = new Distance(jsonDistance.getString("text"), totalDistance);
             route.endAddress = jsonLeg.getString("end_address");
             route.startAddress = jsonLeg.getString("start_address");
             originLat = jsonStartLocation.getDouble("lat");
@@ -157,7 +155,7 @@ public class DirectionFinder {
                 shortestDistance = jsonDistance.getInt("value");
             } else {
                 Log.d("distanceDiff", ""+Math.abs(totalDistance - shortestDistance));
-                if(Math.abs(totalDistance - shortestDistance) < 300){
+                if(Math.abs(totalDistance - shortestDistance) < 300) {
                     wayPointDistance += .001;
                     try {
                         new DownloadRawData().execute(createSecondUrl());
@@ -169,7 +167,6 @@ public class DirectionFinder {
                     wayPointDistance = 0;
                 }
             }
-
             routes.add(route);
         }
 

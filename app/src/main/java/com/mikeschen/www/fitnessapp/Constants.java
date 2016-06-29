@@ -20,11 +20,15 @@ public class Constants {
     public static final String RESULT_QUANTITY_DEFAULT = "0:20";
     public static final String QUERY_FIELD_DEFAULTS = "item_name,brand_name,item_id";
 
+    public static final String PREFERENCES_CURRENT_STEPS_KEY = "currentSteps";
+    public static final String PREFERENCES_CURRENT_CALORIES_BURNED_KEY = "caloriesBurned";
+    public static final String PREFERENCES_CURRENT_CALORIES_CONSUIMED_KEY = "caloriesConsumed";
+    public static final String PREFERENCES_CURRENT_DATE = "date";
+
 
     public static final String PREFERENCES_STEPS_ID_KEY ="steps_id";
-    public static final String PREFERENCES_STEPS_KEY = "steps";
-    public static final String PREFERENCES_TIME_KEY = "time";
+    public static final String PREFERENCES_LAST_KNOWN_STEPS_KEY = "lastKnownSteps";
+    public static final String PREFERENCES_LAST_KNOWN_TIME_KEY = "time";
 
     public static final String PREFERENCES_CALORIES_ID_KEY = "calories_id";
-    public static final String PREFERENCES_CALORIES_KEY = "calories";
 }

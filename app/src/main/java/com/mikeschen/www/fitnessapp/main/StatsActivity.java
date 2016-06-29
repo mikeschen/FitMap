@@ -17,9 +17,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.adapters.DatabaseDaysListAdapter;
 import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.adapters.DatabaseCalorieListAdapter;
 import com.mikeschen.www.fitnessapp.adapters.DatabaseCaloriesConsumedListAdapter;
+import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.adapters.DatabaseStepsListAdapter;
 import com.mikeschen.www.fitnessapp.R;
@@ -32,16 +34,11 @@ import butterknife.ButterKnife;
 
 public class StatsActivity extends BaseActivity implements View.OnClickListener{
 
-    @Bind(R.id.foodRecyclerView) RecyclerView mStepsRecyclerView;
-    @Bind(R.id.caloriesBurnedRecyclerView) RecyclerView mCaloriesBurnedRecyclerView;
-    @Bind(R.id.caloriesConsumedRecyclerView) RecyclerView mCaloriesConsumedRecyclerView;
+
+    @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
     @Bind(R.id.button) Button mButton;
-    private DatabaseStepsListAdapter mDatabaseStepsListAdapter;
-    private DatabaseCalorieListAdapter mDatabaseCaloriesBurnedListAdapter;
-    private DatabaseCaloriesConsumedListAdapter mDatabaseCaloriesConsumedListAdapter;
-    public ArrayList<Steps> mSteps = new ArrayList<>();
-    public ArrayList<Calories> mCaloriesBurned = new ArrayList<>();
-    public ArrayList<Calories> mCaloriesConsumed = new ArrayList<>();
+    private DatabaseDaysListAdapter mDatabaseDaysListAdapter;
+    public ArrayList<Days> mDays = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +46,14 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_stats);
         ButterKnife.bind(this);
 
-        mSteps = (ArrayList<Steps>) db.getAllStepRecords();
-        mCaloriesBurned = (ArrayList<Calories>) db.getAllCaloriesBurnedRecords();
-        mCaloriesConsumed = (ArrayList<Calories>) db.getAllCalorieConsumedRecords();
+        mDays = (ArrayList<Days>) db.getAllDaysRecords();
 
-        mDatabaseStepsListAdapter = new DatabaseStepsListAdapter(getApplicationContext(), mSteps);
-        mStepsRecyclerView.setAdapter(mDatabaseStepsListAdapter);
+        mDatabaseDaysListAdapter = new DatabaseDaysListAdapter(getApplicationContext(), mDays);
+        mStepsRecyclerView.setAdapter(mDatabaseDaysListAdapter);
         RecyclerView.LayoutManager stepsLayoutManager =
                 new LinearLayoutManager(StatsActivity.this);
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
-
-        mDatabaseCaloriesBurnedListAdapter = new DatabaseCalorieListAdapter(getApplicationContext(), mCaloriesBurned);
-        mCaloriesBurnedRecyclerView.setAdapter(mDatabaseCaloriesBurnedListAdapter);
-        RecyclerView.LayoutManager calorieLayoutManager =
-                new LinearLayoutManager(StatsActivity.this);
-        mCaloriesBurnedRecyclerView.setLayoutManager(calorieLayoutManager);
-        mCaloriesBurnedRecyclerView.setHasFixedSize(true);
-
-        mDatabaseCaloriesConsumedListAdapter = new DatabaseCaloriesConsumedListAdapter(getApplicationContext(), mCaloriesConsumed);
-        mCaloriesConsumedRecyclerView.setAdapter(mDatabaseCaloriesConsumedListAdapter);
-        RecyclerView.LayoutManager caloriesConsumedLayoutManager =
-                new LinearLayoutManager(StatsActivity.this);
-        mCaloriesConsumedRecyclerView.setLayoutManager(caloriesConsumedLayoutManager);
-        mCaloriesConsumedRecyclerView.setHasFixedSize(true);
 
         mButton.setOnClickListener(this);
     }
@@ -81,9 +62,10 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()) {
             case(R.id.button) :
-                db.deleteAllStepsRecords();
-                db.deleteAllCaloriesBurnedRecords();
-                db.deleteAllCaloriesConsumedRecords();
+                db.deleteAllDayRecords();
+//                db.deleteAllCaloriesBurnedRecords();
+//                db.deleteAllCaloriesConsumedRecords();
+                db.closeDB();
                 refresh();
         }
     }

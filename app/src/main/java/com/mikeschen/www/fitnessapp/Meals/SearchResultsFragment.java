@@ -23,9 +23,7 @@ public class SearchResultsFragment extends Fragment  {
 
 
 
-    public SearchResultsFragment() {
-        // Required empty public constructor
-    }
+    public SearchResultsFragment() {}
 
     public static SearchResultsFragment newInstance(Context context, String foodItem) {
         SearchResultsFragment searchResultsFragment = new SearchResultsFragment();

@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">FitnessApp</string>
+    <string name="app_name">FitMap</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Maps</string>
+    <string name="title_activity_meals">Meals</string>
+    <string name="title_activity_stats">Stats</string>
+    <string name="title_activity_prefs">Preferences</string>
+    <string name="title_activity_about">About</string>
 
     //Used to make PermissionUtils work
 
@@ -15,7 +19,7 @@
     <string name="Benefits">FitMap is the app that will make you walk to work, explore places and start counting calories you consume on a daily basis without even realizing it!</string>
     <string name="Information">FitMap provides you with ability to check calories burned from walking, log/look up calories and suggest tips for walking paths!
     </string>
-    <string name="Meals">Total Calories Consumed!</string>
+    <string name="Meals">Calories Consumed!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
