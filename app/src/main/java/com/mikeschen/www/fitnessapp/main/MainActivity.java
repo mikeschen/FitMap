@@ -1,6 +1,8 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -27,6 +30,7 @@ import android.widget.TextView;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
+import com.mikeschen.www.fitnessapp.MenuFragment;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
@@ -62,8 +66,6 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
-    @Bind(R.id.mapsMainButton) Button mMapsMainButton;
-    @Bind(R.id.mealsMainButton) Button mMealsMainButton;
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
     @Override
@@ -74,12 +76,10 @@ public class MainActivity extends BaseActivity implements
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
+
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
-
-        mMapsMainButton.setOnClickListener(this);
-        mMealsMainButton.setOnClickListener(this);
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this);
