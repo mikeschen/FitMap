@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mikeschen.www.fitnessapp.Meals.SearchViewHolder;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Days;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.util.ArrayList;
 
