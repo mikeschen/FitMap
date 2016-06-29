@@ -10,31 +10,35 @@
     tools:context=".Meals.MealsActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/Meals"
         android:textColor="@color/colorPrimaryDark"
         android:id="@+id/caloriesTextView"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_large"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/totalCaloriesTextView"
+        android:layout_alignEnd="@+id/totalCaloriesTextView"
+        android:gravity="center" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/todaysDate"
-        android:hint="Enter Today's Date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/caloriesTextView"
         android:layout_above="@+id/foodInputEditText"
         android:elevation="1dp"
-        android:gravity="center_horizontal" />
+        android:textSize="@dimen/text_tiny"
+        android:gravity="center" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/foodRecyclerView"
+        android:layout_marginTop="25dp"
         android:layout_below="@+id/todaysDate"
         android:layout_above="@+id/totalCaloriesTextView" />
 
@@ -49,6 +53,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="@dimen/activity_wide_margin"
         android:layout_marginRight="@dimen/activity_wide_margin"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center" />
 
 </RelativeLayout>
