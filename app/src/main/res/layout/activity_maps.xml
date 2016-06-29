@@ -14,14 +14,48 @@
         android:id="@+id/atOrigin"
         android:hint="My Location" />
 
-    <EditText
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/buttonMenu"
+        android:layout_margin="@dimen/activity_small_padding"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_small_padding"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:hint="Enter Destination Address"
-        android:id="@+id/atDestination" />
+        android:layout_below="@+id/mainButton"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_small_padding"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:hint="Enter Destination Address"
+            android:id="@+id/atDestination"
+            android:layout_gravity="bottom" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/homeButton"
+            android:background="@drawable/buttonred2"
+            android:text="Home"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_tiny"
+            android:elevation="@dimen/activity_elevation"
+            android:layout_marginRight="1dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/workButton"
+            android:background="@drawable/buttonred"
+            android:text="Work"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_tiny"
+            android:elevation="@dimen/activity_elevation"
+            android:layout_marginLeft="1dp" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
