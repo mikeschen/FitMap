@@ -72,22 +72,6 @@ public class StepCounterPresenter implements
             @Override
             public void run() {
                 long currentTime = System.currentTimeMillis() / 60000;
-
-                if (currentTime % (60 * 24) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
-                    //TODO
-                    //Do more thorough math with these numbers
-                    Log.d("tick", "tock");
-
-                    daysRecord = mStepCounterView.endOfDaySave();
-                    mStepCounterView.buildNotification(daysRecord.getStepsTaken());
-
-                    // Builds new, empty database row when notification fires
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-                    daysRecord = new Days(currentDaysTableId, 0, 0, 0, dateFormat.toString());
-                    long daysRecord_id = mStepCounterView.createNewDBRows(daysRecord);
-                    daysRecord.setId(daysRecord_id);
-
-                }
                 checkMidnight(currentTime);
             }
         };
