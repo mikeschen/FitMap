@@ -31,6 +31,7 @@ import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.utils.StepCounterService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity implements
     private NotificationCompat.Builder mBuilder;
     Days newDays;
     int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
+    StepCounterService stepCounterService;
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;

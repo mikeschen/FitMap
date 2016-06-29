@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.main.StepCounterPresenter;
 
@@ -53,6 +54,7 @@ public class StepCounterService extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        Log.d("It's", "moving");
     }
 
     @Override
