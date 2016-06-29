@@ -76,10 +76,10 @@ public class NutritionixService {
             String jsonData = response.body().string();
             if(response.isSuccessful()) {
                 JSONObject foodsJSON = new JSONObject(jsonData);
-                long itemId = foodsJSON.getLong("item_id");
+
                 String itemName = foodsJSON.getString("item_name");
                 double calories = foodsJSON.getDouble("nf_calories");
-                Food food = new Food(itemId, itemName, calories);
+                Food food = new Food(1, itemName, calories);
                 foods.add(food);
             }
             else {
