@@ -53,12 +53,10 @@ public class MealsActivity extends BaseActivity implements
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
 
-    DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
     private SearchListAdapter mAdapter;
 
 
-    private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
     private Days daysRecord;
 
@@ -73,7 +71,6 @@ public class MealsActivity extends BaseActivity implements
         setContentView(R.layout.activity_meals);
         ButterKnife.bind(this);
 
-        mContext = this;
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
         mAuthProgressDialog.setMessage("Searching for food items...");
@@ -89,8 +86,9 @@ public class MealsActivity extends BaseActivity implements
         mSaveButton.setOnClickListener(this);
         mUpcButton.setOnClickListener(this);
         mDialogButton.setOnClickListener(this);
-        db = new DatabaseHelper(getApplicationContext());
+
         List<Days> days = db.getAllDaysRecords();
+
         mMealsPresenter = new MealsPresenter(this);
 
         if (days.size() > 0) {
@@ -122,10 +120,6 @@ public class MealsActivity extends BaseActivity implements
                 break;
         }
     }
-
-
-
-
 
     private void scanUpc() {
         IntentIntegrator integrator = new IntentIntegrator(this);
