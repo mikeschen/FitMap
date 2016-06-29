@@ -1,9 +1,12 @@
 package com.mikeschen.www.fitnessapp;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 
 import butterknife.Bind;
@@ -39,17 +43,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.homeMainButton):
-
-                break;
-            case (R.id.mapsMainButton):
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), MapsActivity.class);
+                intent.setClass(getActivity(), MainActivity.class);
                 getActivity().startActivity(intent);
                 break;
-            case (R.id.mealsMainButton):
+            case (R.id.mapsMainButton):
                 Intent intent2 = new Intent();
                 intent2.setClass(getActivity(), MapsActivity.class);
                 getActivity().startActivity(intent2);
+                break;
+            case (R.id.mealsMainButton):
+                Intent intent3 = new Intent();
+                intent3.setClass(getActivity(), MealsActivity.class);
+                getActivity().startActivity(intent3);
                 break;
         }
     }
