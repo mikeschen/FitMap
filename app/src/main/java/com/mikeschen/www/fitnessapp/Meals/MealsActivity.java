@@ -23,14 +23,18 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Days;
+import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,7 +65,7 @@ public class MealsActivity extends BaseActivity implements
 
     private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
-    private Calories calorieRecord;
+    private Days daysRecord;
 
     private void setHideSoftKeyboard(EditText editText) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -72,7 +76,6 @@ public class MealsActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals);
-        setTitle("Meals");
         ButterKnife.bind(this);
 
         mContext = this;
@@ -88,23 +91,26 @@ public class MealsActivity extends BaseActivity implements
 
         if (mSearchType != null && mSearchType.equals("string")) {
 
+
         } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
 
         }
+
 
 //        mSaveButton.setOnClickListener(this);
 //        mUpcButton.setOnClickListener(this);
 //        mDialogButton.setOnClickListener(this);
         db = new DatabaseHelper(getApplicationContext());
-        List<Calories> calories = db.getAllCalorieConsumedRecords();
+        List<Days> days = db.getAllDaysRecords();
         mMealsPresenter = new MealsPresenter(this);
 
-        if (calories.size() > 0) {
-            calorieRecord = calories.get(calories.size() - 1);
-            mMealsPresenter.loadCalories(calorieRecord);
+        if (days.size() > 0) {
+            daysRecord = days.get(days.size() - 1);
+//            mMealsPresenter.loadCalories(daysRecord);
         } else {
-            calorieRecord = new Calories(1, 0, 345);
-            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
+//            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
         }
 
         Calendar calendar = Calendar.getInstance();
@@ -112,6 +118,7 @@ public class MealsActivity extends BaseActivity implements
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
     }
+
 
 ////
 //        @Override
@@ -139,8 +146,26 @@ public class MealsActivity extends BaseActivity implements
 //                default:
 //            }
 //        }
-
-
+//=======PRETTY SURE DONT NEED THIS
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case (R.id.saveButton):
+//                String strDays = mCalorieInputEditText.getText().toString();
+//                Integer days = Integer.parseInt(strDays);
+////                setHideSoftKeyboard(mCalorieInputEditText);
+////
+////                mMealsPresenter.computeDays(days, daysRecord);
+//                Toast.makeText(MealsActivity.this, "Clicky!", Toast.LENGTH_SHORT).show();
+//                break;
+//            case (R.id.dialogButton):
+//                openDialog();
+//                break;
+//            case (R.id.upcButton):
+//                scanUpc();
+//                break;
+//        }
+//    }
 
 
     private void scanUpc() {
@@ -186,14 +211,14 @@ public class MealsActivity extends BaseActivity implements
 //    }
 
     @Override
-    public void showCalories(Calories calorieRecord) {
-//        Calories caloriesConsumed = db.getCaloriesConsumed(calorieRecord.getId());
+    public void showDays(Days daysRecord) {
+//        Days caloriesConsumed = db.getCaloriesConsumed(daysRecord.getId());
 
 
-        db.updateCaloriesConsumed(calorieRecord);
+        db.updateDays(daysRecord);
 
-        Log.d("showCalories", calorieRecord + "");
-        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + calorieRecord.getCalories());
+        Log.d("showCalories", daysRecord + "");
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + daysRecord.getCaloriesConsumed());
         db.close();
     }
 
@@ -210,6 +235,7 @@ public class MealsActivity extends BaseActivity implements
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
 
+
 //        searchView.setOnSearchClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -221,6 +247,34 @@ public class MealsActivity extends BaseActivity implements
 //            @Override
 //            public boolean onClose() {
 //                getSupportActionBar().setTitle("FitMap");
+//                return false;
+//            }
+//        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String mFoodInputEditText) {
+//                Intent intent = new Intent(MealsActivity.this, MealsSearchResultActivity.class);
+//                intent.putExtra("mFoodInputEditText", mFoodInputEditText);
+//                startActivity(intent);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+
+//        searchView.setOnSearchClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // hide action item
+//                getSupportActionBar().setTitle("");
+//            }
+//        });
+//        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+//            @Override
+//            public boolean onClose() {
 //                return false;
 //            }
 //        });
@@ -300,25 +354,25 @@ public class MealsActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
 
                 String foodItem = subEditText.getText().toString();
-//                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-//                intent.putExtra("food item", foodItem);
-////                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
-//                mContext.startActivity(intent);
-//            }
-//        });
-                if (foodItem == null) {
-//                    mAuthProgressDialog.dismiss();
-
-                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-//                    mContext.startActivity(intent);
-                } else {
-                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                    intent.putExtra("food item", foodItem);
-                    mContext.startActivity(intent);
-                }
+                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                intent.putExtra("food item", foodItem);
+//                Log.d("Food Item Input", intent.putExtra("food item", foodItem) + "");
+                mContext.startActivity(intent);
             }
         });
+//                if (foodItem == null) {
+////                    mAuthProgressDialog.dismiss();
+//
+//                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
+////                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+////                    mContext.startActivity(intent);
+//                } else {
+//                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+//                    intent.putExtra("food item", foodItem);
+//                    mContext.startActivity(intent);
+//                }
+//            }
+//        });
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -349,9 +403,16 @@ public class MealsActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 String foodItem = subEditText.getText().toString();
                 String foodCalories = secondEditText.getText().toString();
-                //need to change this for calories to be added to this activity
-                Integer calories = Integer.parseInt(foodCalories);
-                mMealsPresenter.computeCalories(calories, calorieRecord);
+                Integer intCalories = Integer.parseInt(foodCalories);
+
+                //Add new calorie entry to old calorie total
+                int totalCalories = mSharedPreferences.getInt(Constants.PREFERENCES_CURRENT_CALORIES_CONSUMED_KEY, 0);
+                int newCalorieTotal = totalCalories + intCalories;
+                mEditor.putInt(Constants.PREFERENCES_CURRENT_CALORIES_CONSUMED_KEY, newCalorieTotal);
+
+
+//                Integer calories = Integer.parseInt(foodCalories);
+//                mMealsPresenter.computeCalories(calories, calorieRecord);
 //                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
 //                intent.putExtra("food item", foodItem);
 //                intent.putExtra("food calories", foodCalories);
@@ -372,25 +433,7 @@ public class MealsActivity extends BaseActivity implements
 
     @Override
     public void onClick(View view) {
-//        switch (view.getId()) {
-//            case (R.id.saveButton):
-//                String strCalories = mCalorieInputEditText.getText().toString();
-//                if (strCalories.length() > 0) {
-//                    Integer calories = Integer.parseInt(strCalories);
-//                    mMealsPresenter.computeCalories(calories, calorieRecord);
-//                }
-//                setHideSoftKeyboard(mCalorieInputEditText);
-//                break;
-//
-//        }
     }
-
-    //TODO
-    //Create a "food" object so we can add from API call and manual entry
-    //MealsActivity becomes RecyclerView of all saved food objects
-    //Calorie values of "food" object are totaled, rather than Calories consumed from DB table
-    //Refactor to remove calories consumed DB table?
-
 }
 
 

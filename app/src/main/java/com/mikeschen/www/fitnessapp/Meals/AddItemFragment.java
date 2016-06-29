@@ -26,10 +26,7 @@ public class AddItemFragment extends Fragment {
     @Bind(R.id.foodInputEditText) EditText mFoodInputEditText;
     @Bind(R.id.calorieInputEditText) EditText mCalorieInputEditText;
 
-
-
     public AddItemFragment() {}
-
 
     public static AddItemFragment newInstance(Context context, String foodItem, String calories) {
         AddItemFragment addItemFragment = new AddItemFragment();

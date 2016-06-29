@@ -1,10 +1,10 @@
-package com.mikeschen.www.fitnessapp.Meals;
+package com.mikeschen.www.fitnessapp.models;
 
 import org.parceler.Parcel;
 
 @Parcel
 public class Food {
-    String itemId;
+    long itemId;
     String itemName;
     String brandName;
     String itemDescription;
@@ -15,22 +15,34 @@ public class Food {
     String servingSizeUnit;
     double servingWeightGrams;
 
-    public Food() {}
-
-    public Food(String itemId, String itemName, double calories) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
-        this.itemName = itemName;
-        this.brandName = brandName;
-        this.itemDescription = itemDescription;
-        this.calories = calories;
-        this.totalFat = totalFat;
-        this.servingsPerContainer = servingsPerContainer;
-        this.servingSizeQuantity = servingSizeQuantity;
-        this.servingSizeUnit = servingSizeUnit;
-        this.servingWeightGrams = servingWeightGrams;
     }
 
-    public String getItemId() {
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
+    public Food() {}
+
+    public Food(long itemId, String itemName, double calories){
+            this.itemId = itemId;
+            this.itemName = itemName;
+            this.brandName = brandName;
+            this.itemDescription = itemDescription;
+            this.calories = calories;
+            this.totalFat = totalFat;
+            this.servingsPerContainer = servingsPerContainer;
+            this.servingSizeQuantity = servingSizeQuantity;
+            this.servingSizeUnit = servingSizeUnit;
+            this.servingWeightGrams = servingWeightGrams;
+        }
+
+    public long getItemId() {
         return itemId;
     }
 

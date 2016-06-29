@@ -9,9 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity">
 
-
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/homeEditText"
         android:hint="Enter Home Address"
@@ -20,7 +19,7 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Work Address"
         android:id="@+id/workEditText"
@@ -28,29 +27,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/homeButton"
-        android:padding="@dimen/activity_small_padding"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorAccent"
-        android:layout_above="@+id/workEditText"
-        android:layout_toRightOf="@+id/homeEditText"
-        android:layout_toEndOf="@+id/homeEditText" />
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Submit"
+    android:padding="@dimen/activity_small_padding"
+    android:textSize="@dimen/text_small"
+    android:textColor="@color/colorWhite"
+    android:id="@+id/workButton"
+    android:background="@drawable/button"
+    android:layout_below="@+id/workEditText" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:padding="@dimen/activity_small_padding"
-        android:textColor="@color/colorWhite"
-        android:id="@+id/workButton"
-        android:background="@color/colorBackground"
-        android:layout_below="@+id/homeButton"
-        android:layout_toRightOf="@+id/workEditText"
-        android:layout_toEndOf="@+id/workEditText" />
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import org.parceler.Parcels;
 

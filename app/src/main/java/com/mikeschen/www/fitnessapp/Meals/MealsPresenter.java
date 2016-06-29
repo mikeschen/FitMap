@@ -113,6 +113,7 @@ import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.models.Calories;
+import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -139,7 +140,6 @@ public class MealsPresenter implements
         mMealsView = mealsView;
         consumedCalories = 0;
         totalCalories = 0;
-
     }
 
     @Override
@@ -151,12 +151,15 @@ public class MealsPresenter implements
     public void computeCalories(Integer calories, Calories calorieRecord) {
 
         calorieRecord.setCalories(calorieRecord.getCalories() + calories);
-        mMealsView.showCalories(calorieRecord);
+
+//        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
+//        mMealsView.showCalories(calorieRecord);
+
     }
 
     @Override
     public void loadCalories(Calories calories) {
-        mMealsView.showCalories(calories);
+//        mMealsView.showCalories(calories);
 
     }
 
@@ -206,9 +209,5 @@ public class MealsPresenter implements
 }
 
 
-//create a presenter for searchUPC and take all code from BaseActivity
 //MealsTracker activity that never changes and then implement fragment that handles the search data
-//dialog with fields and btn save and closes
 //list fragment and meals fragment; savedmeals fragment
-//last green activity will be separate activity
-//how to display the calories on the screen as well
