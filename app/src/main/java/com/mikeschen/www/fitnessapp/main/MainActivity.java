@@ -51,19 +51,12 @@ public class MainActivity extends BaseActivity implements
 
     private int caloriesBurned = 0;
     private String buttonDisplay;
-    private Context mContext;
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private NotificationCompat.Builder mBuilder;
-    DatabaseHelper db;
     Days newDays;
-//    Steps newSteps;
-//    Calories newCaloriesBurned;
-//    Calories newCaloriesConsumed;
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
     int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
 
     @Bind(R.id.mainButton) Button mMainButton;
@@ -84,20 +77,16 @@ public class MainActivity extends BaseActivity implements
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
+
         mMapsMainButton.setOnClickListener(this);
         mMealsMainButton.setOnClickListener(this);
-        mContext = this;
 
         mTipPresenter = new TipPresenter(this);
-        mStepCounterPresenter = new StepCounterPresenter(this, mContext);
+        mStepCounterPresenter = new StepCounterPresenter(this);
 
-        mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
-        db = new DatabaseHelper(mContext.getApplicationContext());
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        mEditor = mSharedPreferences.edit();
 
         List<Days> daysList = db.getAllDaysRecords();
 

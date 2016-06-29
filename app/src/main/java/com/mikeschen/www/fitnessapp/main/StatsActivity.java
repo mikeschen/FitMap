@@ -1,3 +1,12 @@
+//TODO:
+// Display date from which current data is being taken
+// Display number of steps taken on that day (steps being more prominent than calories)
+// Display number of calories burned, emphasize relationship between movement and calories
+// Include a link to maps activity if there are less than seven days of data or user has not used map
+// Include a link to meal tracker if user has used maps and there are between seven and twenty one days of data
+// If user has used meal tracker, include breakdown of food they've eaten as well as calorie values and change calories burned to calories consumed
+
+
 package com.mikeschen.www.fitnessapp.main;
 
 import android.content.Intent;
@@ -25,17 +34,11 @@ import butterknife.ButterKnife;
 
 public class StatsActivity extends BaseActivity implements View.OnClickListener{
 
+
     @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
-//    @Bind(R.id.caloriesBurnedRecyclerView) RecyclerView mCaloriesBurnedRecyclerView;
-//    @Bind(R.id.caloriesConsumedRecyclerView) RecyclerView mCaloriesConsumedRecyclerView;
     @Bind(R.id.button) Button mButton;
     private DatabaseDaysListAdapter mDatabaseDaysListAdapter;
-//    private DatabaseCalorieListAdapter mDatabaseCaloriesBurnedListAdapter;
-//    private DatabaseCaloriesConsumedListAdapter mDatabaseCaloriesConsumedListAdapter;
     public ArrayList<Days> mDays = new ArrayList<>();
-//    public ArrayList<Calories> mCaloriesBurned = new ArrayList<>();
-//    public ArrayList<Calories> mCaloriesConsumed = new ArrayList<>();
-    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,6 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_stats);
         ButterKnife.bind(this);
 
-        db = new DatabaseHelper(getApplicationContext());
         mDays = (ArrayList<Days>) db.getAllDaysRecords();
 
         mDatabaseDaysListAdapter = new DatabaseDaysListAdapter(getApplicationContext(), mDays);
@@ -53,20 +55,6 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
 
-//        mDatabaseCaloriesBurnedListAdapter = new DatabaseCalorieListAdapter(getApplicationContext(), mCaloriesBurned);
-//        mCaloriesBurnedRecyclerView.setAdapter(mDatabaseCaloriesBurnedListAdapter);
-//        RecyclerView.LayoutManager calorieLayoutManager =
-//                new LinearLayoutManager(StatsActivity.this);
-//        mCaloriesBurnedRecyclerView.setLayoutManager(calorieLayoutManager);
-//        mCaloriesBurnedRecyclerView.setHasFixedSize(true);
-//
-//        mDatabaseCaloriesConsumedListAdapter = new DatabaseCaloriesConsumedListAdapter(getApplicationContext(), mCaloriesConsumed);
-//        mCaloriesConsumedRecyclerView.setAdapter(mDatabaseCaloriesConsumedListAdapter);
-//        RecyclerView.LayoutManager caloriesConsumedLayoutManager =
-//                new LinearLayoutManager(StatsActivity.this);
-//        mCaloriesConsumedRecyclerView.setLayoutManager(caloriesConsumedLayoutManager);
-//        mCaloriesConsumedRecyclerView.setHasFixedSize(true);
-//
         mButton.setOnClickListener(this);
     }
 

@@ -53,6 +53,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <service
+            android:name=".utils.StepCounterService"
+            android:enabled="true"
+            android:exported="false"/>
+
         <activity
             android:name=".main.StatsActivity"
             android:label="@string/title_activity_stats"/>
@@ -62,11 +67,10 @@
         <activity
             android:name=".Meals.MealsActivity"
             android:label="@string/title_activity_meals"/>
-        <activity
-            android:name=".Meals.MealsSearchResultActivity" />
-        <activity
-            android:name=".simpleActivities.PrefsActivity"
-            android:label="@string/title_activity_prefs"></activity>
+        <activity android:name=".Meals.MealsSearchResultActivity" />
+        <activity android:name=".simpleActivities.PrefsActivity"
+            android:label="@string/title_activity_prefs"/>
+
     </application>
 
 </manifest>
