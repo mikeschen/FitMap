@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,7 +85,7 @@ public class MealsActivity extends BaseActivity implements
         //Adds food from API call results
         if (position >= 0 && mFoods != null) {
             db.logFood(mFoods.get(position));
-            mTotalCaloriesTextView.setText(getFoodFromDB());
+            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
         }
 
         mSearchString = intent.getStringExtra("inputText");
@@ -106,7 +107,7 @@ public class MealsActivity extends BaseActivity implements
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
-//            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
+            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
         }
 
 
@@ -173,12 +174,12 @@ public class MealsActivity extends BaseActivity implements
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_item, menu);
+//        inflater.inflate(R.menu.add_item, menu);
         inflater.inflate(R.menu.menu_photo, menu);
         ButterKnife.bind(this);
 
-        MenuItem menuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+//        MenuItem menuItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         return true;
     }
 
@@ -216,7 +217,7 @@ public class MealsActivity extends BaseActivity implements
                 } else {
                     Food food = foods.get(0);
                     db.logFood(food);
-                    mTotalCaloriesTextView.setText(getFoodFromDB());
+                    mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
                     mAuthProgressDialog.dismiss();
                 }
             }
@@ -244,9 +245,14 @@ public class MealsActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
 
                 String foodItem = subEditText.getText().toString();
-                Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                intent.putExtra("food item", foodItem);
-                mContext.startActivity(intent);
+
+                if (foodItem.trim().length() == 0) {
+                    Toast.makeText(MealsActivity.this, "Please enter a food to search for", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
+                    intent.putExtra("food item", foodItem);
+                    mContext.startActivity(intent);
+                }
             }
         });
 
@@ -273,34 +279,37 @@ public class MealsActivity extends BaseActivity implements
         final EditText subEditText = (EditText) subView.findViewById(R.id.foodInputEditText);
         final EditText secondEditText = (EditText) subView.findViewById(R.id.calorieInputEditText);
 
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String foodItem = subEditText.getText().toString();
-                String foodCalories = secondEditText.getText().toString();
-                Integer intCalories = Integer.parseInt(foodCalories);
+                    String foodItem = subEditText.getText().toString();
+                    String foodCalories = secondEditText.getText().toString();
 
-                Food food = new Food(1, foodItem, intCalories);
-                db.logFood(food);
-                mTotalCaloriesTextView.setText(getFoodFromDB());
-            }
-        });
+                    if (foodItem.trim().length() == 0 && foodCalories.trim().length() == 0
+                            || foodItem.trim().length() == 0 || foodCalories.trim().length() == 0) {
+                        Toast.makeText(MealsActivity.this, "Please fill out both fields", Toast.LENGTH_SHORT).show();
+                    } else {
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
-            }
-        });
+                        Integer intCalories = Integer.parseInt(foodCalories);
+                        Food food = new Food(1, foodItem, intCalories);
+                        db.logFood(food);
+                        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
+                        }
+                    }
+            });
 
-        builder.show();
-    }
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                }
+            });
 
-    @Override
-    public void onClick(View view) {
-    }
+            builder.show();
+        }
+
 
     public String getFoodFromDB() {
 
@@ -318,6 +327,7 @@ public class MealsActivity extends BaseActivity implements
         int totalCalories = 0;
         for (int i = 0; i < mFoods.size(); i++) {
             totalCalories += mFoods.get(i).getCalories();
+        db.closeDB();
         }
         return String.valueOf(totalCalories);
     }
@@ -337,7 +347,7 @@ public class MealsActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 db.deleteFoodRecord(foodId);
                 Toast.makeText(mContext.getApplicationContext(), "Deleted forEVER", Toast.LENGTH_SHORT).show();
-                mTotalCaloriesTextView.setText(getFoodFromDB());
+                mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
             }
         });
 
@@ -349,6 +359,11 @@ public class MealsActivity extends BaseActivity implements
         });
 
         builder.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
 
