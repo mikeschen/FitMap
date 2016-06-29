@@ -31,9 +31,6 @@ public class StepCounterPresenter implements
         StepCounterInterface.Presenter {
 
     private StepCounterInterface.View mStepCounterView;
-    private Context mContext;
-//    private SensorManager mSensorManager;
-//    private Sensor mAccelerometer;
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
 
@@ -60,9 +57,8 @@ public class StepCounterPresenter implements
 
 
 
-    public StepCounterPresenter(StepCounterInterface.View stepCounterInterface, Context context) {
+    public StepCounterPresenter(StepCounterInterface.View stepCounterInterface) {
         mStepCounterView = stepCounterInterface;
-        mContext = context;
 
         totalAverageSpeed = 1;
         speedCounted = 1;
@@ -71,36 +67,15 @@ public class StepCounterPresenter implements
         speedData = new ArrayList<>();
         caloriesBurned = 0;
         currentStepsTableId = 1;
+
         currentDaysTableId = 1;
-
-
-
 
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
             public void run() {
                 long currentTime = System.currentTimeMillis() / 60000;
-
-                if (currentTime % (60 * 24) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
-                    //TODO
-                    //Do more thorough math with these numbers
-                    Log.d("tick", "tock");
-
-                    daysRecord = mStepCounterView.endOfDaySave();
-                    mStepCounterView.buildNotification(daysRecord.getStepsTaken());
-
-                    // Builds new, empty database row when notification fires
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-                    daysRecord = new Days(currentDaysTableId, 0, 0, 0, dateFormat.toString());
-//                    caloriesBurnedRecord = new Calories(currentStepsTableId, 0, 345);
-//                    caloriesConsumedRecord = new Calories(currentStepsTableId, 0, 345);
-                    long daysRecord_id = mStepCounterView.createNewDBRows(daysRecord);
-                    daysRecord.setId(daysRecord_id);
-//                    caloriesBurnedRecord.setId(stepRecord_id);
-//                    caloriesConsumedRecord.setId(stepRecord_id);
-
-                }
+                checkMidnight(currentTime);
             }
         };
 
@@ -199,9 +174,7 @@ public class StepCounterPresenter implements
         long currentTime = System.currentTimeMillis();
         long daysPassed;
         if (lastKnownTime > 0) {
-//            daysPassed = (currentTime / fullDayInMillis) - (lastKnownTime / fullDayInMillis);
             daysPassed = (currentTime / (1000 * 60 * 60 )) - (lastKnownTime / (1000 * 60 * 60 )); //THIS SHOULD SYNC WITH TIMER RUNNING EVERY HOUR
-
         } else {
             daysPassed = 0;
         }
@@ -232,6 +205,28 @@ public class StepCounterPresenter implements
             daysRecord.setId(stepRecordId);
 //            caloriesBurnedRecord.setId(stepRecordId);
 //            caloriesConsumedRecord.setId(stepRecordId);
+        }
+    }
+
+    public void checkMidnight(long currentTime) {
+        if (currentTime % (60 * 24) == 0) { // WHEN YOU CHANGE THIS, ALSO CHANGE IN DAYS PASSED METHOD
+            //TODO
+            //Do more thorough math with these numbers
+            Log.d("tick", "tock");
+
+            daysRecord = mStepCounterView.endOfDaySave();
+            mStepCounterView.buildNotification(daysRecord.getStepsTaken());
+
+            // Builds new, empty database row when notification fires
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            daysRecord = new Days(currentDaysTableId, 0, 0, 0, dateFormat.toString());
+//                    caloriesBurnedRecord = new Calories(currentStepsTableId, 0, 345);
+//                    caloriesConsumedRecord = new Calories(currentStepsTableId, 0, 345);
+            long daysRecord_id = mStepCounterView.createNewDBRows(daysRecord);
+            daysRecord.setId(daysRecord_id);
+//                    caloriesBurnedRecord.setId(stepRecord_id);
+//                    caloriesConsumedRecord.setId(stepRecord_id);
+
         }
     }
 }

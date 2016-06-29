@@ -55,15 +55,9 @@ public class MealsActivity extends BaseActivity implements
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
 
-    DatabaseHelper db;
     private MealsPresenter mMealsPresenter;
     private SearchListAdapter mAdapter;
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
 
-
-
-    private Context mContext;
     public ArrayList<Food> mFoods = new ArrayList<>();
     private Days daysRecord;
 
@@ -78,7 +72,6 @@ public class MealsActivity extends BaseActivity implements
         setContentView(R.layout.activity_meals);
         ButterKnife.bind(this);
 
-        mContext = this;
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
         mAuthProgressDialog.setMessage("Searching for food items...");
@@ -96,12 +89,8 @@ public class MealsActivity extends BaseActivity implements
 
         }
 
-
-//        mSaveButton.setOnClickListener(this);
-//        mUpcButton.setOnClickListener(this);
-//        mDialogButton.setOnClickListener(this);
-        db = new DatabaseHelper(getApplicationContext());
         List<Days> days = db.getAllDaysRecords();
+
         mMealsPresenter = new MealsPresenter(this);
 
         if (days.size() > 0) {
@@ -113,59 +102,12 @@ public class MealsActivity extends BaseActivity implements
 //            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + 0);
         }
 
+
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
     }
-
-
-////
-//        @Override
-//        public void onClick(View view){
-//            switch (view.getId()) {
-//                case (R.id.saveButton):
-////                    String strCalories = mCalorieInputEditText.getText().toString();
-////                    if(strCalories.length() > 0) {
-////                        Integer calories = Integer.parseInt(strCalories);
-////                        mMealsPresenter.computeCalories(calories, calorieRecord);
-////                    }
-////                    setHideSoftKeyboard(mCalorieInputEditText);
-//                    break;
-
-//                case (R.id.dialogButton):
-//                    openDialog();
-//                    break;
-//
-//                case (R.id.upcButton):
-//                    scanUpc();
-//                    break;
-//                case (R.id.add_item):
-//                    openAddItemDialog();
-//                    break;
-//                default:
-//            }
-//        }
-//=======PRETTY SURE DONT NEED THIS
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case (R.id.saveButton):
-//                String strDays = mCalorieInputEditText.getText().toString();
-//                Integer days = Integer.parseInt(strDays);
-////                setHideSoftKeyboard(mCalorieInputEditText);
-////
-////                mMealsPresenter.computeDays(days, daysRecord);
-//                Toast.makeText(MealsActivity.this, "Clicky!", Toast.LENGTH_SHORT).show();
-//                break;
-//            case (R.id.dialogButton):
-//                openDialog();
-//                break;
-//            case (R.id.upcButton):
-//                scanUpc();
-//                break;
-//        }
-//    }
 
 
     private void scanUpc() {

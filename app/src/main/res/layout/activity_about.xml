@@ -46,7 +46,8 @@
 
         android:layout_marginLeft="@dimen/activity_wide_margin"
         android:layout_marginRight="@dimen/activity_wide_margin"
-        android:layout_marginTop="@dimen/activity_medium_padding"/>
+        android:layout_marginTop="@dimen/activity_medium_padding"
+        android:id="@+id/textView3" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -57,4 +58,5 @@
         android:layout_centerHorizontal="true"
         android:elevation="1dp"
         android:scaleType="centerCrop"/>
+
 </RelativeLayout>

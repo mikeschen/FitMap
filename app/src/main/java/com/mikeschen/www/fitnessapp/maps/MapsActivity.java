@@ -54,7 +54,6 @@ public class MapsActivity extends BaseActivity implements
         GoogleMap.OnMyLocationButtonClickListener {
 
     private boolean mPermissionDenied = false;
-    private Context mContext;
     private MapActivityPresenter mMapActivityPresenter;
     @Bind(R.id.atOrigin) EditText atOrigin;
     @Bind(R.id.atDestination) EditText atDestination;
@@ -100,7 +99,6 @@ public class MapsActivity extends BaseActivity implements
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mContext = this;
         mMapActivityPresenter = new MapActivityPresenter(this);
         mapFragment.getMapAsync(this);
         destination = getIntent().getStringExtra("destination");
@@ -128,6 +126,13 @@ public class MapsActivity extends BaseActivity implements
             public void onClick(View v) {
                 sendRequest();
                 setHideSoftKeyboard(atDestination);
+                LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+                pathFinder.setVisibility(LinearLayout.VISIBLE);
+                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+                animation.setDuration(1000);
+                pathFinder.setAnimation(animation);
+                pathFinder.animate();
+                animation.start();
             }
         });
     }
