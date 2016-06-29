@@ -74,11 +74,6 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
 
     }
 
-//    @Override
-//    public void showCalories(Calories calorieRecord) {
-//
-//    }
-
     @Override
     public void refresh() {
 
