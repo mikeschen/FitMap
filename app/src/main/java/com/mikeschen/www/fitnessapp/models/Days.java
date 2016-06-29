@@ -1,7 +1,5 @@
 package com.mikeschen.www.fitnessapp.models;
 
-import java.util.Calendar;
-
 /**
  * Created by Ramon on 6/28/16.
  */
