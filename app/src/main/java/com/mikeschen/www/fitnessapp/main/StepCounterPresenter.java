@@ -49,9 +49,6 @@ public class StepCounterPresenter implements
     private int currentStepsTableId;
     private int currentDaysTableId;
     private Days daysRecord;
-//    private Steps stepRecord;
-//    private Calories caloriesBurnedRecord;
-//    private Calories caloriesConsumedRecord;
 
     private int fullDayInMillis = 86400000;
 
@@ -188,12 +185,9 @@ public class StepCounterPresenter implements
             Log.d("database", "works");
 
             daysRecord = new Days(lastKnownId, lastKnownSteps, lastKnownCalories, 0, dateFormat.format(lastKnownTime));
-//            caloriesBurnedRecord = new Calories(lastKnownId, lastKnownCalories, 345);
         } else {
             long dateInMillis = lastKnownTime + fullDayInMillis;
             daysRecord = new Days(lastKnownId, 0, 0, 0, dateFormat.format(dateInMillis));
-//            caloriesBurnedRecord = new Calories(lastKnownId, 0, 345);
-//            caloriesConsumedRecord = new Calories(lastKnownId, 0, 345);
             if (daysPassed > 1) {
                 for (int i = 0; i > daysPassed - 1; i++) { //FOR LOOP ADDS FIELDS FOR DAYS YOU MISSED
                     mStepCounterView.createNewDBRows(daysRecord);
@@ -203,8 +197,6 @@ public class StepCounterPresenter implements
             }
             long stepRecordId = mStepCounterView.createNewDBRows(daysRecord); //FOR CURRENT DAY
             daysRecord.setId(stepRecordId);
-//            caloriesBurnedRecord.setId(stepRecordId);
-//            caloriesConsumedRecord.setId(stepRecordId);
         }
     }
 
