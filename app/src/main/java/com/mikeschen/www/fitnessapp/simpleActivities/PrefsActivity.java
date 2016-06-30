@@ -21,7 +21,9 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
     @Bind(R.id.workEditText) EditText mWorkEditText;
     @Bind(R.id.homePrefsButton) Button mHomePrefsButton;
     @Bind(R.id.workPrefsButton) Button mWorkPrefsButton;
-    private Context mContext;
+
+    private String home;
+    private String work;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,11 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
 
         mHomePrefsButton.setOnClickListener(this);
         mWorkPrefsButton.setOnClickListener(this);
-        mContext = this;
+
+        home = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
+        mHomeEditText.setText(home);
+        work = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
+        mWorkEditText.setText(work);
     }
 
     @Override

@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
@@ -68,11 +69,14 @@ public class MapsActivity extends BaseActivity implements
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     @Bind(R.id.homeButton) ImageButton mHomeButton;
     @Bind(R.id.workButton) ImageButton mWorkButton;
+
+    private String mHomeAddress;
+    private String mWorkAddress;
     private String destination;
     public ProgressDialog progressDialog;
 
     private Long calorie;
-    private int counter = 0;
+//    private int counter = 0;
 
     public GoogleMap mMap;
     private UiSettings mUiSettings;
@@ -147,28 +151,17 @@ public class MapsActivity extends BaseActivity implements
                 animation.start();
                 break;
             case (R.id.homeButton):
-
+                mHomeAddress = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
+                Log.d("home addy", mHomeAddress);
+                atDestination.setText(mHomeAddress);
                 break;
             case (R.id.workButton):
-
+                mWorkAddress = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
+                Log.d("work addy", mWorkAddress);
+                atDestination.setText(mWorkAddress);
                 break;
         }
     }
-//        btnFindPath.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sendRequest();
-//                setHideSoftKeyboard(atDestination);
-//                LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
-//                pathFinder.setVisibility(LinearLayout.VISIBLE);
-//                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
-//                animation.setDuration(1000);
-//                pathFinder.setAnimation(animation);
-//                pathFinder.animate();
-//                animation.start();
-//            }
-//        });
-
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -234,7 +227,7 @@ public class MapsActivity extends BaseActivity implements
 
     @Override
     public void displayDirections(List<Route> routes) {
-        counter = 0;
+//        counter = 0;
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
@@ -287,7 +280,7 @@ public class MapsActivity extends BaseActivity implements
                 polylineOptions.add(route.points.get(i));
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
-            counter++;
+//            counter++;
             showDistance(distances.get(0));
             showDuration(durations.get(0));
             showCalorieRoute(routeCalories.get(0));
