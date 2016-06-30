@@ -1,17 +1,13 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
-import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import org.parceler.Parcels;
 
@@ -63,7 +59,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
 
     public void bindFood(Food food) {
         mSearchTextView.setText(food.getItemName());
-        mCalorieTextView.setText(food.getCalories() + "");
+        mCalorieTextView.setText(food.getCalories() + "" + " cals");
     }
 
     @Override

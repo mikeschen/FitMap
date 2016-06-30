@@ -10,8 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class StepCounterPresenter implements
-        StepCounterInterface.Presenter {
+public class StepCounterPresenter {
 
     private StepCounterInterface.View mStepCounterView;
     private long lastUpdate = 0;
@@ -66,77 +65,6 @@ public class StepCounterPresenter implements
 
     }
 
-    @Override
-    public void calculateSteps(SensorEvent sensorEvent) {
-        Sensor mySensor = sensorEvent.sensor;
-
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if(System.currentTimeMillis()-lastUpdate > 20) {
-
-                float x = sensorEvent.values[0];
-                float y = sensorEvent.values[1];
-                float z = sensorEvent.values[2];
-
-                long curTime = System.currentTimeMillis();
-
-                long diffTime = (curTime - lastUpdate);
-                lastUpdate = curTime;
-
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 1000;
-                if(speedData.size() < 20) {
-                    speedData.add(speed);
-                } else {
-                    speedData.remove(0);
-                    speedData.add(speed);
-                }
-                float localGrossSpeed = 0;
-                float localAverageSpeed;
-                for(int i = 0; i < speedData.size(); i++)  {
-                    localGrossSpeed += speedData.get(i);
-                }
-                localAverageSpeed = localGrossSpeed/speedData.size();
-
-                if(localAverageSpeed > 20) {
-                    speedCounted++;
-                    grossTotalSpeed = grossTotalSpeed + speed;
-                    totalAverageSpeed = (grossTotalSpeed) / speedCounted;
-                }
-
-                if(totalAverageSpeed > 15 && speedCounted > 200) {
-
-                    if (checkSpeedDirection) {
-                        if (localAverageSpeed > totalAverageSpeed) {
-                            checkSpeedDirection = false;
-                            daysRecord.setStepsTaken(daysRecord.getStepsTaken()+1);
-
-                            caloriesBurned = daysRecord.getStepsTaken() * 175/3500;
-                            daysRecord.setCaloriesBurned(caloriesBurned);
-
-                            loadSteps();
-                        }
-                    } else {
-                        if (localAverageSpeed < totalAverageSpeed) {
-                            checkSpeedDirection = true;
-                            daysRecord.setStepsTaken(daysRecord.getStepsTaken()+1);
-                            loadSteps();
-                        }
-                    }
-                }
-
-                last_x = x;
-                last_y = y;
-                last_z = z;
-            }
-        }
-    }
-
-
-    @Override
-    public void loadSteps() {
-        mStepCounterView.showSteps(daysRecord);
-    }
-
-
     public void onPause() {
         long destroyTime = System.currentTimeMillis();
         int destroySteps = daysRecord.getStepsTaken();
@@ -147,7 +75,6 @@ public class StepCounterPresenter implements
     }
 
 
-    @Override
     public void checkDaysPassed(int lastKnownSteps, int lastKnownCalories, long lastKnownTime, long lastKnownId) {
         long currentTime = System.currentTimeMillis();
         long daysPassed;
