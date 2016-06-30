@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -75,7 +76,6 @@ public class MainActivity extends BaseActivity implements
         ButterKnife.bind(this);
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
-
 
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);

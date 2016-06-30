@@ -7,6 +7,15 @@
     tools:context=".maps.MapsActivity"
     android:orientation="vertical"  >
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.mikeschen.www.fitnessapp.MenuFragment"
+        android:id="@+id/fragment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/fragment_menu" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

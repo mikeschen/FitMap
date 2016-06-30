@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mMapsMainButton.setOnClickListener(this);
         mMealsMainButton.setOnClickListener(this);
 
+        handleBackgrounds();
         return view;
     }
 
@@ -60,21 +62,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void handleBackgrounds(View v) {
-        if (v == mHomeMainButton) {
-            mHomeMainButton.setBackgroundColor(Color.RED);
-            mMapsMainButton.setBackgroundColor(Color.BLUE);
-            mMealsMainButton.setBackgroundColor(Color.BLUE);
-
-        } else if (v == mMapsMainButton) {
-            mHomeMainButton.setBackgroundColor(Color.BLUE);
-            mMapsMainButton.setBackgroundColor(Color.RED);
-            mMealsMainButton.setBackgroundColor(Color.BLUE);
-
-        } else if (v == mMealsMainButton) {
-            mHomeMainButton.setBackgroundColor(Color.BLUE);
-            mMapsMainButton.setBackgroundColor(Color.BLUE);
-            mMealsMainButton.setBackgroundColor(Color.RED);
+    public void handleBackgrounds() {
+        if (getActivity() instanceof MainActivity) {
+            mHomeMainButton.setBackgroundColor(Color.parseColor("#D32F2F"));
+            mMapsMainButton.setBackgroundColor(Color.parseColor("#f32f34"));
+            mMealsMainButton.setBackgroundColor(Color.parseColor("#f32f34"));
+        } else if (getActivity() instanceof MapsActivity) {
+            mHomeMainButton.setBackgroundColor(Color.parseColor("#f32f34"));
+            mMapsMainButton.setBackgroundColor(Color.parseColor("#D32F2F"));
+            mMealsMainButton.setBackgroundColor(Color.parseColor("#f32f34"));
+        } else if (getActivity() instanceof MealsActivity) {
+            mHomeMainButton.setBackgroundColor(Color.parseColor("#f32f34"));
+            mMapsMainButton.setBackgroundColor(Color.parseColor("#f32f34"));
+            mMealsMainButton.setBackgroundColor(Color.parseColor("#D32F2F"));
         }
     }
 }
