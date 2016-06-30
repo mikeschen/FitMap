@@ -65,7 +65,6 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(mDrawerLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-//        setTitle("FitMap");
     }
 
     private void addDrawerItems() {

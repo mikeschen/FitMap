@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
@@ -14,7 +15,7 @@ import com.mikeschen.www.fitnessapp.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PrefsActivity extends BaseActivity implements View.OnClickListener{
+public class PrefsActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.homeEditText) EditText mHomeEditText;
     @Bind(R.id.workEditText) EditText mWorkEditText;
     @Bind(R.id.prefsButton) Button mPrefsButton;
@@ -26,13 +27,14 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_prefs);
         ButterKnife.bind(this);
 
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("MYLABEL", "myStringToSave").commit();
         mPrefsButton.setOnClickListener(this);
         mContext = this;
     }
 
     @Override
     public void onClick(View v) {
-
+        if (v == mPrefsButton) {
+            Toast.makeText(PrefsActivity.this, "Location Saved", Toast.LENGTH_SHORT).show();
+        }
     }
 }

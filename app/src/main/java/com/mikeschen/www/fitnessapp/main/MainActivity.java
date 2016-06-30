@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity implements
     private Sensor mAccelerometer;
     private NotificationCompat.Builder mBuilder;
     Days newDays;
-    int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
+    int images[] = {R.drawable.citymain, R.drawable.snow, R.drawable.girl, R.drawable.graffiti, R.drawable.hall, R.drawable.feet};
 
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements
     }
 
     private int getRandomNumber() {
-        return new Random().nextInt(4);
+        return new Random().nextInt(6);
     }
 
     //Calligraphy

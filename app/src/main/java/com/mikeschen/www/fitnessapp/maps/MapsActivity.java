@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp.maps;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +40,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.models.Route;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
@@ -51,7 +55,8 @@ import butterknife.ButterKnife;
 public class MapsActivity extends BaseActivity implements
         MapInterface.View,
         OnMapReadyCallback,
-        GoogleMap.OnMyLocationButtonClickListener {
+        GoogleMap.OnMyLocationButtonClickListener,
+        View.OnClickListener {
 
     private boolean mPermissionDenied = false;
     private MapActivityPresenter mMapActivityPresenter;
@@ -61,6 +66,8 @@ public class MapsActivity extends BaseActivity implements
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
+    @Bind(R.id.homeButton) ImageButton mHomeButton;
+    @Bind(R.id.workButton) ImageButton mWorkButton;
     private String destination;
     public ProgressDialog progressDialog;
 
@@ -95,6 +102,10 @@ public class MapsActivity extends BaseActivity implements
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
 
+        btnFindPath.setOnClickListener(this);
+        mHomeButton.setOnClickListener(this);
+        mWorkButton.setOnClickListener(this);
+
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
@@ -108,7 +119,6 @@ public class MapsActivity extends BaseActivity implements
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
 
-
         atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -120,10 +130,12 @@ public class MapsActivity extends BaseActivity implements
                 return false;
             }
         });
+    }
 
-        btnFindPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.btnFindPath):
                 sendRequest();
                 setHideSoftKeyboard(atDestination);
                 LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
@@ -133,9 +145,29 @@ public class MapsActivity extends BaseActivity implements
                 pathFinder.setAnimation(animation);
                 pathFinder.animate();
                 animation.start();
-            }
-        });
+                break;
+            case (R.id.homeButton):
+
+                break;
+            case (R.id.workButton):
+
+                break;
+        }
     }
+//        btnFindPath.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendRequest();
+//                setHideSoftKeyboard(atDestination);
+//                LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+//                pathFinder.setVisibility(LinearLayout.VISIBLE);
+//                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+//                animation.setDuration(1000);
+//                pathFinder.setAnimation(animation);
+//                pathFinder.animate();
+//                animation.start();
+//            }
+//        });
 
 
     @Override
