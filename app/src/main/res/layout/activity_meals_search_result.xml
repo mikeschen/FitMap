@@ -7,18 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mikeschen.www.fitnessapp.Meals.MealsSearchResultActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hi there!"
-        android:id="@+id/textView"
-        android:layout_gravity="bottom" />
+    tools:context="com.mikeschen.www.fitnessapp.Meals.MealsSearchResultActivity"
+    android:background="@drawable/searchitem">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="434dp"
-        android:id="@+id/searchResultsRecyclerView"/>
-
+        android:layout_height="430dp"
+        android:id="@+id/searchResultsRecyclerView"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"/>
 </LinearLayout>
