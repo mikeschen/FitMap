@@ -79,6 +79,10 @@ public class StepCounterPresenter implements
         timer.scheduleAtFixedRate(timerTask, 0, 60000); //CHANGE THIS NUMBER TO 1000 FOR DEBUGGING
     }
 
+    public StepCounterPresenter() {
+
+    }
+
     @Override
     public void calculateSteps(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
