@@ -149,12 +149,6 @@ public class StepCounterPresenter implements
         mStepCounterView.showSteps(daysRecord);
     }
 
-//    @Override
-//    public void loadCalories() {
-//        caloriesBurned = stepRecord.getStepsTaken() * 175/3500;
-//        caloriesBurnedRecord.setCalories(caloriesBurned);
-//        mStepCounterView.showCalories(caloriesBurnedRecord);
-//    }
 
     public void onPause() {
         long destroyTime = System.currentTimeMillis();
@@ -212,12 +206,8 @@ public class StepCounterPresenter implements
             // Builds new, empty database row when notification fires
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             daysRecord = new Days(currentDaysTableId, 0, 0, 0, dateFormat.toString());
-//                    caloriesBurnedRecord = new Calories(currentStepsTableId, 0, 345);
-//                    caloriesConsumedRecord = new Calories(currentStepsTableId, 0, 345);
             long daysRecord_id = mStepCounterView.createNewDBRows(daysRecord);
             daysRecord.setId(daysRecord_id);
-//                    caloriesBurnedRecord.setId(stepRecord_id);
-//                    caloriesConsumedRecord.setId(stepRecord_id);
 
         }
     }

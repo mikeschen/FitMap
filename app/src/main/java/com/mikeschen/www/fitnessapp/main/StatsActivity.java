@@ -63,8 +63,7 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
         switch(v.getId()) {
             case(R.id.button) :
                 db.deleteAllDayRecords();
-//                db.deleteAllCaloriesBurnedRecords();
-//                db.deleteAllCaloriesConsumedRecords();
+                db.deleteAllFoodRecords();
                 db.closeDB();
                 refresh();
         }
