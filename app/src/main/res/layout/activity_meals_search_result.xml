@@ -23,7 +23,7 @@
             android:layout_height="30dp"
             android:layout_alignLeft="@id/foodInputEditText"
             android:src="@drawable/ic_add_circle_black_24dp"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="@dimen/activity_layoutBottomSearch"/>
 
     </RelativeLayout>
 

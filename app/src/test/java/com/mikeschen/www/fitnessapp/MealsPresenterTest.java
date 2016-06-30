@@ -20,4 +20,10 @@ public class MealsPresenterTest {
         MockitoAnnotations.initMocks(this);
         mMealsPresenter = new MealsPresenter(mMealsView);
     }
+//
+//    @Test
+//    public void searchFoods(String foodItem) {
+//        mMealsPresenter.searchFoods(foodItem);
+//        verify(mMealsView).displayFoodByItem(foods);
+//    }
 }

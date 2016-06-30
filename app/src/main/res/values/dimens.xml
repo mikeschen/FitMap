@@ -10,4 +10,6 @@
     <dimen name="text_large">35sp</dimen>
     <dimen name="activity_elevation">2dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_layoutSearch">15dp</dimen>
+    <dimen name="activity_layoutBottomSearch">5dp</dimen>
 </resources>

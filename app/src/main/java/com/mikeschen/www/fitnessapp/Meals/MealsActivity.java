@@ -23,6 +23,7 @@ import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.adapters.SearchListAdapter;
 import com.mikeschen.www.fitnessapp.models.Food;
+import com.mikeschen.www.fitnessapp.utils.OnFoodClickedListener;
 
 import org.parceler.Parcels;
 

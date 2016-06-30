@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchTextView"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="@dimen/activity_layoutBottomSearch"
         android:textSize="@dimen/text_small"
         android:textStyle="bold"/>
 
@@ -16,5 +17,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/calorieTextView"
         android:textSize="@dimen/text_tiny"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="@dimen/activity_layoutSearch"/>
 </LinearLayout>

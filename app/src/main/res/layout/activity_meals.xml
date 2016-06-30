@@ -39,7 +39,7 @@
         android:layout_below="@+id/caloriesTextView"
         android:layout_above="@+id/foodInputEditText"
         android:elevation="1dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/activity_layoutBottomSearch"
         android:textSize="@dimen/text_tiny"
         android:gravity="center" />
 
@@ -47,8 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/foodRecyclerView"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="@dimen/activity_wide_margin"
+        android:layout_marginBottom="@dimen/activity_wide_margin"
         android:layout_below="@+id/todaysDate"
         android:layout_above="@+id/totalCaloriesTextView" />
 
