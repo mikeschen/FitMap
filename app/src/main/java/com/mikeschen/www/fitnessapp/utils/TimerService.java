@@ -112,14 +112,10 @@ public class TimerService extends Service {
 
 
     public void checkMidnight(long currentTime) {
-//        if (currentTime % (60 * 24) == 0) {
-        if (currentTime % 3 == 0) {
+        if (currentTime % (60 * 24) == 0) {
+//        if (currentTime % 3 == 0) {
             Log.d("tick", "tock");
-
-
-            List<Days> allDays = db.getAllDaysRecords();
-            Days today = allDays.get(allDays.size() -1);
-            buildNotification(today.getStepsTaken());
+            buildNotification();
 
 //            daysRecord = mStepCounterView.endOfDaySave();
 //            mStepCounterView.buildNotification(daysRecord.getStepsTaken());
@@ -135,9 +131,7 @@ public class TimerService extends Service {
 
 
 
-    public void buildNotification(int steps) {
-//        List<Days> allDays = db.getAllDaysRecords();
-//        Days today = allDays.get(allDays.size() -1);
+    public void buildNotification() {
 
         List<Days> allDays = db.getAllDaysRecords();
         Days today = allDays.get(allDays.size() -1);
