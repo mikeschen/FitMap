@@ -112,7 +112,6 @@ public class MealsActivity extends BaseActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_photo, menu);
-//        ButterKnife.bind(this);
         return true;
     }
 
@@ -152,7 +151,6 @@ public class MealsActivity extends BaseActivity implements
                     db.logFood(food);
                     mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
                     mAuthProgressDialog.dismiss();
-                    db.closeDB();
                 }
             }
         });
@@ -263,7 +261,6 @@ public class MealsActivity extends BaseActivity implements
         for (int i = 0; i < mFoods.size(); i++) {
             totalCalories += mFoods.get(i).getCalories();
         }
-        db.closeDB();
         return String.valueOf(totalCalories);
     }
 
