@@ -52,4 +52,7 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     public void onDirectionFinderSuccess(List<Route> routes) {
         mMapView.displayDirections(routes);
     }
+
+    @Override
+    public void onDirectionFinderFail() { mMapView.closeDialog(); }
 }
