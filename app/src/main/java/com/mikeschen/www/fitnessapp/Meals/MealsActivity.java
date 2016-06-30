@@ -25,9 +25,7 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.adapters.DatabaseDaysListAdapter;
 import com.mikeschen.www.fitnessapp.adapters.SearchListAdapter;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
@@ -113,10 +111,10 @@ public class MealsActivity extends BaseActivity implements
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
-        String strDate = "Today's Date : " + mdformat.format(calendar.getTime());
+        String strDate = mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
 
-        mTotalCaloriesTextView.setText(getFoodFromDB());
+        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
 
         mAdapter.setOnFoodClickedListener(this);
     }
