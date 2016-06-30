@@ -10,12 +10,22 @@
     android:background="#6dd2ed99"
     tools:context=".Meals.MealsActivity">
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.mikeschen.www.fitnessapp.MenuFragment"
+        android:id="@+id/fragment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/fragment_menu" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/Meals"
         android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/fragment"
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_large"
         android:textStyle="bold"

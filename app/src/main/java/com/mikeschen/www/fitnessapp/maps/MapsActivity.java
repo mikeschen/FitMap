@@ -62,7 +62,7 @@ public class MapsActivity extends BaseActivity implements
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     private String destination;
-    private ProgressDialog progressDialog;
+    public ProgressDialog progressDialog;
 
     private Long calorie;
     private int counter = 0;
@@ -351,6 +351,12 @@ public class MapsActivity extends BaseActivity implements
     @Override
     public void updatePermissionStatus(boolean permissionStatus) {
         mPermissionDenied = permissionStatus;
+    }
+
+    @Override
+    public void closeDialog() {
+        progressDialog.dismiss();
+        Toast.makeText(this, "No Route Found", Toast.LENGTH_SHORT).show();
     }
 }
 
