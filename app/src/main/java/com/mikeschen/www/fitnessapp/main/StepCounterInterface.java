@@ -15,11 +15,4 @@ public interface StepCounterInterface {
         void addToSharedPreferences(long time, int steps, long id);
         Days endOfDaySave();
     }
-
-    interface Presenter {
-        void loadSteps();
-        void calculateSteps(SensorEvent sensor);
-        void checkDaysPassed(int lastKnownSteps, int lastKnownCalories, long lastKnownTime, long lastKnownId);
-    }
-
 }
