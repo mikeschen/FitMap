@@ -1,23 +1,18 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +22,6 @@ import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.adapters.SearchListAdapter;
-import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
 
 import org.parceler.Parcels;
@@ -35,8 +29,6 @@ import org.parceler.Parcels;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,12 +50,7 @@ public class MealsActivity extends BaseActivity implements
     private SearchListAdapter mAdapter;
 
     public ArrayList<Food> mFoods = new ArrayList<>();
-    private Days daysRecord;
 
-    private void setHideSoftKeyboard(EditText editText) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,26 +75,7 @@ public class MealsActivity extends BaseActivity implements
 
         mSearchString = intent.getStringExtra("inputText");
 
-        if (mSearchType != null && mSearchType.equals("string")) {
-
-
-        } else if (mSearchType != null && mSearchType.equals("upc") && mSearchString != null) {
-
-        }
-
-        List<Days> days = db.getAllDaysRecords();
-
         mMealsPresenter = new MealsPresenter(this);
-
-        if (days.size() > 0) {
-            daysRecord = days.get(days.size() - 1);
-//            mMealsPresenter.loadCalories(daysRecord);
-        } else {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
-            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
-        }
-
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
@@ -135,49 +103,16 @@ public class MealsActivity extends BaseActivity implements
         if (scanningResult != null && resultCode == RESULT_OK) {
             String scanContent = scanningResult.getContents();
             mMealsPresenter.searchUPC(scanContent);
-
-//            Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
-//            searchIntent.putExtra("inputText", scanContent);
-//            startActivity(searchIntent);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
-    @Override
-    public void showFoodItem(String foodItem) {
-
-    }
-
-    @Override
-    public void saveFoodItem(String foodItem) {
-
-    }
-
-
-    @Override
-    public void showDays(Days daysRecord) {
-
-        db.updateDays(daysRecord);
-
-        Log.d("showCalories", daysRecord + "");
-        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + daysRecord.getCaloriesConsumed());
-        db.close();
-    }
-
-    @Override
-    public void refresh() {
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.add_item, menu);
         inflater.inflate(R.menu.menu_photo, menu);
-        ButterKnife.bind(this);
-
-//        MenuItem menuItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+//        ButterKnife.bind(this);
         return true;
     }
 
@@ -217,6 +152,7 @@ public class MealsActivity extends BaseActivity implements
                     db.logFood(food);
                     mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
                     mAuthProgressDialog.dismiss();
+                    db.closeDB();
                 }
             }
         });
@@ -224,6 +160,7 @@ public class MealsActivity extends BaseActivity implements
 
     @Override
     public void displayFoodByItem(ArrayList<Food> foods) {
+        //Used in MealsSearchResultActivity
     }
 
     private void openDialog() {
@@ -325,8 +262,8 @@ public class MealsActivity extends BaseActivity implements
         int totalCalories = 0;
         for (int i = 0; i < mFoods.size(); i++) {
             totalCalories += mFoods.get(i).getCalories();
-        db.closeDB();
         }
+        db.closeDB();
         return String.valueOf(totalCalories);
     }
 
@@ -346,6 +283,7 @@ public class MealsActivity extends BaseActivity implements
                 db.deleteFoodRecord(foodId);
                 Toast.makeText(mContext.getApplicationContext(), "Deleted forEVER", Toast.LENGTH_SHORT).show();
                 mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
+                db.closeDB();
             }
         });
 
