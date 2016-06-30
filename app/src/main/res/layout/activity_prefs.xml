@@ -9,34 +9,72 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity">
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/homePref"
+        android:layout_margin="@dimen/activity_small_padding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/homeEditText"
-        android:hint="Enter Home Address"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="wrap_content">
 
-    <EditText
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/homeEditText"
+            android:hint="Enter Home Address"
+            android:layout_weight="0.8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.2"
+            android:text="Set"
+            android:padding="@dimen/activity_small_padding"
+            android:textSize="@dimen/text_tiny"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/homePrefsButton"
+            android:drawableRight="@drawable/ic_home_white_24dp"
+            android:background="@drawable/buttonred2"
+            android:layout_below="@+id/workEditText" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/workPref"
+        android:layout_below="@+id/homePref"
+        android:layout_margin="@dimen/activity_small_padding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Work Address"
-        android:id="@+id/workEditText"
-        android:layout_below="@+id/homeEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="wrap_content">
 
-<Button
-    style="?android:attr/buttonStyleSmall"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Submit"
-    android:padding="@dimen/activity_small_padding"
-    android:textSize="@dimen/text_small"
-    android:textColor="@color/colorWhite"
-    android:id="@+id/prefsButton"
-    android:background="@drawable/button"
-    android:layout_below="@+id/workEditText" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Work Address"
+            android:id="@+id/workEditText"
+            android:layout_weight="0.8"
+            android:layout_below="@+id/homeEditText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.2"
+            android:text="Set"
+            android:drawableRight="@drawable/ic_work_white_24dp"
+            android:padding="@dimen/activity_small_padding"
+            android:textSize="@dimen/text_tiny"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/workPrefsButton"
+             android:background="@drawable/buttonred"
+             android:layout_below="@+id/workEditText" />
+    </LinearLayout>
 
 </RelativeLayout>

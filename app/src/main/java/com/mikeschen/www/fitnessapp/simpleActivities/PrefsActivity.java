@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
 
 import butterknife.Bind;
@@ -18,7 +19,8 @@ import butterknife.ButterKnife;
 public class PrefsActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.homeEditText) EditText mHomeEditText;
     @Bind(R.id.workEditText) EditText mWorkEditText;
-    @Bind(R.id.prefsButton) Button mPrefsButton;
+    @Bind(R.id.homePrefsButton) Button mHomePrefsButton;
+    @Bind(R.id.workPrefsButton) Button mWorkPrefsButton;
     private Context mContext;
 
     @Override
@@ -27,14 +29,32 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_prefs);
         ButterKnife.bind(this);
 
-        mPrefsButton.setOnClickListener(this);
+        mHomePrefsButton.setOnClickListener(this);
+        mWorkPrefsButton.setOnClickListener(this);
         mContext = this;
     }
 
     @Override
     public void onClick(View v) {
-        if (v == mPrefsButton) {
-            Toast.makeText(PrefsActivity.this, "Location Saved", Toast.LENGTH_SHORT).show();
+        switch (v.getId()) {
+            case (R.id.homePrefsButton):
+                String home = mHomeEditText.getText().toString();
+                addHomeToSharedPreferences(home);
+                Toast.makeText(PrefsActivity.this, "Home Location Saved!", Toast.LENGTH_SHORT).show();
+                break;
+            case (R.id.workPrefsButton):
+                String work = mWorkEditText.getText().toString();
+                addWorkToSharedPreferences(work);
+                Toast.makeText(PrefsActivity.this, "Work Location Saved!", Toast.LENGTH_SHORT).show();
+                break;
         }
+    }
+
+    private void addHomeToSharedPreferences(String home) {
+        mEditor.putString(Constants.PREFERENCES_HOME, home).apply();
+    }
+
+    private void addWorkToSharedPreferences(String work) {
+        mEditor.putString(Constants.PREFERENCES_WORK, work).apply();
     }
 }
