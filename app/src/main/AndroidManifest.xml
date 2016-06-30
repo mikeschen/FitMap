@@ -65,6 +65,9 @@
             android:name=".simpleActivities.AboutActivity"
             android:label="@string/title_activity_about"/>
         <activity
+            android:name=".simpleActivities.RealStatsActivity"
+            android:label="Stats"/>
+        <activity
             android:name=".Meals.MealsActivity"
             android:label="@string/title_activity_meals"/>
         <activity android:name=".Meals.MealsSearchResultActivity" />

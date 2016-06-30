@@ -1,6 +1,8 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
+import com.mikeschen.www.fitnessapp.MenuFragment;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
@@ -63,8 +66,6 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
-    @Bind(R.id.mapsMainButton) Button mMapsMainButton;
-    @Bind(R.id.mealsMainButton) Button mMealsMainButton;
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
     class IncomingHandler extends Handler {
@@ -118,9 +119,6 @@ public class MainActivity extends BaseActivity implements
 
         buttonDisplay = "Steps";
         mMainButton.setOnClickListener(this);
-
-        mMapsMainButton.setOnClickListener(this);
-        mMealsMainButton.setOnClickListener(this);
 
         mTipPresenter = new TipPresenter(this);
 //        mStepCounterPresenter = new StepCounterPresenter(this);

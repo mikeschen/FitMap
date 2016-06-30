@@ -35,7 +35,7 @@
     android:padding="@dimen/activity_small_padding"
     android:textSize="@dimen/text_small"
     android:textColor="@color/colorWhite"
-    android:id="@+id/workButton"
+    android:id="@+id/prefsButton"
     android:background="@drawable/button"
     android:layout_below="@+id/workEditText" />
 

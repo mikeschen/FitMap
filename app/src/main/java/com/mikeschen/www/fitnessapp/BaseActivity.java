@@ -1,8 +1,10 @@
 package com.mikeschen.www.fitnessapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -23,6 +26,9 @@ import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
@@ -40,14 +46,12 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         mActivityTitle = getTitle().toString();
-
         mContext = this;
 
         db = new DatabaseHelper(mContext.getApplicationContext());
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mEditor = mSharedPreferences.edit();
-
     }
 
     @Override

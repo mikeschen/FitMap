@@ -6,9 +6,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/searchTextView"/>
+        android:id="@+id/searchTextView"
+        android:layout_marginBottom="3dp"
+        android:textSize="@dimen/text_small"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/calorieTextView"/>
+        android:id="@+id/calorieTextView"
+        android:textSize="@dimen/text_tiny"
+        android:layout_marginBottom="15dp"/>
 </LinearLayout>

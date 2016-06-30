@@ -1,10 +1,13 @@
 package com.mikeschen.www.fitnessapp.utils;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikeschen.www.fitnessapp.Constants;
+import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Distance;
 import com.mikeschen.www.fitnessapp.models.Duration;
 import com.mikeschen.www.fitnessapp.models.Route;
@@ -108,77 +111,85 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
+
         Log.d("json", data);
         if (data == null)
             return;
 
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
-        for (int i = 0; i < jsonRoutes.length(); i++) {
-            JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
-            Route route = new Route();
+        Log.d("routez", jsonRoutes +"");
+        if(jsonRoutes != null && jsonRoutes.length() > 0) {
+            Log.d("in the if statement", "check");
+            for (int i = 0; i < jsonRoutes.length(); i++) {
+                JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
+                Route route = new Route();
 
-            JSONObject overview_polylineJson = jsonRoute.getJSONObject("overview_polyline");
-            JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
-            JSONObject jsonLeg = jsonLegs.getJSONObject(0);
-            JSONObject jsonDistance = jsonLeg.getJSONObject("distance");
-            JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
-            JSONObject jsonEndLocation = jsonLeg.getJSONObject("end_location");
-            JSONObject jsonStartLocation = jsonLeg.getJSONObject("start_location");
-            int totalDistance;
-            int totalDuration;
-            if(currentCount > 0) {
-                JSONObject jsonLeg2 = jsonLegs.getJSONObject(1);
-                JSONObject jsonDistance2 = jsonLeg2.getJSONObject("distance");
-                JSONObject jsonDuration2 = jsonLeg2.getJSONObject("duration");
-                totalDistance = jsonDistance.getInt("value") + jsonDistance2.getInt("value");
-                totalDuration = jsonDuration.getInt("value") + jsonDuration2.getInt("value");
-                destinationLat = jsonLeg2.getJSONObject("end_location").getDouble("lat");
-                destinationLong = jsonLeg2.getJSONObject("end_location").getDouble("lng");
-            } else {
-                totalDistance = jsonDistance.getInt("value");
-                totalDuration = jsonDuration.getInt("value");
-                destinationLat = jsonEndLocation.getDouble("lat");
-                destinationLong = jsonEndLocation.getDouble("lng");
-            }
-            route.duration = new Duration(jsonDuration.getString("text"), totalDuration);
-            route.distance = new Distance(jsonDistance.getString("text"), totalDistance);
-            route.endAddress = jsonLeg.getString("end_address");
-            route.startAddress = jsonLeg.getString("start_address");
-            originLat = jsonStartLocation.getDouble("lat");
-            originLong = jsonStartLocation.getDouble("lng");
-            route.startLocation = new LatLng(originLat, originLong);
-            route.endLocation = new LatLng(destinationLat, destinationLong);
-            route.points = decodePolyLine(overview_polylineJson.getString("points"));
-
-            if(currentCount == 0) {
-                shortestDistance = jsonDistance.getInt("value");
-            } else {
-                Log.d("distanceDiff", ""+Math.abs(totalDistance - shortestDistance));
-                if(Math.abs(totalDistance - shortestDistance) < 300) {
-                    wayPointDistance += .001;
-                    try {
-                        new DownloadRawData().execute(createSecondUrl());
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    return;
+                JSONObject overview_polylineJson = jsonRoute.getJSONObject("overview_polyline");
+                JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
+                JSONObject jsonLeg = jsonLegs.getJSONObject(0);
+                JSONObject jsonDistance = jsonLeg.getJSONObject("distance");
+                JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
+                JSONObject jsonEndLocation = jsonLeg.getJSONObject("end_location");
+                JSONObject jsonStartLocation = jsonLeg.getJSONObject("start_location");
+                int totalDistance;
+                int totalDuration;
+                if (currentCount > 0) {
+                    JSONObject jsonLeg2 = jsonLegs.getJSONObject(1);
+                    JSONObject jsonDistance2 = jsonLeg2.getJSONObject("distance");
+                    JSONObject jsonDuration2 = jsonLeg2.getJSONObject("duration");
+                    totalDistance = jsonDistance.getInt("value") + jsonDistance2.getInt("value");
+                    totalDuration = jsonDuration.getInt("value") + jsonDuration2.getInt("value");
+                    destinationLat = jsonLeg2.getJSONObject("end_location").getDouble("lat");
+                    destinationLong = jsonLeg2.getJSONObject("end_location").getDouble("lng");
                 } else {
-                    wayPointDistance = 0;
+                    totalDistance = jsonDistance.getInt("value");
+                    totalDuration = jsonDuration.getInt("value");
+                    destinationLat = jsonEndLocation.getDouble("lat");
+                    destinationLong = jsonEndLocation.getDouble("lng");
+                }
+                route.duration = new Duration(jsonDuration.getString("text"), totalDuration);
+                route.distance = new Distance(jsonDistance.getString("text"), totalDistance);
+                route.endAddress = jsonLeg.getString("end_address");
+                route.startAddress = jsonLeg.getString("start_address");
+                originLat = jsonStartLocation.getDouble("lat");
+                originLong = jsonStartLocation.getDouble("lng");
+                route.startLocation = new LatLng(originLat, originLong);
+                route.endLocation = new LatLng(destinationLat, destinationLong);
+                route.points = decodePolyLine(overview_polylineJson.getString("points"));
+
+                if (currentCount == 0) {
+                    shortestDistance = jsonDistance.getInt("value");
+                } else {
+                    Log.d("distanceDiff", "" + Math.abs(totalDistance - shortestDistance));
+                    if (Math.abs(totalDistance - shortestDistance) < 300) {
+                        wayPointDistance += .001;
+                        try {
+                            new DownloadRawData().execute(createSecondUrl());
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        return;
+                    } else {
+                        wayPointDistance = 0;
+                    }
+                }
+                routes.add(route);
+            }
+
+            currentCount++;
+            if (currentCount == routeCount) {
+                listener.onDirectionFinderSuccess(routes);
+            } else {
+                try {
+                    new DownloadRawData().execute(createSecondUrl());
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
             }
-            routes.add(route);
-        }
-
-        currentCount++;
-        if(currentCount == routeCount) {
-            listener.onDirectionFinderSuccess(routes);
         } else {
-            try {
-                new DownloadRawData().execute(createSecondUrl());
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            Log.d("cant find route", "sorry");
+            listener.onDirectionFinderFail();
         }
     }
 

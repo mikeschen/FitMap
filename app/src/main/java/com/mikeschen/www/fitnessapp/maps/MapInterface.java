@@ -16,6 +16,7 @@ public interface MapInterface {
         void enableMyLocation();
         void displayDirections(List<Route> routes);
         void clearMap();
+        void closeDialog();
     }
 
     interface Presenter {
