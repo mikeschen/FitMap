@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeMainButton"
+        android:layout_centerHorizontal="true"
+        android:background="#f32f34"
+        android:text="Main"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_small"
+        android:elevation="@dimen/activity_elevation"
+        android:layout_gravity="center"
+        android:layout_weight=".33"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mapsMainButton"
+        android:layout_centerHorizontal="true"
+        android:background="#f32f34"
+        android:text="Maps"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_small"
+        android:elevation="@dimen/activity_elevation"
+        android:layout_gravity="center"
+        android:layout_weight=".33"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mealsMainButton"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorAccent"
+        android:text="Meals"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_small"
+        android:elevation="@dimen/activity_elevation"
+        android:layout_gravity="center"
+        android:layout_weight=".33"/>
+
+</LinearLayout>
