@@ -9,7 +9,7 @@
         android:id="@+id/searchTextView"
         android:layout_marginBottom="3dp"
         android:textSize="@dimen/text_small"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
