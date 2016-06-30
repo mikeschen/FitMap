@@ -58,6 +58,11 @@
             android:enabled="true"
             android:exported="true"/>
 
+        <service
+            android:name=".utils.TimerService"
+            android:enabled="true"
+            android:exported="true"/>
+
         <activity
             android:name=".main.StatsActivity"
             android:label="@string/title_activity_stats"/>

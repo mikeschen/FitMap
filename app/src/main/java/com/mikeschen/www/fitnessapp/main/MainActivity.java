@@ -1,8 +1,6 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -30,18 +28,18 @@ import android.widget.TextView;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
-import com.mikeschen.www.fitnessapp.MenuFragment;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.utils.StepCounterService;
+import com.mikeschen.www.fitnessapp.utils.TimerService;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,8 +54,10 @@ public class MainActivity extends BaseActivity implements
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
 //    private StepCounterPresenter mStepCounterPresenter;
+
     private NotificationCompat.Builder mBuilder;
     int images[] = {R.drawable.alone, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
+
     Days daysRecord;
 
     Messenger mService = null;
@@ -119,7 +119,6 @@ public class MainActivity extends BaseActivity implements
 
         buttonDisplay = "Steps";
         mMainButton.setOnClickListener(this);
-
         mTipPresenter = new TipPresenter(this);
 //        mStepCounterPresenter = new StepCounterPresenter(this);
 
@@ -168,6 +167,7 @@ public class MainActivity extends BaseActivity implements
 
 //        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
 
+        startService(new Intent(MainActivity.this, TimerService.class));
         startService(new Intent(MainActivity.this, StepCounterService.class));
         doBindService();
     }
@@ -274,35 +274,35 @@ public class MainActivity extends BaseActivity implements
         finish();
     }
 
-    @Override
-    public void buildNotification(int steps) {
-        mBuilder = new NotificationCompat.Builder(mContext)
-                .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
-                .setContentTitle("My notification")
-                .setContentText("You walked " + steps + " steps today!");
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
-        Intent resultIntent = new Intent(mContext, StatsActivity.class);
-        Log.d("buildNotification", "Is it building?");
-
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        mContext,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-
-        // Sets an ID for the notification
-        int mNotificationId = 001;
-        // Gets an instance of the NotificationManager service
-        NotificationManager mNotifyMgr =
-                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
-    }
+//    @Override
+//    public void buildNotification(int steps) {
+//        mBuilder = new NotificationCompat.Builder(mContext)
+//                .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
+//                .setContentTitle("My notification")
+//                .setContentText("You walked " + steps + " steps today!");
+//
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+//        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
+//        Intent resultIntent = new Intent(mContext, StatsActivity.class);
+//        Log.d("buildNotification", "Is it building?");
+//
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getActivity(
+//                        mContext,
+//                        0,
+//                        resultIntent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT
+//                );
+//        mBuilder.setContentIntent(resultPendingIntent);
+//
+//        // Sets an ID for the notification
+//        int mNotificationId = 001;
+//        // Gets an instance of the NotificationManager service
+//        NotificationManager mNotifyMgr =
+//                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+//    }
 
     @Override
     public long createNewDBRows(Days dayRecord) {

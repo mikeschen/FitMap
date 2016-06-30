@@ -10,7 +10,6 @@ public interface StepCounterInterface {
 
     interface View {
         void showSteps(Days days);
-        void buildNotification(int steps);
         long createNewDBRows(Days dayRecord);
         void addToSharedPreferences(long time, int steps, long id);
         Days endOfDaySave();
