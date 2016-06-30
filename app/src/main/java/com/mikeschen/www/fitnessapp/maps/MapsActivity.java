@@ -152,13 +152,15 @@ public class MapsActivity extends BaseActivity implements
                 break;
             case (R.id.homeButton):
                 mHomeAddress = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
-                Log.d("home addy", mHomeAddress);
                 atDestination.setText(mHomeAddress);
+                mHomeButton.setBackgroundResource(R.drawable.redbutton2down);
+                mWorkButton.setBackgroundResource(R.drawable.buttonred);
                 break;
             case (R.id.workButton):
                 mWorkAddress = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
-                Log.d("work addy", mWorkAddress);
                 atDestination.setText(mWorkAddress);
+                mWorkButton.setBackgroundResource(R.drawable.redbuttondown);
+                mHomeButton.setBackgroundResource(R.drawable.buttonred2);
                 break;
         }
     }
