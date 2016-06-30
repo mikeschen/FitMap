@@ -54,9 +54,11 @@ public class MainActivity extends BaseActivity implements
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
 //    private StepCounterPresenter mStepCounterPresenter;
-//    private NotificationCompat.Builder mBuilder;
+
+    private NotificationCompat.Builder mBuilder;
+    int images[] = {R.drawable.alone, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
+
     Days daysRecord;
-    int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
 
     Messenger mService = null;
     boolean mIsBound;
@@ -178,7 +180,7 @@ public class MainActivity extends BaseActivity implements
     }
 
     private int getRandomNumber() {
-        return new Random().nextInt(4);
+        return new Random().nextInt(5);
     }
 
     //Calligraphy

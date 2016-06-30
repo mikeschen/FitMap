@@ -7,18 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PrefsActivity extends BaseActivity implements View.OnClickListener{
+public class PrefsActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.homeEditText) EditText mHomeEditText;
     @Bind(R.id.workEditText) EditText mWorkEditText;
-    @Bind(R.id.prefsButton) Button mPrefsButton;
-    private Context mContext;
+    @Bind(R.id.homePrefsButton) Button mHomePrefsButton;
+    @Bind(R.id.workPrefsButton) Button mWorkPrefsButton;
+
+    private String home;
+    private String work;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +31,44 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_prefs);
         ButterKnife.bind(this);
 
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("MYLABEL", "myStringToSave").commit();
-        mPrefsButton.setOnClickListener(this);
-        mContext = this;
+        mHomePrefsButton.setOnClickListener(this);
+        mWorkPrefsButton.setOnClickListener(this);
+
+        home = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
+        mHomeEditText.setText(home);
+        work = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
+        mWorkEditText.setText(work);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.homePrefsButton):
+                String home = mHomeEditText.getText().toString();
+                if (home.isEmpty()) {
+                    Toast.makeText(PrefsActivity.this, "Please Enter A Home Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                addHomeToSharedPreferences(home);
+                Toast.makeText(PrefsActivity.this, "Home Location Saved!", Toast.LENGTH_SHORT).show();
+                break;
+            case (R.id.workPrefsButton):
+                String work = mWorkEditText.getText().toString();
+                if (work.isEmpty()) {
+                    Toast.makeText(PrefsActivity.this, "Please Enter A Work Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                addWorkToSharedPreferences(work);
+                Toast.makeText(PrefsActivity.this, "Work Location Saved!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 
+    private void addHomeToSharedPreferences(String home) {
+        mEditor.putString(Constants.PREFERENCES_HOME, home).apply();
+    }
+
+    private void addWorkToSharedPreferences(String work) {
+        mEditor.putString(Constants.PREFERENCES_WORK, work).apply();
     }
 }
