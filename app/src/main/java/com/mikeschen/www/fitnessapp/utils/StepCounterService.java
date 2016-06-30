@@ -84,6 +84,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("Steps", "On Create");
         isRunning = true;
 
         mSharedPreferences = getApplicationContext().getSharedPreferences("MyPrefs", 0);

@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity implements
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
 //    private StepCounterPresenter mStepCounterPresenter;
-    private NotificationCompat.Builder mBuilder;
+//    private NotificationCompat.Builder mBuilder;
     Days daysRecord;
     int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
 
@@ -81,8 +81,6 @@ public class MainActivity extends BaseActivity implements
                         mMainButton.setText("CaloriesBurned: " + (int) daysRecord.getCaloriesBurned());
                     }
                     break;
-                case TimerService.MSG_SEND_NOTIFICATION:
-                    buildNotification(20);
                 default:
                     super.handleMessage(msg);
             }
@@ -119,7 +117,6 @@ public class MainActivity extends BaseActivity implements
 
         buttonDisplay = "Steps";
         mMainButton.setOnClickListener(this);
-
         mTipPresenter = new TipPresenter(this);
 //        mStepCounterPresenter = new StepCounterPresenter(this);
 
@@ -168,6 +165,7 @@ public class MainActivity extends BaseActivity implements
 
 //        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
 
+        startService(new Intent(MainActivity.this, TimerService.class));
         startService(new Intent(MainActivity.this, StepCounterService.class));
         doBindService();
     }
@@ -274,35 +272,35 @@ public class MainActivity extends BaseActivity implements
         finish();
     }
 
-    @Override
-    public void buildNotification(int steps) {
-        mBuilder = new NotificationCompat.Builder(mContext)
-                .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
-                .setContentTitle("My notification")
-                .setContentText("You walked " + steps + " steps today!");
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
-        Intent resultIntent = new Intent(mContext, StatsActivity.class);
-        Log.d("buildNotification", "Is it building?");
-
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        mContext,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-
-        // Sets an ID for the notification
-        int mNotificationId = 001;
-        // Gets an instance of the NotificationManager service
-        NotificationManager mNotifyMgr =
-                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
-    }
+//    @Override
+//    public void buildNotification(int steps) {
+//        mBuilder = new NotificationCompat.Builder(mContext)
+//                .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
+//                .setContentTitle("My notification")
+//                .setContentText("You walked " + steps + " steps today!");
+//
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+//        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
+//        Intent resultIntent = new Intent(mContext, StatsActivity.class);
+//        Log.d("buildNotification", "Is it building?");
+//
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getActivity(
+//                        mContext,
+//                        0,
+//                        resultIntent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT
+//                );
+//        mBuilder.setContentIntent(resultPendingIntent);
+//
+//        // Sets an ID for the notification
+//        int mNotificationId = 001;
+//        // Gets an instance of the NotificationManager service
+//        NotificationManager mNotifyMgr =
+//                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+//    }
 
     @Override
     public long createNewDBRows(Days dayRecord) {
