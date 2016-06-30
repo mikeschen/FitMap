@@ -24,6 +24,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/Meals"
         android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/fragment"
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
