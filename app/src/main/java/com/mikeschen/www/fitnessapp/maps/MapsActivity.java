@@ -2,6 +2,7 @@ package com.mikeschen.www.fitnessapp.maps;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +40,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikeschen.www.fitnessapp.BaseActivity;
+import com.mikeschen.www.fitnessapp.Constants;
+import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.R;
+import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.models.Route;
 import com.mikeschen.www.fitnessapp.utils.PermissionUtils;
 
@@ -51,7 +56,8 @@ import butterknife.ButterKnife;
 public class MapsActivity extends BaseActivity implements
         MapInterface.View,
         OnMapReadyCallback,
-        GoogleMap.OnMyLocationButtonClickListener {
+        GoogleMap.OnMyLocationButtonClickListener,
+        View.OnClickListener {
 
     private boolean mPermissionDenied = false;
     private MapActivityPresenter mMapActivityPresenter;
@@ -61,12 +67,15 @@ public class MapsActivity extends BaseActivity implements
     @Bind(R.id.tvDistance) TextView mTvDistance;
     @Bind(R.id.tvDuration) TextView mTvDuration;
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
+    @Bind(R.id.homeButton) ImageButton mHomeButton;
+    @Bind(R.id.workButton) ImageButton mWorkButton;
+
+    private String mHomeAddress;
+    private String mWorkAddress;
     private String destination;
     public ProgressDialog progressDialog;
 
     private Long calorie;
-    private int counter = 0;
-
     public GoogleMap mMap;
     private UiSettings mUiSettings;
     GPSTracker gps;
@@ -95,6 +104,10 @@ public class MapsActivity extends BaseActivity implements
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
 
+        btnFindPath.setOnClickListener(this);
+        mHomeButton.setOnClickListener(this);
+        mWorkButton.setOnClickListener(this);
+
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         SupportMapFragment mapFragment =
@@ -108,7 +121,6 @@ public class MapsActivity extends BaseActivity implements
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
 
-
         atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -120,10 +132,12 @@ public class MapsActivity extends BaseActivity implements
                 return false;
             }
         });
+    }
 
-        btnFindPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.btnFindPath):
                 sendRequest();
                 setHideSoftKeyboard(atDestination);
                 LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
@@ -133,10 +147,21 @@ public class MapsActivity extends BaseActivity implements
                 pathFinder.setAnimation(animation);
                 pathFinder.animate();
                 animation.start();
-            }
-        });
+                break;
+            case (R.id.homeButton):
+                mHomeAddress = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
+                atDestination.setText(mHomeAddress);
+                mHomeButton.setBackgroundResource(R.drawable.redbutton2down);
+                mWorkButton.setBackgroundResource(R.drawable.buttonred);
+                break;
+            case (R.id.workButton):
+                mWorkAddress = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
+                atDestination.setText(mWorkAddress);
+                mWorkButton.setBackgroundResource(R.drawable.redbuttondown);
+                mHomeButton.setBackgroundResource(R.drawable.buttonred2);
+                break;
+        }
     }
-
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -155,9 +180,6 @@ public class MapsActivity extends BaseActivity implements
         }
         gps = new GPSTracker(mContext);
         if(gps.canGetLocation()) {
-            Log.d("Current Lat", gps.getLatitude() + "");
-            Log.d("Current Long", gps.getLongitude() + "");
-
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
             myLocationLat = gps.getLatitude();
@@ -191,7 +213,7 @@ public class MapsActivity extends BaseActivity implements
             origin = gps.getLatitude() + "," + gps.getLongitude();
         }
         if (destination.isEmpty()) {
-            Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Please Enter A Destination Address!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -202,7 +224,6 @@ public class MapsActivity extends BaseActivity implements
 
     @Override
     public void displayDirections(List<Route> routes) {
-        counter = 0;
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
@@ -255,7 +276,6 @@ public class MapsActivity extends BaseActivity implements
                 polylineOptions.add(route.points.get(i));
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
-            counter++;
             showDistance(distances.get(0));
             showDuration(durations.get(0));
             showCalorieRoute(routeCalories.get(0));
