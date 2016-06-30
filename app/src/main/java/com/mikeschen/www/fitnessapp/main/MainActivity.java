@@ -52,9 +52,9 @@ public class MainActivity extends BaseActivity implements
     private int caloriesBurned = 0;
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
-    private StepCounterPresenter mStepCounterPresenter;
+//    private StepCounterPresenter mStepCounterPresenter;
     private NotificationCompat.Builder mBuilder;
-    Days newDays;
+    Days daysRecord;
     int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
 
     Messenger mService = null;
@@ -72,7 +72,15 @@ public class MainActivity extends BaseActivity implements
         public void handleMessage(Message msg) {
             switch(msg.what) {
                 case StepCounterService.MSG_SET_STEP_COUNT_VALUE:
-                    mMainButton.setText("Steps Taken: " + msg.arg1);
+                    float steps = msg.arg1;
+                    daysRecord.setStepsTaken(msg.arg1);
+                    daysRecord.setCaloriesBurned(steps * 175/3500);
+                    db.updateDays(daysRecord);
+                    if(buttonDisplay.equals("Steps")) {
+                        mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
+                    } else {
+                        mMainButton.setText("CaloriesBurned: " + (int) daysRecord.getCaloriesBurned());
+                    }
                     break;
                 default:
                     super.handleMessage(msg);
@@ -108,15 +116,14 @@ public class MainActivity extends BaseActivity implements
 
         mMessenger = new Messenger(new IncomingHandler());
 
-        buttonDisplay = "Calories";
-        mMainButton.setText("Calories Burned: " + caloriesBurned);
+        buttonDisplay = "Steps";
         mMainButton.setOnClickListener(this);
 
         mMapsMainButton.setOnClickListener(this);
         mMealsMainButton.setOnClickListener(this);
 
         mTipPresenter = new TipPresenter(this);
-        mStepCounterPresenter = new StepCounterPresenter(this);
+//        mStepCounterPresenter = new StepCounterPresenter(this);
 
         List<Days> daysList = db.getAllDaysRecords();
 
@@ -124,11 +131,15 @@ public class MainActivity extends BaseActivity implements
         // This creates a table on first use of app
         if (daysList.size() == 0) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            newDays = new Days(1, 0, 0, 0, dateFormat.toString());
+            daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
             mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
-            db.logDays(newDays);
+            daysRecord.setId(db.logDays(daysRecord));
             db.closeDB();
+        } else {
+            daysRecord = daysList.get(daysList.size()-1);
         }
+
+        mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
         // Retrieves data when app is opened after crash/close and creates tables for each day app was not used
         long lastKnownTime = mSharedPreferences.getLong(Constants.PREFERENCES_LAST_KNOWN_TIME_KEY, 0);
@@ -138,7 +149,7 @@ public class MainActivity extends BaseActivity implements
 
         Log.d("lastKnownSteps", lastKnownSteps + "");
 
-        mStepCounterPresenter.checkDaysPassed(lastKnownSteps, lastKnownCalories, lastKnownTime, lastKnownId);
+//        mStepCounterPresenter.checkDaysPassed(lastKnownSteps, lastKnownCalories, lastKnownTime, lastKnownId);
 
         //Calls tips
         String json;
@@ -157,7 +168,7 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
+//        mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
 
         startService(new Intent(MainActivity.this, StepCounterService.class));
         doBindService();
@@ -230,10 +241,10 @@ public class MainActivity extends BaseActivity implements
             case (R.id.mainButton):
                 if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
-                    mStepCounterPresenter.loadSteps();
+                    mMainButton.setText("Steps Taken: " + String.valueOf(db.getDay(daysRecord.getId()).getStepsTaken()));
                 } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mStepCounterPresenter.loadSteps();
+                    mMainButton.setText("Calories Burned: " + (int) db.getDay(daysRecord.getId()).getCaloriesBurned());
                 }
                 break;
             case (R.id.mapsMainButton):
@@ -250,19 +261,13 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void showSteps(Days days) {
         mEditor.putInt(Constants.PREFERENCES_CURRENT_STEPS_KEY, days.getStepsTaken());
-        mEditor.putInt(Constants.PREFERENCES_CURRENT_CALORIES_BURNED_KEY, days.getCaloriesBurned());
+        mEditor.putFloat(Constants.PREFERENCES_CURRENT_CALORIES_BURNED_KEY, days.getCaloriesBurned());
 
         if (buttonDisplay.equals("Calories")) {
             mMainButton.setText("Calories Burned: " + days.getCaloriesBurned());
         } else if (buttonDisplay.equals("Steps")) {
             mMainButton.setText("Steps Taken: " + days.getStepsTaken());
         }
-    }
-
-    @Override
-    public void onPause() {
-        mStepCounterPresenter.onPause();
-        super.onPause();
     }
 
     public void refresh() {
