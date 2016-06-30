@@ -45,11 +45,19 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case (R.id.homePrefsButton):
                 String home = mHomeEditText.getText().toString();
+                if (home.isEmpty()) {
+                    Toast.makeText(PrefsActivity.this, "Please Enter A Home Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 addHomeToSharedPreferences(home);
                 Toast.makeText(PrefsActivity.this, "Home Location Saved!", Toast.LENGTH_SHORT).show();
                 break;
             case (R.id.workPrefsButton):
                 String work = mWorkEditText.getText().toString();
+                if (work.isEmpty()) {
+                    Toast.makeText(PrefsActivity.this, "Please Enter A Work Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 addWorkToSharedPreferences(work);
                 Toast.makeText(PrefsActivity.this, "Work Location Saved!", Toast.LENGTH_SHORT).show();
                 break;

@@ -76,8 +76,6 @@ public class MapsActivity extends BaseActivity implements
     public ProgressDialog progressDialog;
 
     private Long calorie;
-//    private int counter = 0;
-
     public GoogleMap mMap;
     private UiSettings mUiSettings;
     GPSTracker gps;
@@ -182,9 +180,6 @@ public class MapsActivity extends BaseActivity implements
         }
         gps = new GPSTracker(mContext);
         if(gps.canGetLocation()) {
-            Log.d("Current Lat", gps.getLatitude() + "");
-            Log.d("Current Long", gps.getLongitude() + "");
-
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(gps.getLatitude(), gps.getLongitude()), 13));
             myLocationLat = gps.getLatitude();
@@ -218,7 +213,7 @@ public class MapsActivity extends BaseActivity implements
             origin = gps.getLatitude() + "," + gps.getLongitude();
         }
         if (destination.isEmpty()) {
-            Toast.makeText(mContext, "Please enter destination address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Please Enter A Destination Address!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -229,7 +224,6 @@ public class MapsActivity extends BaseActivity implements
 
     @Override
     public void displayDirections(List<Route> routes) {
-//        counter = 0;
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
@@ -282,7 +276,6 @@ public class MapsActivity extends BaseActivity implements
                 polylineOptions.add(route.points.get(i));
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
-//            counter++;
             showDistance(distances.get(0));
             showDuration(durations.get(0));
             showCalorieRoute(routeCalories.get(0));
