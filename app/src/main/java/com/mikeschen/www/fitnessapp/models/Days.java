@@ -7,11 +7,11 @@ public class Days {
 
     long id;
     int stepsTaken;
-    int caloriesBurned;
+    float caloriesBurned;
     int caloriesConsumed;
     String date;
 
-    public Days (long id, Integer stepsTaken, int caloriesBurned, int caloriesConsumed, String date) {
+    public Days (long id, Integer stepsTaken, float caloriesBurned, int caloriesConsumed, String date) {
         this.id = id;
         this.stepsTaken = stepsTaken;
         this.caloriesBurned = caloriesBurned;
@@ -36,11 +36,11 @@ public class Days {
     }
 
 
-    public int getCaloriesBurned() {
+    public float getCaloriesBurned() {
         return caloriesBurned;
     }
 
-    public void setCaloriesBurned(int caloriesBurned) {
+    public void setCaloriesBurned(float caloriesBurned) {
         this.caloriesBurned = caloriesBurned;
     }
 

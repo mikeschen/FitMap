@@ -10,18 +10,9 @@ public interface StepCounterInterface {
 
     interface View {
         void showSteps(Days days);
-//        void showCalories(Days days);
         void buildNotification(int steps);
         long createNewDBRows(Days dayRecord);
         void addToSharedPreferences(long time, int steps, long id);
         Days endOfDaySave();
     }
-
-    interface Presenter {
-        void loadSteps();
-//        void loadCalories();
-        void calculateSteps(SensorEvent sensor);
-        void checkDaysPassed(int lastKnownSteps, int lastKnownCalories, long lastKnownTime, long lastKnownId);
-    }
-
 }
