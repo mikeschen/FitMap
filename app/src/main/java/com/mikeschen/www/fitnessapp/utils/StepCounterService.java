@@ -38,16 +38,6 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     @Override
-    public boolean onUnbind(Intent intent) {
-        return mAllowRebind;
-    }
-
-    @Override
-    public void onRebind(Intent intent) {
-
-    }
-
-    @Override
     public void onDestroy() {
 
     }
