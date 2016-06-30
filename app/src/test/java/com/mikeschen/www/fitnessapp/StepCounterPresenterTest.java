@@ -2,7 +2,7 @@ package com.mikeschen.www.fitnessapp;
 
 import com.mikeschen.www.fitnessapp.main.StepCounterInterface;
 import com.mikeschen.www.fitnessapp.main.StepCounterPresenter;
-import com.mikeschen.www.fitnessapp.models.Steps;
+import com.mikeschen.www.fitnessapp.models.Days;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class StepCounterPresenterTest {
     @Test
     public void loadSteps() {
         mStepCounterPresenter.loadSteps();
-        verify(mStepCounterView).showSteps(any(Steps.class));
+        verify(mStepCounterView).showSteps(any(Days.class));
     }
 
     @Test

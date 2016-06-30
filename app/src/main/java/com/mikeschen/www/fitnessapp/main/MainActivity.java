@@ -1,21 +1,18 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -31,18 +28,18 @@ import android.widget.TextView;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
-import com.mikeschen.www.fitnessapp.MenuFragment;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
-import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.utils.StepCounterService;
+import com.mikeschen.www.fitnessapp.utils.TimerService;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,23 +48,56 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class MainActivity extends BaseActivity implements
         MainInterface.View,
         StepCounterInterface.View,
-        View.OnClickListener,
-        SensorEventListener {
+        View.OnClickListener {
 
     private int caloriesBurned = 0;
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
     private StepCounterPresenter mStepCounterPresenter;
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
     private NotificationCompat.Builder mBuilder;
     Days newDays;
     int images[] = {R.drawable.citymain, R.drawable.stairwalkmain, R.drawable.walk, R.drawable.girl};
 
+    Messenger mService = null;
+    boolean mIsBound;
+    Messenger mMessenger;
     @Bind(R.id.mainButton) Button mMainButton;
     @Bind(R.id.tipTextView) TextView mTipTextView;
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
+
+    class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what) {
+                case StepCounterService.MSG_SET_STEP_COUNT_VALUE:
+                    mMainButton.setText("Steps Taken: " + msg.arg1);
+                    break;
+                case TimerService.MSG_SEND_NOTIFICATION:
+                    buildNotification(20);
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            mService = new Messenger(service);
+            try {
+                Message msg = Message.obtain(null, StepCounterService.MSG_REGISTER_CLIENT);
+                msg.replyTo = mMessenger;
+                mService.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +107,14 @@ public class MainActivity extends BaseActivity implements
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
+        mMessenger = new Messenger(new IncomingHandler());
+
         buttonDisplay = "Calories";
         mMainButton.setText("Calories Burned: " + caloriesBurned);
         mMainButton.setOnClickListener(this);
 
         mTipPresenter = new TipPresenter(this);
         mStepCounterPresenter = new StepCounterPresenter(this);
-
-        mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
 
         List<Days> daysList = db.getAllDaysRecords();
 
@@ -128,6 +156,9 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mStepCounterPresenter.loadSteps();//This sets text in Steps Taken Button on start
+
+        startService(new Intent(MainActivity.this, StepCounterService.class));
+        doBindService();
     }
 
     protected void onResume()
@@ -239,16 +270,6 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        mStepCounterPresenter.calculateSteps(sensorEvent);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
-    @Override
     public void buildNotification(int steps) {
         mBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
@@ -285,6 +306,27 @@ public class MainActivity extends BaseActivity implements
         return stepRecord_id;
     }
 
+    void doBindService() {
+        bindService(new Intent(this, StepCounterService.class), mConnection, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if(mIsBound) {
+            if(mService != null) {
+                try {
+                    Message msg = Message.obtain(null, StepCounterService.MSG_UNREGISTER_CLIENT);
+                    msg.replyTo = mMessenger;
+                    mService.send(msg);
+                } catch(RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
     @Override
     public void addToSharedPreferences(long time, int steps, long id) {
         mEditor.putLong(Constants.PREFERENCES_LAST_KNOWN_TIME_KEY, time).apply();
@@ -302,6 +344,17 @@ public class MainActivity extends BaseActivity implements
 
         Days day = new Days(1, stepsTaken, caloriesBurned, caloriesConsumed, date);
         return day;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try {
+            doUnbindService();
+        } catch (Throwable t) {
+            Log.e("MainActivity", "Failed to unbind from the service", t);
+        }
     }
 }
 
