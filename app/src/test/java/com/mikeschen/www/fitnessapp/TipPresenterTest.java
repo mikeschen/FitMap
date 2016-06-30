@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-package com.mikeschen.www.fitnessapp;
+import org.mockito.Mock;
 
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.main.MainInterface;
@@ -35,7 +34,6 @@ public class TipPresenterTest {
         mTipPresenter = new TipPresenter(mTipView);
     }
 
-=======
 //package com.mikeschen.www.fitnessapp;
 //
 //import com.mikeschen.www.fitnessapp.main.MainActivity;
@@ -72,16 +70,11 @@ public class TipPresenterTest {
 //        mTipPresenter = new TipPresenter(mTipView, mMainActivity);
 //    }
 //
->>>>>>> 00c58232f73539208a9f711f9e9e0a82d12a741d
 //    @Test
 //    public void loadTipsIntoView() {
 //        mTipPresenter.loadTip();
 //        verify(mTipView).showTip(any(String.class));
 //    }
-<<<<<<< HEAD
 
 }
-=======
-//
 //}
->>>>>>> 00c58232f73539208a9f711f9e9e0a82d12a741d

@@ -32,9 +32,10 @@ public class StepCounterService extends Service implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
-    public static final int MSG_REGISTER_CLIENT = 0;
-    public static final int MSG_UNREGISTER_CLIENT = 1;
-    public static final int MSG_SET_STEP_COUNT_VALUE = 2;
+    //All variables in StepCounterService begin with 1
+    public static final int MSG_REGISTER_CLIENT = 10;
+    public static final int MSG_UNREGISTER_CLIENT = 11;
+    public static final int MSG_SET_STEP_COUNT_VALUE = 12;
 
     final Messenger mMessenger = new Messenger(new IncomingHandler());
     ArrayList<Messenger> mClients = new ArrayList<>();
@@ -83,6 +84,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("Steps", "On Create");
         isRunning = true;
 
         mSharedPreferences = getApplicationContext().getSharedPreferences("MyPrefs", 0);
