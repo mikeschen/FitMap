@@ -19,10 +19,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = DatabaseHelper.class.getName();
 
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     //v.1 DB had three tables, one for steps, one for calories burned, and one for calories consumed
     //v.2 Refactored DB so everything is compiled into one table
     //v.3 Added Food table to the database
+    //v.4 Added height/weight database to be installed on first use of app
 
     // Database Name
     private static final String DATABASE_NAME = "savedDays";

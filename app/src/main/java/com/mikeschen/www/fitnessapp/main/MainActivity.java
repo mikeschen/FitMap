@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -61,6 +62,8 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
+    @Bind(R.id.testText) TextView testText;
+
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -105,6 +108,25 @@ public class MainActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        try {
+            heightWeightDB.createDatabase();
+            Log.d("DB CREATED", heightWeightDB + "");
+        } catch (IOException e) {
+            throw new Error ("Unable to create Database");
+        }
+
+
+        try {
+            heightWeightDB.openDatabase();
+            Log.d("Open DB", heightWeightDB + "Does it open?");
+        } catch (SQLException sqle) {
+            throw sqle;
+        }
+
+
+        testText.setText(String.valueOf(heightWeightDB.getCals()));
+
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
