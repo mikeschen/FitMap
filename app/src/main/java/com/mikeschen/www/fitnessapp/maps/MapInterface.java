@@ -21,6 +21,6 @@ public interface MapInterface {
 
     interface Presenter {
         void loadMap();
-        void makeRequest(String origin, String destination);
+        void makeRequest(String origin, String destination, boolean bikeSwitcher);
     }
 }

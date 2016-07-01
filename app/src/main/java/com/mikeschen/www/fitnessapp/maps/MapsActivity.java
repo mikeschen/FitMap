@@ -92,6 +92,7 @@ public class MapsActivity extends BaseActivity implements
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
     private Switch bikeSwitch;
+    private boolean bikeSwitcher = false;
 
     public double myLocationLat;
     public double myLocationLong;
@@ -125,20 +126,10 @@ public class MapsActivity extends BaseActivity implements
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Log.d("switchOn", "ON");
-                }else{
-                    Log.d("switchOff", "OFF");
+                    bikeSwitcher = true;
                 }
             }
         });
-
-        //check the current state before we display the screen
-        if(bikeSwitch.isChecked()){
-            Log.d("Switch is currently ON", "ON");
-        }
-        else {
-            Log.d("Switch is currently OFF", "OFF");
-        }
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -151,17 +142,17 @@ public class MapsActivity extends BaseActivity implements
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
 
-        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    sendRequest();
-                    setHideSoftKeyboard(atDestination);
-                    return true;
-                }
-                return false;
-            }
-        });
+//        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    sendRequest();
+//                    setHideSoftKeyboard(atDestination);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -249,7 +240,7 @@ public class MapsActivity extends BaseActivity implements
 
         progressDialog = ProgressDialog.show(mContext, "Please wait...",
                 "Finding Directions", true);
-        mMapActivityPresenter.makeRequest(origin, destination);
+        mMapActivityPresenter.makeRequest(origin, destination, bikeSwitcher);
     }
 
     @Override
@@ -268,6 +259,9 @@ public class MapsActivity extends BaseActivity implements
             showDistance(miles + " miles");
             showDuration(minutes);
             calorie = Math.round(route.distance.value / 16.1);
+            if(bikeSwitcher) {
+                calorie = calorie/2;
+            }
             showCalorieRoute(calorie);
             routeCalories.add(calorie);
 
