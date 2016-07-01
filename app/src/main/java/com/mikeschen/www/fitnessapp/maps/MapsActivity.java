@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -72,6 +73,7 @@ public class MapsActivity extends BaseActivity implements
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     @Bind(R.id.homeButton) ImageButton mHomeButton;
     @Bind(R.id.workButton) ImageButton mWorkButton;
+    @Bind(R.id.iconWalk) ImageView mIconWalk;
 
     private String mHomeAddress;
     private String mWorkAddress;
@@ -125,6 +127,8 @@ public class MapsActivity extends BaseActivity implements
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     bikeSwitcher = true;
+                } else {
+                    bikeSwitcher = false;
                 }
             }
         });
@@ -282,7 +286,6 @@ public class MapsActivity extends BaseActivity implements
 
             int padding = 200; // offset from edges of the map in pixels
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-
             mMap.moveCamera(cu);
 
             PolylineOptions polylineOptions = new PolylineOptions()
@@ -302,9 +305,11 @@ public class MapsActivity extends BaseActivity implements
             showDuration(durations.get(0));
             showCalorieRoute(routeCalories.get(0));
         }
+
         for (Polyline polyline : polylinePaths) {
             polyline.setClickable(true);
         }
+
         mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
             @Override
             public void onPolylineClick (Polyline clickedPolyline) {
@@ -352,6 +357,11 @@ public class MapsActivity extends BaseActivity implements
     public void showDistance(String distance) {
         progressDialog.dismiss();
         mTvDistance.setText(distance);
+        if(bikeSwitcher) {
+            mIconWalk.setImageResource(R.drawable.ic_directions_bike_black_24dp);
+        } else {
+            mIconWalk.setImageResource(R.drawable.ic_directions_walk_black_24dp);
+        }
     }
 
     @Override

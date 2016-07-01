@@ -65,7 +65,7 @@ public class DirectionFinder {
     private String createUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
-        if (bikeSwitcher == true) {
+        if (bikeSwitcher) {
             return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
         } else {
             return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
@@ -76,7 +76,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         String urlWaypoint = calculateWaypoint();
-        if (bikeSwitcher == true) {
+        if (bikeSwitcher) {
             return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
         } else {
             return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
