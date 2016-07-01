@@ -57,7 +57,6 @@ public class DirectionFinder {
     public void execute() throws UnsupportedEncodingException {
         routes.clear();
         listener.onDirectionFinderStart();
-
         new DownloadRawData().execute(createUrl());
     }
 
@@ -65,6 +64,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+//        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
     }
 
     private String createSecondUrl() throws UnsupportedEncodingException {
@@ -72,6 +72,7 @@ public class DirectionFinder {
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         String urlWaypoint = calculateWaypoint();
         return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+//        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;    }
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
@@ -111,14 +112,12 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-
         Log.d("json", data);
         if (data == null)
             return;
 
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
-        Log.d("routez", jsonRoutes +"");
         if(jsonRoutes != null && jsonRoutes.length() > 0) {
             Log.d("in the if statement", "check");
             for (int i = 0; i < jsonRoutes.length(); i++) {
@@ -161,7 +160,6 @@ public class DirectionFinder {
                 if (currentCount == 0) {
                     shortestDistance = jsonDistance.getInt("value");
                 } else {
-                    Log.d("distanceDiff", "" + Math.abs(totalDistance - shortestDistance));
                     if (Math.abs(totalDistance - shortestDistance) < 300) {
                         wayPointDistance += .001;
                         try {
@@ -188,7 +186,6 @@ public class DirectionFinder {
                 }
             }
         } else {
-            Log.d("cant find route", "sorry");
             listener.onDirectionFinderFail();
         }
     }
@@ -206,14 +203,10 @@ public class DirectionFinder {
 
         double angle = Math.atan2(latDiff,lngDiff);
         double theta =  (2*Math.PI) - angle;
-        Log.d("atanguts", (originLat - destinationLat)/(originLong - destinationLong)+"");
-        Log.d("theta", theta+"");
         double wayPointLat;
         double wayPointLong;
             wayPointLat = midLat + wayPointDistance * Math.cos(theta);
             wayPointLong = midLong + wayPointDistance * Math.sin(theta);
-        Log.d("verticalDistance", wayPointDistance * Math.sin(theta)+"");
-        Log.d("horizontalDistance", wayPointDistance * Math.cos(theta)+"");
         return wayPointLat + "," + wayPointLong;
     }
 
