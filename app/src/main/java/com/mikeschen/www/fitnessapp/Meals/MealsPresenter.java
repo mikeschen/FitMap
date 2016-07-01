@@ -109,10 +109,8 @@
 
 package com.mikeschen.www.fitnessapp.Meals;
 
-import android.app.ProgressDialog;
 import android.util.Log;
 
-import com.mikeschen.www.fitnessapp.models.Calories;
 import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.io.IOException;
@@ -127,10 +125,6 @@ public class MealsPresenter implements
         MealsInterface.Presenter {
 
     private MealsInterface.View mMealsView;
-    private int consumedCalories;
-    private int totalCalories;
-    private String mSearchType;
-    private ProgressDialog mAuthProgressDialog;
     public ArrayList<Food> mFoods = new ArrayList<>();
 
 
@@ -138,29 +132,6 @@ public class MealsPresenter implements
 
     public MealsPresenter(MealsInterface.View mealsView) {
         mMealsView = mealsView;
-        consumedCalories = 0;
-        totalCalories = 0;
-    }
-
-    @Override
-    public void loadFoodItem() {
-
-    }
-
-    @Override
-    public void computeCalories(Integer calories, Calories calorieRecord) {
-
-        calorieRecord.setCalories(calorieRecord.getCalories() + calories);
-
-//        Log.d("saveCalories", caloriesConsumed.getCalories() + "");
-//        mMealsView.showCalories(calorieRecord);
-
-    }
-
-    @Override
-    public void loadCalories(Calories calories) {
-//        mMealsView.showCalories(calories);
-
     }
 
     @Override
@@ -201,13 +172,4 @@ public class MealsPresenter implements
         });
     }
 
-    @Override
-    public void scanUpc() {
-
-    }
-
 }
-
-
-//MealsTracker activity that never changes and then implement fragment that handles the search data
-//list fragment and meals fragment; savedmeals fragment
