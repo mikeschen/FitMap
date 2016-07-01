@@ -30,7 +30,6 @@ import java.util.TimerTask;
  */
 public class TimerService extends Service {
 
-//    private StepCounterInterface.View mStepCounterView;
     private NotificationCompat.Builder mBuilder;
 
 
@@ -46,9 +45,6 @@ public class TimerService extends Service {
     private Timer timer;
     private TimerTask timerTask;
 
-    private int currentStepsTableId;
-    private int currentDaysTableId;
-    private Days daysRecord;
     DatabaseHelper db;
 
 
@@ -71,30 +67,12 @@ public class TimerService extends Service {
         }
     }
 
-    private void sendMessageToUI() {
-        for (int i = mClients.size() - 1; i >= 0; i--) {
-            try {
-                mClients.get(i).send(Message.obtain(null, MSG_SEND_NOTIFICATION, 0));
-            } catch (RemoteException e) {
-                mClients.remove(i);
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
         isRunning = true;
         db = new DatabaseHelper(getApplicationContext());
 
-        List<Days> allDays = db.getAllDaysRecords();
-        Days today = allDays.get(allDays.size() -1);
-
-
-        currentStepsTableId = 1;
-        currentDaysTableId = 1;
         Log.d("Are you", "Creating?");
         timer = new Timer();
         timerTask = new TimerTask() {

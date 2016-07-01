@@ -16,9 +16,6 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.models.Days;
-
 import java.util.ArrayList;
 
 public class StepCounterService extends Service implements SensorEventListener {
