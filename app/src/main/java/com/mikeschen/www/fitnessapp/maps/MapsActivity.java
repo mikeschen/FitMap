@@ -19,11 +19,14 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -88,6 +91,7 @@ public class MapsActivity extends BaseActivity implements
     private ArrayList<Integer> durations;
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
+    private Switch bikeSwitch;
 
     public double myLocationLat;
     public double myLocationLong;
@@ -110,6 +114,32 @@ public class MapsActivity extends BaseActivity implements
 
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+        bikeSwitch = (Switch) findViewById(R.id.bikeSwitch);
+
+        //set the switch to ON
+        bikeSwitch.setChecked(false);
+        //attach a listener to check for changes in state
+        bikeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Log.d("switchOn", "ON");
+                }else{
+                    Log.d("switchOff", "OFF");
+                }
+            }
+        });
+
+        //check the current state before we display the screen
+        if(bikeSwitch.isChecked()){
+            Log.d("Switch is currently ON", "ON");
+        }
+        else {
+            Log.d("Switch is currently OFF", "OFF");
+        }
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mMapActivityPresenter = new MapActivityPresenter(this);

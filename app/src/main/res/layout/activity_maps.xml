@@ -16,15 +16,34 @@
         android:layout_alignParentStart="true"
         tools:layout="@layout/fragment_menu" />
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/bikeMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_medium_padding"
-        android:layout_marginRight="1dp"
-        android:ems="10"
-        android:id="@+id/atOrigin"
-        android:inputType="textPostalAddress"
-        android:hint="My Location" />
+        android:layout_marginRight="@dimen/activity_small_padding"
+        android:layout_below="@+id/fragment"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".9"
+            android:layout_marginLeft="@dimen/activity_medium_padding"
+            android:layout_marginRight="1dp"
+            android:ems="10"
+            android:id="@+id/atOrigin"
+            android:inputType="textPostalAddress"
+            android:hint="My Location" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:text="BICYCLING"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/bikeSwitch" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -48,7 +67,7 @@
             android:layout_gravity="bottom" />
 
         <ImageButton
-            android:layout_width="40dp"
+            android:layout_width="54dp"
             android:layout_height="40dp"
             android:layout_weight="0.1"
             android:id="@+id/homeButton"
@@ -60,7 +79,7 @@
             android:layout_marginRight="1dp" />
 
         <ImageButton
-            android:layout_width="40dp"
+            android:layout_width="54dp"
             android:layout_height="40dp"
             android:layout_weight="0.1"
             android:id="@+id/workButton"
