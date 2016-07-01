@@ -2,20 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:alpha="0.8"
+    android:elevation="2dp"
+    android:padding="@dimen/activity_medium_padding"
+    android:layout_margin="@dimen/activity_small_padding">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchTextView"
-        android:layout_marginBottom="@dimen/activity_layoutBottomSearch"
-        android:textSize="@dimen/text_small"
-        android:textStyle="bold"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:id="@+id/searchTextView"
+            android:layout_marginBottom="@dimen/activity_layoutBottomSearch"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:id="@+id/plusicon"
+            android:src="@drawable/ic_add_circle_black_24dp"
+            android:layout_gravity="right" />
+
+        </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/calorieTextView"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_tiny"
         android:layout_marginBottom="@dimen/activity_layoutSearch"/>
 </LinearLayout>
