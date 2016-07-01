@@ -26,7 +26,6 @@
         android:elevation="@dimen/activity_elevation"
         android:layout_marginTop="@dimen/activity_medium_padding"
         android:textSize="@dimen/text_small"
-
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="@dimen/activity_medium_padding"
         android:layout_marginRight="@dimen/activity_wide_margin"
