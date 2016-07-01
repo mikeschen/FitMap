@@ -16,7 +16,6 @@ import android.util.Log;
 import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.main.StatsActivity;
-import com.mikeschen.www.fitnessapp.main.StepCounterInterface;
 import com.mikeschen.www.fitnessapp.models.Days;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +30,7 @@ import java.util.TimerTask;
  */
 public class TimerService extends Service {
 
-    private StepCounterInterface.View mStepCounterView;
+//    private StepCounterInterface.View mStepCounterView;
     private NotificationCompat.Builder mBuilder;
 
 

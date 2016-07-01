@@ -13,11 +13,10 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.main.StepCounterInterface;
-import com.mikeschen.www.fitnessapp.main.StepCounterPresenter;
 import com.mikeschen.www.fitnessapp.models.Days;
 
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class StepCounterService extends Service implements SensorEventListener {
         Log.d("Steps", "On Create");
         isRunning = true;
 
-        mSharedPreferences = getApplicationContext().getSharedPreferences("MyPrefs", 0);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
 
         mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
