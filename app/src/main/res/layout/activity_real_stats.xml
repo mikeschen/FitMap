@@ -58,9 +58,13 @@
         android:id="@+id/suggestionLayout">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_medium_padding"
             android:text="See how you could burn more"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimaryDark"
+            android:elevation="@dimen/activity_elevation"
             android:id="@+id/suggestionButton" />
     </LinearLayout>
 

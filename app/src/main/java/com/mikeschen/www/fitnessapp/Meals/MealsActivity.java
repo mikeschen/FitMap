@@ -81,7 +81,7 @@ public class MealsActivity extends BaseActivity implements
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
         String strDate = mdformat.format(calendar.getTime());
-        mTodaysDate.setText(strDate);
+        mTodaysDate.setText("Today's Date: " + strDate);
 
         mTotalCaloriesTextView.setText("Total Calories: " + getFoodFromDB());
 
