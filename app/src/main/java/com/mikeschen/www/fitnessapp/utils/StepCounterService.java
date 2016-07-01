@@ -39,7 +39,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     private long lastUpdate;
     private float last_x;
     private float last_y;
-    private float last_z;
+//    private float last_z;
 
     private ArrayList<Float> speedData;
 
@@ -93,7 +93,7 @@ public class StepCounterService extends Service implements SensorEventListener {
         lastUpdate = 0;
         last_x = 0;
         last_y = 0;
-        last_z = 0;
+//        last_z = 0;
 
         speedData = new ArrayList<>();
 
@@ -129,15 +129,15 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 float x = sensorEvent.values[0];
                 float y = sensorEvent.values[1];
-                float z = sensorEvent.values[2];
+//                float z = sensorEvent.values[2];
 
                 long curTime = System.currentTimeMillis();
 
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 1000;
-                if (speedData.size() < 20) {
+                float speed = Math.abs(x + y - last_x - last_y) / diffTime * 1000;
+                if (speedData.size() < 30) {
                     speedData.add(speed);
                 } else {
                     speedData.remove(0);
@@ -150,7 +150,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                 }
                 localAverageSpeed = localGrossSpeed / speedData.size();
 
-                if (localAverageSpeed > 20) {
+                if (localAverageSpeed > 30 && localAverageSpeed < 300) {
                     speedCounted++;
                     grossTotalSpeed = grossTotalSpeed + localAverageSpeed;
                     totalAverageSpeed = (grossTotalSpeed) / speedCounted;
@@ -184,7 +184,7 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 last_x = x;
                 last_y = y;
-                last_z = z;
+//                last_z = z;
             }
         }
     }
