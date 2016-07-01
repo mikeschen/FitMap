@@ -118,9 +118,7 @@ public class MapsActivity extends BaseActivity implements
 
         bikeSwitch = (Switch) findViewById(R.id.bikeSwitch);
 
-        //set the switch to ON
         bikeSwitch.setChecked(false);
-        //attach a listener to check for changes in state
         bikeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override

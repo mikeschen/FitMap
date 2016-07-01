@@ -28,7 +28,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".9"
+            android:layout_weight=".8"
             android:layout_marginLeft="@dimen/activity_medium_padding"
             android:layout_marginRight="1dp"
             android:ems="10"
@@ -36,11 +36,18 @@
             android:inputType="textPostalAddress"
             android:hint="My Location" />
 
+        <ImageView
+            android:src="@drawable/ic_directions_bike_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight=".1"
+            android:layout_margin="2dp" />
+
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".1"
-            android:text="BICYCLING"
+
             android:textColor="@color/colorBlack"
             android:id="@+id/bikeSwitch" />
     </LinearLayout>
@@ -138,6 +145,7 @@
             android:id="@+id/tvCalorie" />
 
         <ImageView
+            android:id="@+id/iconWalk"
             android:layout_marginLeft="@dimen/activity_wide_margin"
             android:layout_marginTop="@dimen/activity_small_padding"
             android:layout_width="@dimen/activity_large_padding"
