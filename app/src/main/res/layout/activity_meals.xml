@@ -24,11 +24,17 @@
         android:layout_below="@+id/caloriesTextView"
         android:layout_above="@+id/foodInputEditText"
         android:elevation="@dimen/activity_elevation"
-        android:layout_marginTop="@dimen/activity_layoutBottomSearch"
+        android:layout_marginTop="@dimen/activity_medium_padding"
         android:textSize="@dimen/text_small"
-        android:layout_margin="@dimen/activity_medium_padding"
-        android:gravity="center"
-        android:textStyle="bold" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="@dimen/activity_medium_padding"
+        android:layout_marginRight="@dimen/activity_wide_margin"
+        android:layout_marginLeft="@dimen/activity_wide_margin"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:background="@color/colorWhite"
+        android:alpha="0.7"
+        android:gravity="center" />
 
     <TextView
         android:layout_width="match_parent"
