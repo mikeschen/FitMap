@@ -23,9 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/Meals"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/fragment"
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_large"
         android:textStyle="bold"
@@ -42,6 +39,7 @@
         android:layout_below="@+id/caloriesTextView"
         android:layout_above="@+id/foodInputEditText"
         android:elevation="1dp"
+        android:layout_marginTop="@dimen/activity_layoutBottomSearch"
         android:textSize="@dimen/text_tiny"
         android:gravity="center" />
 
@@ -49,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/foodRecyclerView"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/activity_wide_margin"
+        android:layout_marginBottom="@dimen/activity_wide_margin"
         android:layout_below="@+id/todaysDate"
         android:layout_above="@+id/totalCaloriesTextView" />
 
@@ -57,14 +56,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="TOTAL CALORIES:"
         android:id="@+id/totalCaloriesTextView"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="@dimen/activity_wide_margin"
         android:layout_marginRight="@dimen/activity_wide_margin"
         android:textStyle="bold"
+        android:textColor="@color/colorAbout"
         android:gravity="center" />
 
 </RelativeLayout>
