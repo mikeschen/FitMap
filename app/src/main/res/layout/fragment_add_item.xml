@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.mikeschen.www.fitnessapp.Meals.MealsActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -14,7 +13,6 @@
         android:layout_height="177dp"
         android:id="@+id/foodItemAddRecyclerView"
         android:layout_gravity="left|center_vertical" />
-
 
     <EditText
         android:layout_width="wrap_content"
@@ -30,5 +28,4 @@
         android:layout_gravity="right|top"
         android:hint="Enter Calories"
         android:inputType="number" />
-
 </FrameLayout>
