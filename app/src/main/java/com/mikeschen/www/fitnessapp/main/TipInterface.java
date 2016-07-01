@@ -1,6 +1,6 @@
 package com.mikeschen.www.fitnessapp.main;
 
-public interface MainInterface {
+public interface TipInterface {
 
     interface View {
         void showTip(String tip);
