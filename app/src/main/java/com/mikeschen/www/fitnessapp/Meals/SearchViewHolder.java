@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
+import com.mikeschen.www.fitnessapp.utils.MealsTouchHelperViewHolder;
+import com.mikeschen.www.fitnessapp.utils.OnFoodClickedListener;
 
 import org.parceler.Parcels;
 

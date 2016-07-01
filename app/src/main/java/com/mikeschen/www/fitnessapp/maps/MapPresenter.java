@@ -69,7 +69,7 @@ public class MapPresenter implements
     }
 
     @Override
-    public void makeRequest(String origin, String destination) {
+    public void makeRequest(String origin, String destination, boolean bikeSwitcher) {
 
     }
 }

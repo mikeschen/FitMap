@@ -43,11 +43,13 @@ public class DirectionFinder {
     private double shortestDistance;
     private double wayPointDistance;
     private double distance1;
+    private boolean bikeSwitcher;
 
-    public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
+    public DirectionFinder(DirectionFinderListener listener, String origin, String destination, boolean bikeSwitcher) {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
+        this.bikeSwitcher = bikeSwitcher;
         this.routes = new ArrayList<>();
         this.routeCount = 2;
         this.currentCount = 0;
@@ -57,21 +59,28 @@ public class DirectionFinder {
     public void execute() throws UnsupportedEncodingException {
         routes.clear();
         listener.onDirectionFinderStart();
-
         new DownloadRawData().execute(createUrl());
     }
 
     private String createUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        if (bikeSwitcher) {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
+        } else {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        }
     }
 
     private String createSecondUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         String urlWaypoint = calculateWaypoint();
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        if (bikeSwitcher) {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
+        } else {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        }
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
@@ -111,14 +120,12 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-
         Log.d("json", data);
         if (data == null)
             return;
 
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
-        Log.d("routez", jsonRoutes +"");
         if(jsonRoutes != null && jsonRoutes.length() > 0) {
             Log.d("in the if statement", "check");
             for (int i = 0; i < jsonRoutes.length(); i++) {
@@ -161,7 +168,6 @@ public class DirectionFinder {
                 if (currentCount == 0) {
                     shortestDistance = jsonDistance.getInt("value");
                 } else {
-                    Log.d("distanceDiff", "" + Math.abs(totalDistance - shortestDistance));
                     if (Math.abs(totalDistance - shortestDistance) < 300) {
                         wayPointDistance += .001;
                         try {
@@ -188,7 +194,6 @@ public class DirectionFinder {
                 }
             }
         } else {
-            Log.d("cant find route", "sorry");
             listener.onDirectionFinderFail();
         }
     }
@@ -206,14 +211,10 @@ public class DirectionFinder {
 
         double angle = Math.atan2(latDiff,lngDiff);
         double theta =  (2*Math.PI) - angle;
-        Log.d("atanguts", (originLat - destinationLat)/(originLong - destinationLong)+"");
-        Log.d("theta", theta+"");
         double wayPointLat;
         double wayPointLong;
             wayPointLat = midLat + wayPointDistance * Math.cos(theta);
             wayPointLong = midLong + wayPointDistance * Math.sin(theta);
-        Log.d("verticalDistance", wayPointDistance * Math.sin(theta)+"");
-        Log.d("horizontalDistance", wayPointDistance * Math.cos(theta)+"");
         return wayPointLat + "," + wayPointLong;
     }
 

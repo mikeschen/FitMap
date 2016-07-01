@@ -35,9 +35,9 @@ public class MapActivityPresenter extends MapPresenter implements DirectionFinde
     }
 
     @Override
-    public void makeRequest(String origin, String destination) {
+    public void makeRequest(String origin, String destination, boolean bikeSwitcher) {
         try {
-            new DirectionFinder(this, origin, destination).execute();
+            new DirectionFinder(this, origin, destination, bikeSwitcher).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
