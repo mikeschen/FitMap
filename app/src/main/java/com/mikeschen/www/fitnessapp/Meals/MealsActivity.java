@@ -71,7 +71,7 @@ public class MealsActivity extends BaseActivity implements
         //Adds food from API call results
         if (position >= 0 && mFoods != null) {
             db.logFood(mFoods.get(position));
-            mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
+            mTotalCaloriesTextView.setText("Total Calories: " + getFoodFromDB());
         }
 
         mSearchString = intent.getStringExtra("inputText");
@@ -83,7 +83,7 @@ public class MealsActivity extends BaseActivity implements
         String strDate = mdformat.format(calendar.getTime());
         mTodaysDate.setText(strDate);
 
-        mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
+        mTotalCaloriesTextView.setText("Total Calories: " + getFoodFromDB());
 
         mAdapter.setOnFoodClickedListener(this);
     }
@@ -280,7 +280,7 @@ public class MealsActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 db.deleteFoodRecord(foodId);
                 Toast.makeText(mContext.getApplicationContext(), "Deleted forEVER", Toast.LENGTH_SHORT).show();
-                mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
+                mTotalCaloriesTextView.setText("Total Calories: " + getFoodFromDB());
                 db.closeDB();
             }
         });

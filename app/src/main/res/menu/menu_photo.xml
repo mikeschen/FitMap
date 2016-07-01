@@ -15,7 +15,7 @@
     </item>
     <item
         android:id="@+id/action_photo"
-        android:icon="@drawable/barcode"
+        android:icon="@drawable/ic_barcode"
         app:showAsAction="always"
         android:title="UPC">
     </item>
