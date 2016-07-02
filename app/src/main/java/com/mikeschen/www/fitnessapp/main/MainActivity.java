@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
                     } else {
-                        mMainButton.setText("Calories Burned: " + (int) daysRecord.getCaloriesBurned());
+                        setCaloriesText();
                     }
                     break;
                 default:
@@ -239,6 +239,16 @@ public class MainActivity extends BaseActivity implements
         mTipTextView.setText(tip);
     }
 
+    public void setCaloriesText() {
+        daysRecord.setCaloriesBurned(mSharedPreferences.getInt("stepsTaken", 0)*175/3500);
+        db.updateDays(daysRecord);
+        if(daysRecord.getCaloriesConsumed() > 0) {
+            mMainButton.setText("Calories Consumed: " + (int) (daysRecord.getCaloriesConsumed() - daysRecord.getCaloriesBurned()));
+        } else {
+            mMainButton.setText("Calories Burned: " + (int) daysRecord.getCaloriesBurned());
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -249,7 +259,7 @@ public class MainActivity extends BaseActivity implements
                     mMainButton.setText("Steps Taken: " + (int) steps);
                 } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mMainButton.setText("Calories Burned: " + (int) steps*175/3500);
+                    setCaloriesText();
                 }
                 break;
             case (R.id.mapsMainButton):
