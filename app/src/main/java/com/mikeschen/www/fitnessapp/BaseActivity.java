@@ -1,10 +1,8 @@
 package com.mikeschen.www.fitnessapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
@@ -14,22 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
-import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
+import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
-import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
 import com.mikeschen.www.fitnessapp.utils.HeightWeightDatabaseHelper;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
@@ -72,7 +65,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private void addDrawerItems() {
 
-        String[] navArray = {"Main", "Maps", "Meals", "Stats", "Prefs", "About", "DB"};
+        String[] navArray = {"Main", "Maps", "Meals", "Stats", "Prefs", "About"};
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, navArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -108,10 +101,6 @@ public class BaseActivity extends AppCompatActivity {
                     case 5:
                         Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
-                        break;
-                    case 6:
-                        Intent db = new Intent(BaseActivity.this, StatsActivity.class);
-                        startActivity(db);
                         break;
                     default:
                         break;

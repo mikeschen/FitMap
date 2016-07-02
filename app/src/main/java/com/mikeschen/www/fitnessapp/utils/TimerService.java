@@ -9,15 +9,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.mikeschen.www.fitnessapp.Constants;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.main.MainActivity;
-import com.mikeschen.www.fitnessapp.main.StatsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
+import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,7 +35,6 @@ public class TimerService extends Service {
     //All variables in Timer Service begin with 2
     public static final int MSG_REGISTER_CLIENT = 20;
     public static final int MSG_UNREGISTER_CLIENT = 21;
-    public static final int MSG_SEND_NOTIFICATION = 22;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -124,7 +120,7 @@ public class TimerService extends Service {
 
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
 //        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
-        Intent resultIntent = new Intent(getApplicationContext(), StatsActivity.class);
+        Intent resultIntent = new Intent(getApplicationContext(), RealStatsActivity.class);
         Log.d("buildNotification", "Is it building?");
 
         PendingIntent resultPendingIntent =
