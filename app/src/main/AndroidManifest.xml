@@ -23,7 +23,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".simpleActivities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,19 +66,26 @@
 
         <activity
             android:name=".main.StatsActivity"
-            android:label="@string/title_activity_stats"/>
+            android:label="@string/title_activity_stats"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".simpleActivities.AboutActivity"
-            android:label="@string/title_activity_about"/>
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".simpleActivities.RealStatsActivity"
-            android:label="Stats"/>
+            android:label="Stats"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Meals.MealsActivity"
-            android:label="@string/title_activity_meals"/>
-        <activity android:name=".Meals.MealsSearchResultActivity" />
+            android:label="@string/title_activity_meals"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Meals.MealsSearchResultActivity"
+            android:label="@string/title_activity_meals"
+            android:screenOrientation="portrait"/>
         <activity android:name=".simpleActivities.PrefsActivity"
-            android:label="@string/title_activity_prefs"/>
+            android:label="@string/title_activity_prefs"
+            android:screenOrientation="portrait"/>
 
     </application>
 

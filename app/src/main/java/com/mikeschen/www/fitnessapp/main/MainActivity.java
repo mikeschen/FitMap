@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
                     } else {
-                        mMainButton.setText("Calories Burned: " + (int) mSharedPreferences.getFloat("grossTotalSpeed", 1)/mSharedPreferences.getInt("speedCounted", 1));
+                        mMainButton.setText("Calories Burned: " + (int) daysRecord.getCaloriesBurned());
                     }
                     break;
                 default:
@@ -135,10 +135,8 @@ public class MainActivity extends BaseActivity implements
         buttonDisplay = "Steps";
         mMainButton.setOnClickListener(this);
         mTipPresenter = new TipPresenter(this);
-//        mStepCounterPresenter = new StepCounterPresenter(this);
 
         List<Days> daysList = db.getAllDaysRecords();
-
 
         // This creates a table on first use of app
         if (daysList.size() == 0) {
@@ -151,7 +149,7 @@ public class MainActivity extends BaseActivity implements
             daysRecord = daysList.get(daysList.size()-1);
         }
 
-        mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
+        mMainButton.setText("Steps Taken: " + mSharedPreferences.getInt("stepsTaken", 0));
 
         // Retrieves data when app is opened after crash/close and creates tables for each day app was not used
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_LAST_KNOWN_STEPS_KEY, 0);
@@ -245,12 +243,13 @@ public class MainActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.mainButton):
+                float steps = mSharedPreferences.getInt("stepsTaken", 0);
                 if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
-                    mMainButton.setText("Steps Taken: " + String.valueOf(db.getDay(daysRecord.getId()).getStepsTaken()));
+                    mMainButton.setText("Steps Taken: " + (int) steps);
                 } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Calories";
-                    mMainButton.setText("Calories Burned: " + (int) mSharedPreferences.getFloat("grossTotalSpeed", 1)/mSharedPreferences.getInt("speedCounted", 1));
+                    mMainButton.setText("Calories Burned: " + (int) steps*175/3500);
                 }
                 break;
             case (R.id.mapsMainButton):
