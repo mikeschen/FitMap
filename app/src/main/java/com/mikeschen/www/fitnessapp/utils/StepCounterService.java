@@ -197,6 +197,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             Log.d("step taken", stepCount + "");
+                            Log.d("daysRecord ID", days.getId() + "");
                             sendMessageToUI(stepCount);
                             days.setStepsTaken(stepCount);
                             db.updateDays(days);

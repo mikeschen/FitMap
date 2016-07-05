@@ -82,7 +82,6 @@ public class MainActivity extends BaseActivity implements
 //                    daysRecord.setCaloriesBurned(100);
 
                     db.updateDays(daysRecord);
-//                    clearData();
                     //This resets the data every step, but the StepCounterService doesn't get reset, so it doesn't matter.
 //                    sendMessageToStepService(0);
                     if(buttonDisplay.equals("Steps")) {
@@ -328,11 +327,6 @@ public class MainActivity extends BaseActivity implements
         } catch (Throwable t) {
             Log.e("MainActivity", "Failed to unbind from the service", t);
         }
-    }
-
-    public void clearData() {
-        Days newDay = new Days(1, 23, 23, 23, SimpleDateFormat.getInstance().format("MM/dd/YYYY"));
-        db.logDays(newDay);
     }
 }
 
