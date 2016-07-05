@@ -90,7 +90,7 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(meals);
                         break;
                     case 3:
-                        Intent stats = new Intent(BaseActivity.this, DBActivity.class);
+                        Intent stats = new Intent(BaseActivity.this, RealStatsActivity.class);
                         startActivity(stats);
                         break;
 
@@ -100,7 +100,7 @@ public class BaseActivity extends AppCompatActivity {
                         break;
 
                     case 5:
-                        Intent about = new Intent(BaseActivity.this, AboutActivity.class);
+                        Intent about = new Intent(BaseActivity.this, DBActivity.class);
                         startActivity(about);
                         break;
                     default:

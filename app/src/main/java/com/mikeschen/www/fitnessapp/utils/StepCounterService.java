@@ -16,7 +16,12 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.mikeschen.www.fitnessapp.models.Days;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class StepCounterService extends Service implements SensorEventListener {
 
@@ -24,6 +29,9 @@ public class StepCounterService extends Service implements SensorEventListener {
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+
+    DatabaseHelper db;
+    Days days;
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -99,11 +107,21 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         speedCounted = mSharedPreferences.getInt("speedCounted", 1);
         grossTotalSpeed = mSharedPreferences.getFloat("grossTotalSpeed", 0);
-        stepCount = mSharedPreferences.getInt("stepsTaken", 0);
 
         totalAverageSpeed = 1;
 
         checkSpeedDirection = true;
+
+        db = new DatabaseHelper(this);
+        List<Days> daysList = db.getAllDaysRecords();
+        if(daysList.size() > 0) {
+            days = daysList.get(daysList.size()-1);
+            stepCount = days.getStepsTaken();
+        } else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            days = new Days(1, 0, 0, 0, String.valueOf(dateFormat));
+            stepCount = 0;
+        }
     }
 
     @Override
@@ -164,20 +182,24 @@ public class StepCounterService extends Service implements SensorEventListener {
                             checkSpeedDirection = false;
                             stepCount++;
                             Log.d("step taken", stepCount + "");
-                            mEditor.putInt("stepsTaken", stepCount).commit();
+//                            mEditor.putInt("stepsTaken", stepCount).commit();
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
+                            days.setStepsTaken(stepCount);
+                            db.updateDays(days);
                         }
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
                             checkSpeedDirection = true;
                             stepCount++;
-                            mEditor.putInt("stepsTaken", stepCount).commit();
+//                            mEditor.putInt("stepsTaken", stepCount).commit();
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
-                            Log.d("step taken", mSharedPreferences.getInt("stepsTaken", 0)+"");
+                            Log.d("step taken", stepCount + "");
                             sendMessageToUI(stepCount);
+                            days.setStepsTaken(stepCount);
+                            db.updateDays(days);
                         }
                     }
                 }

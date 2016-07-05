@@ -18,14 +18,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class RealStatsActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.suggestionButton)
-    Button mSuggestionButton;
-    @Bind(R.id.caloriesTextView)
-    TextView mCaloriesTextView;
-    @Bind(R.id.stepsTextView)
-    TextView mStepsTextView;
-    @Bind(R.id.dateTextView)
-    TextView mDateTextView;
+    @Bind(R.id.suggestionButton) Button mSuggestionButton;
+    @Bind(R.id.caloriesTextView) TextView mCaloriesTextView;
+    @Bind(R.id.stepsTextView) TextView mStepsTextView;
+    @Bind(R.id.dateTextView) TextView mDateTextView;
+    @Bind(R.id.idTextView) TextView mIdTextView;
+    @Bind(R.id.calsConsumedTextView) TextView mCalsConsumedTextView;
 
     private TipPresenter mTipPresenter;
 
@@ -41,9 +39,14 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         List<Days> allDays = db.getAllDaysRecords();
         Days yesterday = allDays.get(allDays.size()- 2);
 
-        mCaloriesTextView.setText(yesterday.getCaloriesBurned() + "");
+        mDateTextView.setText("Date: " + yesterday.getDate());
+        mIdTextView.setText(String.valueOf("ID: " + yesterday.getId()));
 
-        mStepsTextView.setText(yesterday.getStepsTaken());
+        mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+
+        mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+
+        mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
 
 //        yesterday.getCaloriesBurned();
 

@@ -12,20 +12,40 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Yesterday You Took:"
-        android:id="@+id/dateTextView"
+        android:id="@+id/idTextView"
+        android:textSize="30sp"
+        android:text="id"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp" />
+        android:layout_alignRight="@+id/dateTextView"
+        android:layout_alignEnd="@+id/dateTextView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateTextView"
+        android:textSize="30sp"
+        android:text="date"
+        android:layout_below="@+id/idTextView"
+        android:layout_toLeftOf="@+id/stepsTextView"
+        android:layout_toStartOf="@+id/stepsTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calconsumed"
+        android:id="@+id/calsConsumedTextView"
+        android:textSize="30sp"
+        android:layout_below="@+id/dateTextView"
+        android:layout_toRightOf="@+id/dateTextView"
+        android:layout_toEndOf="@+id/dateTextView"
+        android:layout_marginTop="51dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0 Steps"
         android:id="@+id/stepsTextView"
-        android:layout_marginTop="24dp"
         android:textSize="40sp"
-        android:layout_below="@+id/dateTextView"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -41,13 +61,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:gravity="center" />
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/foodRecyclerView"
-        android:layout_below="@+id/caloriesTextView"
-        android:layout_above="@+id/suggestionLayout" />
 
     <LinearLayout
         android:orientation="horizontal"

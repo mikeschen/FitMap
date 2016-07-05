@@ -91,20 +91,22 @@ public class TimerService extends Service {
             //Finds most recent day in DB
             List<Days> allDays = db.getAllDaysRecords();
             Days today = allDays.get(allDays.size() -1);
-            long currentDaysTableId = today.getId() + 1;
-            int currentDaysSteps;
-            currentDaysSteps = 0;
 
             buildNotification(today);
 
             //Saves day's data to most recent day in DB
-            db.logDays(today);
+            db.updateDays(today);
 
-            // Builds new, empty database row when notification fires
+            // Builds new, empty database row when notification fires and SHOULD create a new row with new ID
+            long currentDaysTableId = today.getId() + 1;
+            int currentDaysSteps;
+            currentDaysSteps = 0;
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             Days newDay = new Days(currentDaysTableId, currentDaysSteps, 0, 0, dateFormat.toString());
             //This SHOULD advance to the next key ID in the database and build a new table.
-            newDay.setId(newDay.getId());
+//            newDay.setId(newDay.getId());
+            newDay.setId(db.logDays(newDay));
+            db.updateDays(newDay);
 
         }
     }
