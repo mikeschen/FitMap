@@ -22,6 +22,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.adapters.SearchListAdapter;
+import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
 import com.mikeschen.www.fitnessapp.utils.OnFoodClickedListener;
 
@@ -30,6 +31,7 @@ import org.parceler.Parcels;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,12 +54,19 @@ public class MealsActivity extends BaseActivity implements
 
     public ArrayList<Food> mFoods = new ArrayList<>();
 
+    private Days today;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals);
         ButterKnife.bind(this);
+
+        List<Days> days = db.getAllDaysRecords();
+        if(days.size() > 0) {
+            today = days.get(days.size()-1);
+
+        }
 
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
@@ -67,10 +76,10 @@ public class MealsActivity extends BaseActivity implements
 
         //setup recycler view
         int position = intent.getIntExtra("position", -1);
-        ArrayList<Food> mFoods = Parcels.unwrap(intent.getParcelableExtra("food"));
+        ArrayList<Food> foods = Parcels.unwrap(intent.getParcelableExtra("food"));
         //Adds food from API call results
-        if (position >= 0 && mFoods != null) {
-            db.logFood(mFoods.get(position));
+        if (position >= 0 && foods != null) {
+            db.logFood(foods.get(position));
             mTotalCaloriesTextView.setText("Total Calories: " + getFoodFromDB());
         }
 
@@ -221,8 +230,7 @@ public class MealsActivity extends BaseActivity implements
                     String foodItem = subEditText.getText().toString();
                     String foodCalories = secondEditText.getText().toString();
 
-                    if (foodItem.trim().length() == 0 && foodCalories.trim().length() == 0
-                            || foodItem.trim().length() == 0 || foodCalories.trim().length() == 0) {
+                    if (foodItem.trim().length() == 0 || foodCalories.trim().length() == 0) {
                         Toast.makeText(MealsActivity.this, "Please fill out both fields", Toast.LENGTH_SHORT).show();
                     } else {
 
@@ -262,6 +270,8 @@ public class MealsActivity extends BaseActivity implements
         for (int i = 0; i < mFoods.size(); i++) {
             totalCalories += mFoods.get(i).getCalories();
         }
+        today.setCaloriesConsumed(totalCalories);
+        db.updateDays(today);
         return String.valueOf(totalCalories);
     }
 

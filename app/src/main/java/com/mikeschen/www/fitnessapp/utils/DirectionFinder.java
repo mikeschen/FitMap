@@ -43,11 +43,13 @@ public class DirectionFinder {
     private double shortestDistance;
     private double wayPointDistance;
     private double distance1;
+    private boolean bikeSwitcher;
 
-    public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
+    public DirectionFinder(DirectionFinderListener listener, String origin, String destination, boolean bikeSwitcher) {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
+        this.bikeSwitcher = bikeSwitcher;
         this.routes = new ArrayList<>();
         this.routeCount = 2;
         this.currentCount = 0;
@@ -63,16 +65,22 @@ public class DirectionFinder {
     private String createUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
-//        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
+        if (bikeSwitcher) {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
+        } else {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        }
     }
 
     private String createSecondUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
         String urlWaypoint = calculateWaypoint();
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
-//        return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;    }
+        if (bikeSwitcher) {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=bicycling&key=" + GOOGLE_API_KEY;
+        } else {
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&waypoints=" + urlWaypoint + "&destination=" + urlDestination + "&mode=walking&key=" + GOOGLE_API_KEY;
+        }
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {

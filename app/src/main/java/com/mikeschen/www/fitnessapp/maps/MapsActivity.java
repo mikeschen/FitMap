@@ -19,11 +19,15 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -69,6 +73,7 @@ public class MapsActivity extends BaseActivity implements
     @Bind(R.id.tvCalorie) TextView mTvCalorie;
     @Bind(R.id.homeButton) ImageButton mHomeButton;
     @Bind(R.id.workButton) ImageButton mWorkButton;
+    @Bind(R.id.iconWalk) ImageView mIconWalk;
 
     private String mHomeAddress;
     private String mWorkAddress;
@@ -88,6 +93,8 @@ public class MapsActivity extends BaseActivity implements
     private ArrayList<Integer> durations;
     private ArrayList<Long> routeCalories;
     private boolean switcher = true;
+    private Switch bikeSwitch;
+    private boolean bikeSwitcher = false;
 
     public double myLocationLat;
     public double myLocationLong;
@@ -110,6 +117,22 @@ public class MapsActivity extends BaseActivity implements
 
         atOrigin.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         atDestination.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+        bikeSwitch = (Switch) findViewById(R.id.bikeSwitch);
+
+        bikeSwitch.setChecked(false);
+        bikeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    bikeSwitcher = true;
+                } else {
+                    bikeSwitcher = false;
+                }
+            }
+        });
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mMapActivityPresenter = new MapActivityPresenter(this);
@@ -121,17 +144,17 @@ public class MapsActivity extends BaseActivity implements
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
 
-        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    sendRequest();
-                    setHideSoftKeyboard(atDestination);
-                    return true;
-                }
-                return false;
-            }
-        });
+//        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    sendRequest();
+//                    setHideSoftKeyboard(atDestination);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -219,7 +242,7 @@ public class MapsActivity extends BaseActivity implements
 
         progressDialog = ProgressDialog.show(mContext, "Please wait...",
                 "Finding Directions", true);
-        mMapActivityPresenter.makeRequest(origin, destination);
+        mMapActivityPresenter.makeRequest(origin, destination, bikeSwitcher);
     }
 
     @Override
@@ -238,6 +261,9 @@ public class MapsActivity extends BaseActivity implements
             showDistance(miles + " miles");
             showDuration(minutes);
             calorie = Math.round(route.distance.value / 16.1);
+            if(bikeSwitcher) {
+                calorie = calorie/2;
+            }
             showCalorieRoute(calorie);
             routeCalories.add(calorie);
 
@@ -260,7 +286,6 @@ public class MapsActivity extends BaseActivity implements
 
             int padding = 200; // offset from edges of the map in pixels
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-
             mMap.moveCamera(cu);
 
             PolylineOptions polylineOptions = new PolylineOptions()
@@ -280,9 +305,11 @@ public class MapsActivity extends BaseActivity implements
             showDuration(durations.get(0));
             showCalorieRoute(routeCalories.get(0));
         }
+
         for (Polyline polyline : polylinePaths) {
             polyline.setClickable(true);
         }
+
         mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
             @Override
             public void onPolylineClick (Polyline clickedPolyline) {
@@ -330,6 +357,11 @@ public class MapsActivity extends BaseActivity implements
     public void showDistance(String distance) {
         progressDialog.dismiss();
         mTvDistance.setText(distance);
+        if(bikeSwitcher) {
+            mIconWalk.setImageResource(R.drawable.ic_directions_bike_black_24dp);
+        } else {
+            mIconWalk.setImageResource(R.drawable.ic_directions_walk_black_24dp);
+        }
     }
 
     @Override
