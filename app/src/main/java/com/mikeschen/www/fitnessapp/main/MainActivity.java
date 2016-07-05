@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements
                     daysRecord.setCaloriesBurned(steps * 175/3500);
 //                    daysRecord.setCaloriesBurned(100);
 
-                    db.updateDays(daysRecord);
+//                    db.updateDays(daysRecord);
 //                    clearData();
                     //This resets the data every step, but the StepCounterService doesn't get reset, so it doesn't matter.
 //                    sendMessageToStepService(0);
