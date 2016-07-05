@@ -16,8 +16,10 @@ import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,9 +29,6 @@ import java.util.TimerTask;
 public class TimerService extends Service {
 
     private NotificationCompat.Builder mBuilder;
-
-
-
 
     private static boolean isRunning;
 
@@ -84,29 +83,37 @@ public class TimerService extends Service {
 
 
     public void checkMidnight(long currentTime) {
-        if (currentTime % (60 * 24) == 0) {
-//        if (currentTime % 3 == 0) {
+//        if (currentTime % (60 * 24) == 0) {
+        if (currentTime % 3 == 0) {
             Log.d("tick", "tock");
-            buildNotification();
 
-//            daysRecord = mStepCounterView.endOfDaySave();
-//            mStepCounterView.buildNotification(daysRecord.getStepsTaken());
-//
-//            // Builds new, empty database row when notification fires
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-//            daysRecord = new Days(currentDaysTableId, 0, 0, 0, dateFormat.toString());
-//            long daysRecord_id = mStepCounterView.createNewDBRows(daysRecord);
-//            daysRecord.setId(daysRecord_id);
+
+            //Finds most recent day in DB
+            List<Days> allDays = db.getAllDaysRecords();
+            Days today = allDays.get(allDays.size() -1);
+
+            buildNotification(today);
+
+            //Saves day's data to most recent day in DB
+            db.updateDays(today);
+
+            // Builds new, empty database row when notification fires and SHOULD create a new row with new ID
+            long currentDaysTableId = today.getId() + 1;
+            int currentDaysSteps;
+            currentDaysSteps = 0;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            Days newDay = new Days(currentDaysTableId, currentDaysSteps, 0, 0, dateFormat.toString());
+            //This SHOULD advance to the next key ID in the database and build a new table.
+//            newDay.setId(newDay.getId());
+            newDay.setId(db.logDays(newDay));
+            db.updateDays(newDay);
 
         }
     }
 
 
 
-    public void buildNotification() {
-
-        List<Days> allDays = db.getAllDaysRecords();
-        Days today = allDays.get(allDays.size() -1);
+    public void buildNotification(Days today) {
 
         mBuilder = new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
