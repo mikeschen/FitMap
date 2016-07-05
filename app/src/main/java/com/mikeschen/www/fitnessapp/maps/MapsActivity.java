@@ -143,18 +143,6 @@ public class MapsActivity extends BaseActivity implements
         distances = new ArrayList<>();
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
-
-//        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    sendRequest();
-//                    setHideSoftKeyboard(atDestination);
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
     }
 
     @Override
