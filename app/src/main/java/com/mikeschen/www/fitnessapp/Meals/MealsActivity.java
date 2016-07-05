@@ -298,7 +298,7 @@ public class MealsActivity extends BaseActivity implements
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(mContext.getApplicationContext(), "Phew! That was close!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext.getApplicationContext(), "Delete Canceled", Toast.LENGTH_SHORT).show();
             }
         });
 

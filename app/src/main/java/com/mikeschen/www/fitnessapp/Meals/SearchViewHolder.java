@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
@@ -53,6 +54,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
                 int foodPosition = getLayoutPosition();
 
                 if (mContext.getClass() == MealsSearchResultActivity.class) {
+                    Toast.makeText(mContext.getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, MealsActivity.class);
                     intent.putExtra("position", foodPosition);
                     intent.putExtra("food", Parcels.wrap(mFoods));
