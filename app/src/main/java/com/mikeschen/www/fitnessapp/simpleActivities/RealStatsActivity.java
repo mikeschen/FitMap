@@ -15,14 +15,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class RealStatsActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.suggestionButton)
-    Button mSuggestionButton;
-    @Bind(R.id.caloriesTextView)
-    TextView mCaloriesTextView;
-    @Bind(R.id.stepsTextView)
-    TextView mStepsTextView;
-    @Bind(R.id.dateTextView)
-    TextView mDateTextView;
+    @Bind(R.id.suggestionButton) Button mSuggestionButton;
+    @Bind(R.id.caloriesTextView) TextView mCaloriesTextView;
+    @Bind(R.id.stepsTextView) TextView mStepsTextView;
+    @Bind(R.id.dateTextView) TextView mDateTextView;
 
     private TipPresenter mTipPresenter;
 
