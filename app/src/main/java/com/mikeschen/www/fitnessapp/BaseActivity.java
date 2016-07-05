@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
+import com.mikeschen.www.fitnessapp.main.DBActivity;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
@@ -89,7 +90,7 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(meals);
                         break;
                     case 3:
-                        Intent stats = new Intent(BaseActivity.this, RealStatsActivity.class);
+                        Intent stats = new Intent(BaseActivity.this, DBActivity.class);
                         startActivity(stats);
                         break;
 

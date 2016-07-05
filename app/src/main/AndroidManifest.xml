@@ -23,8 +23,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".simpleActivities.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,8 +34,7 @@
         <activity
             android:name=".main.MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".BaseActivity" />
+        <activity android:name=".BaseActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -57,36 +56,37 @@
         <service
             android:name=".utils.StepCounterService"
             android:enabled="true"
-            android:exported="true"/>
-
+            android:exported="true" />
         <service
             android:name=".utils.TimerService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity
             android:name=".main.StatsActivity"
             android:label="@string/title_activity_stats"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".simpleActivities.AboutActivity"
             android:label="@string/title_activity_about"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".simpleActivities.RealStatsActivity"
             android:label="Stats"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Meals.MealsActivity"
             android:label="@string/title_activity_meals"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Meals.MealsSearchResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Meals.MealsSearchResultActivity"
             android:label="@string/title_activity_meals"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".simpleActivities.PrefsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".simpleActivities.PrefsActivity"
             android:label="@string/title_activity_prefs"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".main.DBActivity"></activity>
     </application>
 
 </manifest>
