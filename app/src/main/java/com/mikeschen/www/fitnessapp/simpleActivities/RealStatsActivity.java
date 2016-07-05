@@ -10,6 +10,9 @@ import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.main.TipPresenter;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
+import com.mikeschen.www.fitnessapp.models.Days;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,9 +36,16 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         mSuggestionButton.setOnClickListener(this);
-//        db.bindCalories();
-        //how to tell information from db to put on this page
 
+    //make a Day object
+        List<Days> allDays = db.getAllDaysRecords();
+        Days yesterday = allDays.get(allDays.size()- 2);
+
+        mCaloriesTextView.setText(yesterday.getCaloriesBurned() + "");
+
+        mStepsTextView.setText(yesterday.getStepsTaken());
+
+//        yesterday.getCaloriesBurned();
 
 
     }
