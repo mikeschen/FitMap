@@ -10,9 +10,6 @@ import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.main.TipPresenter;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
-import com.mikeschen.www.fitnessapp.models.Days;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,16 +35,16 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         mSuggestionButton.setOnClickListener(this);
 
     //make a Day object
-        List<Days> allDays = db.getAllDaysRecords();
-        Days yesterday = allDays.get(allDays.size()- 2);
-
-        mCaloriesTextView.setText(yesterday.getCaloriesBurned() + "");
-
-        mStepsTextView.setText(yesterday.getStepsTaken());
-
-//        yesterday.getCaloriesBurned();
-
-
+//        List<Days> allDays = db.getAllDaysRecords();
+//        Days yesterday = allDays.get(allDays.size()- 2);
+//        if (allDays.isEmpty()) {
+//            Toast.makeText(RealStatsActivity.this, "Data no available", Toast.LENGTH_SHORT).show();
+//        } else {
+//
+//            mCaloriesTextView.setText(yesterday.getCaloriesBurned() + "" + "cals");
+//
+//            mStepsTextView.setText(yesterday.getStepsTaken() + "" + "steps");
+//        }
     }
 
     @Override
@@ -61,9 +58,6 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         }
     }
 }
-
-
-//pull stuff from database to show steps and calories burned from yesterday
 
 
 

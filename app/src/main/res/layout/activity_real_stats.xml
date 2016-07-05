@@ -10,44 +10,67 @@
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Yesterday You Took:"
         android:id="@+id/dateTextView"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:gravity="center"
+        android:elevation="@dimen/activity_elevation"
+        android:layout_margin="@dimen/activity_medium_padding"
+        android:layout_marginBottom="35dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0 Steps"
+        android:textColor="@color/colorAbout"
         android:id="@+id/stepsTextView"
-        android:layout_marginTop="24dp"
-        android:textSize="40sp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:textSize="@dimen/text_extra_large"
         android:layout_below="@+id/dateTextView"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="And Burned 100 Calories"
-        android:id="@+id/caloriesTextView"
-        android:textSize="25sp"
+        android:text="And"
+        android:id="@+id/andTextView"
+        android:textSize="@dimen/text_large"
         android:layout_below="@+id/stepsTextView"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@color/colorFiller"
+        android:textStyle="bold" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/foodRecyclerView"
-        android:layout_below="@+id/caloriesTextView"
-        android:layout_above="@+id/suggestionLayout" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Burned 100 Calories"
+        android:id="@+id/caloriesTextView"
+        android:textSize="@dimen/text_extra_large"
+        android:gravity="center"
+        android:layout_below="@+id/andTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/colorAbout"/>
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/foodRecyclerView"-->
+        <!--android:layout_below="@+id/caloriesTextView"-->
+        <!--android:layout_above="@+id/suggestionLayout" />-->
 
     <LinearLayout
         android:orientation="horizontal"

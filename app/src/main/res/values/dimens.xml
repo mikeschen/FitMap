@@ -8,6 +8,7 @@
     <dimen name="text_small">20sp</dimen>
     <dimen name="text_tiny">18sp</dimen>
     <dimen name="text_large">35sp</dimen>
+    <dimen name="text_extra_large">45sp</dimen>
     <dimen name="activity_elevation">2dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_layoutSearch">15dp</dimen>
