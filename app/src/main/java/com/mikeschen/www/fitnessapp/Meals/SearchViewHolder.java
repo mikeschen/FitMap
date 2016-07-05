@@ -3,7 +3,9 @@ package com.mikeschen.www.fitnessapp.Meals;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mikeschen.www.fitnessapp.R;
@@ -24,6 +26,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
 
     @Bind(R.id.searchTextView) TextView mSearchTextView;
     @Bind(R.id.calorieTextView) TextView mCalorieTextView;
+    @Bind(R.id.plusicon) ImageView mPlusIcon;
 
     private Context mContext;
     private ArrayList<Food> mFoods = new ArrayList<>();
@@ -38,6 +41,10 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
 
         if (mContext instanceof OnFoodClickedListener) {
             mOnFoodClickListener = (OnFoodClickedListener) foodView.getContext();
+        }
+
+        if (mContext.getClass() == MealsSearchResultActivity.class) {
+            mPlusIcon.setImageResource(R.drawable.ic_add_circle_black_24dp);
         }
 
         foodView.setOnClickListener(new View.OnClickListener() {
