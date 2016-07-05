@@ -130,6 +130,7 @@ public class MapsActivity extends BaseActivity implements
                     bikeSwitcher = true;
                     if(!destination.isEmpty()) {
                         sendRequest();
+                        setHideSoftKeyboard(atDestination);
                         LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
                         pathFinder.setVisibility(LinearLayout.VISIBLE);
                         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
@@ -142,6 +143,7 @@ public class MapsActivity extends BaseActivity implements
                     bikeSwitcher = false;
                     if(!destination.isEmpty()) {
                         sendRequest();
+                        setHideSoftKeyboard(atDestination);
                         LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
                         pathFinder.setVisibility(LinearLayout.VISIBLE);
                         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);

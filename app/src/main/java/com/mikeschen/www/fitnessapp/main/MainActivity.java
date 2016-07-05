@@ -262,7 +262,7 @@ public class MainActivity extends BaseActivity implements
                     setCaloriesText();
                 } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Miles";
-                    mMainButton.setText("Approx. Mileage: " + (double) Math.round(steps/2000 * 10d) / 10d);
+                    mMainButton.setText("Approx. Mileage: " + (double) Math.round(steps/2000 * 100d) / 100d);
                 }
                 break;
             case (R.id.mapsMainButton):
