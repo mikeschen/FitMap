@@ -2,10 +2,12 @@ package com.mikeschen.www.fitnessapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
 import com.mikeschen.www.fitnessapp.utils.OnFoodClickedListener;
 import com.mikeschen.www.fitnessapp.Meals.SearchViewHolder;
 import com.mikeschen.www.fitnessapp.R;
