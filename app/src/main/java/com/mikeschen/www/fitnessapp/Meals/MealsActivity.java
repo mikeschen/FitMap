@@ -282,14 +282,14 @@ public class MealsActivity extends BaseActivity implements
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle("Remove Item From List");
-        builder.setMessage("Are you sure you want to delete this item FOREVER?");
+        builder.setMessage("Are you sure you want to delete this item?");
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 db.deleteFoodRecord(foodId);
-                Toast.makeText(mContext.getApplicationContext(), "Deleted forEVER", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext.getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 mTotalCaloriesTextView.setText("Total Calories: " + getFoodFromDB());
                 db.closeDB();
             }
@@ -298,7 +298,7 @@ public class MealsActivity extends BaseActivity implements
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(mContext.getApplicationContext(), "Phew! That was close!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext.getApplicationContext(), "Delete Canceled", Toast.LENGTH_SHORT).show();
             }
         });
 

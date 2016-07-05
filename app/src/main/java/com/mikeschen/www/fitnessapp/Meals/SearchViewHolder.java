@@ -3,8 +3,11 @@ package com.mikeschen.www.fitnessapp.Meals;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
@@ -24,6 +27,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
 
     @Bind(R.id.searchTextView) TextView mSearchTextView;
     @Bind(R.id.calorieTextView) TextView mCalorieTextView;
+    @Bind(R.id.plusicon) ImageView mPlusIcon;
 
     private Context mContext;
     private ArrayList<Food> mFoods = new ArrayList<>();
@@ -40,12 +44,17 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
             mOnFoodClickListener = (OnFoodClickedListener) foodView.getContext();
         }
 
+        if (mContext.getClass() == MealsSearchResultActivity.class) {
+            mPlusIcon.setImageResource(R.drawable.ic_add_circle_black_24dp);
+        }
+
         foodView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int foodPosition = getLayoutPosition();
 
                 if (mContext.getClass() == MealsSearchResultActivity.class) {
+                    Toast.makeText(mContext.getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, MealsActivity.class);
                     intent.putExtra("position", foodPosition);
                     intent.putExtra("food", Parcels.wrap(mFoods));
