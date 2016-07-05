@@ -69,6 +69,7 @@ public class MainActivity extends BaseActivity implements
         public void handleMessage(Message msg) {
             switch(msg.what) {
                 case StepCounterService.MSG_SET_STEP_COUNT_VALUE:
+
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
                     daysRecord.setCaloriesBurned(steps * 175/3500);

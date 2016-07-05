@@ -44,6 +44,7 @@ public class DirectionFinder {
     private double wayPointDistance;
     private double distance1;
     private boolean bikeSwitcher;
+    private boolean reverseDirection;
 
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination, boolean bikeSwitcher) {
         this.listener = listener;
@@ -54,6 +55,7 @@ public class DirectionFinder {
         this.routeCount = 2;
         this.currentCount = 0;
         this.wayPointDistance = 0;
+        this.reverseDirection = false;
     }
 
     public void execute() throws UnsupportedEncodingException {
@@ -120,14 +122,12 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-        Log.d("json", data);
         if (data == null)
             return;
 
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
         if(jsonRoutes != null && jsonRoutes.length() > 0) {
-            Log.d("in the if statement", "check");
             for (int i = 0; i < jsonRoutes.length(); i++) {
                 JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
                 Route route = new Route();
@@ -168,8 +168,18 @@ public class DirectionFinder {
                 if (currentCount == 0) {
                     shortestDistance = jsonDistance.getInt("value");
                 } else {
-                    if (Math.abs(totalDistance - shortestDistance) < 300) {
-                        wayPointDistance += .001;
+                    if(Math.abs(totalDistance - shortestDistance) > (shortestDistance * 2)) {
+                        reverseDirection = true;
+                        wayPointDistance = 0;
+                        try {
+                            new DownloadRawData().execute(createSecondUrl());
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        return;
+                    }
+                     else if (Math.abs(totalDistance - shortestDistance) < 300) {
+                            wayPointDistance += .001;
                         try {
                             new DownloadRawData().execute(createSecondUrl());
                         } catch (UnsupportedEncodingException e) {
@@ -178,6 +188,7 @@ public class DirectionFinder {
                         return;
                     } else {
                         wayPointDistance = 0;
+                        reverseDirection = false;
                     }
                 }
                 routes.add(route);
@@ -213,8 +224,14 @@ public class DirectionFinder {
         double theta =  (2*Math.PI) - angle;
         double wayPointLat;
         double wayPointLong;
+        if(reverseDirection) {
+            wayPointLat = midLat - wayPointDistance * Math.cos(theta);
+            wayPointLong = midLong - wayPointDistance * Math.sin(theta);
+        } else {
             wayPointLat = midLat + wayPointDistance * Math.cos(theta);
             wayPointLong = midLong + wayPointDistance * Math.sin(theta);
+        }
+        Log.d("waypoint", wayPointLat + " " + wayPointLong);
         return wayPointLat + "," + wayPointLong;
     }
 

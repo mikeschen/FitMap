@@ -39,7 +39,6 @@ public class StepCounterService extends Service implements SensorEventListener {
     private long lastUpdate;
     private float last_x;
     private float last_y;
-//    private float last_z;
 
     private ArrayList<Float> speedData;
 
@@ -93,7 +92,6 @@ public class StepCounterService extends Service implements SensorEventListener {
         lastUpdate = 0;
         last_x = 0;
         last_y = 0;
-//        last_z = 0;
 
         speedData = new ArrayList<>();
 
@@ -129,7 +127,6 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 float x = sensorEvent.values[0];
                 float y = sensorEvent.values[1];
-//                float z = sensorEvent.values[2];
 
                 long curTime = System.currentTimeMillis();
 
@@ -184,7 +181,6 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 last_x = x;
                 last_y = y;
-//                last_z = z;
             }
         }
     }
