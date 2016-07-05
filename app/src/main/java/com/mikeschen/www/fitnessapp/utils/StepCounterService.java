@@ -47,7 +47,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     private long lastUpdate;
     private float last_x;
     private float last_y;
-//    private float last_z;
+    private long lastKnownId;
 
     private ArrayList<Float> speedData;
 
@@ -101,7 +101,6 @@ public class StepCounterService extends Service implements SensorEventListener {
         lastUpdate = 0;
         last_x = 0;
         last_y = 0;
-//        last_z = 0;
 
         speedData = new ArrayList<>();
 
@@ -117,10 +116,12 @@ public class StepCounterService extends Service implements SensorEventListener {
         if(daysList.size() > 0) {
             days = daysList.get(daysList.size()-1);
             stepCount = days.getStepsTaken();
+            lastKnownId = days.getId();
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             days = new Days(1, 0, 0, 0, String.valueOf(dateFormat));
             stepCount = 0;
+            lastKnownId = 1;
         }
     }
 
@@ -147,7 +148,6 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 float x = sensorEvent.values[0];
                 float y = sensorEvent.values[1];
-//                float z = sensorEvent.values[2];
 
                 long curTime = System.currentTimeMillis();
 
@@ -180,9 +180,14 @@ public class StepCounterService extends Service implements SensorEventListener {
                     if (checkSpeedDirection) {
                         if (localAverageSpeed > totalAverageSpeed) {
                             checkSpeedDirection = false;
+                            List<Days> daysList = db.getAllDaysRecords();
+                            days = daysList.get(daysList.size()-1);
+                            if(days.getId() != lastKnownId) {
+                                lastKnownId = days.getId();
+                                stepCount = 0;
+                            }
                             stepCount++;
                             Log.d("step taken", stepCount + "");
-//                            mEditor.putInt("stepsTaken", stepCount).commit();
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
@@ -192,8 +197,13 @@ public class StepCounterService extends Service implements SensorEventListener {
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
                             checkSpeedDirection = true;
+                            List<Days> daysList = db.getAllDaysRecords();
+                            days = daysList.get(daysList.size()-1);
+                            if(days.getId() != lastKnownId) {
+                                lastKnownId = days.getId();
+                                stepCount = 0;
+                            }
                             stepCount++;
-//                            mEditor.putInt("stepsTaken", stepCount).commit();
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             Log.d("step taken", stepCount + "");
@@ -207,7 +217,6 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 last_x = x;
                 last_y = y;
-//                last_z = z;
             }
         }
     }

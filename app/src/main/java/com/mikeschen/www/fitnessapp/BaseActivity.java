@@ -88,20 +88,24 @@ public class BaseActivity extends AppCompatActivity {
                     case 2:
                         Intent meals = new Intent(BaseActivity.this, MealsActivity.class);
                         startActivity(meals);
+                        finish();
                         break;
                     case 3:
                         Intent stats = new Intent(BaseActivity.this, RealStatsActivity.class);
                         startActivity(stats);
+                        finish();
                         break;
 
                     case 4:
                         Intent prefs = new Intent(BaseActivity.this, PrefsActivity.class);
                         startActivity(prefs);
+                        finish();
                         break;
 
                     case 5:
                         Intent about = new Intent(BaseActivity.this, DBActivity.class);
                         startActivity(about);
+                        finish();
                         break;
                     default:
                         break;

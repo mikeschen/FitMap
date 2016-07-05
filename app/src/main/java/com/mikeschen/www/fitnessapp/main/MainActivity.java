@@ -76,12 +76,15 @@ public class MainActivity extends BaseActivity implements
         public void handleMessage(Message msg) {
             switch(msg.what) {
                 case StepCounterService.MSG_SET_STEP_COUNT_VALUE:
+
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
                     daysRecord.setCaloriesBurned(steps * 175/3500);
 //                    daysRecord.setCaloriesBurned(100);
 
-                    db.updateDays(daysRecord);
+
+//                    db.updateDays(daysRecord);
+//                    clearData();
                     //This resets the data every step, but the StepCounterService doesn't get reset, so it doesn't matter.
 //                    sendMessageToStepService(0);
                     if(buttonDisplay.equals("Steps")) {

@@ -130,48 +130,73 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
-            android:layout_marginLeft="@dimen/activity_wide_margin"
-            android:layout_marginTop="@dimen/activity_small_padding"
-            android:layout_width="@dimen/activity_large_padding"
-            android:layout_height="@dimen/activity_large_padding"
-            android:src="@drawable/ic_whatshot_black_24dp"/>
-        <TextView
-            android:layout_marginLeft="@dimen/activity_small_padding"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0 cal"
-            android:id="@+id/tvCalorie" />
+            android:id="@+id/calsLayout"
+            android:layout_weight="0.33">
 
-        <ImageView
-            android:id="@+id/iconWalk"
-            android:layout_marginLeft="@dimen/activity_wide_margin"
-            android:layout_marginTop="@dimen/activity_small_padding"
-            android:layout_width="@dimen/activity_large_padding"
-            android:layout_height="@dimen/activity_large_padding"
-            android:src="@drawable/ic_directions_walk_black_24dp"/>
+            <ImageView
+                android:layout_marginLeft="@dimen/activity_wide_margin"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_width="@dimen/activity_large_padding"
+                android:layout_height="@dimen/activity_large_padding"
+                android:src="@drawable/ic_whatshot_black_24dp"/>
 
-        <TextView
-            android:layout_marginLeft="@dimen/activity_small_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvDistance"
-            android:text="0 miles"/>
-
-        <ImageView
-            android:layout_marginLeft="@dimen/activity_wide_margin"
-            android:layout_marginTop="@dimen/activity_small_padding"
-            android:layout_width="@dimen/activity_large_padding"
-            android:layout_height="@dimen/activity_large_padding"
-            android:padding="@dimen/activity_small_padding"
-            android:src="@drawable/ic_timer_black_24dp"/>
-
-        <TextView
-            android:layout_marginLeft="@dimen/activity_small_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 min"
-            android:id="@+id/tvDuration" />
-
+            <TextView
+                android:layout_marginLeft="@dimen/activity_small_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 cal"
+                android:id="@+id/tvCalorie" />
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/distanceLayout"
+            android:layout_weight="0.33">
+
+            <ImageView
+                android:id="@+id/iconWalk"
+                android:layout_marginLeft="@dimen/activity_wide_margin"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_width="@dimen/activity_large_padding"
+                android:layout_height="@dimen/activity_large_padding"
+                android:src="@drawable/ic_directions_walk_black_24dp"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/activity_small_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDistance"
+                android:text="0 miles"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeLayout"
+            android:layout_weight="0.33">
+
+            <ImageView
+                android:layout_marginLeft="@dimen/activity_wide_margin"
+                android:layout_marginTop="@dimen/activity_small_padding"
+                android:layout_width="@dimen/activity_large_padding"
+                android:layout_height="@dimen/activity_large_padding"
+                android:padding="@dimen/activity_small_padding"
+                android:src="@drawable/ic_timer_black_24dp"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/activity_small_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 min"
+                android:id="@+id/tvDuration" />
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

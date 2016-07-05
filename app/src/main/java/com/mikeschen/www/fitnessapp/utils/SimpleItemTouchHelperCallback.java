@@ -4,8 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 
-import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperAdapter;
-import com.mikeschen.www.fitnessapp.utils.ItemTouchHelperViewHolder;
+import com.mikeschen.www.fitnessapp.adapters.ItemTouchHelperViewHolder;
 
 
 
