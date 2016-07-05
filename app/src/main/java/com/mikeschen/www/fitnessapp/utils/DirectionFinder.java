@@ -168,17 +168,19 @@ public class DirectionFinder {
                 if (currentCount == 0) {
                     shortestDistance = jsonDistance.getInt("value");
                 } else {
-                    if(Math.abs(totalDistance - shortestDistance) > (shortestDistance * 2)) {
-                        reverseDirection = true;
-                        wayPointDistance = 0;
-                        try {
-                            new DownloadRawData().execute(createSecondUrl());
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
+                    if(!reverseDirection) {
+                        if(Math.abs(totalDistance - shortestDistance) > (shortestDistance * 2)) {
+                            reverseDirection = true;
+                            wayPointDistance = 0;
+                            try {
+                                new DownloadRawData().execute(createSecondUrl());
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                            return;
                         }
-                        return;
                     }
-                     else if (Math.abs(totalDistance - shortestDistance) < 300) {
+                    if (Math.abs(totalDistance - shortestDistance) < 300) {
                             wayPointDistance += .001;
                         try {
                             new DownloadRawData().execute(createSecondUrl());
