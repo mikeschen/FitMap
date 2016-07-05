@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
     @Bind(R.id.testText) TextView testText;
+    @Bind(R.id.calorieTestView) TextView calorieTestText;
 
     class IncomingHandler extends Handler {
         @Override
@@ -73,6 +74,9 @@ public class MainActivity extends BaseActivity implements
                     daysRecord.setStepsTaken(msg.arg1);
                     daysRecord.setCaloriesBurned(steps * 175/3500);
                     db.updateDays(daysRecord);
+//                    clearData();
+                    //This resets the data every step, but the StepCounterService doesn't get reset, so it doesn't matter.
+//                    sendMessageToStepService(0);
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
                     } else {
@@ -83,6 +87,11 @@ public class MainActivity extends BaseActivity implements
                     super.handleMessage(msg);
             }
         }
+    }
+
+    private void sendMessageToStepService(int stepCount) {
+
+
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -125,7 +134,6 @@ public class MainActivity extends BaseActivity implements
         }
 
 
-        testText.setText(String.valueOf(heightWeightDB.getCals()));
 
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
@@ -148,6 +156,11 @@ public class MainActivity extends BaseActivity implements
         } else {
             daysRecord = daysList.get(daysList.size()-1);
         }
+
+
+//        testText.setText(String.valueOf(heightWeightDB.getCals()));
+        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
+        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
 
         mMainButton.setText("Steps Taken: " + mSharedPreferences.getInt("stepsTaken", 0));
 
@@ -303,6 +316,11 @@ public class MainActivity extends BaseActivity implements
         } catch (Throwable t) {
             Log.e("MainActivity", "Failed to unbind from the service", t);
         }
+    }
+
+    public void clearData() {
+        Days newDay = new Days(1, 0, 0, 0, "1/01/2000");
+        db.logDays(newDay);
     }
 }
 
