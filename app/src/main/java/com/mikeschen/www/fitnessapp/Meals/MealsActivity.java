@@ -205,7 +205,7 @@ public class MealsActivity extends BaseActivity implements
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -247,7 +247,7 @@ public class MealsActivity extends BaseActivity implements
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
                 }
             });
 

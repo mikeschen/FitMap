@@ -36,17 +36,17 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         mSuggestionButton.setOnClickListener(this);
 
     //make a Day object
-        List<Days> allDays = db.getAllDaysRecords();
-        Days yesterday = allDays.get(allDays.size()- 2);
+//        List<Days> allDays = db.getAllDaysRecords();
+//        Days yesterday = allDays.get(allDays.size()- 2);
 
-        mDateTextView.setText("Date: " + yesterday.getDate());
-        mIdTextView.setText(String.valueOf("ID: " + yesterday.getId()));
-
-        mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
-
-        mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
-
-        mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
+//        mDateTextView.setText("Date: " + yesterday.getDate());
+//        mIdTextView.setText(String.valueOf("ID: " + yesterday.getId()));
+//
+//        mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+//
+//        mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+//
+//        mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
 
 //        yesterday.getCaloriesBurned();
 
@@ -60,7 +60,6 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
                 Intent intent = new Intent(RealStatsActivity.this, MapsActivity.class);
                 startActivity(intent);
                 break;
-
         }
     }
 }
