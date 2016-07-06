@@ -127,9 +127,6 @@ public class MealsPresenter implements
     private MealsInterface.View mMealsView;
     public ArrayList<Food> mFoods = new ArrayList<>();
 
-
-
-
     public MealsPresenter(MealsInterface.View mealsView) {
         mMealsView = mealsView;
     }
