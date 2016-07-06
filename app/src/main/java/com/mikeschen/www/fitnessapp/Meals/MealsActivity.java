@@ -218,7 +218,7 @@ public class MealsActivity extends BaseActivity implements
         View subView = inflater.inflate(R.layout.fragment_add_item, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add food item");
+        builder.setTitle("Add a food item");
         builder.setView(subView);
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.foodInputEditText);
