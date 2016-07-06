@@ -309,6 +309,7 @@ public class MapsActivity extends BaseActivity implements
             }
 
             for (int i = 0; i < route.points.size(); i++) {
+                Log.d("points", route.points.get(i)+"");
                 polylineOptions.add(route.points.get(i));
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));

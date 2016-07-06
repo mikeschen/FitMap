@@ -1,3 +1,5 @@
+package com.mikeschen.www.fitnessapp;
+
 import org.mockito.Mock;
 
 import com.mikeschen.www.fitnessapp.main.MainActivity;
@@ -5,12 +7,8 @@ import com.mikeschen.www.fitnessapp.main.MainInterface;
 import com.mikeschen.www.fitnessapp.main.TipPresenter;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Ramon on 6/13/16.
@@ -33,6 +31,8 @@ public class TipPresenterTest {
 
         mTipPresenter = new TipPresenter(mTipView);
     }
+}
+
 
 //package com.mikeschen.www.fitnessapp;
 //
@@ -70,11 +70,12 @@ public class TipPresenterTest {
 //        mTipPresenter = new TipPresenter(mTipView, mMainActivity);
 //    }
 //
+
 //    @Test
 //    public void loadTipsIntoView() {
 //        mTipPresenter.loadTip();
 //        verify(mTipView).showTip(any(String.class));
 //    }
 
-}
 //}
+

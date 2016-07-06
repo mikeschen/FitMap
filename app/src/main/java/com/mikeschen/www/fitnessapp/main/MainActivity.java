@@ -1,9 +1,11 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -29,6 +32,7 @@ import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.utils.StepCounterService;
 import com.mikeschen.www.fitnessapp.utils.TimerService;
 
@@ -50,6 +54,8 @@ public class MainActivity extends BaseActivity implements
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
 
+    DatabaseHelper db;
+
     int images[] = {R.drawable.alone, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
 
     Days daysRecord;
@@ -63,27 +69,39 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
     @Bind(R.id.testText) TextView testText;
+    @Bind(R.id.calorieTestView) TextView calorieTestText;
 
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             switch(msg.what) {
                 case StepCounterService.MSG_SET_STEP_COUNT_VALUE:
+
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
                     daysRecord.setCaloriesBurned(steps * 175/3500);
-                    db.updateDays(daysRecord);
+//                    daysRecord.setCaloriesBurned(100);
+
+//                    db.updateDays(daysRecord);
+//                    clearData();
+                    //This resets the data every step, but the StepCounterService doesn't get reset, so it doesn't matter.
+//                    sendMessageToStepService(0);
                     if(buttonDisplay.equals("Steps")) {
-                        mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
+                        mMainButton.setText("Steps Taken: " + (int) steps);
                     } else {
                         setCaloriesText();
-                    }
+                    } // We need to send a message to the StepsCounterService that resets the step count at midnight, but we can't tie the timer to the activity... Timer currently saves data and creates a new empty row.
                     break;
                 default:
                     super.handleMessage(msg);
             }
         }
     }
+
+//    private void sendMessageToStepService(int stepCount) {
+//
+//
+//    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -125,8 +143,6 @@ public class MainActivity extends BaseActivity implements
         }
 
 
-        testText.setText(String.valueOf(heightWeightDB.getCals()));
-
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
@@ -136,6 +152,8 @@ public class MainActivity extends BaseActivity implements
         mMainButton.setOnClickListener(this);
         mTipPresenter = new TipPresenter(this);
 
+        db = new DatabaseHelper(mContext);
+
         List<Days> daysList = db.getAllDaysRecords();
 
         // This creates a table on first use of app
@@ -144,12 +162,18 @@ public class MainActivity extends BaseActivity implements
             daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
             mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             daysRecord.setId(db.logDays(daysRecord));
+            db.updateDays(daysRecord);
             db.closeDB();
         } else {
             daysRecord = daysList.get(daysList.size()-1);
         }
 
-        mMainButton.setText("Steps Taken: " + mSharedPreferences.getInt("stepsTaken", 0));
+
+//        testText.setText(String.valueOf(heightWeightDB.getCals()));
+        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
+        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
+
+        mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
         // Retrieves data when app is opened after crash/close and creates tables for each day app was not used
         int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_LAST_KNOWN_STEPS_KEY, 0);
@@ -240,8 +264,8 @@ public class MainActivity extends BaseActivity implements
     }
 
     public void setCaloriesText() {
-        daysRecord.setCaloriesBurned(mSharedPreferences.getInt("stepsTaken", 0)*175/3500);
-        db.updateDays(daysRecord);
+//        daysRecord.setCaloriesBurned(mSharedPreferences.getInt("stepsTaken", 0)*175/3500);
+//        db.updateDays(daysRecord);
         if(daysRecord.getCaloriesConsumed() > 0) {
             mMainButton.setText("Calories Consumed: " + (int) (daysRecord.getCaloriesConsumed() - daysRecord.getCaloriesBurned()));
         } else {
@@ -253,7 +277,9 @@ public class MainActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.mainButton):
-                float steps = mSharedPreferences.getInt("stepsTaken", 0);
+                Days today = db.getDay(daysRecord.getId());
+                float steps = today.getStepsTaken();
+
                 if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
                     mMainButton.setText("Steps Taken: " + (int) steps);
@@ -306,6 +332,11 @@ public class MainActivity extends BaseActivity implements
         } catch (Throwable t) {
             Log.e("MainActivity", "Failed to unbind from the service", t);
         }
+    }
+
+    public void clearData() {
+        Days newDay = new Days(1, 23, 23, 23, SimpleDateFormat.getInstance().format("MM/dd/YYYY"));
+        db.logDays(newDay);
     }
 }
 

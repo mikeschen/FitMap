@@ -170,7 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_DATE, days.getDate());
 
         //updating row
-        return db.update(TABLE_DAY, values, KEY_DAY_ID + " + ?",
+        return db.update(TABLE_DAY, values, KEY_DAY_ID + " = ?",
                 new String[]{String.valueOf(days.getId())});
     }
 

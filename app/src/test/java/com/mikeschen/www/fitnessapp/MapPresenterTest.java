@@ -1,3 +1,5 @@
+package com.mikeschen.www.fitnessapp;
+
 import com.mikeschen.www.fitnessapp.maps.MapInterface;
 import com.mikeschen.www.fitnessapp.maps.MapPresenter;
 
