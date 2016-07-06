@@ -65,7 +65,7 @@ public class DatabaseDaysListAdapter extends RecyclerView.Adapter<DatabaseDaysLi
             mTextViewId.setText(String.valueOf(days.getId()));
             mTextViewCount.setText(String.valueOf(days.getStepsTaken()));
             mTextViewCalBurned.setText(String.valueOf(days.getCaloriesBurned()));
-            mTextViewCalBurned.setText(String.valueOf(days.getCaloriesConsumed()));
+            mTextViewCalConsumed.setText(String.valueOf(days.getCaloriesConsumed()));
             mTextViewDate.setText(String.valueOf(days.getDate()));        }
     }
 }

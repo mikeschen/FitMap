@@ -1,11 +1,9 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -79,30 +76,22 @@ public class MainActivity extends BaseActivity implements
 
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
-                    daysRecord.setCaloriesBurned(steps * 175/3500);
-//                    daysRecord.setCaloriesBurned(100);
+//                    daysRecord.setCaloriesBurned(steps * 175/3500);
+                    daysRecord.setCaloriesBurned(100);
+                    Log.d("caloriesBurned", daysRecord.getCaloriesBurned() + "");
 
-
-//                    db.updateDays(daysRecord);
-//                    clearData();
-                    //This resets the data every step, but the StepCounterService doesn't get reset, so it doesn't matter.
-//                    sendMessageToStepService(0);
+                    db.updateDays(daysRecord);
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + (int) steps);
                     } else {
                         setCaloriesText();
-                    } // We need to send a message to the StepsCounterService that resets the step count at midnight, but we can't tie the timer to the activity... Timer currently saves data and creates a new empty row.
+                    }
                     break;
                 default:
                     super.handleMessage(msg);
             }
         }
     }
-
-//    private void sendMessageToStepService(int stepCount) {
-//
-//
-//    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -163,9 +152,6 @@ public class MainActivity extends BaseActivity implements
             mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             daysRecord.setId(db.logDays(daysRecord));
             db.updateDays(daysRecord);
-            Log.d("Main, Line 166", daysRecord.getId() + "");
-            Log.d("Main, Line 166", daysRecord.getStepsTaken() + "");
-
             db.closeDB();
         } else {
             daysRecord = daysList.get(daysList.size()-1);

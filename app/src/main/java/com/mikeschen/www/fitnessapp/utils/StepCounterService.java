@@ -20,6 +20,7 @@ import com.mikeschen.www.fitnessapp.models.Days;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -118,12 +119,11 @@ public class StepCounterService extends Service implements SensorEventListener {
             days = daysList.get(daysList.size()-1);
             stepCount = days.getStepsTaken();
             lastKnownId = days.getId();
-            Log.d("StepService, L: 121", days.getId() + "");
-            Log.d("StepSerview, L: 121", days.getStepsTaken() + "");
-
         } else {
+            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            days = new Days(1, 0, 0, 0, String.valueOf(dateFormat));
+            String today = dateFormat.format(date);
+            days = new Days(1, 0, 0, 0, today);
             stepCount = 0;
             lastKnownId = 1;
         }
@@ -197,9 +197,6 @@ public class StepCounterService extends Service implements SensorEventListener {
                             sendMessageToUI(stepCount);
                             days.setStepsTaken(stepCount);// This isn't it either...
                             db.updateDays(days);
-                            Log.d("StepService, L: 200", days.getId() + "");
-                            Log.d("StepSerview, L: 200", days.getStepsTaken() + "");
-
                         }
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
@@ -218,9 +215,6 @@ public class StepCounterService extends Service implements SensorEventListener {
                             sendMessageToUI(stepCount);
                             days.setStepsTaken(stepCount);// Or this...
                             db.updateDays(days);
-                            Log.d("StepService, L: 221", days.getId() + "");
-                            Log.d("StepSerview, L: 222", days.getStepsTaken() + "");
-
                         }
                     }
                 }
