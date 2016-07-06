@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -84,8 +85,15 @@ public class TimerService extends Service {
 
 
     public void checkMidnight(long currentTime) {
-//        if (currentTime % (60 * 24) == 0) {
-        if (currentTime % 3 == 0) {
+        TimeZone tz = TimeZone.getDefault();
+        int offsetFromGMT = tz.getOffset(currentTime*60*1000);
+        if(offsetFromGMT < 0) {
+            offsetFromGMT += 24*60*60*1000;
+        }
+        offsetFromGMT = offsetFromGMT/1000/60;
+        Log.d("Time Zone Offset", offsetFromGMT+"");
+        if (currentTime % (60 * 24) == offsetFromGMT) {
+//        if (currentTime % 3 == 0) {
             Log.d("tick", "tock");
 
 
@@ -110,7 +118,6 @@ public class TimerService extends Service {
             Days newDay = new Days(currentDaysTableId, currentDaysSteps, 0, 0, stringDate);
 
             //This advances to the next key ID in the database and build a new table.
-            newDay.setId(newDay.getId());
             newDay.setId(db.logDays(newDay));
             db.updateDays(newDay);
             db.deleteAllFoodRecords();

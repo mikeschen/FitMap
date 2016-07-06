@@ -35,5 +35,7 @@ public class Constants {
     public static final String PREFERENCES_HOME = "myHome";
     public static final String PREFERENCES_WORK = "myWork";
     public static final String PREFERENCES_HEIGHT = "myHeight";
+    public static final String PREFERENCES_FEET = "myFeet";
+    public static final String PREFERENCES_INCHES = "myInches";
     public static final String PREFERENCES_WEIGHT = "myWeight";
 }

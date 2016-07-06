@@ -65,7 +65,6 @@ public class MealsActivity extends BaseActivity implements
         List<Days> days = db.getAllDaysRecords();
         if(days.size() > 0) {
             today = days.get(days.size()-1);
-
         }
 
         mAuthProgressDialog = new ProgressDialog(this);
@@ -156,6 +155,7 @@ public class MealsActivity extends BaseActivity implements
                     Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                     mContext.startActivity(intent);
+                    finish();
                 } else {
                     Food food = foods.get(0);
                     db.logFood(food);
@@ -195,6 +195,7 @@ public class MealsActivity extends BaseActivity implements
                     Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                     intent.putExtra("food item", foodItem);
                     mContext.startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -203,7 +204,7 @@ public class MealsActivity extends BaseActivity implements
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -216,7 +217,7 @@ public class MealsActivity extends BaseActivity implements
         View subView = inflater.inflate(R.layout.fragment_add_item, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add food item");
+        builder.setTitle("Add a food item");
         builder.setView(subView);
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.foodInputEditText);
@@ -245,7 +246,7 @@ public class MealsActivity extends BaseActivity implements
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
                 }
             });
 

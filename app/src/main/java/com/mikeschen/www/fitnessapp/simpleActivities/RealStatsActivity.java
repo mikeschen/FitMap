@@ -1,11 +1,16 @@
 package com.mikeschen.www.fitnessapp.simpleActivities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
@@ -25,8 +30,6 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
     @Bind(R.id.calsConsumedTextView) TextView mCalsConsumedTextView;
     private Days yesterday;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,34 +38,56 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
 
         mSuggestionButton.setOnClickListener(this);
 
-        //make a Day object
         List<Days> allDays = db.getAllDaysRecords();
+        if (db.getAllDaysRecords().size() < 2) {
+            Toast.makeText(RealStatsActivity.this, "No data available", Toast.LENGTH_SHORT).show();
+        } else {
+            yesterday = allDays.get(allDays.size() - 2);
 
-        yesterday = allDays.get(allDays.size() - 2);
-//        Calendar calendar = Calendar.getInstance();
-//        SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
-//        String strDate = mdformat.format(calendar.getTime());
-//        mDateTextView.setText("Date: " + yesterday.getDate());
-//
-        mDateTextView.setText("Date: " + yesterday.getDate());
+            mDateTextView.setText("Date: " + yesterday.getDate());
 
-        mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+            mCaloriesTextView.setText("Calories Burned: " + yesterday.getCaloriesBurned());
 
-        mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+            mStepsTextView.setText("Steps Taken: " + yesterday.getStepsTaken());
 
-        mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
+            mCalsConsumedTextView.setText("Calories Consumed:" + yesterday.getCaloriesConsumed());
+        }
     }
-
-
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.suggestionButton):
-                Intent intent = new Intent(RealStatsActivity.this, MapsActivity.class);
-                startActivity(intent);
+                openMapDialog();
                 break;
         }
+    }
+
+    private void openMapDialog() {
+        LayoutInflater inflater = LayoutInflater.from(RealStatsActivity.this);
+        View subView = inflater.inflate(R.layout.fragment_search_map, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add An Address (i.e. home or work)");
+        builder.setView(subView);
+
+        final EditText subEditText = (EditText) subView.findViewById(R.id.searchMapEditText);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    String destination = subEditText.getText().toString();
+                    Intent intent = new Intent(RealStatsActivity.this, MapsActivity.class);
+                    intent.putExtra("destination", destination);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // do nothing
+                }
+            });
+            builder.show();
     }
 }
 

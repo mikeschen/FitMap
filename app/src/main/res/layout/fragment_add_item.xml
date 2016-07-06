@@ -4,28 +4,31 @@
     android:layout_height="match_parent"
     tools:context="com.mikeschen.www.fitnessapp.Meals.MealsActivity">
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="351dp"
-        android:layout_height="177dp"
-        android:id="@+id/foodItemAddRecyclerView"
-        android:layout_gravity="left|center_vertical" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_medium_padding">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_small_padding"
+        android:layout_marginLeft="@dimen/activity_wide_margin"
+        android:padding="@dimen/activity_small_padding"
         android:id="@+id/foodInputEditText"
-        android:layout_gravity="left|top"
         android:hint="Enter Food Item" />
 
     <EditText
-        android:layout_width="155dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_wide_margin"
+        android:layout_marginLeft="@dimen/activity_small_padding"
+        android:padding="@dimen/activity_small_padding"
         android:id="@+id/calorieInputEditText"
-        android:layout_gravity="right|top"
         android:hint="Enter Calories"
         android:inputType="number" />
+
+    </LinearLayout>
 </FrameLayout>
