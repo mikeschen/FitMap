@@ -151,10 +151,7 @@ public class MealsActivity extends BaseActivity implements
             public void run() {
                 if (foods == null) {
                     mAuthProgressDialog.dismiss();
-
                     Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                    mContext.startActivity(intent);
                 } else {
                     Food food = foods.get(0);
                     db.logFood(food);
