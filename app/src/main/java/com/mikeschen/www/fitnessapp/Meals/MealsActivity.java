@@ -65,7 +65,6 @@ public class MealsActivity extends BaseActivity implements
         List<Days> days = db.getAllDaysRecords();
         if(days.size() > 0) {
             today = days.get(days.size()-1);
-
         }
 
         mAuthProgressDialog = new ProgressDialog(this);
