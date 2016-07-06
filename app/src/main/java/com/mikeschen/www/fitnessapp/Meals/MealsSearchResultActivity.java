@@ -1,11 +1,13 @@
 package com.mikeschen.www.fitnessapp.Meals;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.adapters.SearchListAdapter;
@@ -21,30 +23,31 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
 
     private SearchListAdapter mSearchListAdapter;
     private MealsPresenter mMealsPresenter;
+    private ProgressDialog mAuthProgressDialog;
 
     @Bind(R.id.searchResultsRecyclerView) RecyclerView mSearchResultsRecyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals_search_result);
         ButterKnife.bind(this);
+        mAuthProgressDialog = new ProgressDialog(this);
+        mAuthProgressDialog.setTitle("Loading...");
+        mAuthProgressDialog.setMessage("Searching for food items...");
+        mAuthProgressDialog.setCancelable(false);
+        mAuthProgressDialog.show();
 
         mMealsPresenter = new MealsPresenter(this);
 
         Intent intent = getIntent();
         String foodItem = intent.getStringExtra("food item");
         String scanResult = intent.getStringExtra("inputText");
-        if ( scanResult == null) {
-
-            Log.d("Food Item?", intent.getStringExtra("food item"));
+        if (scanResult == null) {
             mMealsPresenter.searchFoods(foodItem);
         } else {
-            Log.d("scanResult", scanResult);
             mMealsPresenter.searchUPC(scanResult);
         }
-
     }
 
     @Override
@@ -52,11 +55,18 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         MealsSearchResultActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d("displayFoodByUPC", foods + "");
-                mSearchListAdapter = new SearchListAdapter(getApplicationContext(), foods);
-                mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
-                mSearchResultsRecyclerView.setLayoutManager(layoutManager);
+                if (mMealsPresenter.mFoods.isEmpty()) {
+                    mAuthProgressDialog.dismiss();
+                    Toast.makeText(MealsSearchResultActivity.this, "Food Item Not Found", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MealsSearchResultActivity.this, MealsActivity.class);
+                    startActivity(intent);
+                } else {
+                    mSearchListAdapter = new SearchListAdapter(getApplicationContext(), foods);
+                    mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
+                    mSearchResultsRecyclerView.setLayoutManager(layoutManager);
+                    mAuthProgressDialog.dismiss();
+                }
             }
         });
     }
@@ -66,11 +76,18 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         MealsSearchResultActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d("displayFoodByItem", foods + "");
-                mSearchListAdapter = new SearchListAdapter(getApplicationContext(), foods);
-                mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
-                mSearchResultsRecyclerView.setLayoutManager(layoutManager);
+                if (mMealsPresenter.mFoods.isEmpty()) {
+                    mAuthProgressDialog.dismiss();
+                    Toast.makeText(MealsSearchResultActivity.this, "Food Item Not Found", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MealsSearchResultActivity.this, MealsActivity.class);
+                    startActivity(intent);
+                } else {
+                    mSearchListAdapter = new SearchListAdapter(getApplicationContext(), foods);
+                    mSearchResultsRecyclerView.setAdapter(mSearchListAdapter);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(MealsSearchResultActivity.this);
+                    mSearchResultsRecyclerView.setLayoutManager(layoutManager);
+                    mAuthProgressDialog.dismiss();
+                }
             }
         });
     }
