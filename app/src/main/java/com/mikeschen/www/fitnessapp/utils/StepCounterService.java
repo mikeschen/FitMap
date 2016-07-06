@@ -16,7 +16,12 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.mikeschen.www.fitnessapp.models.Days;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class StepCounterService extends Service implements SensorEventListener {
 
@@ -24,6 +29,9 @@ public class StepCounterService extends Service implements SensorEventListener {
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+
+    DatabaseHelper db;
+    Days days;
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -39,7 +47,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     private long lastUpdate;
     private float last_x;
     private float last_y;
-//    private float last_z;
+    private long lastKnownId;
 
     private ArrayList<Float> speedData;
 
@@ -93,17 +101,28 @@ public class StepCounterService extends Service implements SensorEventListener {
         lastUpdate = 0;
         last_x = 0;
         last_y = 0;
-//        last_z = 0;
 
         speedData = new ArrayList<>();
 
         speedCounted = mSharedPreferences.getInt("speedCounted", 1);
         grossTotalSpeed = mSharedPreferences.getFloat("grossTotalSpeed", 0);
-        stepCount = mSharedPreferences.getInt("stepsTaken", 0);
 
         totalAverageSpeed = 1;
 
         checkSpeedDirection = true;
+
+        db = new DatabaseHelper(this);
+        List<Days> daysList = db.getAllDaysRecords();
+        if(daysList.size() > 0) {
+            days = daysList.get(daysList.size()-1);
+            stepCount = days.getStepsTaken();
+            lastKnownId = days.getId();
+        } else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
+            days = new Days(1, 0, 0, 0, String.valueOf(dateFormat));
+            stepCount = 0;
+            lastKnownId = 1;
+        }
     }
 
     @Override
@@ -129,7 +148,6 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                 float x = sensorEvent.values[0];
                 float y = sensorEvent.values[1];
-//                float z = sensorEvent.values[2];
 
                 long curTime = System.currentTimeMillis();
 
@@ -162,29 +180,49 @@ public class StepCounterService extends Service implements SensorEventListener {
                     if (checkSpeedDirection) {
                         if (localAverageSpeed > totalAverageSpeed) {
                             checkSpeedDirection = false;
+                            List<Days> daysList = db.getAllDaysRecords();
+                            days = daysList.get(daysList.size()-1);
+                            if(days.getId() != lastKnownId) {
+                                lastKnownId = days.getId();
+                                stepCount = 0;
+                            }
                             stepCount++;
                             Log.d("step taken", stepCount + "");
-                            mEditor.putInt("stepsTaken", stepCount).commit();
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
+                            days.setStepsTaken(stepCount);
+                            days.setCaloriesBurned(stepCount * 175/3500);
+                            Log.d("stepServiceId", days.getId()+"");
+                            Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
+
+                            db.updateDays(days);
                         }
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
                             checkSpeedDirection = true;
+                            List<Days> daysList = db.getAllDaysRecords();
+                            days = daysList.get(daysList.size()-1);
+                            if(days.getId() != lastKnownId) {
+                                lastKnownId = days.getId();
+                                stepCount = 0;
+                            }
                             stepCount++;
-                            mEditor.putInt("stepsTaken", stepCount).commit();
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
-                            Log.d("step taken", mSharedPreferences.getInt("stepsTaken", 0)+"");
+                            Log.d("step taken", stepCount + "");
                             sendMessageToUI(stepCount);
+                            days.setStepsTaken(stepCount);
+                            days.setCaloriesBurned(stepCount * 175/3500);
+                            Log.d("stepServiceId", days.getId()+" size: " + db.getAllDaysRecords().size());
+                            Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
+                            db.updateDays(days);
                         }
                     }
                 }
 
                 last_x = x;
                 last_y = y;
-//                last_z = z;
             }
         }
     }

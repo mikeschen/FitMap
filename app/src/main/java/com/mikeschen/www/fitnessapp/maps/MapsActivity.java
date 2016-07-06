@@ -125,10 +125,33 @@ public class MapsActivity extends BaseActivity implements
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String destination = atDestination.getText().toString();
                 if(isChecked){
                     bikeSwitcher = true;
+                    if(!destination.isEmpty()) {
+                        sendRequest();
+                        setHideSoftKeyboard(atDestination);
+                        LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+                        pathFinder.setVisibility(LinearLayout.VISIBLE);
+                        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+                        animation.setDuration(1000);
+                        pathFinder.setAnimation(animation);
+                        pathFinder.animate();
+                        animation.start();
+                    }
                 } else {
                     bikeSwitcher = false;
+                    if(!destination.isEmpty()) {
+                        sendRequest();
+                        setHideSoftKeyboard(atDestination);
+                        LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+                        pathFinder.setVisibility(LinearLayout.VISIBLE);
+                        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+                        animation.setDuration(1000);
+                        pathFinder.setAnimation(animation);
+                        pathFinder.animate();
+                        animation.start();
+                    }
                 }
             }
         });
@@ -286,6 +309,7 @@ public class MapsActivity extends BaseActivity implements
             }
 
             for (int i = 0; i < route.points.size(); i++) {
+                Log.d("points", route.points.get(i)+"");
                 polylineOptions.add(route.points.get(i));
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));
