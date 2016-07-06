@@ -125,10 +125,33 @@ public class MapsActivity extends BaseActivity implements
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String destination = atDestination.getText().toString();
                 if(isChecked){
                     bikeSwitcher = true;
+                    if(!destination.isEmpty()) {
+                        sendRequest();
+                        setHideSoftKeyboard(atDestination);
+                        LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+                        pathFinder.setVisibility(LinearLayout.VISIBLE);
+                        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+                        animation.setDuration(1000);
+                        pathFinder.setAnimation(animation);
+                        pathFinder.animate();
+                        animation.start();
+                    }
                 } else {
                     bikeSwitcher = false;
+                    if(!destination.isEmpty()) {
+                        sendRequest();
+                        setHideSoftKeyboard(atDestination);
+                        LinearLayout pathFinder = (LinearLayout)findViewById(R.id.pathFinder);
+                        pathFinder.setVisibility(LinearLayout.VISIBLE);
+                        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim);
+                        animation.setDuration(1000);
+                        pathFinder.setAnimation(animation);
+                        pathFinder.animate();
+                        animation.start();
+                    }
                 }
             }
         });
@@ -143,18 +166,6 @@ public class MapsActivity extends BaseActivity implements
         distances = new ArrayList<>();
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
-
-//        atDestination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    sendRequest();
-//                    setHideSoftKeyboard(atDestination);
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
     }
 
     @Override
@@ -298,6 +309,7 @@ public class MapsActivity extends BaseActivity implements
             }
 
             for (int i = 0; i < route.points.size(); i++) {
+                Log.d("points", route.points.get(i)+"");
                 polylineOptions.add(route.points.get(i));
             }
             polylinePaths.add(mMap.addPolyline(polylineOptions));

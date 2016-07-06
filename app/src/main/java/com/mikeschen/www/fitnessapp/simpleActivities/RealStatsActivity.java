@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
@@ -22,7 +21,9 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
     @Bind(R.id.caloriesTextView) TextView mCaloriesTextView;
     @Bind(R.id.stepsTextView) TextView mStepsTextView;
     @Bind(R.id.dateTextView) TextView mDateTextView;
-    @Bind(R.id.andTextView) TextView mAndTextView;
+    @Bind(R.id.idTextView) TextView mIdTextView;
+    @Bind(R.id.calsConsumedTextView) TextView mCalsConsumedTextView;
+
 
 
     @Override
@@ -33,21 +34,20 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
 
         mSuggestionButton.setOnClickListener(this);
 
-
+        //make a Day object
         List<Days> allDays = db.getAllDaysRecords();
-        if (allDays == null) {
-            Toast.makeText(RealStatsActivity.this, "Data no available", Toast.LENGTH_SHORT).show();
-        } else {
+        Days yesterday = allDays.get(allDays.size() - 2);
 
-            Days yesterday = allDays.get(allDays.size() - 2);
-//            mCaloriesTextView.setText(yesterday.getCaloriesBurned() + "" + "cals");
-//            mStepsTextView.setText(yesterday.getStepsTaken() + "" + "steps");
-////        }
+        mDateTextView.setText("Date: " + yesterday.getDate());
+        mIdTextView.setText(String.valueOf("ID: " + yesterday.getId()));
 
-            mCaloriesTextView.setText(String.valueOf(yesterday.getCaloriesBurned()) + "cals");
-            mStepsTextView.setText(String.valueOf(yesterday.getCaloriesBurned()) + "steps");
-        }
+        mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+
+        mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+
+        mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
     }
+
 
 
     @Override

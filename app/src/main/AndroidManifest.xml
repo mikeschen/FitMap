@@ -5,7 +5,7 @@
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
+         location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -23,8 +23,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".simpleActivities.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,15 +34,14 @@
         <activity
             android:name=".main.MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".BaseActivity" />
+        <activity android:name=".BaseActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -57,36 +56,37 @@
         <service
             android:name=".utils.StepCounterService"
             android:enabled="true"
-            android:exported="true"/>
-
+            android:exported="true" />
         <service
             android:name=".utils.TimerService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity
             android:name=".main.StatsActivity"
             android:label="@string/title_activity_stats"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".simpleActivities.AboutActivity"
             android:label="@string/title_activity_about"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".simpleActivities.RealStatsActivity"
             android:label="Stats"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Meals.MealsActivity"
             android:label="@string/title_activity_meals"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Meals.MealsSearchResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Meals.MealsSearchResultActivity"
             android:label="@string/title_activity_meals"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".simpleActivities.PrefsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".simpleActivities.PrefsActivity"
             android:label="@string/title_activity_prefs"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".main.DBActivity"></activity>
     </application>
 
 </manifest>
