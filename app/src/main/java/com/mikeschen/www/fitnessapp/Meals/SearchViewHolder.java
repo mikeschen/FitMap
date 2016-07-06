@@ -59,6 +59,8 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements MealsTo
                     intent.putExtra("position", foodPosition);
                     intent.putExtra("food", Parcels.wrap(mFoods));
                     mContext.startActivity(intent);
+                    MealsSearchResultActivity mMealsSearchResultActivity = (MealsSearchResultActivity) mContext;
+                    mMealsSearchResultActivity.finish();
                 } else {
                     if (mOnFoodClickListener != null) {
                         mOnFoodClickListener.onFoodClicked(foodPosition, mFoods);

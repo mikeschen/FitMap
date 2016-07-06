@@ -159,6 +159,7 @@ public class MealsActivity extends BaseActivity implements
                     Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                     mContext.startActivity(intent);
+                    finish();
                 } else {
                     Food food = foods.get(0);
                     db.logFood(food);
@@ -198,6 +199,7 @@ public class MealsActivity extends BaseActivity implements
                     Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                     intent.putExtra("food item", foodItem);
                     mContext.startActivity(intent);
+                    finish();
                 }
             }
         });
