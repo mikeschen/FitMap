@@ -25,16 +25,6 @@
         android:layout_marginBottom="35dp"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/idTextView"
-        android:textSize="30sp"
-        android:text="id"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/dateTextView"
-        android:layout_alignEnd="@+id/dateTextView" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="calconsumed"
@@ -51,27 +41,14 @@
         android:text="0 Steps"
         android:textColor="@color/colorAbout"
         android:id="@+id/stepsTextView"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
         android:textSize="@dimen/text_extra_large"
-        android:layout_below="@+id/dateTextView"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="And"
-        android:id="@+id/andTextView"
-        android:textSize="@dimen/text_large"
-        android:layout_below="@+id/stepsTextView"
-        android:layout_marginTop="32dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:gravity="center"
-        android:textColor="@color/colorFiller"
-        android:textStyle="bold" />
+        android:layout_alignTop="@+id/calsConsumedTextView"
+        android:layout_alignLeft="@+id/dateTextView"
+        android:layout_alignStart="@+id/dateTextView"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,11 +57,11 @@
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_extra_large"
         android:gravity="center"
-        android:layout_below="@+id/andTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp"
-        android:textColor="@color/colorAbout"/>
+        android:textColor="@color/colorAbout"
+        android:layout_above="@+id/suggestionLayout"
+        android:layout_alignLeft="@+id/dateTextView"
+        android:layout_alignStart="@+id/dateTextView"
+        android:layout_marginBottom="66dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

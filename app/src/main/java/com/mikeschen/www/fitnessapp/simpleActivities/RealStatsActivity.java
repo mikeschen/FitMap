@@ -21,8 +21,8 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
     @Bind(R.id.caloriesTextView) TextView mCaloriesTextView;
     @Bind(R.id.stepsTextView) TextView mStepsTextView;
     @Bind(R.id.dateTextView) TextView mDateTextView;
-    @Bind(R.id.idTextView) TextView mIdTextView;
     @Bind(R.id.calsConsumedTextView) TextView mCalsConsumedTextView;
+    private Days yesterday;
 
 
 
@@ -36,10 +36,14 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
 
         //make a Day object
         List<Days> allDays = db.getAllDaysRecords();
-        Days yesterday = allDays.get(allDays.size() - 2);
 
+        yesterday = allDays.get(allDays.size() - 2);
+//        Calendar calendar = Calendar.getInstance();
+//        SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
+//        String strDate = mdformat.format(calendar.getTime());
+//        mDateTextView.setText("Date: " + yesterday.getDate());
+//
         mDateTextView.setText("Date: " + yesterday.getDate());
-        mIdTextView.setText(String.valueOf("ID: " + yesterday.getId()));
 
         mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
 
