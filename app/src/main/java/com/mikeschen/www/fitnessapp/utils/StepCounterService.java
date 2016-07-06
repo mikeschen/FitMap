@@ -20,6 +20,7 @@ import com.mikeschen.www.fitnessapp.models.Days;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -113,13 +114,16 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         db = new DatabaseHelper(this);
         List<Days> daysList = db.getAllDaysRecords();
+        //It's not this...
         if(daysList.size() > 0) {
             days = daysList.get(daysList.size()-1);
             stepCount = days.getStepsTaken();
             lastKnownId = days.getId();
         } else {
+            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            days = new Days(1, 0, 0, 0, String.valueOf(dateFormat));
+            String today = dateFormat.format(date);
+            days = new Days(1, 0, 0, 0, today);
             stepCount = 0;
             lastKnownId = 1;
         }
@@ -191,6 +195,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
+
                             days.setStepsTaken(stepCount);
                             days.setCaloriesBurned(stepCount * 175/3500);
                             Log.d("stepServiceId", days.getId()+"");
@@ -211,6 +216,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             Log.d("step taken", stepCount + "");
+                            Log.d("daysRecord ID", days.getId() + "");
                             sendMessageToUI(stepCount);
                             days.setStepsTaken(stepCount);
                             days.setCaloriesBurned(stepCount * 175/3500);
