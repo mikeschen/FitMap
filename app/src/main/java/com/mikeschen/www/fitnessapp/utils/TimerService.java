@@ -18,6 +18,7 @@ import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -101,12 +102,18 @@ public class TimerService extends Service {
             long currentDaysTableId = today.getId() + 1;
             int currentDaysSteps;
             currentDaysSteps = 0;
+
+            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            Days newDay = new Days(currentDaysTableId, currentDaysSteps, 0, 0, dateFormat.toString());
-            //This SHOULD advance to the next key ID in the database and build a new table.
-//            newDay.setId(newDay.getId());
+            String stringDate = dateFormat.format(date);
+
+            Days newDay = new Days(currentDaysTableId, currentDaysSteps, 0, 0, stringDate);
+
+            //This advances to the next key ID in the database and build a new table.
+            newDay.setId(newDay.getId());
             newDay.setId(db.logDays(newDay));
             db.updateDays(newDay);
+            db.deleteAllFoodRecords();
 
         }
     }
@@ -120,8 +127,6 @@ public class TimerService extends Service {
                 .setContentTitle("My notification")
                 .setContentText("You walked "  + today.getStepsTaken() + " steps today!");
 
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-//        mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
         Intent resultIntent = new Intent(getApplicationContext(), RealStatsActivity.class);
         Log.d("buildNotification", "Is it building?");
 
