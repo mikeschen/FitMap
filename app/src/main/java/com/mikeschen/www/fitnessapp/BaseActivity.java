@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
-import com.mikeschen.www.fitnessapp.main.DBActivity;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
@@ -103,7 +102,7 @@ public class BaseActivity extends AppCompatActivity {
                         break;
 
                     case 5:
-                        Intent about = new Intent(BaseActivity.this, DBActivity.class);
+                        Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
                         finish();
                         break;

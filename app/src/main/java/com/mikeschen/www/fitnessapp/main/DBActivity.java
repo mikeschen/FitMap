@@ -9,15 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.adapters.DatabaseDaysListAdapter;
-import com.mikeschen.www.fitnessapp.models.Calories;
-import com.mikeschen.www.fitnessapp.adapters.DatabaseCalorieListAdapter;
-import com.mikeschen.www.fitnessapp.adapters.DatabaseCaloriesConsumedListAdapter;
-import com.mikeschen.www.fitnessapp.models.Days;
-import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
-import com.mikeschen.www.fitnessapp.adapters.DatabaseStepsListAdapter;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.models.Steps;
+import com.mikeschen.www.fitnessapp.adapters.DatabaseDaysListAdapter;
+import com.mikeschen.www.fitnessapp.models.Days;
 
 import java.util.ArrayList;
 
@@ -62,7 +56,7 @@ public class DBActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void refresh() {
-        Intent intent = new Intent(DBActivity.this, DBActivity.class);
+        Intent intent = new Intent(DBActivity.this,DBActivity.class);
         startActivity(intent);
         finish();
     }

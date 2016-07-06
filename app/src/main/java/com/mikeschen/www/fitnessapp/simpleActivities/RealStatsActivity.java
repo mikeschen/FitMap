@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
@@ -38,18 +39,21 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         List<Days> allDays = db.getAllDaysRecords();
 
         yesterday = allDays.get(allDays.size() - 2);
-//        Calendar calendar = Calendar.getInstance();
-//        SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
-//        String strDate = mdformat.format(calendar.getTime());
-//        mDateTextView.setText("Date: " + yesterday.getDate());
-//
-        mDateTextView.setText("Date: " + yesterday.getDate());
+        if (db.getAllDaysRecords().size() < 2) {
+            Toast.makeText(RealStatsActivity.this, "No data available", Toast.LENGTH_SHORT).show();
+        } else {
 
-        mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+            //set up the date to show in the right format
+//            SimpleDateFormat dateyesterday = new SimpleDateFormat("dd-MM-yyyy ");
 
-        mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+            mDateTextView.setText("Date: " + yesterday.getDate());
 
-        mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
+            mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+
+            mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+
+            mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
+        }
     }
 
 
