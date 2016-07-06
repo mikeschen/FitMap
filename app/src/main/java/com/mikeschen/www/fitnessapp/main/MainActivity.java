@@ -283,9 +283,12 @@ public class MainActivity extends BaseActivity implements
                 if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
                     mMainButton.setText("Steps Taken: " + (int) steps);
-                } else if (buttonDisplay.equals("Steps")) {
+                } else if (buttonDisplay.equals("Miles")) {
                     buttonDisplay = "Calories";
                     setCaloriesText();
+                } else if (buttonDisplay.equals("Steps")) {
+                    buttonDisplay = "Miles";
+                    mMainButton.setText("Approx. Mileage: " + (double) Math.round(steps/2000 * 100d) / 100d);
                 }
                 break;
             case (R.id.mapsMainButton):
