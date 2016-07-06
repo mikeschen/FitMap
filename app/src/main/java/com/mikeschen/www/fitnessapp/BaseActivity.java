@@ -103,7 +103,7 @@ public class BaseActivity extends AppCompatActivity {
                         break;
 
                     case 5:
-                        Intent about = new Intent(BaseActivity.this, DBActivity.class);
+                        Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
                         finish();
                         break;
