@@ -270,7 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CALORIES_BURNED, food.getCalories());
 
         //updating row
-        return db.update(TABLE_FOOD, values, KEY_FOOD_ID + " + ?",
+        return db.update(TABLE_FOOD, values, KEY_FOOD_ID + " = ?",
                 new String[]{String.valueOf(food.getItemId())});
     }
 

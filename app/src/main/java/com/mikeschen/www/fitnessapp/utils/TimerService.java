@@ -113,6 +113,7 @@ public class TimerService extends Service {
             newDay.setId(newDay.getId());
             newDay.setId(db.logDays(newDay));
             db.updateDays(newDay);
+            db.deleteAllFoodRecords();
 
         }
     }

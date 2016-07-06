@@ -76,8 +76,7 @@ public class MainActivity extends BaseActivity implements
 
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
-//                    daysRecord.setCaloriesBurned(steps * 175/3500);
-                    daysRecord.setCaloriesBurned(100);
+                    daysRecord.setCaloriesBurned(steps * 175/3500);
                     Log.d("caloriesBurned", daysRecord.getCaloriesBurned() + "");
 
                     db.updateDays(daysRecord);
@@ -253,8 +252,6 @@ public class MainActivity extends BaseActivity implements
     }
 
     public void setCaloriesText() {
-//        daysRecord.setCaloriesBurned(mSharedPreferences.getInt("stepsTaken", 0)*175/3500);
-//        db.updateDays(daysRecord);
         if(daysRecord.getCaloriesConsumed() > 0) {
             mMainButton.setText("Calories Consumed: " + (int) (daysRecord.getCaloriesConsumed() - daysRecord.getCaloriesBurned()));
         } else {
