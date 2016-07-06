@@ -13,7 +13,6 @@ public class TipPresenter implements TipInterface.Presenter {
         mTipView = tipView;
     }
 
-    //Will implement Presenter interface
     @Override
     public void loadTip(String json) {
 

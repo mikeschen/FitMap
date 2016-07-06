@@ -1,8 +1,5 @@
 package com.mikeschen.www.fitnessapp.models;
 
-/**
- * Created by alexnenchev on 6/14/16.
- */
 public class Distance {
     public String text;
     public int value;
