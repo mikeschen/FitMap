@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements
 
     DatabaseHelper db;
 
-    int images[] = {R.drawable.alone, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
+    int images[] = {R.drawable.about, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
 
     Days daysRecord;
 
