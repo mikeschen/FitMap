@@ -32,7 +32,7 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
     private String work;
     private String feet;
     private String inches;
-    private int weight;
+    private String weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
         mWorkEditText.setText(work);
         feet = mSharedPreferences.getString(Constants.PREFERENCES_FEET, null);
         mHeightFeetEditText.setText(feet);
-        inches = mSharedPreferences.getString(Constants.PREFERENCES_FEET, null);
+        inches = mSharedPreferences.getString(Constants.PREFERENCES_INCHES, null);
         mHeightInchesEditText.setText(inches);
-        weight = mSharedPreferences.getInt(Constants.PREFERENCES_WEIGHT, 0);
+        weight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
         mWeightEditText.setText(weight);
 
     }
@@ -93,6 +93,8 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
                 int intInches = Integer.parseInt(inches);
                 int height = (intFeet * 12) + intInches;
 
+                addFeetToSharedPreferences(feet);
+                addInchesToSharedPreferences(inches);
                 addHeightToSharedPreferences(height);
                 Toast.makeText(PrefsActivity.this, "Height Saved!", Toast.LENGTH_SHORT).show();
                 break;
@@ -104,9 +106,7 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
                     return;
                 }
 
-                int intWeight = Integer.parseInt(weight);
-
-                addWeightToSharedPreferences(intWeight);
+                addWeightToSharedPreferences(weight);
                 Toast.makeText(PrefsActivity.this, "Weight Saved!", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -122,7 +122,13 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
     private void addHeightToSharedPreferences(int height) {
         mEditor.putInt(Constants.PREFERENCES_HEIGHT, height).apply();
     }
-    private void addWeightToSharedPreferences(int weight) {
-        mEditor.putInt(Constants.PREFERENCES_WEIGHT, weight).apply();
+    private void addFeetToSharedPreferences(String feet) {
+        mEditor.putString(Constants.PREFERENCES_FEET, feet).apply();
+    }
+    private void addInchesToSharedPreferences(String inches) {
+        mEditor.putString(Constants.PREFERENCES_INCHES, inches).apply();
+    }
+    private void addWeightToSharedPreferences(String weight) {
+        mEditor.putString(Constants.PREFERENCES_WEIGHT, weight).apply();
     }
 }

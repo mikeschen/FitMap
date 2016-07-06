@@ -64,7 +64,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            switch(msg.what) {
+            switch (msg.what) {
                 case MSG_REGISTER_CLIENT:
                     mClients.add(msg.replyTo);
                     break;
@@ -78,7 +78,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     private void sendMessageToUI(int stepCount) {
-        for(int i = mClients.size()-1; i >= 0; i--) {
+        for (int i = mClients.size() - 1; i >= 0; i--) {
             try {
                 mClients.get(i).send(Message.obtain(null, MSG_SET_STEP_COUNT_VALUE, stepCount, 0));
             } catch (RemoteException e) {
@@ -115,9 +115,10 @@ public class StepCounterService extends Service implements SensorEventListener {
         checkSpeedDirection = true;
 
         db = new DatabaseHelper(this);
+        heightWeightDB = new HeightWeightDatabaseHelper(this);
         List<Days> daysList = db.getAllDaysRecords();
-        if(daysList.size() > 0) {
-            days = daysList.get(daysList.size()-1);
+        if (daysList.size() > 0) {
+            days = daysList.get(daysList.size() - 1);
             stepCount = days.getStepsTaken();
             lastKnownId = days.getId();
         } else {
@@ -149,7 +150,7 @@ public class StepCounterService extends Service implements SensorEventListener {
         Sensor mySensor = sensorEvent.sensor;
 
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if(System.currentTimeMillis()-lastUpdate > 20) {
+            if (System.currentTimeMillis() - lastUpdate > 20) {
 
                 float x = sensorEvent.values[0];
                 float y = sensorEvent.values[1];
@@ -186,8 +187,8 @@ public class StepCounterService extends Service implements SensorEventListener {
                         if (localAverageSpeed > totalAverageSpeed) {
                             checkSpeedDirection = false;
                             List<Days> daysList = db.getAllDaysRecords();
-                            days = daysList.get(daysList.size()-1);
-                            if(days.getId() != lastKnownId) {
+                            days = daysList.get(daysList.size() - 1);
+                            if (days.getId() != lastKnownId) {
                                 lastKnownId = days.getId();
                                 stepCount = 0;
                             }
@@ -198,8 +199,8 @@ public class StepCounterService extends Service implements SensorEventListener {
                             sendMessageToUI(stepCount);
 
                             days.setStepsTaken(stepCount);
-                            days.setCaloriesBurned(stepCount * 175/3500);
-                            Log.d("stepServiceId", days.getId()+"");
+                            days.setCaloriesBurned(stepCount * 175 / 3500);
+                            Log.d("stepServiceId", days.getId() + "");
                             Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
 
                             db.updateDays(days);
@@ -222,23 +223,28 @@ public class StepCounterService extends Service implements SensorEventListener {
                             days.setStepsTaken(stepCount);
 
                             //Gathers height and weight and pulls corresponding cals burned data from DB
-                            int weight = mSharedPreferences.getInt(Constants.PREFERENCES_WEIGHT, 0);
+//                            String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
+//                            int oldWeight = Integer.parseInt(strWeight);
                             int stride = strideCalculator();
+                            int weight = weightCalculator();
+                            Log.d("service stride", stride + "");
 
 
                             if (weight > 0 || stride > 0 || weight > 0 && stride > 0) {
-                                int cals = heightWeightDB.getCals(weight, stride);
+                                Integer cals = heightWeightDB.getCals(weight, stride);
+                                Log.d("StepService", cals + " = cals");
                                 int newCalsBurned = cals / 1000;
+                                Log.d("StepService", newCalsBurned + " = newCalsBurned");
                                 days.setCaloriesBurned(stepCount * newCalsBurned);
-
                             } else {
                                 days.setCaloriesBurned(stepCount * 175 / 3500);
                             }
 
 
-                            Log.d("stepServiceId", days.getId()+" size: " + db.getAllDaysRecords().size());
+                            Log.d("stepServiceId", days.getId() + " size: " + db.getAllDaysRecords().size());
                             Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
                             db.updateDays(days);
+                            db.closeDB();
                         }
                     }
                 }
@@ -264,25 +270,62 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     public int strideCalculator() {
-        int height = mSharedPreferences.getInt(Constants.PREFERENCES_HEIGHT, 0);
+        int height = mSharedPreferences.getInt(Constants.PREFERENCES_HEIGHT, 0); //This works
         int stride = 0;
 
         double inchPerStride = (height * .413);
         double feetPerStride = (inchPerStride / 12);
         Double dStepsPerMile = (5280 / feetPerStride);
         int stepsPerMile = dStepsPerMile.intValue();
+        Log.d("steps per mile", stepsPerMile + "");
 
 //            2000 = 6'2" - 6'5"
 //            2200 = 5'7" - 6'1"
 //            2400 = 4'10" - 5'6"
 //
+
+
+//        @ 2101 and 180 lbs, 20 steps = 1 cal
+//        @ 2400 and 160 lbs, 21 steps = 1 cal...
+        //@ 2400 and 300 lbs, 20 steps = 1 cal...
+        //Don't have if statements written for weight yet, but will need them if we're going to keep this to account for weights that are between weights in the database (ie 180 @ 2400 steps)
+
         if (stepsPerMile >= 2400 && stepsPerMile > 2301) {
             stride = 2400;
-        } else if (stepsPerMile < 2300 && stepsPerMile > 2101) {
+        } else if (stepsPerMile < 2300 && stepsPerMile >= 2101) {
             stride = 2200;
         } else if (stepsPerMile < 2101 && stepsPerMile >= 2000) {
             stride = 2000;
         }
         return stride;
+    }
+
+    public int weightCalculator() {
+        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
+        int weight = Integer.parseInt(strWeight);
+
+        if (weight >= 300 && weight >= 280) {
+            weight = 300;
+
+        } else if (weight >= 279 && weight >= 260) {
+            weight = 275;
+        } else if (weight >= 259 && weight >= 230) {
+            weight = 250;
+        } else if (weight >= 229 && weight >= 210) {
+            weight = 220;
+        } else if (weight >= 209 && weight >= 190) {
+            weight = 200;
+        } else if (weight >= 189 && weight >= 170) {
+            weight = 180;
+        } else if (weight >= 164 && weight >= 150) {
+            weight = 160;
+        } else if (weight >= 149 && weight >= 130) {
+            weight = 140;
+        } else if (weight >= 129 && weight >= 110) {
+            weight = 120;
+        } else if (weight >= 100) {
+            weight = 100;
+        }
+        return weight;
     }
 }

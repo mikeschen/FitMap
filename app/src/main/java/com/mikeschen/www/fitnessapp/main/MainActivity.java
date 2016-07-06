@@ -158,8 +158,8 @@ public class MainActivity extends BaseActivity implements
 
 
 //        testText.setText(String.valueOf(heightWeightDB.getCals()));
-        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
-        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
+//        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
+//        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
 
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 

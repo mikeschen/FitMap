@@ -42,8 +42,8 @@ public class HeightWeightDatabaseHelper extends SQLiteOpenHelper {
 
     //Column names
     private static final String KEY_ID = "_id";
-    private static final String KEY_WEIGHT = "keyWeight";
-    private static final String KEY_STRIDE = "keyStride";
+    private static final String KEY_WEIGHT = "weight";
+    private static final String KEY_STRIDE = "stride";
     private static final String KEY_CALORIES_BURNED= "calories";
 
 
@@ -150,10 +150,13 @@ public class HeightWeightDatabaseHelper extends SQLiteOpenHelper {
         Log.e(LOG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
+        if (c != null) {
             c.moveToFirst();
+        }
         Integer cals;
         cals = c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED));
         return cals;
     }
+
+
 }
