@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mikeschen.www.fitnessapp.utils.OnFoodClickedListener;
 import com.mikeschen.www.fitnessapp.Meals.SearchViewHolder;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Food;
+import com.mikeschen.www.fitnessapp.utils.OnFoodClickedListener;
 
 import java.util.ArrayList;
 

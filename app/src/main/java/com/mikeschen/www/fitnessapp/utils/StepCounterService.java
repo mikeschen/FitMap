@@ -195,7 +195,12 @@ public class StepCounterService extends Service implements SensorEventListener {
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
-                            days.setStepsTaken(stepCount);// This isn't it either...
+
+                            days.setStepsTaken(stepCount);
+                            days.setCaloriesBurned(stepCount * 175/3500);
+                            Log.d("stepServiceId", days.getId()+"");
+                            Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
+
                             db.updateDays(days);
                         }
                     } else {
@@ -213,7 +218,10 @@ public class StepCounterService extends Service implements SensorEventListener {
                             Log.d("step taken", stepCount + "");
                             Log.d("daysRecord ID", days.getId() + "");
                             sendMessageToUI(stepCount);
-                            days.setStepsTaken(stepCount);// Or this...
+                            days.setStepsTaken(stepCount);
+                            days.setCaloriesBurned(stepCount * 175/3500);
+                            Log.d("stepServiceId", days.getId()+" size: " + db.getAllDaysRecords().size());
+                            Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
                             db.updateDays(days);
                         }
                     }

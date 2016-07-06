@@ -45,12 +45,9 @@ public class DatabaseCalorieListAdapter extends RecyclerView.Adapter<DatabaseCal
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.textViewId)
-        TextView mTextViewId;
-        @Bind(R.id.textViewCount)
-        TextView mTextViewCount;
-        @Bind(R.id.textViewDate)
-        TextView mTextViewDate;
+        @Bind(R.id.textViewId) TextView mTextViewId;
+        @Bind(R.id.textViewCount) TextView mTextViewCount;
+        @Bind(R.id.textViewDate) TextView mTextViewDate;
         private Context mContext;
 
         public DatabaseViewHolder(View itemView) {

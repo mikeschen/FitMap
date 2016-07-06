@@ -10,23 +10,19 @@
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/idTextView"
-        android:textSize="30sp"
-        android:text="id"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/dateTextView"
-        android:layout_alignEnd="@+id/dateTextView" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="Yesterday You Took:"
         android:id="@+id/dateTextView"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:textSize="30sp"
-        android:text="date"
-        android:layout_below="@+id/idTextView"
-        android:layout_toLeftOf="@+id/stepsTextView"
-        android:layout_toStartOf="@+id/stepsTextView" />
+        android:gravity="center"
+        android:elevation="@dimen/activity_elevation"
+        android:layout_margin="@dimen/activity_medium_padding"
+        android:layout_marginBottom="35dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,25 +39,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0 Steps"
+        android:textColor="@color/colorAbout"
         android:id="@+id/stepsTextView"
-        android:textSize="40sp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="@dimen/text_extra_large"
+        android:gravity="center"
+        android:layout_alignTop="@+id/calsConsumedTextView"
+        android:layout_alignLeft="@+id/dateTextView"
+        android:layout_alignStart="@+id/dateTextView"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="And Burned 100 Calories"
+        android:text="Burned 100 Calories"
         android:id="@+id/caloriesTextView"
-        android:textSize="25sp"
-        android:layout_below="@+id/stepsTextView"
-        android:layout_marginTop="24dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center" />
-
+        android:textSize="@dimen/text_extra_large"
+        android:gravity="center"
+        android:textColor="@color/colorAbout"
+        android:layout_above="@+id/suggestionLayout"
+        android:layout_alignLeft="@+id/dateTextView"
+        android:layout_alignStart="@+id/dateTextView"
+        android:layout_marginBottom="66dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
