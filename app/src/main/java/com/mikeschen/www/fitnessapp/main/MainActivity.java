@@ -143,7 +143,6 @@ public class MainActivity extends BaseActivity implements
             throw sqle;
         }
 
-
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
@@ -164,6 +163,9 @@ public class MainActivity extends BaseActivity implements
             mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             daysRecord.setId(db.logDays(daysRecord));
             db.updateDays(daysRecord);
+            Log.d("Main, Line 166", daysRecord.getId() + "");
+            Log.d("Main, Line 166", daysRecord.getStepsTaken() + "");
+
             db.closeDB();
         } else {
             daysRecord = daysList.get(daysList.size()-1);

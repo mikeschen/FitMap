@@ -113,10 +113,14 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         db = new DatabaseHelper(this);
         List<Days> daysList = db.getAllDaysRecords();
+        //It's not this...
         if(daysList.size() > 0) {
             days = daysList.get(daysList.size()-1);
             stepCount = days.getStepsTaken();
             lastKnownId = days.getId();
+            Log.d("StepService, L: 121", days.getId() + "");
+            Log.d("StepSerview, L: 121", days.getStepsTaken() + "");
+
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             days = new Days(1, 0, 0, 0, String.valueOf(dateFormat));
@@ -191,8 +195,11 @@ public class StepCounterService extends Service implements SensorEventListener {
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
-                            days.setStepsTaken(stepCount);
+                            days.setStepsTaken(stepCount);// This isn't it either...
                             db.updateDays(days);
+                            Log.d("StepService, L: 200", days.getId() + "");
+                            Log.d("StepSerview, L: 200", days.getStepsTaken() + "");
+
                         }
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
@@ -209,8 +216,11 @@ public class StepCounterService extends Service implements SensorEventListener {
                             Log.d("step taken", stepCount + "");
                             Log.d("daysRecord ID", days.getId() + "");
                             sendMessageToUI(stepCount);
-                            days.setStepsTaken(stepCount);
+                            days.setStepsTaken(stepCount);// Or this...
                             db.updateDays(days);
+                            Log.d("StepService, L: 221", days.getId() + "");
+                            Log.d("StepSerview, L: 222", days.getStepsTaken() + "");
+
                         }
                     }
                 }

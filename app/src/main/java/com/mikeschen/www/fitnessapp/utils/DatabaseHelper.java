@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //DAYS COLUMN NAMES
-    private static final String KEY_DAY_ID = "id";
+    private static final String KEY_DAY_ID = "_id";
     private static final String KEY_STEPS = "steps";
     private static final String KEY_CALORIES_BURNED = "caloriesBurned";
     private static final String KEY_CALORIES_CONSUMED = "caloriesConsumed";
@@ -170,7 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_DATE, days.getDate());
 
         //updating row
-        return db.update(TABLE_DAY, values, KEY_DAY_ID + " + ?",
+        return db.update(TABLE_DAY, values, KEY_DAY_ID + " = ?",
                 new String[]{String.valueOf(days.getId())});
     }
 

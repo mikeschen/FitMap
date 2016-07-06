@@ -13,6 +13,7 @@ import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.models.Food;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,8 +60,8 @@ public class DatabaseDaysListAdapter extends RecyclerView.Adapter<DatabaseDaysLi
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
         }
-
         public void bindDays(Days days) {
+
             mTextViewId.setText(String.valueOf(days.getId()));
             mTextViewCount.setText(String.valueOf(days.getStepsTaken()));
             mTextViewCalBurned.setText(String.valueOf(days.getCaloriesBurned()));

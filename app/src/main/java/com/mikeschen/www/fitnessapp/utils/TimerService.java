@@ -96,6 +96,9 @@ public class TimerService extends Service {
 
             //Saves day's data to most recent day in DB
             db.updateDays(today);
+            Log.d("TimeService, L: 99", today.getId() + "");
+            Log.d("TimeService, L:99", today.getStepsTaken() + "");
+
 
             // Builds new, empty database row when notification fires and SHOULD create a new row with new ID
             long currentDaysTableId = today.getId() + 1;
@@ -106,7 +109,9 @@ public class TimerService extends Service {
             //This SHOULD advance to the next key ID in the database and build a new table.
 //            newDay.setId(newDay.getId());
             newDay.setId(db.logDays(newDay));
-            db.updateDays(newDay);
+            db.updateDays(newDay);//It's not this...
+            Log.d("TimeService, L: 113", newDay.getId() + "");
+            Log.d("TimeService, L:113", newDay.getStepsTaken() + "");
 
         }
     }

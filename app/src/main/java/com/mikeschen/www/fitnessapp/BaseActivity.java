@@ -19,7 +19,6 @@ import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.main.DBActivity;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
-import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
