@@ -2,7 +2,6 @@ package com.mikeschen.www.fitnessapp.simpleActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,22 +37,18 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
 
         //make a Day object
         List<Days> allDays = db.getAllDaysRecords();
-
-        yesterday = allDays.get(allDays.size() - 2);
         if (db.getAllDaysRecords().size() < 2) {
             Toast.makeText(RealStatsActivity.this, "No data available", Toast.LENGTH_SHORT).show();
         } else {
-
-            //set up the date to show in the right format
-//            SimpleDateFormat dateyesterday = new SimpleDateFormat("dd-MM-yyyy ");
+            yesterday = allDays.get(allDays.size() - 2);
 
             mDateTextView.setText("Date: " + yesterday.getDate());
 
-            mCaloriesTextView.setText("Cal Burned: " + yesterday.getCaloriesBurned());
+            mCaloriesTextView.setText("Calories Burned: " + yesterday.getCaloriesBurned());
 
-            mStepsTextView.setText("Steps: " + yesterday.getStepsTaken());
+            mStepsTextView.setText("Steps Taken: " + yesterday.getStepsTaken());
 
-            mCalsConsumedTextView.setText("Cals Consumed:" + yesterday.getCaloriesConsumed());
+            mCalsConsumedTextView.setText("Calories Consumed:" + yesterday.getCaloriesConsumed());
         }
     }
 
