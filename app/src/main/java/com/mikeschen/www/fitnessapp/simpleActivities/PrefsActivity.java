@@ -19,11 +19,17 @@ import butterknife.ButterKnife;
 public class PrefsActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.homeEditText) EditText mHomeEditText;
     @Bind(R.id.workEditText) EditText mWorkEditText;
+    @Bind(R.id.heightEditText) EditText mHeightEditText;
+    @Bind(R.id.weightEditText) EditText mWeightEditText;
     @Bind(R.id.homePrefsButton) Button mHomePrefsButton;
     @Bind(R.id.workPrefsButton) Button mWorkPrefsButton;
+    @Bind(R.id.heightPrefsButton) Button mHeighPrefsButton;
+    @Bind(R.id.weightPrefsButton) Button mWeightPrefsButton;
 
     private String home;
     private String work;
+    private String height;
+    private String weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +39,18 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
 
         mHomePrefsButton.setOnClickListener(this);
         mWorkPrefsButton.setOnClickListener(this);
+        mHeighPrefsButton.setOnClickListener(this);
+        mWeightPrefsButton.setOnClickListener(this);
 
         home = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
         mHomeEditText.setText(home);
         work = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
         mWorkEditText.setText(work);
+        height = mSharedPreferences.getString(Constants.PREFERENCES_HEIGHT, null);
+        mHeightEditText.setText(height);
+        weight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
+        mWeightEditText.setText(weight);
+
     }
 
     @Override
@@ -61,6 +74,24 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
                 addWorkToSharedPreferences(work);
                 Toast.makeText(PrefsActivity.this, "Work Location Saved!", Toast.LENGTH_SHORT).show();
                 break;
+            case (R.id.heightPrefsButton):
+                String height = mHeightEditText.getText().toString();
+                if(height.isEmpty()) {
+                    Toast.makeText(PrefsActivity.this, "Please enter your height", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                addHeightToSharedPreferences(height);
+                Toast.makeText(PrefsActivity.this, "Height Saved!", Toast.LENGTH_SHORT).show();
+                break;
+            case (R.id.weightPrefsButton):
+                String weight = mHeightEditText.getText().toString();
+                if(weight.isEmpty()) {
+                    Toast.makeText(PrefsActivity.this, "Please enter your weight", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                addWeightToSharedPreferences(weight);
+                Toast.makeText(PrefsActivity.this, "Weight Saved!", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -70,5 +101,11 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
 
     private void addWorkToSharedPreferences(String work) {
         mEditor.putString(Constants.PREFERENCES_WORK, work).apply();
+    }
+    private void addHeightToSharedPreferences(String work) {
+        mEditor.putString(Constants.PREFERENCES_HEIGHT, height).apply();
+    }
+    private void addWeightToSharedPreferences(String work) {
+        mEditor.putString(Constants.PREFERENCES_WEIGHT, weight).apply();
     }
 }
