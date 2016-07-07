@@ -9,3 +9,7 @@
 /build
 /captures
 gradle.properties
+src/androidTestMock/
+src/mock/
+src/prod/
+/app/src/release/res/values/google_maps_api.xml
