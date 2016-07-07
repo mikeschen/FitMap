@@ -68,9 +68,6 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
-    @Bind(R.id.testText) TextView testText;
-    @Bind(R.id.calorieTestView) TextView calorieTestText;
-
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {

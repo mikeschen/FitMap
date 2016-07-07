@@ -228,12 +228,13 @@ public class StepCounterService extends Service implements SensorEventListener {
                             int stride = strideCalculator();
                             int weight = weightCalculator();
                             Log.d("service stride", stride + "");
+                            Log.d("service weight", weight + "");
 
 
                             if (weight > 0 || stride > 0 || weight > 0 && stride > 0) {
-                                Integer cals = heightWeightDB.getCals(weight, stride);
+                                float cals = heightWeightDB.getCals(weight, stride);
                                 Log.d("StepService", cals + " = cals");
-                                int newCalsBurned = cals / 1000;
+                                float newCalsBurned = cals / 1000;
                                 Log.d("StepService", newCalsBurned + " = newCalsBurned");
                                 days.setCaloriesBurned(stepCount * newCalsBurned);
                             } else {
@@ -269,15 +270,16 @@ public class StepCounterService extends Service implements SensorEventListener {
         mSensorManager.unregisterListener(this);
     }
 
+    //Takes user pref height and uses it to determine which table to pull data from
     public int strideCalculator() {
         int height = mSharedPreferences.getInt(Constants.PREFERENCES_HEIGHT, 0);
-        int stride = 0;
+        int stride = 2000;
 
         double inchPerStride = (height * .413);
         double feetPerStride = (inchPerStride / 12);
         Double dStepsPerMile = (5280 / feetPerStride);
         int stepsPerMile = dStepsPerMile.intValue();
-        Log.d("steps per mile", stepsPerMile + "");
+        Log.d("service spm", stepsPerMile + "");
 
 //            2000 = 6'2" - 6'5"
 //            2200 = 5'7" - 6'1"
@@ -285,12 +287,9 @@ public class StepCounterService extends Service implements SensorEventListener {
 //
 
 
-//        @ 2101 and 180 lbs, 20 steps = 1 cal
-//        @ 2400 and 160 lbs, 21 steps = 1 cal...
-        //@ 2400 and 300 lbs, 20 steps = 1 cal...
-        //Don't have if statements written for weight yet, but will need them if we're going to keep this to account for weights that are between weights in the database (ie 180 @ 2400 steps)
-
-        if (stepsPerMile >= 2400 && stepsPerMile > 2301) {
+//      @ 2000 and 100 lbs, 20 steps = 1 cal
+//      @ 2400 and 300 lbs,  20 = 1 cal
+        if (stepsPerMile > 2301) {
             stride = 2400;
         } else if (stepsPerMile < 2300 && stepsPerMile >= 2101) {
             stride = 2200;
@@ -300,30 +299,31 @@ public class StepCounterService extends Service implements SensorEventListener {
         return stride;
     }
 
+    //Takes user pref weight and uses it to determine which table to pull data from
     public int weightCalculator() {
-        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
+        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, "0");
         int weight = Integer.parseInt(strWeight);
 
         if (weight >= 300 && weight >= 280) {
             weight = 300;
 
-        } else if (weight >= 279 && weight >= 260) {
+        } else if (weight >= 260) {
             weight = 275;
-        } else if (weight >= 259 && weight >= 230) {
+        } else if (weight <= 259 && weight >= 230) {
             weight = 250;
-        } else if (weight >= 229 && weight >= 210) {
+        } else if (weight <= 229 && weight >= 210) {
             weight = 220;
-        } else if (weight >= 209 && weight >= 190) {
+        } else if (weight <= 209 && weight >= 190) {
             weight = 200;
-        } else if (weight >= 189 && weight >= 170) {
+        } else if (weight <= 189 && weight >= 170) {
             weight = 180;
-        } else if (weight >= 164 && weight >= 150) {
+        } else if (weight <= 164 && weight >= 150) {
             weight = 160;
-        } else if (weight >= 149 && weight >= 130) {
+        } else if (weight <= 149 && weight >= 130) {
             weight = 140;
-        } else if (weight >= 129 && weight >= 110) {
+        } else if (weight <= 129 && weight >= 110) {
             weight = 120;
-        } else if (weight >= 100) {
+        } else if (weight < 110) {
             weight = 100;
         }
         return weight;
