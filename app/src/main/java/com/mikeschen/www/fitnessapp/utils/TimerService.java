@@ -68,8 +68,6 @@ public class TimerService extends Service {
         super.onCreate();
         isRunning = true;
         db = new DatabaseHelper(getApplicationContext());
-
-        Log.d("Are you", "Creating?");
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
@@ -93,13 +91,8 @@ public class TimerService extends Service {
             offsetFromGMT = -offsetFromGMT + (24*60*60*1000);
         }
         offsetFromGMT = offsetFromGMT/1000/60;
-        Log.d("Time Zone Offset", offsetFromGMT+"");
-        Log.d("current time",currentTime % (60 * 24) + "");
 
         if (currentTime % (60 * 24) == offsetFromGMT) {
-//        if (currentTime % 3 == 0) {
-            Log.d("tick", "tock");
-
 
             //Finds most recent day in DB
             List<Days> allDays = db.getAllDaysRecords();
@@ -139,7 +132,6 @@ public class TimerService extends Service {
                 .setContentText("You walked "  + today.getStepsTaken() + " steps today!");
 
         Intent resultIntent = new Intent(getApplicationContext(), RealStatsActivity.class);
-        Log.d("buildNotification", "Is it building?");
 
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
