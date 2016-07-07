@@ -61,7 +61,6 @@ public class NutritionixService {
         urlBuilder.addQueryParameter(APPKEY_QUERY, API_KEY);
 
         String url = urlBuilder.build().toString();
-        Log.d("searchUPC", url);
         Request request = new Request.Builder().url(url).build();
 
         Call call = client.newCall(request);

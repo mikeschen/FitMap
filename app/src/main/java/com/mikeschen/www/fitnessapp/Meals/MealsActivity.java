@@ -111,12 +111,10 @@ public class MealsActivity extends BaseActivity implements
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null && resultCode == RESULT_OK) {
             String scanContent = scanningResult.getContents();
-            Log.d("scanContent", scanContent);
             Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
             searchIntent.putExtra("inputText", scanContent);
             startActivity(searchIntent);
-//            mike this is where i left off
-//            mMealsPresenter.searchUPC(scanContent);
+
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
@@ -134,7 +132,6 @@ public class MealsActivity extends BaseActivity implements
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_photo:
-                Log.d("menuItem", item.getItemId()+"");
                 scanUpc();
                 break;
             case R.id.action_search:
@@ -151,20 +148,7 @@ public class MealsActivity extends BaseActivity implements
 
     @Override
     public void displayFoodByUPC(ArrayList<Food> foods) {
-//        MealsActivity.this.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (foods == null) {
-//                    mAuthProgressDialog.dismiss();
-//                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Food food = foods.get(0);
-//                    db.logFood(food);
-//                    mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
-//                    mAuthProgressDialog.dismiss();
-//                }
-//            }
-//        });
+        //Used in MealsSearchResultActivity
     }
 
     @Override
@@ -204,10 +188,9 @@ public class MealsActivity extends BaseActivity implements
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+
             }
         });
-
         builder.show();
     }
 
@@ -246,7 +229,7 @@ public class MealsActivity extends BaseActivity implements
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-//                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+
                 }
             });
 
