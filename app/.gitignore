@@ -1,2 +1,3 @@
 /build
 .idea/misc.xml
+/src/release/res/values/google_maps_api.xml
