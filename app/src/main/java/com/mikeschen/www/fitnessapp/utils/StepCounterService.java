@@ -232,18 +232,19 @@ public class StepCounterService extends Service implements SensorEventListener {
 
 
                             if (weight > 0 && stride > 0) {
-                                Integer cals = heightWeightDB.getCals(weight, stride);
+                                float cals = heightWeightDB.getCals(weight, stride);
                                 Log.d("StepService", cals + " = cals");
                                 float newCalsBurned = cals / 1000;
                                 Log.d("StepService", newCalsBurned + " = newCalsBurned");
                                 days.setCaloriesBurned(stepCount * newCalsBurned);
+                                Log.d("stepsBurned", stepCount * newCalsBurned + "");
                             } else {
                                 days.setCaloriesBurned(stepCount * 175 / 3500);
                             }
 
 
                             Log.d("stepServiceId", days.getId() + " size: " + db.getAllDaysRecords().size());
-                            Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
+                            Log.d("firstId & stepsBurned", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
                             db.updateDays(days);
                             db.closeDB();
                         }
@@ -288,7 +289,7 @@ public class StepCounterService extends Service implements SensorEventListener {
 
 
 //      @ 2000 and 100 lbs, 20 steps = 1 cal
-//      @ 2400 and 300 lbs,  20 = 1 cal
+//      @ 2400 and 300 lbs,   = 1 cal
         if (stepsPerMile > 2301) {
             stride = 2400;
         } else if (stepsPerMile < 2300 && stepsPerMile >= 2101) {

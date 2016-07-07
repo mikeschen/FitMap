@@ -76,8 +76,6 @@ public class MainActivity extends BaseActivity implements
 
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
-                    daysRecord.setCaloriesBurned(steps * 175/3500); //End variable of calorieCalculator goes in these ()
-                    Log.d("caloriesBurned", daysRecord.getCaloriesBurned() + "");
 
                     db.updateDays(daysRecord);
                     if(buttonDisplay.equals("Steps")) {
