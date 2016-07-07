@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/foodRecyclerView"
-        android:layout_marginTop="@dimen/activity_medium_padding"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="@dimen/activity_medium_padding"
         android:layout_below="@+id/todaysDate"
         android:layout_above="@+id/totalCaloriesTextView" />

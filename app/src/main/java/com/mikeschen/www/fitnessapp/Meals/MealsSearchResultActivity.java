@@ -55,7 +55,7 @@ public class MealsSearchResultActivity extends AppCompatActivity implements Meal
         MealsSearchResultActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mMealsPresenter.mFoods.isEmpty()) {
+                if (mMealsPresenter.mFoods == null) {
                     mAuthProgressDialog.dismiss();
                     Toast.makeText(MealsSearchResultActivity.this, "Food Item Not Found", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MealsSearchResultActivity.this, MealsActivity.class);

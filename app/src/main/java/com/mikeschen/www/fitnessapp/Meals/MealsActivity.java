@@ -111,7 +111,12 @@ public class MealsActivity extends BaseActivity implements
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null && resultCode == RESULT_OK) {
             String scanContent = scanningResult.getContents();
-            mMealsPresenter.searchUPC(scanContent);
+            Log.d("scanContent", scanContent);
+            Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
+            searchIntent.putExtra("inputText", scanContent);
+            startActivity(searchIntent);
+//            mike this is where i left off
+//            mMealsPresenter.searchUPC(scanContent);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
@@ -145,21 +150,21 @@ public class MealsActivity extends BaseActivity implements
 
 
     @Override
-    public void displayFoodByUPC(final ArrayList<Food> foods) {
-        MealsActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (foods == null) {
-                    mAuthProgressDialog.dismiss();
-                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
-                } else {
-                    Food food = foods.get(0);
-                    db.logFood(food);
-                    mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
-                    mAuthProgressDialog.dismiss();
-                }
-            }
-        });
+    public void displayFoodByUPC(ArrayList<Food> foods) {
+//        MealsActivity.this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (foods == null) {
+//                    mAuthProgressDialog.dismiss();
+//                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Food food = foods.get(0);
+//                    db.logFood(food);
+//                    mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
+//                    mAuthProgressDialog.dismiss();
+//                }
+//            }
+//        });
     }
 
     @Override
