@@ -10,31 +10,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/homePref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gridLayout">
+
+        <TextView
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Home Address"
+            android:id="@+id/homeTextView"
+            android:alpha="0.7"
+            android:elevation="@dimen/activity_elevation"
+            android:layout_marginRight="@dimen/activity_medium_padding"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlack"
+            android:gravity="center" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_address"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:padding="@dimen/activity_small_padding"
+            android:layout_marginRight="@dimen/activity_medium_padding"
             android:background="@color/colorWhite"
             android:id="@+id/homeEditText"
-            android:hint="Enter Home Address"
-            android:paddingLeft="@dimen/activity_medium_padding"
-            android:layout_weight="0.8"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="bottom" />
+            android:hint="Home Address" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:layout_marginRight="@dimen/activity_medium_padding"
+            android:layout_marginBottom="@dimen/activity_medium_padding"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
             android:padding="@dimen/activity_small_padding"
@@ -43,37 +63,43 @@
             android:id="@+id/homePrefsButton"
             android:drawableRight="@drawable/ic_home_white_24dp"
             android:background="@drawable/buttonred2"
-            android:layout_below="@+id/workEditText" />
+            android:layout_gravity="center_horizontal" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/workPref"
-        android:layout_below="@+id/homePref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Work Address"
+            android:id="@+id/workTextView"
+            android:alpha="0.7"
+            android:elevation="@dimen/activity_elevation"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlack"
+            android:gravity="center" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_address"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:layout_columnSpan="2"
             android:background="@color/colorWhite"
-            android:hint="Enter Work Address"
-            android:id="@+id/workEditText"
-            android:paddingLeft="@dimen/activity_medium_padding"
-            android:layout_weight="0.8"
-            android:layout_below="@+id/homeEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="bottom" />
+            android:hint="Work Address"
+            android:padding="@dimen/activity_small_padding"
+            android:id="@+id/workEditText" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:layout_columnSpan="2"
             android:elevation="@dimen/activity_elevation"
+            android:layout_marginBottom="@dimen/activity_small_margin"
             android:text="Set"
             android:drawableRight="@drawable/ic_work_white_24dp"
             android:padding="@dimen/activity_small_padding"
@@ -81,93 +107,111 @@
             android:textColor="@color/colorWhite"
             android:id="@+id/workPrefsButton"
             android:background="@drawable/buttonred"
-            android:layout_below="@+id/workEditText" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/heightPref"
-        android:layout_below="@+id/workPref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginRight="@dimen/activity_medium_padding"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Your Height"
+            android:id="@+id/heightFeetTextView"
+            android:alpha="0.7"
+            android:elevation="@dimen/activity_elevation"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlack"
+            android:gravity="center" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="64dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_row="4"
+            android:layout_column="0"
             android:background="@color/colorWhite"
-            android:hint="Enter Feet"
+            android:layout_marginRight="1dp"
+            android:padding="@dimen/activity_small_padding"
+            android:hint="Feet"
             android:id="@+id/heightFeetEditText"
-            android:paddingLeft="@dimen/activity_medium_padding"
-            android:layout_weight="0.8"
-            android:layout_below="@+id/workEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="bottom" />
+            android:inputType="number"
+            android:layout_gravity="center" />
+
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="65dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_row="4"
+            android:layout_column="1"
             android:background="@color/colorWhite"
-            android:hint="Enter Inches"
+            android:padding="@dimen/activity_small_padding"
+            android:hint="Inches"
             android:id="@+id/heightInchesEditText"
-            android:paddingLeft="@dimen/activity_medium_padding"
-            android:layout_weight="0.8"
-            android:layout_below="@+id/workEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="bottom" />
+            android:inputType="number"
+            android:layout_gravity="center_horizontal" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_medium_padding"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
-            android:drawableRight="@drawable/ic_work_white_24dp"
+            android:drawableRight="@drawable/ic_height_24dp"
             android:padding="@dimen/activity_small_padding"
             android:textSize="@dimen/text_tiny"
             android:textColor="@color/colorWhite"
             android:id="@+id/heightPrefsButton"
-            android:background="@drawable/buttonred"
-            android:layout_below="@+id/workPrefsButton" />
-    </LinearLayout>
+            android:background="@drawable/buttonyellow"
+            android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/weightPref"
-        android:layout_below="@+id/heightPref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Your Weight"
+            android:id="@+id/weightTextView"
+            android:alpha="0.7"
+            android:elevation="@dimen/activity_elevation"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlack"
+            android:gravity="center" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:padding="@dimen/activity_small_padding"
+            android:layout_columnSpan="2"
+            android:layout_row="4"
+            android:layout_column="3"
             android:background="@color/colorWhite"
             android:hint="Enter Weight"
             android:id="@+id/weightEditText"
-            android:paddingLeft="@dimen/activity_medium_padding"
-            android:layout_weight="0.8"
-            android:layout_below="@+id/heightEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="bottom" />
+            android:inputType="number"
+            android:layout_gravity="center_horizontal" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_row="5"
+            android:layout_column="3"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
-            android:drawableRight="@drawable/ic_work_white_24dp"
+            android:drawableRight="@drawable/ic_pregnant_woman_white_24dp"
             android:padding="@dimen/activity_small_padding"
             android:textSize="@dimen/text_tiny"
             android:textColor="@color/colorWhite"
             android:id="@+id/weightPrefsButton"
-            android:background="@drawable/buttonred"
-            android:layout_below="@+id/heightPrefsButton" />
-    </LinearLayout>
+            android:background="@drawable/button"
+            android:layout_gravity="center_horizontal" />
 
+    </GridLayout>
 </RelativeLayout>
