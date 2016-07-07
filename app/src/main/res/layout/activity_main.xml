@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tipTextView"
+            android:textColor="#292929"
             android:layout_below="@+id/tipsTextView"
             android:layout_marginLeft="@dimen/activity_wide_margin"
             android:layout_marginRight="@dimen/activity_wide_margin"

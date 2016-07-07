@@ -88,11 +88,14 @@ public class TimerService extends Service {
         TimeZone tz = TimeZone.getDefault();
         int offsetFromGMT = tz.getOffset(currentTime*60*1000);
         if(offsetFromGMT < 0) {
-            offsetFromGMT += 24*60*60*1000;
+            offsetFromGMT = -offsetFromGMT;
+        } else {
+            offsetFromGMT = -offsetFromGMT + (24*60*60*1000);
         }
         offsetFromGMT = offsetFromGMT/1000/60;
         Log.d("Time Zone Offset", offsetFromGMT+"");
         Log.d("current time",currentTime % (60 * 24) + "");
+
         if (currentTime % (60 * 24) == offsetFromGMT) {
 //        if (currentTime % 3 == 0) {
             Log.d("tick", "tock");

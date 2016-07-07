@@ -231,8 +231,8 @@ public class StepCounterService extends Service implements SensorEventListener {
                             Log.d("service weight", weight + "");
 
 
-                            if (weight > 0 || stride > 0 || weight > 0 && stride > 0) {
-                                float cals = heightWeightDB.getCals(weight, stride);
+                            if (weight > 0 && stride > 0) {
+                                Integer cals = heightWeightDB.getCals(weight, stride);
                                 Log.d("StepService", cals + " = cals");
                                 float newCalsBurned = cals / 1000;
                                 Log.d("StepService", newCalsBurned + " = newCalsBurned");

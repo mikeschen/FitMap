@@ -8,14 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.Meals.MealsSearchResultActivity"
-    android:background="@drawable/search"
-    android:alpha="0.7"
+    android:background="@drawable/hallwaysearch"
     android:orientation="horizontal">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -26,6 +20,5 @@
             android:layout_height="match_parent"
             android:id="@+id/searchResultsRecyclerView" />
 
-    </LinearLayout>
 </LinearLayout>
 

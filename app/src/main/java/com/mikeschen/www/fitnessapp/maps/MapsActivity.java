@@ -162,9 +162,6 @@ public class MapsActivity extends BaseActivity implements
         mapFragment.getMapAsync(this);
         destination = getIntent().getStringExtra("destination");
         atDestination.setText(destination, TextView.BufferType.EDITABLE);
-//        if(mapItem != null && mapItem != "") {
-//            atDestination.setText(mapItem);
-//        }
         distances = new ArrayList<>();
         durations = new ArrayList<>();
         routeCalories = new ArrayList<>();
