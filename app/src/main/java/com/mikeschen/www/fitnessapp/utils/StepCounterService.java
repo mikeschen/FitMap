@@ -230,7 +230,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                             Log.d("service stride", stride + "");
 
 
-                            if (weight > 0 || stride > 0 || weight > 0 && stride > 0) {
+                            if (weight > 0 && stride > 0) {
                                 Integer cals = heightWeightDB.getCals(weight, stride);
                                 Log.d("StepService", cals + " = cals");
                                 int newCalsBurned = cals / 1000;
@@ -301,7 +301,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     public int weightCalculator() {
-        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
+        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, "0");
         int weight = Integer.parseInt(strWeight);
 
         if (weight >= 300 && weight >= 280) {
