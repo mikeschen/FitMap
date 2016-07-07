@@ -184,14 +184,26 @@ public class MapsActivity extends BaseActivity implements
             case (R.id.homeButton):
                 mHomeAddress = mSharedPreferences.getString(Constants.PREFERENCES_HOME, null);
                 atDestination.setText(mHomeAddress);
-                mHomeButton.setBackgroundResource(R.drawable.redbutton2down);
-                mWorkButton.setBackgroundResource(R.drawable.buttonred);
+                String homeDestination = atDestination.getText().toString();
+                if (homeDestination.isEmpty()) {
+                    mWorkButton.setBackgroundResource(R.drawable.buttonred);
+                    mHomeButton.setBackgroundResource(R.drawable.buttonred2);
+                } else {
+                    mHomeButton.setBackgroundResource(R.drawable.redbutton2down);
+                    mWorkButton.setBackgroundResource(R.drawable.buttonred);
+                }
                 break;
             case (R.id.workButton):
                 mWorkAddress = mSharedPreferences.getString(Constants.PREFERENCES_WORK, null);
                 atDestination.setText(mWorkAddress);
-                mWorkButton.setBackgroundResource(R.drawable.redbuttondown);
-                mHomeButton.setBackgroundResource(R.drawable.buttonred2);
+                String workDestination = atDestination.getText().toString();
+                if (workDestination.isEmpty()) {
+                    mWorkButton.setBackgroundResource(R.drawable.buttonred);
+                    mHomeButton.setBackgroundResource(R.drawable.buttonred2);
+                } else {
+                    mWorkButton.setBackgroundResource(R.drawable.redbuttondown);
+                    mHomeButton.setBackgroundResource(R.drawable.buttonred2);
+                }
                 break;
         }
     }
