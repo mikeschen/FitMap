@@ -44,7 +44,6 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     @Bind(R.id.foodRecyclerView) RecyclerView mFoodRecyclerView;
 
-
     private String mSearchString;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
@@ -145,7 +144,6 @@ public class MealsActivity extends BaseActivity implements
         return false;
     }
 
-
     @Override
     public void displayFoodByUPC(ArrayList<Food> foods) {
         //Used in MealsSearchResultActivity
@@ -166,7 +164,6 @@ public class MealsActivity extends BaseActivity implements
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.searchFoodItemEditText);
 
-
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             @Override
@@ -180,10 +177,10 @@ public class MealsActivity extends BaseActivity implements
                     Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
                     intent.putExtra("food item", foodItem);
                     mContext.startActivity(intent);
+                    finish();
                 }
             }
         });
-
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -193,7 +190,6 @@ public class MealsActivity extends BaseActivity implements
         });
         builder.show();
     }
-
 
     private void openAddItemDialog() {
         LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
@@ -235,7 +231,6 @@ public class MealsActivity extends BaseActivity implements
 
             builder.show();
         }
-
 
     public String getFoodFromDB() {
 
