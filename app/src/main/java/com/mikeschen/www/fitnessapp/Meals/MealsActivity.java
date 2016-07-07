@@ -44,7 +44,6 @@ public class MealsActivity extends BaseActivity implements
     @Bind(R.id.totalCaloriesTextView) TextView mTotalCaloriesTextView;
     @Bind(R.id.foodRecyclerView) RecyclerView mFoodRecyclerView;
 
-
     private String mSearchString;
     private String mSearchType;
     private ProgressDialog mAuthProgressDialog;
@@ -111,7 +110,10 @@ public class MealsActivity extends BaseActivity implements
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null && resultCode == RESULT_OK) {
             String scanContent = scanningResult.getContents();
-            mMealsPresenter.searchUPC(scanContent);
+            Intent searchIntent = new Intent(this, MealsSearchResultActivity.class);
+            searchIntent.putExtra("inputText", scanContent);
+            startActivity(searchIntent);
+
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
@@ -129,7 +131,6 @@ public class MealsActivity extends BaseActivity implements
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_photo:
-                Log.d("menuItem", item.getItemId()+"");
                 scanUpc();
                 break;
             case R.id.action_search:
@@ -143,27 +144,9 @@ public class MealsActivity extends BaseActivity implements
         return false;
     }
 
-
     @Override
-    public void displayFoodByUPC(final ArrayList<Food> foods) {
-        MealsActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (foods == null) {
-                    mAuthProgressDialog.dismiss();
-
-                    Toast.makeText(mContext, "Food Item Not Found", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(mContext, MealsSearchResultActivity.class);
-                    mContext.startActivity(intent);
-                    finish();
-                } else {
-                    Food food = foods.get(0);
-                    db.logFood(food);
-                    mTotalCaloriesTextView.setText("TOTAL CALORIES CONSUMED: " + getFoodFromDB());
-                    mAuthProgressDialog.dismiss();
-                }
-            }
-        });
+    public void displayFoodByUPC(ArrayList<Food> foods) {
+        //Used in MealsSearchResultActivity
     }
 
     @Override
@@ -180,7 +163,6 @@ public class MealsActivity extends BaseActivity implements
         builder.setView(subView);
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.searchFoodItemEditText);
-
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -200,17 +182,14 @@ public class MealsActivity extends BaseActivity implements
             }
         });
 
-
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+
             }
         });
-
         builder.show();
     }
-
 
     private void openAddItemDialog() {
         LayoutInflater inflater = LayoutInflater.from(MealsActivity.this);
@@ -246,13 +225,12 @@ public class MealsActivity extends BaseActivity implements
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-//                    Toast.makeText(MealsActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+
                 }
             });
 
             builder.show();
         }
-
 
     public String getFoodFromDB() {
 

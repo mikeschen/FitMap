@@ -49,8 +49,7 @@ public class NutritionixService {
         Request request = new Request.Builder().url(url).build();
 
         Call call = client.newCall(request);
-        call.enqueue((Callback) callback);
-
+        call.enqueue(callback);
     }
 
     public void searchUPC(String upc, Callback callback){
@@ -62,11 +61,10 @@ public class NutritionixService {
         urlBuilder.addQueryParameter(APPKEY_QUERY, API_KEY);
 
         String url = urlBuilder.build().toString();
-        Log.d("works", url);
         Request request = new Request.Builder().url(url).build();
 
         Call call = client.newCall(request);
-        call.enqueue((Callback) callback);
+        call.enqueue(callback);
     }
 
     public ArrayList<Food> processResultsUpc(Response response) {
@@ -76,7 +74,6 @@ public class NutritionixService {
             String jsonData = response.body().string();
             if(response.isSuccessful()) {
                 JSONObject foodsJSON = new JSONObject(jsonData);
-
                 String itemName = foodsJSON.getString("item_name");
                 double calories = foodsJSON.getDouble("nf_calories");
                 Food food = new Food(1, itemName, calories);
@@ -98,9 +95,7 @@ public class NutritionixService {
 
         try {
             String jsonData = response.body().string();
-            Log.d("JSON?", jsonData + "");
             if(response.isSuccessful()) {
-                Log.d("processResults", "Are you here?");
                 JSONObject nutritionJSON  = new JSONObject(jsonData);
                 JSONArray hitsArrayJSON = nutritionJSON.getJSONArray("hits");
                 for (int i = 0; i < hitsArrayJSON.length(); i++  ){
@@ -117,7 +112,6 @@ public class NutritionixService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("return foods", foods + "");
         return foods;
     }
 }
