@@ -35,8 +35,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/dateTextView"
-        android:layout_alignEnd="@+id/dateTextView" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,15 +55,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Burned 100 Calories"
+        android:text="Burned Calories"
         android:id="@+id/caloriesTextView"
         android:textSize="@dimen/text_extra_large"
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="@color/colorBackground"
-        android:layout_above="@+id/suggestionLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/calsConsumedTextView"
+        android:layout_alignLeft="@+id/dateTextView"
+        android:layout_alignStart="@+id/dateTextView" />
 
 
     <LinearLayout

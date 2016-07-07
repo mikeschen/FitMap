@@ -301,7 +301,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     public int weightCalculator() {
-        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
+        String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, "0");
         int weight = Integer.parseInt(strWeight);
 
         if (weight >= 300 && weight >= 280) {
