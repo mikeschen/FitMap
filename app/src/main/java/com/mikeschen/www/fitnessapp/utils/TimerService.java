@@ -94,7 +94,8 @@ public class TimerService extends Service {
         }
         offsetFromGMT = offsetFromGMT/1000/60;
         Log.d("Time Zone Offset", offsetFromGMT+"");
-        Log.d("currentTimeModulo", ""+currentTime%(60*24));
+        Log.d("current time",currentTime % (60 * 24) + "");
+
         if (currentTime % (60 * 24) == offsetFromGMT) {
 //        if (currentTime % 3 == 0) {
             Log.d("tick", "tock");

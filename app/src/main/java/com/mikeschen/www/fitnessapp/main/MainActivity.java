@@ -51,6 +51,9 @@ public class MainActivity extends BaseActivity implements
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
 
+    int weight;
+    int stride;
+
     DatabaseHelper db;
 
     int images[] = {R.drawable.stairwellmain, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
@@ -65,9 +68,6 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.tipsTextView) TextView mTipsTextView;
     @Bind(R.id.mainlayout) RelativeLayout relativeLayout;
 
-    @Bind(R.id.testText) TextView testText;
-    @Bind(R.id.calorieTestView) TextView calorieTestText;
-
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -76,8 +76,6 @@ public class MainActivity extends BaseActivity implements
 
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
-                    daysRecord.setCaloriesBurned(steps * 175/3500); //End variable of calorieCalculator goes in these ()
-                    Log.d("caloriesBurned", daysRecord.getCaloriesBurned() + "");
 
                     db.updateDays(daysRecord);
                     if(buttonDisplay.equals("Steps")) {
@@ -157,10 +155,6 @@ public class MainActivity extends BaseActivity implements
             daysRecord = daysList.get(daysList.size()-1);
         }
 
-
-//        testText.setText(String.valueOf(heightWeightDB.getCals()));
-//        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
-//        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
 
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
