@@ -10,16 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/homePref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gridLayout">
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:background="@color/colorWhite"
             android:id="@+id/homeEditText"
             android:hint="Enter Home Address"
@@ -32,8 +36,11 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:layout_weight="0.2"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
@@ -45,19 +52,12 @@
             android:background="@drawable/buttonred2"
             android:layout_below="@+id/workEditText" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/workPref"
-        android:layout_below="@+id/homePref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:background="@color/colorWhite"
             android:hint="Enter Work Address"
             android:id="@+id/workEditText"
@@ -70,8 +70,11 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:layout_columnSpan="2"
             android:layout_weight="0.2"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
@@ -82,19 +85,12 @@
             android:id="@+id/workPrefsButton"
             android:background="@drawable/buttonred"
             android:layout_below="@+id/workEditText" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/heightPref"
-        android:layout_below="@+id/workPref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
             android:background="@color/colorWhite"
             android:hint="Enter Feet"
             android:id="@+id/heightFeetEditText"
@@ -104,9 +100,12 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="bottom" />
+
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="1"
             android:background="@color/colorWhite"
             android:hint="Enter Inches"
             android:id="@+id/heightInchesEditText"
@@ -119,8 +118,11 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:layout_weight="0.2"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
@@ -131,19 +133,13 @@
             android:id="@+id/heightPrefsButton"
             android:background="@drawable/buttonred"
             android:layout_below="@+id/workPrefsButton" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/weightPref"
-        android:layout_below="@+id/heightPref"
-        android:layout_margin="@dimen/activity_small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="4"
+            android:layout_row="0"
+            android:layout_column="0"
             android:background="@color/colorWhite"
             android:hint="Enter Weight"
             android:id="@+id/weightEditText"
@@ -156,8 +152,11 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="5"
+            android:layout_row="0"
+            android:layout_column="0"
             android:layout_weight="0.2"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
@@ -168,6 +167,6 @@
             android:id="@+id/weightPrefsButton"
             android:background="@drawable/buttonred"
             android:layout_below="@+id/heightPrefsButton" />
-    </LinearLayout>
 
+    </GridLayout>
 </RelativeLayout>
