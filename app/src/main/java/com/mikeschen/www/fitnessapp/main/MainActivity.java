@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements
 
     DatabaseHelper db;
 
-    int images[] = {R.drawable.alone, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
+    int images[] = {R.drawable.stairwellmain, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
 
     Days daysRecord;
 
@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements
 
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
-                    daysRecord.setCaloriesBurned(steps * 175/3500);
+                    daysRecord.setCaloriesBurned(steps * 175/3500); //End variable of calorieCalculator goes in these ()
                     Log.d("caloriesBurned", daysRecord.getCaloriesBurned() + "");
 
                     db.updateDays(daysRecord);
@@ -139,6 +139,7 @@ public class MainActivity extends BaseActivity implements
         buttonDisplay = "Steps";
         mMainButton.setOnClickListener(this);
         mTipPresenter = new TipPresenter(this);
+        mTipTextView.setOnClickListener(this);
 
         db = new DatabaseHelper(mContext);
 
@@ -158,8 +159,8 @@ public class MainActivity extends BaseActivity implements
 
 
 //        testText.setText(String.valueOf(heightWeightDB.getCals()));
-        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
-        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
+//        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
+//        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
 
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
@@ -284,6 +285,20 @@ public class MainActivity extends BaseActivity implements
             case (R.id.mealsMainButton):
                 Intent intent2 = new Intent(MainActivity.this, MealsActivity.class);
                 startActivity(intent2);
+                break;
+            case (R.id.tipTextView):
+                String json;
+                try {
+                    InputStream is = mContext.getAssets().open("tips.json");
+                    int size = is.available();
+                    byte[] buffer = new byte[size];
+                    is.read(buffer);
+                    is.close();
+                    json = new String(buffer, "UTF-8");
+                    mTipPresenter.loadTip(json);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 break;
         }
     }

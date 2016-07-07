@@ -121,8 +121,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class MealsPresenter implements
-        MealsInterface.Presenter {
+public class MealsPresenter implements MealsInterface.Presenter {
 
     private MealsInterface.View mMealsView;
     public ArrayList<Food> mFoods = new ArrayList<>();
@@ -143,11 +142,11 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResults(response);
+                Log.d("mFoods", mFoods + "");
                 mMealsView.displayFoodByItem(mFoods);
             }
         });
     }
-
 
     @Override
     public void searchUPC(String upc) {
@@ -161,12 +160,9 @@ public class MealsPresenter implements
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mFoods = nutritionixService.processResultsUpc(response);
-                Log.d("search return", mFoods + "");
+                Log.d("mFoods", mFoods + "");
                 mMealsView.displayFoodByUPC(mFoods);
-
             }
-
         });
     }
-
 }

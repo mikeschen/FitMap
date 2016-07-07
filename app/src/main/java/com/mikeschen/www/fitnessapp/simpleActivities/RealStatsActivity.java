@@ -67,7 +67,7 @@ public class RealStatsActivity extends BaseActivity implements View.OnClickListe
         View subView = inflater.inflate(R.layout.fragment_search_map, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add An Address (i.e. home or work)");
+        builder.setTitle("Enter An Address");
         builder.setView(subView);
 
         final EditText subEditText = (EditText) subView.findViewById(R.id.searchMapEditText);
