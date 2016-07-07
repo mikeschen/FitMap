@@ -270,7 +270,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     public int strideCalculator() {
-        int height = mSharedPreferences.getInt(Constants.PREFERENCES_HEIGHT, 0); //This works
+        int height = mSharedPreferences.getInt(Constants.PREFERENCES_HEIGHT, 0);
         int stride = 0;
 
         double inchPerStride = (height * .413);

@@ -51,6 +51,9 @@ public class MainActivity extends BaseActivity implements
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
 
+    int weight;
+    int stride;
+
     DatabaseHelper db;
 
     int images[] = {R.drawable.alone, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
@@ -156,10 +159,6 @@ public class MainActivity extends BaseActivity implements
             daysRecord = daysList.get(daysList.size()-1);
         }
 
-
-//        testText.setText(String.valueOf(heightWeightDB.getCals()));
-//        testText.setText(String.valueOf(daysRecord.getStepsTaken()));
-//        calorieTestText.setText(String.valueOf(daysRecord.getCaloriesBurned()));
 
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
