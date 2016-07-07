@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/search"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@drawable/tunnelmeal"
     tools:context=".Meals.MealsActivity">
 
     <fragment
@@ -52,8 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/foodRecyclerView"
-        android:layout_marginTop="@dimen/activity_wide_margin"
-        android:layout_marginBottom="@dimen/activity_wide_margin"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="@dimen/activity_medium_padding"
         android:layout_below="@+id/todaysDate"
         android:layout_above="@+id/totalCaloriesTextView" />
 

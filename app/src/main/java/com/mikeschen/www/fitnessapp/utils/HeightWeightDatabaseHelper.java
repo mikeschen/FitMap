@@ -141,29 +141,22 @@ public class HeightWeightDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Integer getCals() {
+    public Integer getCals(int weight, int stride) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-
-//        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-//
-//        if (c.moveToFirst()) {
-//            while ( !c.isAfterLast() ) {
-//                Toast.makeText(context, "Table Name=> " + c.getString(0), Toast.LENGTH_LONG).show();
-//                c.moveToNext();
-//            }
-//        }
-
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE "
-                + KEY_WEIGHT + " = " + 120 + " and " + KEY_STRIDE + " = " + 2000;
+                + KEY_WEIGHT + " = " + weight + " and " + KEY_STRIDE + " = " + stride;
 
         Log.e(LOG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
+        if (c != null) {
             c.moveToFirst();
+        }
         Integer cals;
         cals = c.getInt(c.getColumnIndex(KEY_CALORIES_BURNED));
         return cals;
     }
+
+
 }
