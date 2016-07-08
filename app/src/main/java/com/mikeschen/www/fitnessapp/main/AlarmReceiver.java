@@ -1,83 +1,42 @@
-package com.mikeschen.www.fitnessapp.utils;
+package com.mikeschen.www.fitnessapp.main;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
+import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class TimerService extends Service {
-
+/**
+ * Created by Matt on 7/8/2016.
+ */
+public class AlarmReceiver extends BroadcastReceiver {
+    private Context mContext;
+    DatabaseHelper db;
     private NotificationCompat.Builder mBuilder;
 
-    private static boolean isRunning;
-
-    //All variables in Timer Service begin with 2
-    public static final int MSG_REGISTER_CLIENT = 20;
-    public static final int MSG_UNREGISTER_CLIENT = 21;
-
-    private Timer timer;
-    private TimerTask timerTask;
-
-    DatabaseHelper db;
-
-
-    final Messenger mMessenger = new Messenger(new IncomingHandler());
-    ArrayList<Messenger> mClients = new ArrayList<>();
-
-    class IncomingHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_REGISTER_CLIENT:
-                    mClients.add(msg.replyTo);
-                    break;
-                case MSG_UNREGISTER_CLIENT:
-                    mClients.remove(msg.replyTo);
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-        }
-    }
-
     @Override
-    public void onCreate() {
-        super.onCreate();
-        isRunning = true;
-        db = new DatabaseHelper(getApplicationContext());
-        timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                long currentTime = System.currentTimeMillis() / 60000;
-                checkMidnight(currentTime);
-                Log.d("Current Time", currentTime + "");
-            }
-        };
-
-        timer.scheduleAtFixedRate(timerTask, 0, 60000);
+    public void onReceive(Context context, Intent intent) {
+        Log.d("firing", "alarm");
+        mContext = context;
+//        Intent timerService = new Intent(context, TimerService.class);
+//        context.startService(timerService);
+        db = new DatabaseHelper(mContext);
+        long currentTime = System.currentTimeMillis() / 60000;
+        checkMidnight(currentTime);
     }
-
 
     public void checkMidnight(long currentTime) {
         TimeZone tz = TimeZone.getDefault();
@@ -88,6 +47,8 @@ public class TimerService extends Service {
             offsetFromGMT = -offsetFromGMT + (24*60*60*1000);
         }
         offsetFromGMT = offsetFromGMT/1000/60;
+        Log.d("currentTime", currentTime%(60*24)+"");
+        Log.d("offsetTime", offsetFromGMT+"");
 
         if (currentTime % (60 * 24) == offsetFromGMT) {
 
@@ -121,16 +82,16 @@ public class TimerService extends Service {
 
     public void buildNotification(Days today) {
 
-        mBuilder = new NotificationCompat.Builder(getApplicationContext())
+        mBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
                 .setContentTitle("FitMap Says: ")
                 .setContentText("You walked "  + today.getStepsTaken() + " steps today!");
 
-        Intent resultIntent = new Intent(getApplicationContext(), RealStatsActivity.class);
+        Intent resultIntent = new Intent(mContext, RealStatsActivity.class);
 
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
-                        getApplicationContext(),
+                        mContext,
                         0,
                         resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT
@@ -141,30 +102,8 @@ public class TimerService extends Service {
         int mNotificationId = 001;
         // Gets an instance of the NotificationManager service
         NotificationManager mNotifyMgr =
-                (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mMessenger.getBinder();
-    }
-
-    public static boolean isRunning() {
-        return isRunning;
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        isRunning = false;
-    }
-
 }

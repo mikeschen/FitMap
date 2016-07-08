@@ -56,10 +56,8 @@
             android:name=".utils.StepCounterService"
             android:enabled="true"
             android:exported="true" />
-        <service
-            android:name=".utils.TimerService"
-            android:enabled="true"
-            android:exported="true" />
+        <receiver
+            android:name=".main.AlarmReceiver"/>
         <activity
             android:name=".simpleActivities.AboutActivity"
             android:label="@string/title_activity_about"
