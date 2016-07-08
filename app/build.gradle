@@ -10,8 +10,8 @@ android {
         applicationId "com.mikeschen.www.fitnessapp"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 4
-        versionName "1.04"
+        versionCode 5
+        versionName "1.05"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // Enabling multidex support.
         multiDexEnabled true

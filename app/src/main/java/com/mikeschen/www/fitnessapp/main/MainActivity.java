@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity implements
                     daysRecord.setCaloriesBurned(db.getDay(daysRecord.getId()).getCaloriesBurned());
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + (int) steps);
+                        Log.d("Main Button", steps + "");
                     } else {
                         setCaloriesText();
                     }
@@ -135,8 +136,8 @@ public class MainActivity extends BaseActivity implements
         } else {
             daysRecord = daysList.get(daysList.size()-1);
         }
-    Log.d("Main Activity", daysRecord.getStepsTaken() + "");
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
+        Log.d("Main Activity", daysRecord.getStepsTaken() + "");
 
         //Calls tips
         String json;

@@ -196,6 +196,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                                 float cals = heightWeightDB.getCals(weight, stride);
                                 float newCalsBurned = cals / 1000;
                                 day.setCaloriesBurned(stepCount * newCalsBurned);
+                                db.updateDays(day);
                             } else {
                                 day.setCaloriesBurned(stepCount * 175 / 3500);
                                 db.updateDays(day);
@@ -225,6 +226,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                                 float cals = heightWeightDB.getCals(weight, stride);
                                 float newCalsBurned = cals / 1000;
                                 day.setCaloriesBurned(stepCount * newCalsBurned);
+                                db.updateDays(day);
                             } else {
                                 day.setCaloriesBurned(stepCount * 175 / 3500);
                                 db.updateDays(day);
