@@ -205,7 +205,7 @@
             android:layout_column="3"
             android:elevation="@dimen/activity_elevation"
             android:text="Set"
-            android:drawableRight="@drawable/ic_pregnant_woman_white_24dp"
+            android:drawableRight="@drawable/ic_cake_white_24dp"
             android:padding="@dimen/activity_small_padding"
             android:textSize="@dimen/text_tiny"
             android:textColor="@color/colorWhite"
