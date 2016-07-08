@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity implements
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
                     daysRecord.setCaloriesBurned(db.getDay(daysRecord.getId()).getCaloriesBurned());
-                    Log.d("MainBurned", "" + db.getDay(daysRecord.getId()).getCaloriesBurned());
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + (int) steps);
                     } else {
