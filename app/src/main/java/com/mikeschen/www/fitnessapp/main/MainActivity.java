@@ -101,14 +101,12 @@ public class MainActivity extends BaseActivity implements
 
         try {
             heightWeightDB.createDatabase();
-            Log.d("DB CREATED", heightWeightDB + "");
         } catch (IOException e) {
             throw new Error ("Unable to create Database");
         }
 
         try {
             heightWeightDB.openDatabase();
-            Log.d("Open DB", heightWeightDB + "Does it open?");
         } catch (SQLException sqle) {
             throw sqle;
         }
