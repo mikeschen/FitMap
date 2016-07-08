@@ -86,7 +86,7 @@
             android:name=".simpleActivities.PrefsActivity"
             android:label="@string/title_activity_prefs"
             android:screenOrientation="portrait" />
-        <activity android:name=".main.DBActivity"></activity>
+        <activity android:name=".simpleActivities.HistoryActivity"></activity>
     </application>
 
 </manifest>

@@ -45,7 +45,6 @@ public class DatabaseStepsListAdapter extends RecyclerView.Adapter<DatabaseSteps
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.textViewId) TextView mTextViewId;
         @Bind(R.id.textViewCount) TextView mTextViewCount;
         @Bind(R.id.textViewDate) TextView mTextViewDate;
         private Context mContext;
@@ -57,7 +56,6 @@ public class DatabaseStepsListAdapter extends RecyclerView.Adapter<DatabaseSteps
         }
 
         public void bindSteps(Steps steps) {
-            mTextViewId.setText(String.valueOf(steps.getId()));
             mTextViewCount.setText(String.valueOf(steps.getStepsTaken()));
             mTextViewDate.setText(String.valueOf(steps.getDate()));
 

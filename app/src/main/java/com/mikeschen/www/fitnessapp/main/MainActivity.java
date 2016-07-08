@@ -36,6 +36,8 @@ import com.mikeschen.www.fitnessapp.utils.TimerService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -145,8 +147,17 @@ public class MainActivity extends BaseActivity implements
 
         // This creates a table on first use of app
         if (daysList.size() == 0) {
+
+
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat mdformat = new SimpleDateFormat("MM / dd / yyyy");
+            String strDate = mdformat.format(calendar.getTime());
+
+
+            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
+            String finalDate = dateFormat.format(date);
+            daysRecord = new Days(1, 0, 0, 0, finalDate);
             mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             daysRecord.setId(db.logDays(daysRecord));
             db.updateDays(daysRecord);

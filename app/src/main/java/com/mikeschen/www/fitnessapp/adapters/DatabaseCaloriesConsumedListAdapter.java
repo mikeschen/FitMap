@@ -45,7 +45,6 @@ public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<Da
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.textViewId) TextView mTextViewId;
         @Bind(R.id.textViewCount) TextView mTextViewCount;
         @Bind(R.id.textViewDate) TextView mTextViewDate;
         private Context mContext;
@@ -57,7 +56,6 @@ public class DatabaseCaloriesConsumedListAdapter extends RecyclerView.Adapter<Da
         }
 
         public void bindCalories(Calories calories) {
-            mTextViewId.setText(String.valueOf(calories.getId()));
             mTextViewCount.setText(String.valueOf(calories.getCalories()));
             mTextViewDate.setText(String.valueOf(calories.getDate()));
 
