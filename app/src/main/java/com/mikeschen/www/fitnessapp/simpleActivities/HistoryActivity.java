@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 
 public class HistoryActivity extends BaseActivity implements View.OnClickListener{
 
-
     @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
     @Bind(R.id.button) Button mButton;
     private DatabaseDaysListAdapter mDatabaseDaysListAdapter;
