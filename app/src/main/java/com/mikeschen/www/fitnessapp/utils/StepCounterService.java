@@ -224,9 +224,9 @@ public class StepCounterService extends Service implements SensorEventListener {
                                 Log.d("StepService", cals + " = cals");
                                 float newCalsBurned = cals / 1000;
                                 Log.d("StepService", newCalsBurned + " = newCalsBurned");
-                                days.setCaloriesBurned(100);
+                                days.setCaloriesBurned(stepCount * newCalsBurned);
                                 Log.d("stepsBurned", stepCount * newCalsBurned + "");
-                                Log.d("idburned", days.getId() + "");
+                                Log.d("calsBurned", days.getCaloriesBurned() + "");
                             } else {
                                 days.setCaloriesBurned(stepCount * 175 / 3500);
                             }

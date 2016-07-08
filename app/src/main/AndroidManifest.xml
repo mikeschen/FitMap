@@ -52,7 +52,6 @@
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <service
             android:name=".utils.StepCounterService"
             android:enabled="true"
@@ -61,11 +60,6 @@
             android:name=".utils.TimerService"
             android:enabled="true"
             android:exported="true" />
-
-        <activity
-            android:name=".main.StatsActivity"
-            android:label="@string/title_activity_stats"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".simpleActivities.AboutActivity"
             android:label="@string/title_activity_about"
@@ -86,7 +80,10 @@
             android:name=".simpleActivities.PrefsActivity"
             android:label="@string/title_activity_prefs"
             android:screenOrientation="portrait" />
-        <activity android:name=".simpleActivities.HistoryActivity"></activity>
+        <activity android:name=".simpleActivities.HistoryActivity"
+            android:label="History"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

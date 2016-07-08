@@ -127,7 +127,7 @@ public class TimerService extends Service {
         mBuilder = new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.drawable.ic_accessibility_white_24dp)
                 .setContentTitle("FitMap Says: ")
-                .setContentText("You walked "  + today.getStepsTaken() + " steps today and burned " + today.getCaloriesBurned() + " calories!");
+                .setContentText("You walked "  + today.getStepsTaken() + " steps today!");
 
         Intent resultIntent = new Intent(getApplicationContext(), RealStatsActivity.class);
 
