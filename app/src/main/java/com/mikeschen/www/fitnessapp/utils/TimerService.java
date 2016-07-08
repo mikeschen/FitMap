@@ -25,9 +25,6 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by Ramon on 6/30/16.
- */
 public class TimerService extends Service {
 
     private NotificationCompat.Builder mBuilder;

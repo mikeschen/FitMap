@@ -187,8 +187,19 @@ public class StepCounterService extends Service implements SensorEventListener {
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
                             day.setStepsTaken(stepCount);
-                            day.setCaloriesBurned(stepCount * 175 / 3500);
-                            db.updateDays(day);
+
+                            //Gathers height and weight and pulls corresponding cals burned data from DB
+                            int stride = strideCalculator();
+                            int weight = weightCalculator();
+
+                            if (weight > 0 && stride > 0) {
+                                float cals = heightWeightDB.getCals(weight, stride);
+                                float newCalsBurned = cals / 1000;
+                                day.setCaloriesBurned(stepCount * newCalsBurned);
+                            } else {
+                                day.setCaloriesBurned(stepCount * 175 / 3500);
+                                db.updateDays(day);
+                            }
                         }
                     } else {
                         if (localAverageSpeed < totalAverageSpeed) {
@@ -211,23 +222,18 @@ public class StepCounterService extends Service implements SensorEventListener {
 
                             if (weight > 0 && stride > 0) {
                                 float cals = heightWeightDB.getCals(weight, stride);
-                                Log.d("StepService", cals + " = cals");
                                 float newCalsBurned = cals / 1000;
-                                Log.d("StepService", newCalsBurned + " = newCalsBurned");
                                 day.setCaloriesBurned(stepCount * newCalsBurned);
-                                Log.d("stepsBurned", stepCount * newCalsBurned + "");
-                                Log.d("calsBurned", day.getCaloriesBurned() + "");
                             } else {
                                 day.setCaloriesBurned(stepCount * 175 / 3500);
+                                db.updateDays(day);
                             }
-                            db.updateDays(day);
-                            db.closeDB();
                         }
                     }
-                }
 
-                last_x = x;
-                last_y = y;
+                    last_x = x;
+                    last_y = y;
+                }
             }
         }
     }

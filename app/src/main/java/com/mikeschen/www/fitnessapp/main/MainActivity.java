@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity implements
 
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
-
     int images[] = {R.drawable.stairwellmain, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
 
     Days daysRecord;
