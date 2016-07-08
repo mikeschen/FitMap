@@ -1,36 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<!--THIS IS A SINGLE ITEM IN A RECYCLERVIEW CREATED IN activity_stats.xml-->
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <!--THIS IS A SINGLE ITEM IN A RECYCLERVIEW CREATED IN activity_stats.xml-->
+        <TextView
+            android:id="@+id/textViewDate"
+            android:text="Date"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I"
-        android:id="@+id/textViewId" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Am"
-        android:id="@+id/textViewCount" />
+        <TextView
+            android:text="Steps Taken: "
+            android:id="@+id/textViewStepCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/textViewCount"
+            android:layout_toStartOf="@+id/textViewCount"
+            android:layout_marginRight="34dp"
+            android:layout_marginEnd="34dp" />
+        <TextView
+            android:text="Steps"
+            android:id="@+id/textViewCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="34dp"
+            android:layout_marginEnd="34dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="A"
-        android:id="@+id/textViewCalBurned" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New"
-        android:id="@+id/textViewCalConsumed" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories Burned: "
+            android:id="@+id/textViewCalBurnedText"
+            android:layout_below="@+id/textViewDate"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Database"
-        android:id="@+id/textViewDate" />
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data"
+            android:id="@+id/textViewCalBurned"
+            android:layout_alignTop="@+id/textViewCalBurnedText"
+            android:layout_toRightOf="@+id/textViewCalBurnedText"
+            android:layout_toEndOf="@+id/textViewCalBurnedText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories Consumed"
+            android:id="@+id/textViewCalConsumedText"
+            android:layout_alignTop="@+id/textViewCalBurned"
+            android:layout_alignLeft="@+id/textViewStepCountText"
+            android:layout_alignStart="@+id/textViewStepCountText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data"
+            android:id="@+id/textViewCalConsumed"
+            android:layout_alignTop="@+id/textViewCalConsumedText"
+            android:layout_alignRight="@+id/textViewCount"
+            android:layout_alignEnd="@+id/textViewCount" />
+
+</RelativeLayout>
+

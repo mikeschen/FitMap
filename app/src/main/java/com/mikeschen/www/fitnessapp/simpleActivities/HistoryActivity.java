@@ -1,4 +1,4 @@
-package com.mikeschen.www.fitnessapp.main;
+package com.mikeschen.www.fitnessapp.simpleActivities;
 
 
 import android.content.Intent;
@@ -12,13 +12,14 @@ import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.adapters.DatabaseDaysListAdapter;
 import com.mikeschen.www.fitnessapp.models.Days;
+import com.mikeschen.www.fitnessapp.utils.DividerItemDecoration;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DBActivity extends BaseActivity implements View.OnClickListener{
+public class HistoryActivity extends BaseActivity implements View.OnClickListener{
 
 
     @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
@@ -29,15 +30,16 @@ public class DBActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_db);
+        setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
 
         mDays = (ArrayList<Days>) db.getAllDaysRecords();
 
         mDatabaseDaysListAdapter = new DatabaseDaysListAdapter(getApplicationContext(), mDays);
+        mStepsRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mStepsRecyclerView.setAdapter(mDatabaseDaysListAdapter);
         RecyclerView.LayoutManager stepsLayoutManager =
-                new LinearLayoutManager(DBActivity.this);
+                new LinearLayoutManager(HistoryActivity.this);
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
 
@@ -56,7 +58,7 @@ public class DBActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void refresh() {
-        Intent intent = new Intent(DBActivity.this,DBActivity.class);
+        Intent intent = new Intent(HistoryActivity.this,HistoryActivity.class);
         startActivity(intent);
         finish();
     }

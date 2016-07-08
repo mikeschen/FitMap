@@ -29,7 +29,7 @@ public class StatsActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_db);
+        setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
 
         mDays = (ArrayList<Days>) db.getAllDaysRecords();
