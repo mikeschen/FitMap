@@ -19,10 +19,13 @@ import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.main.MainActivity;
 import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.AboutActivity;
+import com.mikeschen.www.fitnessapp.simpleActivities.HistoryActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.utils.HeightWeightDatabaseHelper;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class BaseActivity extends AppCompatActivity {
     private ListView mDrawerList;
@@ -63,9 +66,15 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
+    //Calligraphy
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
+    }
+
     private void addDrawerItems() {
 
-        String[] navArray = {"Main", "Maps", "Meals", "Stats", "Prefs", "About"};
+        String[] navArray = {"Main", "Maps", "Meals", "Stats", "History", "Prefs", "About"};
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, navArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -94,14 +103,17 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(stats);
                         finish();
                         break;
-
                     case 4:
+                        Intent history = new Intent(BaseActivity.this, HistoryActivity.class);
+                        startActivity(history);
+                        finish();
+                        break;
+                    case 5:
                         Intent prefs = new Intent(BaseActivity.this, PrefsActivity.class);
                         startActivity(prefs);
                         finish();
                         break;
-
-                    case 5:
+                    case 6:
                         Intent about = new Intent(BaseActivity.this, AboutActivity.class);
                         startActivity(about);
                         finish();

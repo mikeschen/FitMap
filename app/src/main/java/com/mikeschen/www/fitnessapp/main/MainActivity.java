@@ -36,6 +36,8 @@ import com.mikeschen.www.fitnessapp.utils.TimerService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -76,8 +78,8 @@ public class MainActivity extends BaseActivity implements
 
                     float steps = msg.arg1;
                     daysRecord.setStepsTaken(msg.arg1);
-
-                    db.updateDays(daysRecord);
+                    daysRecord.setCaloriesBurned(db.getDay(daysRecord.getId()).getCaloriesBurned());
+                    Log.d("MainBurned", "" + db.getDay(daysRecord.getId()).getCaloriesBurned());
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + (int) steps);
                     } else {
@@ -116,7 +118,6 @@ public class MainActivity extends BaseActivity implements
 
         try {
             heightWeightDB.createDatabase();
-            Log.d("DB CREATED", heightWeightDB + "");
         } catch (IOException e) {
             throw new Error ("Unable to create Database");
         }
@@ -124,7 +125,6 @@ public class MainActivity extends BaseActivity implements
 
         try {
             heightWeightDB.openDatabase();
-            Log.d("Open DB", heightWeightDB + "Does it open?");
         } catch (SQLException sqle) {
             throw sqle;
         }
@@ -145,8 +145,10 @@ public class MainActivity extends BaseActivity implements
 
         // This creates a table on first use of app
         if (daysList.size() == 0) {
+            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
-            daysRecord = new Days(1, 0, 0, 0, dateFormat.toString());
+            String finalDate = dateFormat.format(date);
+            daysRecord = new Days(1, 0, 0, 0, finalDate);
             mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             daysRecord.setId(db.logDays(daysRecord));
             db.updateDays(daysRecord);
@@ -157,11 +159,6 @@ public class MainActivity extends BaseActivity implements
 
 
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
-
-        // Retrieves data when app is opened after crash/close and creates tables for each day app was not used
-        int lastKnownSteps = mSharedPreferences.getInt(Constants.PREFERENCES_LAST_KNOWN_STEPS_KEY, 0);
-
-        Log.d("lastKnownSteps", lastKnownSteps + "");
 
         //Calls tips
         String json;

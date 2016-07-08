@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/stairfeet"
     tools:context="com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity">
 
     <TextView
@@ -21,53 +22,57 @@
         android:textSize="30sp"
         android:gravity="center"
         android:elevation="@dimen/activity_elevation"
-        android:layout_margin="@dimen/activity_medium_padding"
-        android:layout_marginBottom="25dp"/>
+        android:layout_margin="@dimen/activity_small_margin"
+        android:padding="@dimen/activity_medium_padding"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calories Consumed"
-        android:id="@+id/calsConsumedTextView"
-        android:textSize="@dimen/text_extra_large"
-        android:textColor="@color/colorFiller"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_above="@+id/caloriesTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0 Steps"
         android:textColor="@color/colorAbout"
+        android:layout_margin="@dimen/activity_small_margin"
         android:id="@+id/stepsTextView"
+        android:layout_below="@+id/dateTextView"
         android:textSize="@dimen/text_extra_large"
         android:gravity="center"
         android:textStyle="bold"
-        android:layout_below="@+id/dateTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp" />
-
+        android:background="@color/colorWhite"
+        android:alpha="0.75"
+        android:elevation="1dp"
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Burned 100 Calories"
-        android:id="@+id/caloriesTextView"
+        android:text="Calories Consumed"
+        android:id="@+id/calsConsumedTextView"
+        android:layout_below="@+id/stepsTextView"
         android:textSize="@dimen/text_extra_large"
+        android:layout_margin="@dimen/activity_small_margin"
+        android:textColor="@color/colorFiller"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        android:alpha="0.75"
+        android:elevation="1dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Burned Calories"
+        android:id="@+id/caloriesTextView"
+        android:layout_below="@+id/calsConsumedTextView"
+        android:textSize="@dimen/text_extra_large"
+        android:layout_margin="@dimen/activity_small_margin"
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="@color/colorBackground"
-        android:layout_above="@+id/suggestionLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="25dp"/>
-
+        android:background="@color/colorWhite"
+        android:alpha="0.75"
+        android:elevation="1dp"/>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -77,12 +82,16 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_medium_padding"
+            android:layout_margin="@dimen/activity_small_margin"
             android:text="See how you could burn more"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/button"
             android:elevation="@dimen/activity_elevation"
-            android:id="@+id/suggestionButton" />
-    </LinearLayout>
+            android:id="@+id/suggestionButton"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"/>
 
+    </LinearLayout>
 </RelativeLayout>

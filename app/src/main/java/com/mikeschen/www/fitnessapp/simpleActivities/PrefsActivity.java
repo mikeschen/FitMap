@@ -91,6 +91,10 @@ public class PrefsActivity extends BaseActivity implements View.OnClickListener 
 
                 int intFeet = Integer.parseInt(feet);
                 int intInches = Integer.parseInt(inches);
+                if(intInches > 12) {
+                    Toast.makeText(PrefsActivity.this, "Please enter 12 inches or less", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int height = (intFeet * 12) + intInches;
 
                 addFeetToSharedPreferences(feet);

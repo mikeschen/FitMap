@@ -48,7 +48,6 @@ public class DatabaseDaysListAdapter extends RecyclerView.Adapter<DatabaseDaysLi
     }
 
     public class DatabaseViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.textViewId) TextView mTextViewId;
         @Bind(R.id.textViewCount) TextView mTextViewCount;
         @Bind(R.id.textViewCalBurned) TextView mTextViewCalBurned;
         @Bind(R.id.textViewCalConsumed) TextView mTextViewCalConsumed;
@@ -62,10 +61,10 @@ public class DatabaseDaysListAdapter extends RecyclerView.Adapter<DatabaseDaysLi
         }
         public void bindDays(Days days) {
 
-            mTextViewId.setText(String.valueOf(days.getId()));
             mTextViewCount.setText(String.valueOf(days.getStepsTaken()));
             mTextViewCalBurned.setText(String.valueOf(days.getCaloriesBurned()));
             mTextViewCalConsumed.setText(String.valueOf(days.getCaloriesConsumed()));
-            mTextViewDate.setText(String.valueOf(days.getDate()));        }
+            mTextViewDate.setText(days.getDate());
+        }
     }
 }
