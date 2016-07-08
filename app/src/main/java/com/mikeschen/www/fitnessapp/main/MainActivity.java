@@ -5,38 +5,27 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mikeschen.www.fitnessapp.BaseActivity;
-import com.mikeschen.www.fitnessapp.Constants;
-import com.mikeschen.www.fitnessapp.Meals.MealsActivity;
 import com.mikeschen.www.fitnessapp.R;
-import com.mikeschen.www.fitnessapp.maps.MapsActivity;
 import com.mikeschen.www.fitnessapp.models.Days;
-import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
 import com.mikeschen.www.fitnessapp.utils.StepCounterService;
 import com.mikeschen.www.fitnessapp.utils.TimerService;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -52,10 +41,6 @@ public class MainActivity extends BaseActivity implements
 
     private String buttonDisplay;
     private TipPresenter mTipPresenter;
-
-    int weight;
-    int stride;
-
     int images[] = {R.drawable.stairwellmain, R.drawable.back, R.drawable.graffiti, R.drawable.hall, R.drawable.blur};
 
     Days daysRecord;
@@ -113,19 +98,6 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        try {
-            heightWeightDB.createDatabase();
-        } catch (IOException e) {
-            throw new Error ("Unable to create Database");
-        }
-
-
-        try {
-            heightWeightDB.openDatabase();
-        } catch (SQLException sqle) {
-            throw sqle;
-        }
-
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
@@ -136,8 +108,6 @@ public class MainActivity extends BaseActivity implements
         mTipPresenter = new TipPresenter(this);
         mTipTextView.setOnClickListener(this);
 
-        db = new DatabaseHelper(mContext);
-
         List<Days> daysList = db.getAllDaysRecords();
 
         // This creates a table on first use of app
@@ -146,14 +116,13 @@ public class MainActivity extends BaseActivity implements
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM / dd / yyyy", Locale.getDefault());
             String finalDate = dateFormat.format(date);
             daysRecord = new Days(1, 0, 0, 0, finalDate);
-            mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
+//            mEditor.putString(Constants.PREFERENCES_CURRENT_DATE, dateFormat.toString());
             daysRecord.setId(db.logDays(daysRecord));
             db.updateDays(daysRecord);
             db.closeDB();
         } else {
             daysRecord = daysList.get(daysList.size()-1);
         }
-
 
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
@@ -179,10 +148,10 @@ public class MainActivity extends BaseActivity implements
         doBindService();
     }
 
-    protected void onResume()
-    {
-        if(relativeLayout != null)
+    protected void onResume() {
+        if(relativeLayout != null) {
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
+        }
         super.onResume();
     }
 
@@ -194,45 +163,6 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
-        ButterKnife.bind(this);
-
-        MenuItem menuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        searchView.setQueryHint("Enter Destination...");
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportActionBar().setTitle("");
-            }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                return false;
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String destination) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                intent.putExtra("destination", destination);
-                startActivity(intent);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        return true;
     }
 
     @Override
@@ -252,8 +182,8 @@ public class MainActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.mainButton):
-                Days today = db.getDay(daysRecord.getId());
-                float steps = today.getStepsTaken();
+//                Days today = db.getDay(daysRecord.getId());
+                float steps = daysRecord.getStepsTaken();
 
                 if (buttonDisplay.equals("Calories")) {
                     buttonDisplay = "Steps";
@@ -263,16 +193,8 @@ public class MainActivity extends BaseActivity implements
                     setCaloriesText();
                 } else if (buttonDisplay.equals("Steps")) {
                     buttonDisplay = "Miles";
-                    mMainButton.setText("Approx. Mileage: " + (double) Math.round(steps/2000 * 100d) / 100d);
+                    mMainButton.setText("Approx. Mileage: " + (float) Math.round(steps/2000 * 100d) / 100d);
                 }
-                break;
-            case (R.id.mapsMainButton):
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
-                break;
-            case (R.id.mealsMainButton):
-                Intent intent2 = new Intent(MainActivity.this, MealsActivity.class);
-                startActivity(intent2);
                 break;
             case (R.id.tipTextView):
                 String json;
