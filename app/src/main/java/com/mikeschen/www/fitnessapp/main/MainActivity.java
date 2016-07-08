@@ -1,6 +1,8 @@
 package com.mikeschen.www.fitnessapp.main;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +23,11 @@ import com.mikeschen.www.fitnessapp.BaseActivity;
 import com.mikeschen.www.fitnessapp.R;
 import com.mikeschen.www.fitnessapp.models.Days;
 import com.mikeschen.www.fitnessapp.utils.StepCounterService;
-import com.mikeschen.www.fitnessapp.utils.TimerService;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -143,9 +145,15 @@ public class MainActivity extends BaseActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        startService(new Intent(MainActivity.this, TimerService.class));
+//        startService(new Intent(MainActivity.this, TimerService.class));
         startService(new Intent(MainActivity.this, StepCounterService.class));
         doBindService();
+
+        Intent timerAlarm = new Intent(getApplicationContext(), AlarmReceiver.class);
+        PendingIntent recurringAlarm = PendingIntent.getBroadcast(getApplicationContext(), 0, timerAlarm, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarms = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Calendar updateTime = Calendar.getInstance();
+        alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis()+10, 60000, recurringAlarm);
     }
 
     protected void onResume() {
