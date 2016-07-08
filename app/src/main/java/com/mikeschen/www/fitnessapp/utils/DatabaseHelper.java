@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    * Get all days records
+    * Get all day records
     */
     public List<Days> getAllDaysRecords() {
         List<Days> allDaysRecords = new ArrayList<Days>();
@@ -158,7 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    * Updating a days record
+    * Updating a day record
     */
     public int updateDays(Days days) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -260,7 +260,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    * Updating a days record
+    * Updating a day record
     */
     public int updateFood(Food food) {
         SQLiteDatabase db = this.getWritableDatabase();
