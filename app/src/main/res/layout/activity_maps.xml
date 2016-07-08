@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:layout_marginLeft="@dimen/activity_medium_padding"
+            android:layout_marginRight="1dp"
             android:imeOptions="actionSearch"
             android:inputType="textPostalAddress"
             android:ems="10"

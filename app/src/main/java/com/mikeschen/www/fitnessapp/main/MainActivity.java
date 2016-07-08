@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity implements
                     daysRecord.setCaloriesBurned(db.getDay(daysRecord.getId()).getCaloriesBurned());
                     if(buttonDisplay.equals("Steps")) {
                         mMainButton.setText("Steps Taken: " + (int) steps);
+                        Log.d("Main Button", steps + "");
                     } else {
                         setCaloriesText();
                     }
@@ -100,6 +102,17 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        try {
+            heightWeightDB.createDatabase();
+        } catch (IOException e) {
+            throw new Error ("Unable to create Database");
+        }
+
+        try {
+            heightWeightDB.openDatabase();
+        } catch (SQLException sqle) {
+            throw sqle;
+        }
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
@@ -125,8 +138,8 @@ public class MainActivity extends BaseActivity implements
         } else {
             daysRecord = daysList.get(daysList.size()-1);
         }
-
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
+        Log.d("Main Activity", daysRecord.getStepsTaken() + "");
 
         //Calls tips
         String json;
