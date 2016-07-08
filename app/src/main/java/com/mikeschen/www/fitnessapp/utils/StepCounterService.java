@@ -193,16 +193,11 @@ public class StepCounterService extends Service implements SensorEventListener {
                                 stepCount = 0;
                             }
                             stepCount++;
-                            Log.d("step taken", stepCount + "");
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
                             sendMessageToUI(stepCount);
-
                             days.setStepsTaken(stepCount);
                             days.setCaloriesBurned(stepCount * 175 / 3500);
-                            Log.d("stepServiceId", days.getId() + "");
-                            Log.d("firstId & steps", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
-
                             db.updateDays(days);
                         }
                     } else {
@@ -217,19 +212,12 @@ public class StepCounterService extends Service implements SensorEventListener {
                             stepCount++;
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
-                            Log.d("step taken", stepCount + "");
-                            Log.d("daysRecord ID", days.getId() + "");
                             sendMessageToUI(stepCount);
                             days.setStepsTaken(stepCount);
 
                             //Gathers height and weight and pulls corresponding cals burned data from DB
-//                            String strWeight = mSharedPreferences.getString(Constants.PREFERENCES_WEIGHT, null);
-//                            int oldWeight = Integer.parseInt(strWeight);
                             int stride = strideCalculator();
                             int weight = weightCalculator();
-                            Log.d("service stride", stride + "");
-                            Log.d("service weight", weight + "");
-
 
                             if (weight > 0 && stride > 0) {
                                 float cals = heightWeightDB.getCals(weight, stride);
@@ -238,13 +226,10 @@ public class StepCounterService extends Service implements SensorEventListener {
                                 Log.d("StepService", newCalsBurned + " = newCalsBurned");
                                 days.setCaloriesBurned(stepCount * newCalsBurned);
                                 Log.d("stepsBurned", stepCount * newCalsBurned + "");
+                                Log.d("calsBurned", days.getCaloriesBurned() + "");
                             } else {
                                 days.setCaloriesBurned(stepCount * 175 / 3500);
                             }
-
-
-                            Log.d("stepServiceId", days.getId() + " size: " + db.getAllDaysRecords().size());
-                            Log.d("firstId & stepsBurned", db.getAllDaysRecords().get(0).getId() + " " + db.getAllDaysRecords().get(0).getStepsTaken());
                             db.updateDays(days);
                             db.closeDB();
                         }
@@ -280,16 +265,7 @@ public class StepCounterService extends Service implements SensorEventListener {
         double feetPerStride = (inchPerStride / 12);
         Double dStepsPerMile = (5280 / feetPerStride);
         int stepsPerMile = dStepsPerMile.intValue();
-        Log.d("service spm", stepsPerMile + "");
 
-//            2000 = 6'2" - 6'5"
-//            2200 = 5'7" - 6'1"
-//            2400 = 4'10" - 5'6"
-//
-
-
-//      @ 2000 and 100 lbs, 20 steps = 1 cal
-//      @ 2400 and 300 lbs,   = 1 cal
         if (stepsPerMile > 2301) {
             stride = 2400;
         } else if (stepsPerMile < 2300 && stepsPerMile >= 2101) {
