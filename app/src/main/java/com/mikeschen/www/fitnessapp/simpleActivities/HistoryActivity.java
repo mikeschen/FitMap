@@ -1,8 +1,10 @@
 package com.mikeschen.www.fitnessapp.simpleActivities;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,7 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HistoryActivity extends BaseActivity implements View.OnClickListener{
-
 
     @Bind(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
     @Bind(R.id.button) Button mButton;
@@ -50,10 +51,28 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch(v.getId()) {
             case(R.id.button) :
-                db.deleteAllDayRecords();
-                db.deleteAllFoodRecords();
-                db.closeDB();
-                refresh();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("Delete Data");
+                builder.setMessage("Are you sure you want to delete your history?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deleteAllDayRecords();
+                        db.deleteAllFoodRecords();
+                        db.closeDB();
+                        refresh();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.show();
         }
     }
 
