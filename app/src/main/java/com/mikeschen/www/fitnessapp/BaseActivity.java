@@ -23,6 +23,7 @@ import com.mikeschen.www.fitnessapp.simpleActivities.HistoryActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.PrefsActivity;
 import com.mikeschen.www.fitnessapp.simpleActivities.RealStatsActivity;
 import com.mikeschen.www.fitnessapp.utils.DatabaseHelper;
+import com.mikeschen.www.fitnessapp.utils.HeightWeightDatabaseHelper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -36,6 +37,7 @@ public class BaseActivity extends AppCompatActivity {
     public SharedPreferences mSharedPreferences;
     public SharedPreferences.Editor mEditor;
     public DatabaseHelper db;
+    public HeightWeightDatabaseHelper heightWeightDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class BaseActivity extends AppCompatActivity {
         mContext = this;
 
         db = new DatabaseHelper(mContext.getApplicationContext());
+        heightWeightDB = new HeightWeightDatabaseHelper(mContext.getApplicationContext());
+
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mEditor = mSharedPreferences.edit();
