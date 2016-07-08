@@ -210,6 +210,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                                 lastKnownId = day.getId();
                                 stepCount = 0;
                             }
+
                             stepCount++;
                             mEditor.putFloat("grossTotalSpeed", grossTotalSpeed).commit();
                             mEditor.putInt("speedCounted", speedCounted).commit();
@@ -227,16 +228,18 @@ public class StepCounterService extends Service implements SensorEventListener {
                             } else {
                                 day.setCaloriesBurned(stepCount * 175 / 3500);
                                 db.updateDays(day);
+                                db.closeDB();
                             }
                         }
                     }
-
-                    last_x = x;
-                    last_y = y;
                 }
+
+                last_x = x;
+                last_y = y;
             }
         }
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {

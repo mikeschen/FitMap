@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -98,6 +99,19 @@ public class MainActivity extends BaseActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        try {
+            heightWeightDB.createDatabase();
+            Log.d("DB CREATED", heightWeightDB + "");
+        } catch (IOException e) {
+            throw new Error ("Unable to create Database");
+        }
+
+        try {
+            heightWeightDB.openDatabase();
+            Log.d("Open DB", heightWeightDB + "Does it open?");
+        } catch (SQLException sqle) {
+            throw sqle;
+        }
         if(relativeLayout != null)
             relativeLayout.setBackgroundResource(images[getRandomNumber()]);
 
@@ -123,7 +137,7 @@ public class MainActivity extends BaseActivity implements
         } else {
             daysRecord = daysList.get(daysList.size()-1);
         }
-
+    Log.d("Main Activity", daysRecord.getStepsTaken() + "");
         mMainButton.setText("Steps Taken: " + daysRecord.getStepsTaken());
 
         //Calls tips
